@@ -2,7 +2,7 @@
  Funciones relacionadas con el modulo CN: inicializacion del modulo
  y rutina de atencion.
 
-Egileak: Alex y Amanda
+Autores: Alex y Amanda
 Data: Febrero 2023
 */
 
@@ -13,10 +13,10 @@ Data: Febrero 2023
 //==================
 void inic_CN()
 {
-  	CNEN2bits.CN19IE = 1;	// habilitacion de la interrupcion del pin CN16
+  	CNEN2bits.CN19IE = 1;	// habilitacion de la interrupcion del pin CN19
                             // que es al que esta conectado el pulsador S4
     
- 	CNEN2bits.CN23IE = 1;	// habilitacion de la interrupcion del pin CN16
+ 	CNEN2bits.CN23IE = 1;	// habilitacion de la interrupcion del pin CN23
                             // que es al que esta conectado el pulsador S5
     
  	CNEN2bits.CN16IE = 1;	// habilitacion de la interrupcion del pin CN16
