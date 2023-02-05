@@ -1,5 +1,5 @@
 /*
-Funciones de inicializacion y tratamiento de pulsadores y leds
+Funciones de inicializacion de pulsadores y leds
 
 Autores: Alex y Amanda
 Fecha: Febrero 2023
