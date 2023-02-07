@@ -14,7 +14,13 @@ void inic_Timer7 ()
     T7CONbits.TCS = 0;	// reloj interno
     T7CONbits.TGATE = 0;	// Deshabilitar el modo Gate
     
+    IEC3bits.T7IE = 1;      // habilitacion de la interrupcion general de T7
+    IFS3bits.T7IF = 0;      // Puesta a 0 del flag IF del temporizador 7
+    Nop();
+    Nop();
+    
     T7CONbits.TON = 1;	// puesta en marcha del timer
+
 }	
 
 unsigned int mili,deci,seg,dec,min;

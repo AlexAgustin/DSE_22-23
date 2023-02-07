@@ -15,6 +15,7 @@ Fecha: 07/02
 #include "GPIO.h"
 #include "timers.h"
 #include "commons.h"
+#include "CN.h"
 
 
 int main()
@@ -27,6 +28,8 @@ int main()
 	inic_crono();	//Inicializacion variables cronometro.
 
 	inic_Timer7();	// Inicializacion T7 con un periodo de 10 milisegundos.
+    
+    inic_CN();      //Inicializacion de los pulsadores
 
 	while(1) cronometro(); //bucle infinito para la ejecucion del cronometro
 	
