@@ -1,0 +1,64 @@
+Microchip Technology Inc, v1.36 (B)
+
+Tool Name:
+  c:\program files (x86)\microchip\xc16\v1.36\bin\bin\..\bin/elf-ld.exe
+
+Command:
+  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00006d04.00 \
+  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00006d04.01 \
+  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00006d04.02 \
+  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00006d04.03 \
+  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00006d04.04 \
+  -p24HJ256GP610A \
+  -o \
+  dist/default/debug/P2_B_v1.X.debug.elf \
+  -Lc:/program files (x86)/microchip/xc16/v1.36/bin/bin/.. \
+  -Lc:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib \
+  -Lc:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../support/PIC24E/gld \
+  -Lc:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../support/PIC24F/gld \
+  -Lc:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../support/PIC24H/gld \
+  -Lc:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../support/dsPIC30F/gld \
+  -Lc:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../support/dsPIC33C/gld \
+  -Lc:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../support/dsPIC33E/gld \
+  -Lc:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../support/dsPIC33F/gld \
+  build/default/debug/_ext/1472/GPIO.o \
+  build/default/debug/_ext/1472/oscilator.o \
+  build/default/debug/_ext/1472/timers.o \
+  build/default/debug/_ext/1472/CN.o \
+  build/default/debug/_ext/1472/main_P2_B_v1.o \
+  --defsym=__MPLAB_BUILD=1 \
+  --defsym=__MPLAB_DEBUG=1 \
+  --defsym=__DEBUG=1 \
+  --defsym=__MPLAB_DEBUGGER_REAL_ICE=1 \
+  -Tp24HJ256GP610A.gld.05 \
+  --stack=16 \
+  --check-sections \
+  --data-init \
+  --pack-data \
+  --handles \
+  --isr \
+  --no-gc-sections \
+  --fill-upper=0 \
+  --stackguard=16 \
+  --no-force-link \
+  --smart-io \
+  -Map=dist/default/debug/P2_B_v1.X.debug.map \
+  --report-mem \
+  --memorysummary \
+  dist/default/debug/memoryfile.xml \
+  -start-group \
+  --library=lega-pic30-elf \
+  --library=m-elf \
+  --library=lega-c-elf \
+  -end-group \
+
+
+Optional library libp24HJ256GP610A.a not found
+Archive member included because of file (symbol)
+
+c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o)
+                              (__resetPRI)
+c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\liblega-pic30-elf.a(data_init_standard.o)
+                              c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o) (__data_init_standard)
+c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\liblega-pic30-elf.a(crt_start_mode_normal.Leo)
+                              (__crt_start_mode_normal)

@@ -9,14 +9,11 @@ Fecha: Febrero 2023
 #include "p24HJ256GP610A.h"
 #include "commons.h"
 #include "timers.h"
-int cont4=0, cont5=0, cont6=0;
+int cont5=0, cont6=0;
 // Funcion para inicializar el modulo CN
 //==================
 void inic_CN()
 {
-  	CNEN2bits.CN19IE = 1;	// habilitacion de la interrupcion del pin CN19
-                            // que es al que esta conectado el pulsador S4
-    
  	CNEN2bits.CN23IE = 1;	// habilitacion de la interrupcion del pin CN23
                             // que es al que esta conectado el pulsador S5
     
@@ -32,25 +29,21 @@ void inic_CN()
 //==============================
 void _ISR_NO_PSV _CNInterrupt()
 {
-		if (!PORTDbits.RD13)    // pulsador S4
-			{
-                // se ha pulsado S4
-                //inicializacion del cronometro (que active los leds)
-                cont4 ++; //se suma uno al contador de interrupciones recibidas (S4)
-			}
-        if(!PORTAbits.RA7)     //pulsador S5
-			{
-                // se ha pulsado S5
-				//puesta en marcha y detencion del crono
-                cont5 ++; //se suma uno al contador de interrupciones recibidas (S5)
-			}
-        if(!PORTDbits.RD7)     //pulsador S6
-			{
-                // se ha pulsado S6
-				//reset del crono
-                inic_crono();
-                cont6 ++; //se suma uno al contador de interrupciones recibidas (S6)
-			}
+    if(!PORTAbits.RA7)     //pulsador S5
+	{
+        // se ha pulsado S5
+		//puesta en marcha y detencion del crono
+        T7CONbits.TON = !T7CONbits.TON;
+        cont5 ++; //se suma uno al contador de interrupciones recibidas (S5)
+	}
+    if(!PORTDbits.RD7)     //pulsador S6
+	{
+        // se ha pulsado S6
+		//reset del crono
+        inic_crono();
+        LATA=LATA & 0xff00; 	// Apagar los leds
+        cont6 ++; //se suma uno al contador de interrupciones recibidas (S6)
+	}
 	IFS1bits.CNIF = 0;	//se marca que la interrupcion ha sido atendida	
 }
 

@@ -1,6 +1,13 @@
+/*
+ Funciones relacionadas con el modulo T7 y su correspondiente cronometro.
+
+Autores: Alex y Amanda
+Fecha: Febrero 2023
+*/
+
 #include "p24HJ256GP610A.h"
 #include "commons.h"
-
+void cronometro();
 void inic_Timer7 ()
 {
     TMR7 = 0 ; 	// Inicializar el registro de cuenta
@@ -16,14 +23,17 @@ void inic_Timer7 ()
     
     IEC3bits.T7IE = 1;      // habilitacion de la interrupcion general de T7
     IFS3bits.T7IF = 0;      // Puesta a 0 del flag IF del temporizador 7
-    Nop();
-    Nop();
     
-    T7CONbits.TON = 1;	// puesta en marcha del timer
-
+    T7CONbits.TON = 1;	// el timer empieza en estado apagado
 }	
-
 unsigned int mili,deci,seg,dec,min;
+void _ISR_NO_PSV _T7Interrupt()
+{
+    mili +=10; //se suman 10 milesimas de segundo
+    IFS3bits.T7IF = 0;      // Puesta a 0 del flag IF del temporizador 7
+}
+
+
 void inic_crono()	
 // inicializacion de las variables del cronometro: 
 // milesimas de segundo (mili), decimas de segundo (deci), segundos (seg), decenas de segundos (dec), minutos (min)
@@ -35,20 +45,18 @@ void inic_crono()
     min=0;
 }
 
-void delay_10ms()	// detecta que el timer ha llegado a 10 milisegundos
+/*void delay_10ms()	// detecta que el timer ha llegado a 10 milisegundos
 {
 	
     while (!IFS3bits.T7IF);	// encuesta a la activacion del flag
     IFS3bits.T7IF=0;//flag a 0
  
-}
+}*/
 
 void cronometro()	
 // control del tiempo: espera 10 ms y luego actualiza
 {
-    delay_10ms();	// espera a que pasen 10 milisegundos
   // actualiza las variables del cronometro y modifica los leds segun corresponda
-    mili +=10; //se suman 10 milesimas de segundo
     if (mili==100){ //cada 100 milesimas de segundo
         deci+=1; //se suma una decima
         mili=0; //reset milesimas
