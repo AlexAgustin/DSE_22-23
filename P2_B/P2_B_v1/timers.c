@@ -1,5 +1,5 @@
 /*
- Funciones relacionadas con el modulo T7 y su correspondiente cronometro.
+Funciones relacionadas con el modulo T7 y el cronometro.
 
 Autores: Alex y Amanda
 Fecha: Febrero 2023
@@ -7,6 +7,8 @@ Fecha: Febrero 2023
 
 #include "p24HJ256GP610A.h"
 #include "commons.h"
+int inicializar_crono = 0;
+
 void cronometro();
 void inic_Timer7 ()
 {
@@ -55,34 +57,39 @@ void inic_crono()
 
 void cronometro()	
 // control del tiempo: espera 10 ms y luego actualiza
+// inicializar cronometro: si el flag inicializar_crono esta activado, inicializa el cronometro
 {
+    if(inicializar_crono)
+    {
+        //el flag inicializar_crono esta activado
+        inic_crono(); //inicializa el cronometro
+        inicializar_crono = 0; //puesta a 0 del flag inicializar_crono
+    }
+
   // actualiza las variables del cronometro y modifica los leds segun corresponda
-    if (mili==100){ //cada 100 milesimas de segundo
+    if (mili>=100){ //cada 100 milesimas de segundo
         deci+=1; //se suma una decima
-        mili=0; //reset milesimas
+        mili-=100; //reset milesimas
         LATAbits.LATA0=!LATAbits.LATA0; //conmutar LED3
-        if (deci==10){ //cada 10 decimas de segundo
+
+        if (deci>=10){ //cada 10 decimas de segundo
             seg+=1; //se suma 1 seg
-            deci=0; //reset decimas
+            deci-=10; //reset decimas
             LATAbits.LATA2=!LATAbits.LATA2; //comuntar LED5
-            if (seg==10){ //cada vez que pasen 10 segundos
+
+            if (seg>=10){ //cada vez que pasen 10 segundos
                 dec+=1; //se suma una decena de segundo
-                seg=0; //reset segundos
+                seg-=10; //reset segundos
                 LATAbits.LATA4=!LATAbits.LATA4;
-                if (dec==6){ //cada vez que pasen 6 decenas de segundo
+
+                if (dec>=6){ //cada vez que pasen 6 decenas de segundo
                     min+=1; //se suma 1 minuto
-                    dec=0; //reset decenas
+                    dec-=6; //reset decenas
                     LATAbits.LATA6=!LATAbits.LATA6;
                 }
             }
             
         }
     }
-    
-    
-    
-    /*if((seg%10)==0){
-        LATAbits.LATA4=!LATAbits.LATA4;
-    }*/
 }
 

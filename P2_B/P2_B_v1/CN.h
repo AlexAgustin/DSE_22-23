@@ -3,4 +3,3 @@
 // que se usan en otros modulos
 
 void inic_CN();
-

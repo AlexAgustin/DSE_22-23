@@ -1,6 +1,6 @@
-// Exporta funciones invocadas en otroos modulos
+// Exporta funciones invocadas en otros modulos
 
 // funciones
 void inic_Timer7 ();
 void cronometro();
-void inic_crono();
+extern int inicializar_crono;

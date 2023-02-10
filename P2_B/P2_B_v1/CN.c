@@ -1,6 +1,5 @@
 /*
- Funciones relacionadas con el modulo CN: inicializacion del modulo
- y rutina de atencion.
+Funciones relacionadas con el modulo CN: inicializacion del modulo y rutina de atencion.
 
 Autores: Alex y Amanda
 Fecha: Febrero 2023
@@ -40,7 +39,7 @@ void _ISR_NO_PSV _CNInterrupt()
 	{
         // se ha pulsado S6
 		//reset del crono
-        inic_crono();
+        inicializar_crono = 1;
         LATA=LATA & 0xff00; 	// Apagar los leds
         cont6 ++; //se suma uno al contador de interrupciones recibidas (S6)
 	}
