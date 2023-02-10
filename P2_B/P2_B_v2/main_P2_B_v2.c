@@ -35,10 +35,16 @@ int main()
 	Nop();
     Nop();
     delay_ms(5);
+    delay_ms(25);
+    delay_ms(150);
+    delay_ms(425); // se sale del rango maximo
     
     Nop();
     Nop();
-    delay_us(15000);
+    delay_us(400);
+    delay_us(1000);
+    delay_us(20000);
+    delay_us(420000); //se sale del rango maximo
 
 	return (0);
 }
