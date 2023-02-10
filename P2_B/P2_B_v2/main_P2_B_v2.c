@@ -25,7 +25,7 @@ int main()
     
 	Nop();
 	Nop();
-	// Espera de milisegundos 
+	// Esperas de milisegundos 
 	delay_ms(5);
 	delay_ms(25);
 	delay_ms(150);
@@ -33,7 +33,7 @@ int main()
     
 	Nop();
 	Nop();
-	// Espera de microsegundos 
+	// Esperas de microsegundos 
 	delay_us(400);
 	delay_us(1000);
 	delay_us(20000);
