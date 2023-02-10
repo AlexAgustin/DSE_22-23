@@ -4,5 +4,6 @@
 void inic_Timer7 ();
 void cronometro();
 void inic_crono();
-void delay_ms(int ms);
-void delay_us(int us);
+void inic_Timer9(unsigned long ciclos);
+void delay_ms(unsigned int ms);
+void delay_us(unsigned int us);

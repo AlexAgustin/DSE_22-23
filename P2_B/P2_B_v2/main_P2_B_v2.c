@@ -32,18 +32,29 @@ int main()
 	
 	inic_leds();	// Inicializacio³n leds: sentido y valor inicial.
     
-    inic_pulsadores();
+    //inic_pulsadores();
 	
-	inic_crono();	//Inicializacion variables cronometro.
+	//inic_crono();	//Inicializacion variables cronometro.
     
-    while (PORTDbits.RD13);    // esperar al pulsador S4
+    //while (PORTDbits.RD13);    // esperar al pulsador S4
 
-    inic_Timer7();	// Inicializacion T7 con un periodo de 10 milisegundos.
+    //inic_Timer7();	// Inicializacion T7 con un periodo de 10 milisegundos.
     
-    inic_CN();      //Inicializacion de los pulsadores
+    //inic_CN();      //Inicializacion de los pulsadores
     
-	while(1) cronometro(); //bucle infinito para la ejecucion del cronometro
-	
+	//while(1) cronometro(); //bucle infinito para la ejecucion del cronometro
+	Nop();
+    Nop();
+    delay_ms(15);
+    
+    Nop();
+    Nop();
+    delay_us(15000);
+    
+    Nop();
+    Nop();
+    Nop();
+    Nop();
 	return (0);
 }
 	

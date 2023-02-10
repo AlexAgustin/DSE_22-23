@@ -17,7 +17,7 @@ void inic_Timer7 ()
     IEC3bits.T7IE = 1;      // habilitacion de la interrupcion general de T7
     IFS3bits.T7IF = 0;      // Puesta a 0 del flag IF del temporizador 7
     
-    T7CONbits.TON = 1;	// el timer empieza en estado apagado
+    T7CONbits.TON = 1;	// puesta en marcha del timer
 }	
 unsigned int mili,deci,seg,dec,min;
 void _ISR_NO_PSV _T7Interrupt()
@@ -38,13 +38,13 @@ void inic_crono()
     min=0;
 }
 
-/*void delay_10ms()	// detecta que el timer ha llegado a 10 milisegundos
+void delay_10ms()	// detecta que el timer ha llegado a 10 milisegundos
 {
 	
     while (!IFS3bits.T7IF);	// encuesta a la activacion del flag
     IFS3bits.T7IF=0;//flag a 0
  
-}*/
+}
 
 void cronometro()	
 // control del tiempo: espera 10 ms y luego actualiza
@@ -67,41 +67,66 @@ void cronometro()
                     dec=0; //reset decenas
                     LATAbits.LATA6=!LATAbits.LATA6;
                 }
-            }
-            
+            } 
         }
     }
-    
-    
-    
-    /*if((seg%10)==0){
-        LATAbits.LATA4=!LATAbits.LATA4;
-    }*/
 }
 
-void delay_ms(int ms){
-    int ciclos = ms *40000;
-    
+void inic_Timer9(unsigned long ciclos){
     if (ciclos < 65535) {
-         T7CONbits.TCKPS = 0;	// escala del prescaler 00
+         T9CONbits.TCKPS = 0;	// escala del prescaler 00
+         PR9 =  ciclos-1 ;	// Periodo del timer con prescaler 00
     }else{
         if ((ciclos/8) < 65535){
-            T7CONbits.TCKPS = 1;	// escala del prescaler 01
+            T9CONbits.TCKPS = 1;	// escala del prescaler 01
+            PR9 =  (ciclos/8)-1 ;	// Periodo del timer con prescaler 01
         }else{
             if ((ciclos/64) < 65535){
-                T7CONbits.TCKPS = 2;	// escala del prescaler 10
+                T9CONbits.TCKPS = 2;	// escala del prescaler 10
+                PR9 =  (ciclos/64)-1 ;	// Periodo del timer con prescaler 10
             }else{
                 if ((ciclos/256) < 65535) {
-                    T7CONbits.TCKPS = 3;	// escala del prescaler 11
+                    T9CONbits.TCKPS = 3;	// escala del prescaler 11
+                    PR9 =  (ciclos/256)-1 ;	// Periodo del timer con prescaler 11
                 }
             }
         }
     }
+    T9CONbits.TCS = 0;	// reloj interno
+    T9CONbits.TGATE = 0;	// Deshabilitar el modo Gate
     
+    //IEC3bits.T9IE = 1;      // habilitacion de la interrupcion general de T9
+    IFS3bits.T9IF = 0;      // Puesta a 0 del flag IF del temporizador 9
     
+    T9CONbits.TON = 1;	// puesta en marcha del timer
 }
 
-void delay_us(int us){
-
+void delay_ms(unsigned int ms){
+    unsigned long ciclos = (unsigned long)ms * (unsigned long)40000;
+    
+    if(ciclos < 16776960){// 65535 * 256. Valor maximo que puede aceptar el temporizador con el mayor prescaler
+        inic_Timer9(ciclos);// inicializa el T9
+        
+        while(!IFS3bits.T9IF); // espera a que el temporizador indique que ha finalizado
+    
+        IFS3bits.T9IF = 0; // se marca la interrupcion como atendida
+        T9CONbits.TON = 0; // apagar el temporizador
+    }else{
+        LATAbits.LATA0=1;
+    }
 }
 
+void delay_us(unsigned int us){
+    unsigned long ciclos = (unsigned long)us * (unsigned long)40;
+    
+    if (ciclos < 16776960){// 65535 * 256. Valor maximo que puede aceptar el temporizador con el mayor prescaler
+        inic_Timer9(ciclos);// inicializa el T9
+        
+        while(!IFS3bits.T9IF); // espera a que el temporizador indique que ha finalizado
+    
+        IFS3bits.T9IF = 0; // se marca la interrupcion como atendida
+        T9CONbits.TON = 0; // apagar el temporizador
+    }else{
+        LATAbits.LATA2=1;
+    }
+}
