@@ -1,6 +1,6 @@
 /*
 Esperar una cantidad determinada de milisegundos (ms) y microsegundos (us).
-Se encienden LEDs para indicar que se ha introducido un valor superior al esperado:
+Se encienden LEDs para indicar que se ha introducido un valor de espera superior a lo contemplado:
  * LED3: cantidad de ms a esperar superior a lo contemplado
  * LED5: cantidad de us a esperar superior a lo contemplado
 Autores: Alex Agustin y Amanda Sin
