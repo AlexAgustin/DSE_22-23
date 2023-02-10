@@ -43,8 +43,8 @@ void delay_ms(unsigned int ms){
         while(!IFS3bits.T9IF); // espera a que el temporizador indique que ha finalizado
         IFS3bits.T9IF = 0; // se marca la interrupcion como atendida
         T9CONbits.TON = 0; // apagar el temporizador
-    }else{
-        LATAbits.LATA0=1;
+    }else{ // Valor de tiempo de espera superior a lo contemplado
+        LATAbits.LATA0=!LATAbits.LATA0; // Se conmuta el LED D3 (RA0)
     }
 }
 
@@ -58,7 +58,7 @@ void delay_us(unsigned int us){
         while(!IFS3bits.T9IF); // espera a que el temporizador indique que ha finalizado
         IFS3bits.T9IF = 0; // se marca la interrupcion como atendida
         T9CONbits.TON = 0; // apagar el temporizador
-    }else{
-        LATAbits.LATA2=1;
+    }else{ // Valor de tiempo de espera superior a lo contemplado
+        LATAbits.LATA2=!LATAbits.LATA2; // Se conmuta el LED D5 (RA2)
     }
 }
