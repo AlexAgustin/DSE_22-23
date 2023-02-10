@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=../CN.c ../GPIO.c ../main_P2_B_v2.c ../oscilator.c ../timers.c
+SOURCEFILES_QUOTED_IF_SPACED=../GPIO.c ../main_P2_B_v2.c ../oscilator.c ../timers.c ../CN.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/_ext/1472/CN.o ${OBJECTDIR}/_ext/1472/GPIO.o ${OBJECTDIR}/_ext/1472/main_P2_B_v2.o ${OBJECTDIR}/_ext/1472/oscilator.o ${OBJECTDIR}/_ext/1472/timers.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/_ext/1472/CN.o.d ${OBJECTDIR}/_ext/1472/GPIO.o.d ${OBJECTDIR}/_ext/1472/main_P2_B_v2.o.d ${OBJECTDIR}/_ext/1472/oscilator.o.d ${OBJECTDIR}/_ext/1472/timers.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/_ext/1472/GPIO.o ${OBJECTDIR}/_ext/1472/main_P2_B_v2.o ${OBJECTDIR}/_ext/1472/oscilator.o ${OBJECTDIR}/_ext/1472/timers.o ${OBJECTDIR}/_ext/1472/CN.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/_ext/1472/GPIO.o.d ${OBJECTDIR}/_ext/1472/main_P2_B_v2.o.d ${OBJECTDIR}/_ext/1472/oscilator.o.d ${OBJECTDIR}/_ext/1472/timers.o.d ${OBJECTDIR}/_ext/1472/CN.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/_ext/1472/CN.o ${OBJECTDIR}/_ext/1472/GPIO.o ${OBJECTDIR}/_ext/1472/main_P2_B_v2.o ${OBJECTDIR}/_ext/1472/oscilator.o ${OBJECTDIR}/_ext/1472/timers.o
+OBJECTFILES=${OBJECTDIR}/_ext/1472/GPIO.o ${OBJECTDIR}/_ext/1472/main_P2_B_v2.o ${OBJECTDIR}/_ext/1472/oscilator.o ${OBJECTDIR}/_ext/1472/timers.o ${OBJECTDIR}/_ext/1472/CN.o
 
 # Source Files
-SOURCEFILES=../CN.c ../GPIO.c ../main_P2_B_v2.c ../oscilator.c ../timers.c
+SOURCEFILES=../GPIO.c ../main_P2_B_v2.c ../oscilator.c ../timers.c ../CN.c
 
 
 CFLAGS=
@@ -94,13 +94,6 @@ MP_LINKER_FILE_OPTION=,--script=p24HJ256GP610A.gld
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: compile
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${OBJECTDIR}/_ext/1472/CN.o: ../CN.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/1472" 
-	@${RM} ${OBJECTDIR}/_ext/1472/CN.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1472/CN.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  ../CN.c  -o ${OBJECTDIR}/_ext/1472/CN.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1472/CN.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_REAL_ICE=1    -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"../../../../../../../../../../../Program Files (x86)/Microchip/xc16/v1.36/support/PIC24H/h" -O0 -msmart-io=1 -Wall -msfr-warn=off  
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/CN.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
-	
 ${OBJECTDIR}/_ext/1472/GPIO.o: ../GPIO.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/_ext/1472" 
 	@${RM} ${OBJECTDIR}/_ext/1472/GPIO.o.d 
@@ -129,14 +122,14 @@ ${OBJECTDIR}/_ext/1472/timers.o: ../timers.c  nbproject/Makefile-${CND_CONF}.mk
 	${MP_CC} $(MP_EXTRA_CC_PRE)  ../timers.c  -o ${OBJECTDIR}/_ext/1472/timers.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1472/timers.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_REAL_ICE=1    -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"../../../../../../../../../../../Program Files (x86)/Microchip/xc16/v1.36/support/PIC24H/h" -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/timers.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
-else
 ${OBJECTDIR}/_ext/1472/CN.o: ../CN.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/_ext/1472" 
 	@${RM} ${OBJECTDIR}/_ext/1472/CN.o.d 
 	@${RM} ${OBJECTDIR}/_ext/1472/CN.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  ../CN.c  -o ${OBJECTDIR}/_ext/1472/CN.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1472/CN.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"../../../../../../../../../../../Program Files (x86)/Microchip/xc16/v1.36/support/PIC24H/h" -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	${MP_CC} $(MP_EXTRA_CC_PRE)  ../CN.c  -o ${OBJECTDIR}/_ext/1472/CN.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1472/CN.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_REAL_ICE=1    -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"../../../../../../../../../../../Program Files (x86)/Microchip/xc16/v1.36/support/PIC24H/h" -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/CN.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
+else
 ${OBJECTDIR}/_ext/1472/GPIO.o: ../GPIO.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/_ext/1472" 
 	@${RM} ${OBJECTDIR}/_ext/1472/GPIO.o.d 
@@ -164,6 +157,13 @@ ${OBJECTDIR}/_ext/1472/timers.o: ../timers.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/_ext/1472/timers.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  ../timers.c  -o ${OBJECTDIR}/_ext/1472/timers.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1472/timers.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"../../../../../../../../../../../Program Files (x86)/Microchip/xc16/v1.36/support/PIC24H/h" -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/timers.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/_ext/1472/CN.o: ../CN.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/1472" 
+	@${RM} ${OBJECTDIR}/_ext/1472/CN.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1472/CN.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  ../CN.c  -o ${OBJECTDIR}/_ext/1472/CN.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1472/CN.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"../../../../../../../../../../../Program Files (x86)/Microchip/xc16/v1.36/support/PIC24H/h" -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/CN.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 endif
 

@@ -22,7 +22,7 @@ Fecha: 09/02
 #include "GPIO.h"
 #include "timers.h"
 #include "commons.h"
-#include "CN.h"
+
 
 
 int main()
@@ -30,31 +30,16 @@ int main()
     
 	inic_oscilator();	// Seleccion e inicializacion del reloj: 80 MHz
 	
-	inic_leds();	// Inicializacio³n leds: sentido y valor inicial.
+	inic_leds();	// Inicializacion leds: sentido y valor inicial.
     
-    //inic_pulsadores();
-	
-	//inic_crono();	//Inicializacion variables cronometro.
-    
-    //while (PORTDbits.RD13);    // esperar al pulsador S4
-
-    //inic_Timer7();	// Inicializacion T7 con un periodo de 10 milisegundos.
-    
-    //inic_CN();      //Inicializacion de los pulsadores
-    
-	//while(1) cronometro(); //bucle infinito para la ejecucion del cronometro
 	Nop();
     Nop();
-    delay_ms(15);
+    delay_ms(5);
     
     Nop();
     Nop();
     delay_us(15000);
-    
-    Nop();
-    Nop();
-    Nop();
-    Nop();
+
 	return (0);
 }
 	

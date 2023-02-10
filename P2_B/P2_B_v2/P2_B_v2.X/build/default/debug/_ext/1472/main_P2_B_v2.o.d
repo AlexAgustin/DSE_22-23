@@ -3,5 +3,4 @@ build/default/debug/_ext/1472/main_P2_B_v2.o:  \
  ../oscilator.h  \
 ../GPIO.h  \
 ../timers.h  \
-../commons.h  \
-../CN.h 
+../commons.h 

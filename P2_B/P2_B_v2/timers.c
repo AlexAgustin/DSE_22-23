@@ -108,7 +108,8 @@ void delay_ms(unsigned int ms){
         inic_Timer9(ciclos);// inicializa el T9
         
         while(!IFS3bits.T9IF); // espera a que el temporizador indique que ha finalizado
-    
+        Nop();
+        Nop();
         IFS3bits.T9IF = 0; // se marca la interrupcion como atendida
         T9CONbits.TON = 0; // apagar el temporizador
     }else{
