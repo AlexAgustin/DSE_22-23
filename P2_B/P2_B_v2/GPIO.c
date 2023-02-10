@@ -1,5 +1,5 @@
 /*
-Funciones de inicializacion y tratamiento de leds
+Funcion de inicializacion y tratamiento de leds
 
 Autores: Alex y Amanda
 Fecha: febrero 2023
