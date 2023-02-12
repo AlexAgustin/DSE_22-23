@@ -2,15 +2,15 @@
 Cronometro mediante leds.
 Control de temporizador por interrupcion.
 Se utilizan los siguientes leds:
- * LED3 para decimas de segundo
- * LED5 para segundos
- * LED7 para decenas de segundos
- * LED9 para minutos
-Control del inicio del temporizador mediante encuesta del pulsador RD13 (S4).
+ * LED D3 para decimas de segundo
+ * LED D5 para segundos
+ * LED D7 para decenas de segundos
+ * LED D9 para minutos
+Control del inicio del temporizador mediante encuesta del pulsador S4 (RD13).
 Control del temporizador mediante pulsadores por interrupcion.
 Se usan los siguientes botones:
- * RA7 (S5) para parar o continuar con el cronometro
- * RD7 (S6) para reiniciar el cronometro
+ * S5 (RA7) para parar o continuar con el cronometro
+ * S6 (RD7) para reiniciar el cronometro
 
 Autores: Alex Agustin y Amanda Sin
 Fecha: 09/02
@@ -30,9 +30,9 @@ int main()
     
 	inic_oscilator();	// Seleccion e inicializacion del reloj: 80 MHz
 	
-	inic_leds();	// Inicializacio³n leds: sentido y valor inicial.
+	inic_leds();	// Inicializacion leds: sentido y valor inicial.
     
-    inic_pulsadores();
+    inic_pulsadores(); // Inicializacion pulsadores
 	
 	inic_crono();	//Inicializacion variables cronometro.
     
