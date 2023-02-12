@@ -8,7 +8,7 @@ Se utilizan los siguientes leds:
  * LED D9 para minutos
 Control del inicio del temporizador mediante encuesta del pulsador S4 (RD13).
 Control del temporizador mediante pulsadores por interrupcion.
-Se usan los siguientes botones:
+Se usan los siguientes pulsadores:
  * S5 (RA7) para parar o continuar con el cronometro
  * S6 (RD7) para reiniciar el cronometro
 
