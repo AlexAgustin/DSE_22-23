@@ -70,22 +70,22 @@ void cronometro()
     if (mili>=100){ //cada 100 milesimas de segundo
         deci+=1; //se suma una decima
         mili-=100; //reset milesimas
-        LATAbits.LATA0=!LATAbits.LATA0; //conmutar LED3
+        LATAbits.LATA0=!LATAbits.LATA0; //conmutar LED D3
 
         if (deci>=10){ //cada 10 decimas de segundo
             seg+=1; //se suma 1 seg
             deci-=10; //reset decimas
-            LATAbits.LATA2=!LATAbits.LATA2; //conmuntar LED5
+            LATAbits.LATA2=!LATAbits.LATA2; //conmuntar LED D5
 
             if (seg>=10){ //cada vez que pasen 10 segundos
                 dec+=1; //se suma una decena de segundo
                 seg-=10; //reset segundos
-                LATAbits.LATA4=!LATAbits.LATA4; //conmuntar LED7
+                LATAbits.LATA4=!LATAbits.LATA4; //conmuntar LED D7
 
                 if (dec>=6){ //cada vez que pasen 6 decenas de segundo
                     min+=1; //se suma 1 minuto
                     dec-=6; //reset decenas
-                    LATAbits.LATA6=!LATAbits.LATA6; //conmuntar LED9
+                    LATAbits.LATA6=!LATAbits.LATA6; //conmuntar LED D9
                 }
             }
             
