@@ -47,13 +47,6 @@ void inic_crono()
     min=0;
 }
 
-/*void delay_10ms()	// detecta que el timer ha llegado a 10 milisegundos
-{
-	
-    while (!IFS3bits.T7IF);	// encuesta a la activacion del flag
-    IFS3bits.T7IF=0;//flag a 0
- 
-}*/
 
 void cronometro()	
 // control del tiempo: espera 10 ms y luego actualiza
