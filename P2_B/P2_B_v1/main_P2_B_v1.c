@@ -30,7 +30,7 @@ int main()
     
 	inic_oscilator();	// Seleccion e inicializacion del reloj: 80 MHz
 	
-	inic_leds();	// Inicializacio³n leds: sentido y valor inicial.
+	inic_leds();	// InicializacioÂ³n leds: sentido y valor inicial.
     
     inic_pulsadores();
 	
@@ -40,7 +40,7 @@ int main()
 
     inic_Timer7();	// Inicializacion T7 con un periodo de 10 milisegundos.
     
-    inic_CN();      //Inicializacion de los pulsadores
+    inic_CN();     // habilita las interrupciones de los pulsadores S5 y S6
     
 	while(1) cronometro(); //bucle infinito para la ejecucion del cronometro
 	
