@@ -5,7 +5,11 @@
         <group>
             <file>file:/C:/Users/xelab/Documents/Uni/Curso3/Cuatri2/DSE/DSE_22-23/P3/LCD.c</file>
             <file>file:/C:/Users/xelab/Documents/Uni/Curso3/Cuatri2/DSE/DSE_22-23/P3/utilidades.c</file>
-            <file>file:/C:/Users/xelab/Documents/Uni/Curso3/Cuatri2/DSE/DSE_22-23/P3/P3_LCD_v1.X/nbproject/Makefile-default.mk</file>
+            <file>file:/C:/Users/xelab/Documents/Uni/Curso3/Cuatri2/DSE/DSE_22-23/P3/commons.h</file>
+            <file>file:/C:/Users/xelab/Documents/Uni/Curso3/Cuatri2/DSE/DSE_22-23/P3/CN.c</file>
+            <file>file:/C:/Users/xelab/Documents/Uni/Curso3/Cuatri2/DSE/DSE_22-23/P3/timers.h</file>
+            <file>file:/C:/Users/xelab/Documents/Uni/Curso3/Cuatri2/DSE/DSE_22-23/P3/GPIO.c</file>
+            <file>file:/C:/Users/xelab/Documents/Uni/Curso3/Cuatri2/DSE/DSE_22-23/P3/memoria.h</file>
             <file>file:/C:/Users/xelab/Documents/Uni/Curso3/Cuatri2/DSE/DSE_22-23/P3/main_P3_LCD_v1.c</file>
             <file>file:/C:/Users/xelab/Documents/Uni/Curso3/Cuatri2/DSE/DSE_22-23/P3/memoria.c</file>
             <file>file:/C:/Users/xelab/Documents/Uni/Curso3/Cuatri2/DSE/DSE_22-23/P3/timers.c</file>
