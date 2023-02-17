@@ -1,4 +1,5 @@
-// Exporta funciones invocadas en otros modulos
+// Exporta una variable y funciones invocadas en otros modulos
+//Flag para inicializar el cronometro
 extern int inicializar_crono;
 // funciones
 void inic_Timer9(unsigned long ciclos);

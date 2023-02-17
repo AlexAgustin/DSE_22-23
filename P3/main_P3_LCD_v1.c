@@ -1,10 +1,13 @@
 /*
-Esperar una cantidad determinada de milisegundos (ms) y microsegundos (us).
-Se encienden LEDs para indicar que se ha introducido un valor de espera superior a lo contemplado:
- * LED3: cantidad de ms a esperar superior a lo contemplado
- * LED5: cantidad de us a esperar superior a lo contemplado
+Proyecta texto en la pantalla y queda a la espera de que se pulse S3 (encuesta).
+Una vez pulsado, proyecta un nuevo texto en pantalla y queda a la espera de que se pulse S4 para inicializa el cronometro (encuesta).
+Una vez pulsado, se inicializa el cronometro y se muestra tanto por pantalla como por leds el tiempo transcurrido (led D3 -> ms, led D5 -> seg, led D9 -> min).
+A partir de este punto se permite la interrupcion de los pulsadores S3 y S6:
+* pulsador S3 -> parar/reanudar cronometro
+* pulsador S6 -> inicializar cronometro (puesta a 0)
+
 Autores: Alex Agustin y Amanda Sin
-Fecha: 09/02
+Fecha: febrero 2023
 */
 
 #include "p24HJ256GP610A.h"
@@ -23,12 +26,10 @@ int main()
 {
     inic_oscilator();	// Seleccion e inicializacion del reloj: 80 MHz
     
-	
-    
     Init_LCD(); //Inicializacion del LCD
     
-    copiar_FLASH_RAM((unsigned char*) Mens_LCD_1, 0); //Copiar a memoria RAM la primera linea
-    copiar_FLASH_RAM((unsigned char*) Mens_LCD_2, 1); //Copiar a memoria RAM la segunda linea
+    copiar_FLASH_RAM((unsigned char*) Mens_LCD_1, 0); //Copiar a memoria RAM la primera linea (mensaje 1)
+    copiar_FLASH_RAM((unsigned char*) Mens_LCD_2, 1); //Copiar a memoria RAM la segunda linea (mensaje 2)
     
     line_1(); //nos posicionamos en la primera linea
     puts_lcd((unsigned char*) Ventana_LCD[0], 16); // Llevar al LCD la primera linea, desde RAM
@@ -36,10 +37,10 @@ int main()
     line_2(); //nos posicionamos en la segunda linea
     puts_lcd((unsigned char*) Ventana_LCD[1], 16); // Llevar al LCD la segunda linea, desde RAM
     
-     while(PORTDbits.RD6);
+    while(PORTDbits.RD6); //Esperar a que se pulse S3 (RD6)
     
-    copiar_FLASH_RAM((unsigned char*) Mens_LCD_3, 0); //Copiar a memoria RAM la primera linea
-    copiar_FLASH_RAM((unsigned char*) Mens_LCD_4, 1); //Copiar a memoria RAM la segunda linea
+    copiar_FLASH_RAM((unsigned char*) Mens_LCD_3, 0); //Copiar a memoria RAM la primera linea (mensaje 3)
+    copiar_FLASH_RAM((unsigned char*) Mens_LCD_4, 1); //Copiar a memoria RAM la segunda linea (mensaje 4)
     
     line_1(); //nos posicionamos en la primera linea
     puts_lcd((unsigned char*) Ventana_LCD[0], 16); // Llevar al LCD la primera linea, desde RAM
@@ -48,18 +49,21 @@ int main()
     puts_lcd((unsigned char*) Ventana_LCD[1], 16); // Llevar al LCD la segunda linea, desde RAM
     
     while(PORTDbits.RD13);
-    
-    copiar_FLASH_RAM((unsigned char*) Mens_LCD_6, 1); //Copiar a memoria RAM la segunda linea
-    
+    copiar_FLASH_RAM((unsigned char*) Mens_LCD_5, 0); //Copiar a memoria RAM la primera linea (mensaje 5)
+    copiar_FLASH_RAM((unsigned char*) Mens_LCD_6, 1); //Copiar a memoria RAM la segunda linea (mensaje 6)
+
+    line_1(); //nos posicionamos en la primera linea
+    puts_lcd((unsigned char*) Ventana_LCD[0], 16); // Llevar al LCD la primera linea, desde RAM
+
     line_2(); //nos posicionamos en la segunda linea
     puts_lcd((unsigned char*) Ventana_LCD[1], 16); // Llevar al LCD la segunda linea, desde RAM
     
-    inic_crono();
-    inic_CN();
-    inic_Timer7();
+    inic_crono(); // Inicializar cronometro
+    inic_CN(); // Inicializar modulo CN
+    inic_Timer7(); // Inicializar modulo T7
     inic_leds();	// Inicializacion leds: sentido y valor inicial.
     
-    while(1) cronometro();
+    while(1) cronometro(); //Bucle infinito para la ejecucion del cronometro
     
 	return (0);
 }

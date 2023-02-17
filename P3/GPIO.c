@@ -1,5 +1,5 @@
 /*
-Funcion de inicializacion y tratamiento de leds
+Funciones de inicializacion y tratamiento de leds y pulsadores
 
 Autores: Alex y Amanda
 Fecha: febrero 2023
@@ -19,10 +19,8 @@ void inic_pulsadores ()
 	el pulsador S5 esta siempre pulsado aunque no sea asi
 	*/
    	
-	// Definir los pines de los pulsadores S3, S4, S5 y S6 como entrada
-	// S6(RD7), S5 (RA7),  S4(RD13), S3 (RD6)
-
-
+	// Definir los pines de los pulsadores S3, S4 y S6 como entrada
+	// S6(RD7),  S4(RD13), S3 (RD6)
     TRISDbits.TRISD6 = 1;
     TRISDbits.TRISD13 = 1;
     TRISDbits.TRISD7 = 1;
@@ -33,7 +31,6 @@ void inic_leds()
   TRISA = 0xff00; // Definir como salidas los 8 pines conectados a leds: RA7-RA0		  // El resto como entradas: 1 = In; 0 = Out
   Nop();	
   Nop();
-  LATA=LATA & 0xff00; 	// Apagar los leds
-	
+  LATA=LATA & 0xff00; 	// Apagar los leds	
 }
       

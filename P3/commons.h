@@ -35,6 +35,7 @@
 /////////////////////
 // definiciones posiciones cronometro
 //////////////////////
-#define posds 13
-#define posseg 10
-#define posmin 7
+#define posds 13 //decimas de segundo
+#define poscs 14 //centesimas de segundo
+#define posseg 10 //segundo
+#define posmin 7 //minuto

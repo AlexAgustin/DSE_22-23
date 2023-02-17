@@ -1,10 +1,10 @@
 /**********************************************************************
-LCD erabiltzeko funtzioak:
-	Hasieraketa
-	Komando bat bidali
-	Datu bat bistaratu
-	Testu bat bistaratu
-	Funtzio bereziak: 1. lerroan kokatu // 2. lerroan kokatu
+Funciones para utilizar LCD :
+	Inicializacion
+	Enviar un comando
+	Visualizar un dato
+	Visualizar un texto
+	Funciones especiales: posicionarse en linea 1 // posicionarse en linea 2
 **********************************************************************/
 
 #include "p24HJ256GP610A.h"
@@ -18,7 +18,7 @@ void lcd_cmd (char cmd)        // subroutine for lcd commands
 {
   RW = 0;             // RW=0, para escribir
   RS = 0;	      // RS=0, se va a escribir un comando
-  DATA &= 0xFF00;     // pines RD0-RD7 (dato que se envía): poner a 0
+  DATA &= 0xFF00;     // pines RD0-RD7 (dato que se envia): poner a 0
   DATA |= cmd;        // copiar a esos pines el parametro cmd
   E = 1;              // E=1. Debe permanecer activado al menos 230 ns. 
 
@@ -33,7 +33,7 @@ void lcd_data (char data)      // subroutine for lcd data
 {
   RW = 0;       	// RW=0, para escribir
   RS = 1;            	// RS=1, se va a escribir un caracter
-  DATA &= 0xFF00;    	// pines RD0-RD7 (dato que se envía): poner a 0
+  DATA &= 0xFF00;    	// pines RD0-RD7 (dato que se envia): poner a 0
   DATA |= data;      	// copiar a esos pines el parametro data
   E = 1;             	// E=1. Debe permanecer activado al menos 230 ns.
 

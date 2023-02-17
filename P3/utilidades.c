@@ -1,6 +1,8 @@
-/*
-Komentarioak!!!
-Egileak eta data!!!
+/* 
+Contiene una funcion auxiliar para la conversion del tiempo (digito -> caracteres).
+
+Autores: Alex Agustin y Amanda Sin
+Fecha: febrero 2023
 */
 
 #include "p24HJ256GP610A.h"

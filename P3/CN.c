@@ -1,6 +1,6 @@
 /*
- Funciones relacionadas con el modulo CN: inicializacion del modulo
- y rutina de atencion.
+Funciones relacionadas con el modulo CN: inicializacion del modulo
+y rutina de atencion.
 
 Autores: Alex y Amanda
 Fecha: Febrero 2023
@@ -9,7 +9,7 @@ Fecha: Febrero 2023
 #include "p24HJ256GP610A.h"
 #include "commons.h"
 #include "timers.h"
-int cont4=0, cont5=0, cont6=0;
+int cont3=0, cont6=0;
 // Funcion para inicializar el modulo CN
 //==================
 void inic_CN()
@@ -33,14 +33,14 @@ void _ISR_NO_PSV _CNInterrupt()
     if(!PORTDbits.RD6)     //pulsador S3
 	{
         // se ha pulsado S3
-		//puesta en marcha y detencion del crono
-        T7CONbits.TON = !T7CONbits.TON;
+        T7CONbits.TON = !T7CONbits.TON; //puesta en marcha y detencion del crono
+        cont3 ++; //se suma uno al contador de interrupciones recibidas (S3)
 	}
     if(!PORTDbits.RD7)     //pulsador S6
 	{
         // se ha pulsado S6
 		//reset del crono
-        inicializar_crono = 1;
+        inicializar_crono = 1; // Poner a 1 el flag para inicializar el cronometro
         LATA=LATA & 0xff00; 	// Apagar los leds
         cont6 ++; //se suma uno al contador de interrupciones recibidas (S6)
 	}
