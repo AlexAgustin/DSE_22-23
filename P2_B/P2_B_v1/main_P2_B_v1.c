@@ -1,6 +1,6 @@
 /*
 Cronometro mediante leds.
-Control de temporizador por interrupcion.
+Control de temporizador T7 por interrupcion.
 Se utilizan los siguientes leds:
  * LED D3 para decimas de segundo
  * LED D5 para segundos
@@ -13,7 +13,7 @@ Se usan los siguientes pulsadores:
  * S6 (RD7) para reiniciar el cronometro
 
 Autores: Alex Agustin y Amanda Sin
-Fecha: 09/02
+Fecha: Febrero 2023
 */
 
 #include "p24HJ256GP610A.h"
@@ -36,7 +36,7 @@ int main()
 	
 	inic_crono();	//Inicializacion variables cronometro.
     
-    while (PORTDbits.RD13);    // esperar al pulsador S4
+    while (PORTDbits.RD13);    // esperar al pulsador S4 por encuesta
 
     inic_Timer7();	// Inicializacion T7 con un periodo de 10 milisegundos.
     

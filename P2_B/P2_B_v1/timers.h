@@ -1,6 +1,8 @@
-// Exporta funciones invocadas en otros modulos
+// Exporta variables y funciones invocadas en otros modulos
+extern int inicializar_crono; //flag que indica si se ha de incializar el cronometro
 
-// funciones
+// declaracion de las funciones relacionadas con los temporizadores
+// que se usan en otros modulos
 void inic_Timer7 ();
 void cronometro();
-extern int inicializar_crono;
+void inic_crono();

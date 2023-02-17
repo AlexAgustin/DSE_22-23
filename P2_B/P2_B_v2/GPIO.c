@@ -2,7 +2,7 @@
 Funcion de inicializacion y tratamiento de leds
 
 Autores: Alex y Amanda
-Fecha: febrero 2023
+Fecha: Febrero 2023
 */
 
 

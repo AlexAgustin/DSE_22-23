@@ -182,7 +182,7 @@
       </C30-LD>
       <C30Global>
         <property key="common-include-directories"
-                  value="..\..\..\..\..\..\..\..\..\..\Program Files (x86)\Microchip\xc16\v1.36\support\PIC24H\h"/>
+                  value="..\..\..\..\..\..\..\..\..\..\..\Program Files (x86)\Microchip\xc16\v1.36\support\PIC24H\h"/>
         <property key="dual-boot-partition" value="0"/>
         <property key="fast-math" value="false"/>
         <property key="generic-16-bit" value="false"/>
@@ -244,7 +244,6 @@
         <property key="UART 1" value="true"/>
         <property key="UART 2" value="true"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
-        <property key="firmware.download.all" value="false"/>
         <property key="hwtoolclock.frcindebug" value="false"/>
         <property key="hwtoolclock.instructionspeed" value="4"/>
         <property key="hwtoolclock.units" value="mips"/>

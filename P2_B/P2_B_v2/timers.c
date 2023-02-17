@@ -1,5 +1,5 @@
 /* 
-Contiene las funciones asociadas al modulo T9 y 
+Contiene las funciones asociadas al temporizador T9 y 
 a las esperas de un determinado numero de milisegundos y microsegundos
 */
 #include "p24HJ256GP610A.h"
@@ -40,11 +40,15 @@ void delay_ms(unsigned int ms){
     if(ciclos < 16776960){// 65535 * 256. Valor maximo que puede aceptar el temporizador con el mayor prescaler
         inic_Timer9(ciclos);// inicializa el T9
         
+        
         while(!IFS3bits.T9IF); // espera a que el temporizador indique que ha finalizado
+        Nop();
+        Nop();
         IFS3bits.T9IF = 0; // se marca la interrupcion como atendida
         T9CONbits.TON = 0; // apagar el temporizador
     }else{ // Valor de tiempo de espera superior a lo contemplado
         LATAbits.LATA0=!LATAbits.LATA0; // Se conmuta el LED D3 (RA0)
+        //while(1);
     }
 }
 
@@ -60,5 +64,6 @@ void delay_us(unsigned int us){
         T9CONbits.TON = 0; // apagar el temporizador
     }else{ // Valor de tiempo de espera superior a lo contemplado
         LATAbits.LATA2=!LATAbits.LATA2; // Se conmuta el LED D5 (RA2)
+        //while(1);
     }
 }

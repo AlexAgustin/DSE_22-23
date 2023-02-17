@@ -1,3 +1,10 @@
+/*
+ Contiene funciones asociadas al modulo oscilator
+
+Autores: Alex y Amanda
+Fecha: Febero 2023 
+ */
+
 #include "p24HJ256GP610A.h"
 
 // Inicializacion del modulo oscilator
