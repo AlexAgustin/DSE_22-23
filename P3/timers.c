@@ -24,6 +24,7 @@ unsigned int mili,deci,seg,min;
 
 // inicializacion del timer 9
 void inic_Timer9(unsigned long ciclos){
+    TMR9 = 0 ; 	// Inicializar el registro de cuenta
     if (ciclos < 65535) { //65535 es el maximo numero de ciclos que entra en un tamaño de 2^16 (tamaño de PR) 
          T9CONbits.TCKPS = 0;	// escala del prescaler 00
          PR9 =  ciclos-1 ;	// Periodo del timer con prescaler 00
@@ -145,14 +146,11 @@ void cronometro()
         deci+=1; //se suma una decima
         mili-=100; //reset milesimas
         LATAbits.LATA0=!LATAbits.LATA0; //conmutar LED D3
-        conversion_tiempo(&Ventana_LCD[1][posds], deci*10); //asignacion del valor de las decimas de segundo en la posicion correspondiente de la linea a mostrar en pantalla
-        Ventana_LCD[1][poscs]=' '; // Poner un 0 en la posicion asociada a las centesimas de segundo
 
         if (deci>=10){ //cada 10 decimas de segundo
             seg+=1; //se suma 1 segundo
             deci-=10; //reset decimas
             LATAbits.LATA2=!LATAbits.LATA2; //conmuntar LED D5
-            conversion_tiempo(&Ventana_LCD[1][posseg],seg); //asignacion del valor de los segundos en la posicion correspondiente de la linea a mostrar en pantalla
             
             if (seg>=60){ //cada vez que pasen 60 segundos
                 min+=1; //se suma 1 minuto
@@ -160,7 +158,10 @@ void cronometro()
                 LATAbits.LATA6=!LATAbits.LATA6; //conmuntar LED D9
                 conversion_tiempo(&Ventana_LCD[1][posmin],min); //asignacion del valor de los minutos en la posicion correspondiente de la linea a mostrar en pantalla  
             }
+            conversion_tiempo(&Ventana_LCD[1][posseg],seg); //asignacion del valor de los segundos en la posicion correspondiente de la linea a mostrar en pantalla
         }
+        conversion_tiempo(&Ventana_LCD[1][posds], deci*10); //asignacion del valor de las decimas de segundo en la posicion correspondiente de la linea a mostrar en pantalla
+        Ventana_LCD[1][poscs]=' '; // Poner un 0 en la posicion asociada a las centesimas de segundo
 
         line_2(); //nos posicionamos en la segunda linea
         puts_lcd((unsigned char*) Ventana_LCD[1], 16); // Llevar al LCD la segunda linea
