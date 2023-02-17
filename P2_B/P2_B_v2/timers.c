@@ -7,6 +7,7 @@ a las esperas de un determinado numero de milisegundos y microsegundos
 
 // inicializacion del timer 9
 void inic_Timer9(unsigned long ciclos){
+    TMR9 = 0 ; 	// Inicializar el registro de cuenta
     if (ciclos < 65535) {
          T9CONbits.TCKPS = 0;	// escala del prescaler 00
          PR9 =  ciclos-1 ;	// Periodo del timer con prescaler 00
