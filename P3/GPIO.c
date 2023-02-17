@@ -2,7 +2,7 @@
 Funciones de inicializacion y tratamiento de leds y pulsadores
 
 Autores: Alex y Amanda
-Fecha: febrero 2023
+Fecha: Febrero 2023
 */
 
 

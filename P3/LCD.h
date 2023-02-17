@@ -1,6 +1,7 @@
 
-// Funciones
-	
+// declaracion de las funciones relacionadas con LCD
+// que se usan en otros modulos
+
 void lcd_cmd(char cmd);	
 void lcd_data(char data);
 void Init_LCD();

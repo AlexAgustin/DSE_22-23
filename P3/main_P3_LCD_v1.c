@@ -1,13 +1,15 @@
 /*
 Proyecta texto en la pantalla y queda a la espera de que se pulse S3 (encuesta).
-Una vez pulsado, proyecta un nuevo texto en pantalla y queda a la espera de que se pulse S4 para inicializa el cronometro (encuesta).
-Una vez pulsado, se inicializa el cronometro y se muestra tanto por pantalla como por leds el tiempo transcurrido (led D3 -> ms, led D5 -> seg, led D9 -> min).
+Una vez pulsado, proyecta un nuevo texto en pantalla y queda a la espera de que se pulse 
+S4 para inicializar el cronometro (encuesta de S4).
+Una vez pulsado, se inicializa el cronometro y se muestra tanto por pantalla como en los leds el 
+tiempo transcurrido (led D3 -> ms, led D5 -> seg, led D9 -> min).
 A partir de este punto se permite la interrupcion de los pulsadores S3 y S6:
 * pulsador S3 -> parar/reanudar cronometro
 * pulsador S6 -> inicializar cronometro (puesta a 0)
 
 Autores: Alex Agustin y Amanda Sin
-Fecha: febrero 2023
+Fecha: Febrero 2023
 */
 
 #include "p24HJ256GP610A.h"

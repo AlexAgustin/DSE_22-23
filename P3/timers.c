@@ -3,10 +3,10 @@ Por un lado, contiene las funciones asociadas al modulo T9 (inicializacion) y
 a las esperas de un determinado numero de milisegundos y microsegundos.
 
 Ademas, contiene las funciones asociadas al modulo T7 (inicializacion e interrupcion) 
-y a su correspondiente cronometro (inicializacion y gestion del paso del tiempo)
+y a su correspondiente cronometro (inicializacion y gestion del paso del tiempo).
 
 Autores: Alex Agustin y Amanda Sin
-Fecha: febrero 2023
+Fecha: Febrero 2023
 
 */
 #include "p24HJ256GP610A.h"
@@ -24,7 +24,7 @@ unsigned int mili,deci,seg,min;
 
 // inicializacion del timer 9
 void inic_Timer9(unsigned long ciclos){
-    if (ciclos < 65535) {
+    if (ciclos < 65535) { //65535 es el maximo numero de ciclos que entra en un tamaño de 2^16 (tamaño de PR) 
          T9CONbits.TCKPS = 0;	// escala del prescaler 00
          PR9 =  ciclos-1 ;	// Periodo del timer con prescaler 00
     }else{
@@ -60,7 +60,8 @@ void Delay_ms(unsigned int ms){
         IFS3bits.T9IF = 0; // se marca la interrupcion como atendida
         T9CONbits.TON = 0; // apagar el temporizador
     }else{ // Valor de tiempo de espera superior a lo contemplado
-        LATAbits.LATA0=!LATAbits.LATA0; // Se conmuta el LED D3 (RA0)
+        LATAbits.LATA4=!LATAbits.LATA4; // Se conmuta el LED D7 (RA4)
+        while(1); //espera infinita para advertir del error
     }
 }
 
@@ -75,7 +76,8 @@ void Delay_us(unsigned int us){
         IFS3bits.T9IF = 0; // se marca la interrupcion como atendida
         T9CONbits.TON = 0; // apagar el temporizador
     }else{ // Valor de tiempo de espera superior a lo contemplado
-        LATAbits.LATA2=!LATAbits.LATA2; // Se conmuta el LED D5 (RA2)
+        LATAbits.LATA5=!LATAbits.LATA5; // Se conmuta el LED D8 (RA5)
+        while(1); //espera infinita para advertir del error
     }
 }
 
@@ -96,7 +98,7 @@ void inic_Timer7 ()
     IEC3bits.T7IE = 1;      // habilitacion de la interrupcion general de T7
     IFS3bits.T7IF = 0;      // Puesta a 0 del flag IF del temporizador 7
     
-    T7CONbits.TON = 1;	// el timer empieza en estado apagado
+    T7CONbits.TON = 1;	// encender el timer
 }	
 
 
@@ -111,7 +113,7 @@ void _ISR_NO_PSV _T7Interrupt()
 
 void inic_crono()	
 // Inicializacion de las variables del cronometro: 
-// milesimas de segundo (mili), decimas de segundo (deci), segundos (seg), decenas de segundos (dec), minutos (min)
+// milesimas de segundo (mili), decimas de segundo (deci), segundos (seg), minutos (min)
 {
 	mili=0;
     deci=0;
@@ -138,7 +140,7 @@ void cronometro()
         inicializar_crono = 0; //puesta a 0 del flag inicializar_crono
     }
 
-  // actualiza las variables del cronometro y modifica el texto en pantalla y los leds segun corresponda
+    // actualiza las variables del cronometro y modifica el texto en pantalla y los leds segun corresponda
     if (mili>=100){ //cada 100 milesimas de segundo
         deci+=1; //se suma una decima
         mili-=100; //reset milesimas

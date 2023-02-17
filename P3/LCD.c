@@ -22,7 +22,7 @@ void lcd_cmd (char cmd)        // subroutine for lcd commands
   DATA |= cmd;        // copiar a esos pines el parametro cmd
   E = 1;              // E=1. Debe permanecer activado al menos 230 ns. 
 
-  Nop();Nop();Nop();Nop();Nop();Nop();Nop();Nop();Nop();Nop(); //aseguramos el tiempo para que los datos este estables
+  Nop();Nop();Nop();Nop();Nop();Nop();Nop();Nop();Nop();Nop(); //aseguramos el tiempo para que los datos esten estables
   
   E = 0;		// desactivar E
   RW = 1;		// desactivar escritura
@@ -37,7 +37,7 @@ void lcd_data (char data)      // subroutine for lcd data
   DATA |= data;      	// copiar a esos pines el parametro data
   E = 1;             	// E=1. Debe permanecer activado al menos 230 ns.
 
-  Nop();Nop();Nop();Nop();Nop();Nop();Nop();Nop();Nop();Nop(); //aseguramos el tiempo para que los datos este estables
+  Nop();Nop();Nop();Nop();Nop();Nop();Nop();Nop();Nop();Nop(); //aseguramos el tiempo para que los datos esten estables
   
   E = 0;             	// desactivar E
   RS = 0;            	// desactivar RS
@@ -82,11 +82,11 @@ void Init_LCD ()             // initialize LCD display
 
 void puts_lcd (unsigned char *data, unsigned char count) 
 {
-  while (count)
-	{
-	 lcd_data(*data++); //se accede a data y se le suma 1 al puntero (se incrementa la direcion a la que se accede))
-         Delay_us (40);	// 40 us delay
-	 count--;
+    while (count)
+    {
+        lcd_data(*data++); //se accede a data y se le suma 1 al puntero (se incrementa la direcion a la que se accede)
+        Delay_us (40);	// 40 us delay
+        count--;
 	}	
 }
 
