@@ -4,11 +4,11 @@ Tool Name:
   c:\program files (x86)\microchip\xc16\v1.36\bin\bin\..\bin/elf-ld.exe
 
 Command:
-  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp000027a8.00 \
-  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp000027a8.01 \
-  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp000027a8.02 \
-  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp000027a8.03 \
-  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp000027a8.04 \
+  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp000038d0.00 \
+  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp000038d0.01 \
+  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp000038d0.02 \
+  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp000038d0.03 \
+  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp000038d0.04 \
   -p24HJ256GP610A \
   -o \
   dist/default/debug/P2_B_v2.X.debug.elf \
@@ -108,8 +108,8 @@ External Symbols in Program Memory (by address):
                   0x0002ce                  _inic_Timer9
                   0x000370                  _delay_ms
                   0x0003d2                  _delay_us
-                  0x000432                  _inic_oscilator
-                  0x000484                  _main
+                  0x000436                  _inic_oscilator
+                  0x000488                  _main
                   0x0004b8                  _inic_leds
 
 External Symbols in Program Memory (by name):
@@ -123,8 +123,8 @@ External Symbols in Program Memory (by name):
                   0x0003d2                  _delay_us
                   0x0002ce                  _inic_Timer9
                   0x0004b8                  _inic_leds
-                  0x000432                  _inic_oscilator
-                  0x000484                  _main
+                  0x000436                  _inic_oscilator
+                  0x000488                  _main
 
 Memory Configuration
 
@@ -293,12 +293,12 @@ __FUID3
  .debug_abbrev    0x00008b         0xc3 build/default/debug/_ext/1472/oscilator.o
  .debug_abbrev    0x00014e         0xf4 build/default/debug/_ext/1472/timers.o
 
-.debug_line       0x000000        0x34c
+.debug_line       0x000000        0x34d
  *(.debug_line)
  .debug_line      0x000000         0xef build/default/debug/_ext/1472/GPIO.o
- .debug_line      0x0000ef         0x4e build/default/debug/_ext/1472/main_P2_B_v2.o
- .debug_line      0x00013d         0xf8 build/default/debug/_ext/1472/oscilator.o
- .debug_line      0x000235        0x117 build/default/debug/_ext/1472/timers.o
+ .debug_line      0x0000ef         0x4d build/default/debug/_ext/1472/main_P2_B_v2.o
+ .debug_line      0x00013c         0xf8 build/default/debug/_ext/1472/oscilator.o
+ .debug_line      0x000234        0x119 build/default/debug/_ext/1472/timers.o
 
 .debug_frame      0x000000         0xf8
  *(.debug_frame)
@@ -1541,13 +1541,13 @@ __c30_signature
  .config_IESO     0xf80006          0x2 build/default/debug/_ext/1472/oscilator.o
 
 .text             0x0002ce        0x200
- .text            0x0002ce        0x164 build/default/debug/_ext/1472/timers.o
+ .text            0x0002ce        0x168 build/default/debug/_ext/1472/timers.o
                   0x0002ce                  _inic_Timer9
                   0x000370                  _delay_ms
                   0x0003d2                  _delay_us
- .text            0x000432         0x52 build/default/debug/_ext/1472/oscilator.o
-                  0x000432                  _inic_oscilator
- .text            0x000484         0x34 build/default/debug/_ext/1472/main_P2_B_v2.o
-                  0x000484                  _main
+ .text            0x000436         0x52 build/default/debug/_ext/1472/oscilator.o
+                  0x000436                  _inic_oscilator
+ .text            0x000488         0x30 build/default/debug/_ext/1472/main_P2_B_v2.o
+                  0x000488                  _main
  .text            0x0004b8         0x16 build/default/debug/_ext/1472/GPIO.o
                   0x0004b8                  _inic_leds

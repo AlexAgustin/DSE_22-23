@@ -37,7 +37,7 @@ int main()
 	delay_us(400);
 	delay_us(1000);
 	delay_us(20000);
-	delay_us(420000); // comprobacion del caso en el que se salga del rango maximo
+	//delay_us(420000); // comprobacion del caso en el que se salga del rango maximo //se trunca el valor
 
 	return (0);
 }
