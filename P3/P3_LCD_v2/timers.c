@@ -169,7 +169,7 @@ void cronometro()
             conversion_tiempo(&Ventana_LCD[1][posseg],seg); //asignacion del valor de los segundos en la posicion correspondiente de la linea a mostrar en pantalla
         }
         conversion_tiempo(&Ventana_LCD[1][posds], deci*10); //asignacion del valor de las decimas de segundo en la posicion correspondiente de la linea a mostrar en pantalla
-        Ventana_LCD[1][poscs]=' '; // Poner un 0 en la posicion asociada a las centesimas de segundo
+        Ventana_LCD[1][poscs]=' '; // Poner un ' ' en la posicion asociada a las centesimas de segundo
 
     }
 }
