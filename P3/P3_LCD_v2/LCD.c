@@ -5,6 +5,9 @@ Funciones para utilizar LCD :
 	Visualizar un dato
 	Visualizar un texto
 	Funciones especiales: posicionarse en linea 1 // posicionarse en linea 2
+
+Autores: Alex y Amanda
+Fecha: Febrero 2023
 **********************************************************************/
 
 #include "p24HJ256GP610A.h"

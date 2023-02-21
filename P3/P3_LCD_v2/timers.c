@@ -2,8 +2,10 @@
 Por un lado, contiene las funciones asociadas al modulo T9 (inicializacion) y 
 a las esperas de un determinado numero de milisegundos y microsegundos.
 
-Ademas, contiene las funciones asociadas al modulo T7 (inicializacion e interrupcion) 
+Ademas, contiene las funciones asociadas al modulo T7 (inicializacion y rutina de atencion) 
 y a su correspondiente cronometro (inicializacion y gestion del paso del tiempo).
+
+Por otro lado, contiene la funcion para inicializar el modulo T5 y su correspondiente rutina de atencion.
 
 Autores: Alex Agustin y Amanda Sin
 Fecha: Febrero 2023
@@ -30,7 +32,7 @@ unsigned int mili,deci,seg,min;
 // inicializacion del timer 9
 void inic_Timer9(unsigned long ciclos){
     TMR9 = 0 ; 	// Inicializar el registro de cuenta
-    if (ciclos < 65535) { //65535 es el maximo numero de ciclos que entra en un tamaño de 2^16 (tamaño de PR) 
+    if (ciclos < 65535) { //65535 es el maximo numero de ciclos que entra en un tamanho de 2^16 (tamanho de PR) 
          T9CONbits.TCKPS = 0;	// escala del prescaler 00
          PR9 =  ciclos-1 ;	// Periodo del timer con prescaler 00
     }else{
@@ -119,7 +121,7 @@ void _ISR_NO_PSV _T7Interrupt()
 
 void inic_crono()	
 // Inicializacion de las variables del cronometro: 
-// milesimas de segundo (mili), decimas de segundo (deci), segundos (seg), minutos (min)
+// milesimas de segundo (mili), decimas de segundo (deci), segundos (seg) y minutos (min)
 {
 	mili=0;
     deci=0;
@@ -140,8 +142,8 @@ void cronometro()
 
         //Puesta a 0 de lo mostrado en la pantalla
         copiar_FLASH_RAM((unsigned char*) Mens_LCD_6, 1); //Copiar a memoria RAM la segunda linea (puesta a 0)
-        line_2(); //nos posicionamos en la segunda linea
-        puts_lcd((unsigned char*) Ventana_LCD[1], 16); // Llevar al LCD la segunda linea, desde RAM (puesta a 0)
+        //line_2(); //nos posicionamos en la segunda linea
+        //puts_lcd((unsigned char*) Ventana_LCD[1], 16); // Llevar al LCD la segunda linea, desde RAM (puesta a 0)
 
         inicializar_crono = 0; //puesta a 0 del flag inicializar_crono
     }
@@ -216,7 +218,7 @@ void _ISR_NO_PSV _T5Interrupt()
             estado_LCD = LCD_DATA2; // Cambio de estado, suguiente: envio de datos de la segunda linea
             break;
         case LCD_DATA2: // Envio de los datos de la segunda linea
-            lcd_data(Ventana_LCD[1][i]);
+            lcd_data(Ventana_LCD[1][i]); //Primero se manda uno de los datos de ventana
             if (i<15){
                 i++; // Si no es la ultima iteracion, se incrementa la posicion
             }else if (i == 15) {

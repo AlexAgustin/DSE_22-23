@@ -7,7 +7,7 @@ tiempo transcurrido (led D3 -> ms, led D5 -> seg, led D9 -> min).
 A partir de este punto se permite la interrupcion de los pulsadores S3 y S6:
 * pulsador S3 -> parar/reanudar cronometro
 * pulsador S6 -> inicializar cronometro (puesta a 0)
-
+A partir de este momento se da refresco distribuido para actualizar la informacion en la pantalla LCD.
 Autores: Alex Agustin y Amanda Sin
 Fecha: Febrero 2023
 */
@@ -50,7 +50,7 @@ int main()
     line_2(); //nos posicionamos en la segunda linea
     puts_lcd((unsigned char*) Ventana_LCD[1], 16); // Llevar al LCD la segunda linea, desde RAM
     
-    while(PORTDbits.RD13);
+    while(PORTDbits.RD13); //Esperar a que se pulse S4 (RD13)
     copiar_FLASH_RAM((unsigned char*) Mens_LCD_5, 0); //Copiar a memoria RAM la primera linea (mensaje 5)
     copiar_FLASH_RAM((unsigned char*) Mens_LCD_6, 1); //Copiar a memoria RAM la segunda linea (mensaje 6)
 
@@ -62,8 +62,8 @@ int main()
     
     inic_crono(); // Inicializar cronometro
     inic_CN(); // Inicializar modulo CN
-    inic_Timer7(); // Inicializar modulo T7
     inic_leds();	// Inicializacion leds: sentido y valor inicial.
+    inic_Timer7(); // Inicializar modulo T7
     
     
     //------------------------A partir de ahora refresco distribuido-------------------------//
