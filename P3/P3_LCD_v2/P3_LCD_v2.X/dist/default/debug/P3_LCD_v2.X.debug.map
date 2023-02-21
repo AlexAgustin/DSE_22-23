@@ -4,11 +4,11 @@ Tool Name:
   c:\program files (x86)\microchip\xc16\v1.36\bin\bin\..\bin/elf-ld.exe
 
 Command:
-  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00002e44.00 \
-  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00002e44.01 \
-  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00002e44.02 \
-  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00002e44.03 \
-  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00002e44.04 \
+  -TC:\\Users\\Andy\\AppData\\Local\\Temp\\tmp00002d20.00 \
+  -TC:\\Users\\Andy\\AppData\\Local\\Temp\\tmp00002d20.01 \
+  -TC:\\Users\\Andy\\AppData\\Local\\Temp\\tmp00002d20.02 \
+  -TC:\\Users\\Andy\\AppData\\Local\\Temp\\tmp00002d20.03 \
+  -TC:\\Users\\Andy\\AppData\\Local\\Temp\\tmp00002d20.04 \
   -p24HJ256GP610A \
   -o \
   dist/default/debug/P3_LCD_v2.X.debug.elf \
@@ -73,13 +73,13 @@ xc16-ld 1.36 (B)
 
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
-.text                        0x200               0x1a8           0x27c  (636)
-.const                       0x3a8                0x66            0x99  (153)
-.text                        0x40e               0x508           0x78c  (1932)
-.dinit                       0x916                0x26            0x39  (57)
-.text                        0x93c                 0xe            0x15  (21)
+.text                        0x200               0x1ae           0x285  (645)
+.const                       0x3ae                0x66            0x99  (153)
+.text                        0x414               0x50a           0x78f  (1935)
+.dinit                       0x91e                0x26            0x39  (57)
+.text                        0x944                 0xe            0x15  (21)
 
-                 Total "program" memory used (bytes):          0xaef  (2799) 1%
+                 Total "program" memory used (bytes):          0xafb  (2811) 1%
 
 
 "data" Memory  [Origin = 0x800, Length = 0x4000]
@@ -141,70 +141,70 @@ External Symbols in Program Memory (by address):
                   0x0002c8                  __CNInterrupt
                   0x000314                  __T7Interrupt
                   0x000326                  __T5Interrupt
-                  0x0003a2                  __DefaultInterrupt
-                  0x0003a8                  _Mens_LCD_1
-                  0x0003b9                  _Mens_LCD_2
-                  0x0003ca                  _Mens_LCD_3
-                  0x0003db                  _Mens_LCD_4
-                  0x0003ec                  _Mens_LCD_5
-                  0x0003fd                  _Mens_LCD_6
-                  0x00040e                  _inic_Timer9
-                  0x0004b0                  _Delay_ms
-                  0x000510                  _Delay_us
-                  0x000572                  _inic_Timer7
-                  0x000592                  _inic_crono
-                  0x0005a4                  _cronometro
-                  0x000682                  _inic_Timer5
-                  0x0006a2                  _lcd_cmd
-                  0x0006d8                  _lcd_data
-                  0x000710                  _Init_LCD
-                  0x000766                  _puts_lcd
-                  0x00078a                  _line_1
-                  0x000798                  _line_2
-                  0x0007a6                  _main
-                  0x00082c                  _inic_oscilator
-                  0x00087e                  _conversion_tiempo
-                  0x0008c6                  _copiar_FLASH_RAM
-                  0x0008f0                  _inic_pulsadores
-                  0x000900                  _inic_leds
-                  0x00093c                  _inic_CN
+                  0x0003a8                  __DefaultInterrupt
+                  0x0003ae                  _Mens_LCD_1
+                  0x0003bf                  _Mens_LCD_2
+                  0x0003d0                  _Mens_LCD_3
+                  0x0003e1                  _Mens_LCD_4
+                  0x0003f2                  _Mens_LCD_5
+                  0x000403                  _Mens_LCD_6
+                  0x000414                  _inic_Timer9
+                  0x0004b6                  _Delay_ms
+                  0x000516                  _Delay_us
+                  0x000578                  _inic_Timer7
+                  0x000598                  _inic_crono
+                  0x0005aa                  _cronometro
+                  0x000688                  _inic_Timer5
+                  0x0006a8                  _lcd_cmd
+                  0x0006de                  _lcd_data
+                  0x000716                  _Init_LCD
+                  0x00076c                  _puts_lcd
+                  0x000790                  _line_1
+                  0x00079e                  _line_2
+                  0x0007ac                  _main
+                  0x000834                  _inic_oscilator
+                  0x000886                  _conversion_tiempo
+                  0x0008ce                  _copiar_FLASH_RAM
+                  0x0008f8                  _inic_pulsadores
+                  0x000908                  _inic_leds
+                  0x000944                  _inic_CN
 
 External Symbols in Program Memory (by name):
 
-                  0x0004b0                  _Delay_ms
-                  0x000510                  _Delay_us
-                  0x000710                  _Init_LCD
-                  0x0003a8                  _Mens_LCD_1
-                  0x0003b9                  _Mens_LCD_2
-                  0x0003ca                  _Mens_LCD_3
-                  0x0003db                  _Mens_LCD_4
-                  0x0003ec                  _Mens_LCD_5
-                  0x0003fd                  _Mens_LCD_6
+                  0x0004b6                  _Delay_ms
+                  0x000516                  _Delay_us
+                  0x000716                  _Init_LCD
+                  0x0003ae                  _Mens_LCD_1
+                  0x0003bf                  _Mens_LCD_2
+                  0x0003d0                  _Mens_LCD_3
+                  0x0003e1                  _Mens_LCD_4
+                  0x0003f2                  _Mens_LCD_5
+                  0x000403                  _Mens_LCD_6
                   0x0002c8                  __CNInterrupt
-                  0x0003a2                  __DefaultInterrupt
+                  0x0003a8                  __DefaultInterrupt
                   0x000326                  __T5Interrupt
                   0x000314                  __T7Interrupt
                   0x000252                  __data_init
                   0x000252                  __data_init_standard
                   0x00023c                  __psv_init
                   0x000200                  __resetPRI
-                  0x00087e                  _conversion_tiempo
-                  0x0008c6                  _copiar_FLASH_RAM
-                  0x0005a4                  _cronometro
-                  0x00093c                  _inic_CN
-                  0x000682                  _inic_Timer5
-                  0x000572                  _inic_Timer7
-                  0x00040e                  _inic_Timer9
-                  0x000592                  _inic_crono
-                  0x000900                  _inic_leds
-                  0x00082c                  _inic_oscilator
-                  0x0008f0                  _inic_pulsadores
-                  0x0006a2                  _lcd_cmd
-                  0x0006d8                  _lcd_data
-                  0x00078a                  _line_1
-                  0x000798                  _line_2
-                  0x0007a6                  _main
-                  0x000766                  _puts_lcd
+                  0x000886                  _conversion_tiempo
+                  0x0008ce                  _copiar_FLASH_RAM
+                  0x0005aa                  _cronometro
+                  0x000944                  _inic_CN
+                  0x000688                  _inic_Timer5
+                  0x000578                  _inic_Timer7
+                  0x000414                  _inic_Timer9
+                  0x000598                  _inic_crono
+                  0x000908                  _inic_leds
+                  0x000834                  _inic_oscilator
+                  0x0008f8                  _inic_pulsadores
+                  0x0006a8                  _lcd_cmd
+                  0x0006de                  _lcd_data
+                  0x000790                  _line_1
+                  0x00079e                  _line_2
+                  0x0007ac                  _main
+                  0x00076c                  _puts_lcd
 
 Memory Configuration
 
@@ -297,7 +297,7 @@ LOAD c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libfx-elf.a
                   0x000002          0x2 SHORT 0x0 ((ABSOLUTE (__reset) >> 0x10) & 0x7f)
                   0x000003          0x2 SHORT 0x0
 
-.text             0x000200        0x1a8
+.text             0x000200        0x1ae
  *(.init)
  .init            0x000200         0x4c c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o)
                   0x000200                  __resetPRI
@@ -311,19 +311,19 @@ LOAD c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libfx-elf.a
  *(.isr*)
  .isr.text        0x0002c8         0x4c build/default/debug/_ext/1472/CN.o
                   0x0002c8                  __CNInterrupt
- .isr.text        0x000314         0x8e build/default/debug/_ext/1472/timers.o
+ .isr.text        0x000314         0x94 build/default/debug/_ext/1472/timers.o
                   0x000314                  __T7Interrupt
                   0x000326                  __T5Interrupt
- .isr             0x0003a2          0x4 default_isr
-                  0x0003a2                  __DefaultInterrupt
+ .isr             0x0003a8          0x4 default_isr
+                  0x0003a8                  __DefaultInterrupt
  *(.libc)
  *(.libm)
  *(.libdsp)
  *(.lib*)
  .libpic30_crt_start_mode
-                  0x0003a6          0x2 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\liblega-pic30-elf.a(crt_start_mode_normal.Leo)
-                  0x0003a6                  __crt_start_mode
-                  0x0003a6                  __crt_start_mode_normal
+                  0x0003ac          0x2 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\liblega-pic30-elf.a(crt_start_mode_normal.Leo)
+                  0x0003ac                  __crt_start_mode
+                  0x0003ac                  __crt_start_mode_normal
 
 usercode
  *(usercode)
@@ -367,16 +367,16 @@ __FUID3
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x3354
+.debug_info       0x000000       0x32cc
  *(.debug_info)
- .debug_info      0x000000        0xa50 build/default/debug/_ext/1472/CN.o
- .debug_info      0x000a50        0x37f build/default/debug/_ext/1472/GPIO.o
- .debug_info      0x000dcf        0x8c9 build/default/debug/_ext/1472/LCD.o
- .debug_info      0x001698        0x3f3 build/default/debug/_ext/1472/main_P3_LCD_v2.o
- .debug_info      0x001a8b        0x28e build/default/debug/_ext/1472/memoria.o
- .debug_info      0x001d19        0x63d build/default/debug/_ext/1472/oscilator.o
- .debug_info      0x002356        0xe39 build/default/debug/_ext/1472/timers.o
- .debug_info      0x00318f        0x1c5 build/default/debug/_ext/1472/utilidades.o
+ .debug_info      0x000000        0xa3f build/default/debug/_ext/1472/CN.o
+ .debug_info      0x000a3f        0x36e build/default/debug/_ext/1472/GPIO.o
+ .debug_info      0x000dad        0x8b8 build/default/debug/_ext/1472/LCD.o
+ .debug_info      0x001665        0x3e2 build/default/debug/_ext/1472/main_P3_LCD_v2.o
+ .debug_info      0x001a47        0x27d build/default/debug/_ext/1472/memoria.o
+ .debug_info      0x001cc4        0x62c build/default/debug/_ext/1472/oscilator.o
+ .debug_info      0x0022f0        0xe28 build/default/debug/_ext/1472/timers.o
+ .debug_info      0x003118        0x1b4 build/default/debug/_ext/1472/utilidades.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000        0x6c2
@@ -390,16 +390,16 @@ __FUID3
  .debug_abbrev    0x00049b        0x196 build/default/debug/_ext/1472/timers.o
  .debug_abbrev    0x000631         0x91 build/default/debug/_ext/1472/utilidades.o
 
-.debug_line       0x000000        0x75d
+.debug_line       0x000000        0x764
  *(.debug_line)
  .debug_line      0x000000        0x115 build/default/debug/_ext/1472/CN.o
  .debug_line      0x000115         0xf7 build/default/debug/_ext/1472/GPIO.o
  .debug_line      0x00020c        0x126 build/default/debug/_ext/1472/LCD.o
- .debug_line      0x000332        0x121 build/default/debug/_ext/1472/main_P3_LCD_v2.o
- .debug_line      0x000453         0x3c build/default/debug/_ext/1472/memoria.o
- .debug_line      0x00048f         0xf8 build/default/debug/_ext/1472/oscilator.o
- .debug_line      0x000587        0x190 build/default/debug/_ext/1472/timers.o
- .debug_line      0x000717         0x46 build/default/debug/_ext/1472/utilidades.o
+ .debug_line      0x000332        0x122 build/default/debug/_ext/1472/main_P3_LCD_v2.o
+ .debug_line      0x000454         0x3c build/default/debug/_ext/1472/memoria.o
+ .debug_line      0x000490         0xf8 build/default/debug/_ext/1472/oscilator.o
+ .debug_line      0x000588        0x196 build/default/debug/_ext/1472/timers.o
+ .debug_line      0x00071e         0x46 build/default/debug/_ext/1472/utilidades.o
 
 .debug_frame      0x000000        0x358
  *(.debug_frame)
@@ -1718,46 +1718,46 @@ __c30_signature
  .ivt._T5Interrupt
                   0x00004c          0x2 build/default/debug/_ext/1472/timers.o
 
-.const              0x83a8         0x66 load address 0x0003a8  
- .const             0x83a8         0x66 build/default/debug/_ext/1472/memoria.o
-                    0x83a8                  _Mens_LCD_1
-                    0x83b9                  _Mens_LCD_2
-                    0x83ca                  _Mens_LCD_3
-                    0x83db                  _Mens_LCD_4
-                    0x83ec                  _Mens_LCD_5
-                    0x83fd                  _Mens_LCD_6
+.const              0x83ae         0x66 load address 0x0003ae  
+ .const             0x83ae         0x66 build/default/debug/_ext/1472/memoria.o
+                    0x83ae                  _Mens_LCD_1
+                    0x83bf                  _Mens_LCD_2
+                    0x83d0                  _Mens_LCD_3
+                    0x83e1                  _Mens_LCD_4
+                    0x83f2                  _Mens_LCD_5
+                    0x8403                  _Mens_LCD_6
 
-.text             0x00040e        0x508
- .text            0x00040e        0x294 build/default/debug/_ext/1472/timers.o
-                  0x00040e                  _inic_Timer9
-                  0x0004b0                  _Delay_ms
-                  0x000510                  _Delay_us
-                  0x000572                  _inic_Timer7
-                  0x000592                  _inic_crono
-                  0x0005a4                  _cronometro
-                  0x000682                  _inic_Timer5
- .text            0x0006a2        0x104 build/default/debug/_ext/1472/LCD.o
-                  0x0006a2                  _lcd_cmd
-                  0x0006d8                  _lcd_data
-                  0x000710                  _Init_LCD
-                  0x000766                  _puts_lcd
-                  0x00078a                  _line_1
-                  0x000798                  _line_2
- .text            0x0007a6         0x86 build/default/debug/_ext/1472/main_P3_LCD_v2.o
-                  0x0007a6                  _main
- .text            0x00082c         0x52 build/default/debug/_ext/1472/oscilator.o
-                  0x00082c                  _inic_oscilator
- .text            0x00087e         0x48 build/default/debug/_ext/1472/utilidades.o
-                  0x00087e                  _conversion_tiempo
- .text            0x0008c6         0x2a build/default/debug/_ext/1472/memoria.o
-                  0x0008c6                  _copiar_FLASH_RAM
- .text            0x0008f0         0x26 build/default/debug/_ext/1472/GPIO.o
-                  0x0008f0                  _inic_pulsadores
-                  0x000900                  _inic_leds
+.text             0x000414        0x50a
+ .text            0x000414        0x294 build/default/debug/_ext/1472/timers.o
+                  0x000414                  _inic_Timer9
+                  0x0004b6                  _Delay_ms
+                  0x000516                  _Delay_us
+                  0x000578                  _inic_Timer7
+                  0x000598                  _inic_crono
+                  0x0005aa                  _cronometro
+                  0x000688                  _inic_Timer5
+ .text            0x0006a8        0x104 build/default/debug/_ext/1472/LCD.o
+                  0x0006a8                  _lcd_cmd
+                  0x0006de                  _lcd_data
+                  0x000716                  _Init_LCD
+                  0x00076c                  _puts_lcd
+                  0x000790                  _line_1
+                  0x00079e                  _line_2
+ .text            0x0007ac         0x88 build/default/debug/_ext/1472/main_P3_LCD_v2.o
+                  0x0007ac                  _main
+ .text            0x000834         0x52 build/default/debug/_ext/1472/oscilator.o
+                  0x000834                  _inic_oscilator
+ .text            0x000886         0x48 build/default/debug/_ext/1472/utilidades.o
+                  0x000886                  _conversion_tiempo
+ .text            0x0008ce         0x2a build/default/debug/_ext/1472/memoria.o
+                  0x0008ce                  _copiar_FLASH_RAM
+ .text            0x0008f8         0x26 build/default/debug/_ext/1472/GPIO.o
+                  0x0008f8                  _inic_pulsadores
+                  0x000908                  _inic_leds
 
-.dinit            0x000916         0x26
- .dinit           0x000916         0x26 data_init
+.dinit            0x00091e         0x26
+ .dinit           0x00091e         0x26 data_init
 
-.text             0x00093c          0xe
- .text            0x00093c          0xe build/default/debug/_ext/1472/CN.o
-                  0x00093c                  _inic_CN
+.text             0x000944          0xe
+ .text            0x000944          0xe build/default/debug/_ext/1472/CN.o
+                  0x000944                  _inic_CN

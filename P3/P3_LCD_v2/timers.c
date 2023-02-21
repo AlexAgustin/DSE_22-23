@@ -127,7 +127,6 @@ void inic_crono()
     deci=0;
     seg=0;
     min=0;
-    inicializar_crono =1;
 }
 
 
@@ -147,10 +146,6 @@ void cronometro()
         conversion_tiempo(&Ventana_LCD[1][posds], deci); //asignacion del valor de las decimas de segundo en la posicion correspondiente de la linea a mostrar en pantalla
         Ventana_LCD[1][poscs]=' '; // Poner un 0 en la posicion asociada a las centesimas de segundo
         
-        //copiar_FLASH_RAM((unsigned char*) Mens_LCD_6, 1); //Copiar a memoria RAM la segunda linea (puesta a 0)
-        //line_2(); //nos posicionamos en la segunda linea
-        //puts_lcd((unsigned char*) Ventana_LCD[1], 16); // Llevar al LCD la segunda linea, desde RAM (puesta a 0)
-
         inicializar_crono = 0; //puesta a 0 del flag inicializar_crono
     }
 
@@ -176,8 +171,6 @@ void cronometro()
         conversion_tiempo(&Ventana_LCD[1][posds], deci*10); //asignacion del valor de las decimas de segundo en la posicion correspondiente de la linea a mostrar en pantalla
         Ventana_LCD[1][poscs]=' '; // Poner un 0 en la posicion asociada a las centesimas de segundo
 
-        //line_2(); //nos posicionamos en la segunda linea
-        //puts_lcd((unsigned char*) Ventana_LCD[1], 16); // Llevar al LCD la segunda linea
     }
 }
 
