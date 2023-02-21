@@ -30,6 +30,8 @@ int main()
     
     Init_LCD(); //Inicializacion del LCD
     
+    inic_pulsadores(); // inicializacion pulsadores
+    
     copiar_FLASH_RAM((unsigned char*) Mens_LCD_1, 0); //Copiar a memoria RAM la primera linea (mensaje 1)
     copiar_FLASH_RAM((unsigned char*) Mens_LCD_2, 1); //Copiar a memoria RAM la segunda linea (mensaje 2)
     

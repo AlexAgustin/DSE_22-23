@@ -212,11 +212,11 @@ void _ISR_NO_PSV _T5Interrupt()
             break;
         case LCD_DATA1: // Envio de los datos de la primera linea
             lcd_data(Ventana_LCD[0][i]); //Primero se manda uno de los datos de ventana
-            if (i == 15) {
+            i++; // se incrementa la posicion
+            if (i == 16) {
                 i=0; //Si es la ultima iteracion, se vuelve a la posicion 0 y...
                 estado_LCD = LCD_LINE2; // y cambiamos de estado, siguiente: posicionamiento en la linea 2
             }
-            i++; // Si no es la ultima iteracion, se incrementa la posicion
             break;
         case LCD_LINE2: //Posicionamiento en la segunda linea
             lcd_cmd(0xC0);  	// Set DDRAM address (@40)
@@ -224,12 +224,11 @@ void _ISR_NO_PSV _T5Interrupt()
             break;
         case LCD_DATA2: // Envio de los datos de la segunda linea
             lcd_data(Ventana_LCD[1][i]); //Primero se manda uno de los datos de ventana
-            if (i == 15) {
+            i++; // se incrementa la posicion
+            if (i == 16) {
                 i=0; //Si es la ultima iteracion, se vuelve a la posicion 0 y...
                 estado_LCD = LCD_LINE1; // y cambiamos de estado, siguiente: posicionamiento en la linea 1
             }
-            i++; // Si no es la ultima iteracion, se incrementa la posicion
-
             break;
     }
     
