@@ -75,7 +75,7 @@ void Init_LCD ()             // initialize LCD display
   lcd_cmd (0x38);
   Delay_us (40);      // 40 us delay
   lcd_cmd (0x38);  
-  Delay_us (40);      // 40 us delay
+    Delay_us (40);      // 40 us delay
   lcd_cmd (0x0C);       // Display on/off control, cursor blink off (0x0C)
   Delay_us (40);      // 40 us delay
   lcd_cmd (0x06);	// Entry mode set (0x06)

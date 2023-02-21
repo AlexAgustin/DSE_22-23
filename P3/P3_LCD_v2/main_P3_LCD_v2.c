@@ -67,7 +67,7 @@ int main()
     
     
     //------------------------A partir de ahora refresco distribuido-------------------------//
-    inic_Timer5();
+    inic_Timer5(); // Inicializacion del temporizador T5
     
     while(1) cronometro(); //Bucle infinito para la ejecucion del cronometro
     

@@ -127,6 +127,7 @@ void inic_crono()
     deci=0;
     seg=0;
     min=0;
+    inicializar_crono =1;
 }
 
 
@@ -141,7 +142,12 @@ void cronometro()
         inic_crono(); //inicializa el cronometro
 
         //Puesta a 0 de lo mostrado en la pantalla
-        copiar_FLASH_RAM((unsigned char*) Mens_LCD_6, 1); //Copiar a memoria RAM la segunda linea (puesta a 0)
+        conversion_tiempo(&Ventana_LCD[1][posmin],min); //asignacion del valor de los minutos en la posicion correspondiente de la linea a mostrar en pantalla  
+        conversion_tiempo(&Ventana_LCD[1][posseg],seg); //asignacion del valor de los segundos en la posicion correspondiente de la linea a mostrar en pantalla
+        conversion_tiempo(&Ventana_LCD[1][posds], deci); //asignacion del valor de las decimas de segundo en la posicion correspondiente de la linea a mostrar en pantalla
+        Ventana_LCD[1][poscs]=' '; // Poner un 0 en la posicion asociada a las centesimas de segundo
+        
+        //copiar_FLASH_RAM((unsigned char*) Mens_LCD_6, 1); //Copiar a memoria RAM la segunda linea (puesta a 0)
         //line_2(); //nos posicionamos en la segunda linea
         //puts_lcd((unsigned char*) Ventana_LCD[1], 16); // Llevar al LCD la segunda linea, desde RAM (puesta a 0)
 
@@ -206,12 +212,11 @@ void _ISR_NO_PSV _T5Interrupt()
             break;
         case LCD_DATA1: // Envio de los datos de la primera linea
             lcd_data(Ventana_LCD[0][i]); //Primero se manda uno de los datos de ventana
-            if (i<15){
-                i++; // Si no es la ultima iteracion, se incrementa la posicion
-            }else if (i == 15) {
+            if (i == 15) {
                 i=0; //Si es la ultima iteracion, se vuelve a la posicion 0 y...
                 estado_LCD = LCD_LINE2; // y cambiamos de estado, siguiente: posicionamiento en la linea 2
             }
+            i++; // Si no es la ultima iteracion, se incrementa la posicion
             break;
         case LCD_LINE2: //Posicionamiento en la segunda linea
             lcd_cmd(0xC0);  	// Set DDRAM address (@40)
@@ -219,12 +224,12 @@ void _ISR_NO_PSV _T5Interrupt()
             break;
         case LCD_DATA2: // Envio de los datos de la segunda linea
             lcd_data(Ventana_LCD[1][i]); //Primero se manda uno de los datos de ventana
-            if (i<15){
-                i++; // Si no es la ultima iteracion, se incrementa la posicion
-            }else if (i == 15) {
+            if (i == 15) {
                 i=0; //Si es la ultima iteracion, se vuelve a la posicion 0 y...
                 estado_LCD = LCD_LINE1; // y cambiamos de estado, siguiente: posicionamiento en la linea 1
             }
+            i++; // Si no es la ultima iteracion, se incrementa la posicion
+
             break;
     }
     
