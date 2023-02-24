@@ -139,6 +139,8 @@ void cronometro()
         //el flag inicializar_crono esta activado
         //Puesta a 0 de las variables del cronometro
         inic_crono(); //inicializa el cronometro
+        
+        LATA=LATA & 0xff00; 	// Apagar los leds
 
         //Puesta a 0 de lo mostrado en la pantalla
         conversion_tiempo(&Ventana_LCD[1][posmin],min); //asignacion del valor de los minutos en la posicion correspondiente de la linea a mostrar en pantalla  
@@ -223,6 +225,8 @@ void _ISR_NO_PSV _T5Interrupt()
                 estado_LCD = LCD_LINE1; // y cambiamos de estado, siguiente: posicionamiento en la linea 1
             }
             break;
+        default:
+            break; //Inalcanzable
     }
     
     IFS1bits.T5IF = 0;      // Puesta a 0 del flag IF del temporizador 5

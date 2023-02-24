@@ -8,6 +8,14 @@ A partir de este punto se permite la interrupcion de los pulsadores S3 y S6:
 * pulsador S3 -> parar/reanudar cronometro
 * pulsador S6 -> inicializar cronometro (puesta a 0)
 A partir de este momento se da refresco distribuido para actualizar la informacion en la pantalla LCD.
+Ademas, visualizamos en el ordenador (a traves del emisor de UART2) la informacion que mandamos a la LCD.
+6 teclas presionadas en el PC tienen efecto sobre el cronometro gracias al receptor del modulo UART2: 
+ * I e i, inicializar el crono; 
+ * P y p, parar el crono; 
+ * C y c, poner en marcha el crono. 
+ * El resto de caracteres no afectaran al cronometro.
+Se mostrara la tecla presionada en la ultima posicion de la segunda linea tanto en el modulo LCD como
+en la pantalla del PC.
 Autores: Alex Agustin y Amanda Sin
 Fecha: Febrero 2023
 */
@@ -67,11 +75,12 @@ int main()
     inic_CN(); // Inicializar modulo CN
     inic_leds();	// Inicializacion leds: sentido y valor inicial.
     inic_Timer7(); // Inicializar modulo T7
-    inic_UART2(); // Inicializar la UART 2
+    inic_UART2(); // Inicializar modulo UART2
     
     
     //------------------------A partir de ahora refresco distribuido-------------------------//
     inic_Timer5(); // Inicializacion del temporizador T5
+    U2TXREG = 'Z'; // Asignacion de un primer caracter para que UART2 TX empiece a interrumpir
     
     while(1) cronometro(); //Bucle infinito para la ejecucion del cronometro
     

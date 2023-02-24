@@ -41,7 +41,6 @@ void _ISR_NO_PSV _CNInterrupt()
         // se ha pulsado S6
 		//reset del crono
         inicializar_crono = 1; // Poner a 1 el flag para inicializar el cronometro
-        LATA=LATA & 0xff00; 	// Apagar los leds
         cont6 ++; //se suma uno al contador de interrupciones recibidas (S6)
 	}
 	IFS1bits.CNIF = 0;	//se marca que la interrupcion ha sido atendida	
