@@ -198,7 +198,7 @@ void inic_Timer5 ()
 
 void _ISR_NO_PSV _T5Interrupt()
 {
-    static unsigned int estado_LCD = 0;
+    static unsigned int estado_LCD = LCD_LINE1;
     static int i = 0;
     switch (estado_LCD){
         case LCD_LINE1: //Posicionamiento en la primera linea

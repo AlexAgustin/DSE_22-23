@@ -74,13 +74,13 @@ void _ISR_NO_PSV _U2RXInterrupt()
             break;
     }
     
-    Ventana_LCD[1][15] = caracter; // añadir en la ultima posicion de ventana el carater recibido para obtener feedback
+    Ventana_LCD[1][15] = caracter; // aï¿½adir en la ultima posicion de ventana el carater recibido para obtener feedback
     IFS1bits.U2RXIF=0; // Volver a poner el flag de interrupcion a 0
 }
 
 void _ISR_NO_PSV _U2TXInterrupt()
 {
-    static unsigned int estado_UART = 0;
+    static unsigned int estado_UART = UART_HOME;
     static int i = 0;
     switch (estado_UART){ // switch que funciona como automata del emisor de UART
         case UART_HOME: //Posicionamiento al principio de la pantalla
