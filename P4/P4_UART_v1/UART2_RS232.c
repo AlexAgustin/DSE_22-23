@@ -23,7 +23,7 @@ void inic_UART2 ()
 	U2BRG = BAUD_RATEREG_2_BRGH1;  // Utilizamos el BRGH para velocidades altas
 	//U2BRG = BAUD_RATEREG_2_BRGH0;
 
-     // U2MODE: habilitar el modulo (UARTEN), 8 bits, paridad par (PDSEL),
+     // U2MODE: habilitar el modulo (UARTEN), 8 bits, no paridad,
      // 1 bit de stop (STSEL), BRGH ...
 	U2MODE = 0; //Deshabilitado
 	U2MODEbits.BRGH=1; //Uso de velocidades altas
