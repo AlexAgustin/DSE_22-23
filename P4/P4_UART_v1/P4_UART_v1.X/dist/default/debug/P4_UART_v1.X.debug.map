@@ -4,11 +4,11 @@ Tool Name:
   c:\program files (x86)\microchip\xc16\v1.36\bin\bin\..\bin/elf-ld.exe
 
 Command:
-  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00001c98.00 \
-  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00001c98.01 \
-  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00001c98.02 \
-  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00001c98.03 \
-  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00001c98.04 \
+  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00004934.00 \
+  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00004934.01 \
+  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00004934.02 \
+  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00004934.03 \
+  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00004934.04 \
   -p24HJ256GP610A \
   -o \
   dist/default/debug/P4_UART_v1.X.debug.elf \
@@ -403,17 +403,17 @@ __FUID3
  .debug_abbrev    0x000676         0x91 build/default/debug/_ext/1472/utilidades.o
  .debug_abbrev    0x000707         0xc5 build/default/debug/_ext/1472/main_P4_UART_v1.o
 
-.debug_line       0x000000        0x8d2
+.debug_line       0x000000        0x8dc
  *(.debug_line)
  .debug_line      0x000000        0x114 build/default/debug/_ext/1472/CN.o
  .debug_line      0x000114         0xf7 build/default/debug/_ext/1472/GPIO.o
  .debug_line      0x00020b        0x126 build/default/debug/_ext/1472/LCD.o
- .debug_line      0x000331        0x16c build/default/debug/_ext/1472/UART2_RS232.o
- .debug_line      0x00049d         0x3c build/default/debug/_ext/1472/memoria.o
- .debug_line      0x0004d9         0xf8 build/default/debug/_ext/1472/oscilator.o
- .debug_line      0x0005d1        0x196 build/default/debug/_ext/1472/timers.o
- .debug_line      0x000767         0x46 build/default/debug/_ext/1472/utilidades.o
- .debug_line      0x0007ad        0x125 build/default/debug/_ext/1472/main_P4_UART_v1.o
+ .debug_line      0x000331        0x171 build/default/debug/_ext/1472/UART2_RS232.o
+ .debug_line      0x0004a2         0x3c build/default/debug/_ext/1472/memoria.o
+ .debug_line      0x0004de         0xf8 build/default/debug/_ext/1472/oscilator.o
+ .debug_line      0x0005d6        0x19b build/default/debug/_ext/1472/timers.o
+ .debug_line      0x000771         0x46 build/default/debug/_ext/1472/utilidades.o
+ .debug_line      0x0007b7        0x125 build/default/debug/_ext/1472/main_P4_UART_v1.o
 
 .debug_frame      0x000000        0x3d0
  *(.debug_frame)
