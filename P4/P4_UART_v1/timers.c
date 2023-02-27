@@ -131,7 +131,7 @@ void inic_crono()
 
 
 void cronometro()	
-// control del tiempo: actualiza cada 10 ms
+// control del tiempo (se actualiza cada 10 ms)
 // inicializar cronometro: si el flag inicializar_crono esta activado, inicializa el cronometro
 {
     if(inicializar_crono)
