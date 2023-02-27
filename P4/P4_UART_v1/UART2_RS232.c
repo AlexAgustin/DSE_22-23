@@ -20,10 +20,10 @@ void inic_UART2 ()
 {
      // Velocidad de transmision
      // Hay que hacer solo una de las dos asignaciones siguientes
-	U2BRG = BAUD_RATEREG_2_BRGH1;
+	U2BRG = BAUD_RATEREG_2_BRGH1;  // Utilizamos el BRGH para velocidades altas
 	//U2BRG = BAUD_RATEREG_2_BRGH0;
 
-     // U2MODE: habilitar el modulo (UARTEN), 8 bits, paridad par (PDSEL),
+     // U2MODE: habilitar el modulo (UARTEN), 8 bits, no paridad,
      // 1 bit de stop (STSEL), BRGH ...
 	U2MODE = 0; //Deshabilitado
 	U2MODEbits.BRGH=1; //Uso de velocidades altas
@@ -74,7 +74,7 @@ void _ISR_NO_PSV _U2RXInterrupt()
             break;
     }
     
-    Ventana_LCD[1][15] = caracter; // a�adir en la ultima posicion de ventana el carater recibido para obtener feedback
+    Ventana_LCD[1][15] = caracter; // anadir en la ultima posicion de ventana el carater recibido para obtener feedback
     IFS1bits.U2RXIF=0; // Volver a poner el flag de interrupcion a 0
 }
 
@@ -101,10 +101,10 @@ void _ISR_NO_PSV _U2TXInterrupt()
             break;
         case UART_NEXTLINE: //Salto de linea + posicionamiento al principio de la linea, en dos tiempos
             if (i==0) {
-                U2TXREG = CR; // Primera iteracion, salto de linea
+                U2TXREG = CR; // Primera iteracion, posicionamiento al principio de la linea
                 i++;
             }else{
-                U2TXREG = LF; // Segunda iteracion, posicionamiento al principio de la linea
+                U2TXREG = LF; // Segunda iteracion, salto de linea
                 i = 0;
                 estado_UART = UART_DATA2; // Cambio de estado, suguiente: envio de datos de la segunda linea
             }
