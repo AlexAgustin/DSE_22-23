@@ -5,9 +5,12 @@ Fecha: Marzo 2023
 */
 
 #include <p24HJ256GP610A.h>
+#include "commons.h"
+#include "utilidades.h"
+#include "memoria.h"
 
-unsigned int ADCvalue;
-int flag_CAD =0;
+
+//int flag_CAD =0;
 
 void inic_ADC1 (void)
 {
@@ -81,17 +84,33 @@ AD1CON1bits.ADON=1;  // Habilitar el modulo ADC
 // comienzo del muestreo por programa
 void comienzo_muestreo ()
 {
-    AD1CON1bits.SAMP=1; 
+    AD1CON1bits.SAMP=1; // Comienza el muestreo y 31Tad despues comienza la digit
 }
 
 
 // Funcion que recoge el valor del convertidor por encuesta
 void recoger_valorADC1 () 
 {
-	comienzo_muestreo();
-    while (!AD1CON1bits.DONE);
-    ADCvalue = ADC1BUF0;
-    
+    unsigned int ADC_value;
+	//comienzo_muestreo();
+    if (AD1CON1bits.DONE){ // Encuesta: comprobar si ha terminado la digitalizacion
+        ADC_value = ADC1BUF0; //Dejar el valor en ADC_Value
+        Nop();
+        Nop();
+        //flag_CAD=1;
+        
+        
+        if (AD1CHS0bits.CH0SA==5){ // se esta muestreando el potenciometro
+            conversion_ADC(&Ventana_LCD[0][pospoten],ADC_value); //escribimos el valor de la potencia en la posicion correspondiente
+            AD1CHS0bits.CH0SA=4; // pasamos a muestrear el termometro
+        }else{
+            if (AD1CHS0bits.CH0SA==4) { // se esta muestreando el termometro
+                conversion_ADC(&Ventana_LCD[0][postemp],ADC_value); //escribimos el valor de la temperatura en la posicion correspondiente
+                AD1CHS0bits.CH0SA=5; //pasamos a muestrear el potenciometro
+            }
+        }
+        comienzo_muestreo(); // Comienza el muestreo y 31Tad despues comienza la digit
+    }
 }
 
 

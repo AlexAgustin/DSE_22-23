@@ -31,6 +31,7 @@ Fecha: Febrero 2023
 #include "CN.h"
 #include "utilidades.h"
 #include "UART2_RS232.h"
+#include "ADC1.h"
 
 
 int main()
@@ -82,8 +83,12 @@ int main()
     inic_Timer5(); // Inicializacion del temporizador T5
     U2TXREG = 'Z'; // Asignacion de un primer caracter para que UART2 TX empiece a interrumpir
     
+    inic_ADC1();
+    comienzo_muestreo();
+    
     while(1) {
         cronometro(); //Bucle infinito para la ejecucion del cronometro
+        recoger_valorADC1();
     }
     
 	return (0);

@@ -39,6 +39,9 @@
 #define poscs 14 //centesimas de segundo
 #define posseg 10 //segundo
 #define posmin 7 //minuto
+#define pospoten 2 //potenciometro
+#define postemp 10 //termometro
+
 
 // Definiciones ligadas a la velocidad de transmision de UART2
 

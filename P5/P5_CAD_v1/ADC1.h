@@ -6,8 +6,8 @@ void inic_ADC1 ();
 void comienzo_muestreo ();
 void recoger_valorADC1 ();
 
-extern unsigned int ADCvalue;
-extern int flag_CAD;
+//extern unsigned int poten_value;
+//extern int flag_CAD;
 
 
 
