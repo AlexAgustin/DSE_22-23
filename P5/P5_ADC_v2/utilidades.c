@@ -43,7 +43,7 @@ void conversion_ADC (unsigned char * dir, unsigned int val)
     unsigned int dig;
     int i,divisor = 1000;
     //int i;
-    if (val>1023) {
+    if (val>9999) {
         while(1);    
     } else { //bulce
         dig=val;

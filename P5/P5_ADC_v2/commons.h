@@ -60,3 +60,7 @@
 
 #define CR 0x0D		// carriage return
 #define LF 0x0A		// line feed
+
+
+#define potenciometro 5
+#define termometro 4

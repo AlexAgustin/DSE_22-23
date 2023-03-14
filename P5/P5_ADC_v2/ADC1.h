@@ -7,7 +7,7 @@ void comienzo_muestreo ();
 void recoger_valorADC1 ();
 
 //extern unsigned int poten_value;
-//extern int flag_CAD;
+extern int flag_ADC;
 
 
 

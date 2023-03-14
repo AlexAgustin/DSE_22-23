@@ -88,7 +88,7 @@ int main()
     
     while(1) {
         cronometro(); //Bucle infinito para la ejecucion del cronometro
-        recoger_valorADC1();
+        if (flag_ADC)recoger_valorADC1();
     }
     
 	return (0);

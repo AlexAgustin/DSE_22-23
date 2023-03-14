@@ -9,8 +9,11 @@ Fecha: Marzo 2023
 #include "utilidades.h"
 #include "memoria.h"
 
+#define TOTAL_MUESTRAS 2
 
-//int flag_CAD =0;
+unsigned int Poten_value;
+unsigned int Temp_value;
+int flag_ADC =0;
 
 void inic_ADC1 (void)
 {
@@ -73,7 +76,7 @@ AD1PCFGLbits.PCFG4=0;   // sensor temperatura
 
 // Bits y campos relacionados con las interrupciones
 IFS0bits.AD1IF=0;    
-IEC0bits.AD1IE=0; //trabajaremos por encuesta   
+IEC0bits.AD1IE=1; //trabajaremos por interrupcion   
 //IPC3bits.AD1IP=xx;    
 
 //AD1CON
@@ -90,27 +93,37 @@ void comienzo_muestreo ()
 
 // Funcion que recoge el valor del convertidor por encuesta
 void recoger_valorADC1 () 
-{
-    unsigned int ADC_value;
-	//comienzo_muestreo();
-    if (AD1CON1bits.DONE){ // Encuesta: comprobar si ha terminado la digitalizacion
-        ADC_value = ADC1BUF0; //Dejar el valor en ADC_Value
-        Nop();
-        Nop();
-        //flag_CAD=1;
-        
-        
-        if (AD1CHS0bits.CH0SA==5){ // se esta muestreando el potenciometro
-            conversion_ADC(&Ventana_LCD[0][pospoten],ADC_value); //escribimos el valor de la potencia en la posicion correspondiente
-            AD1CHS0bits.CH0SA=4; // pasamos a muestrear el termometro
-        }else{
-            if (AD1CHS0bits.CH0SA==4) { // se esta muestreando el termometro
-                conversion_ADC(&Ventana_LCD[0][postemp],ADC_value); //escribimos el valor de la temperatura en la posicion correspondiente
-                AD1CHS0bits.CH0SA=5; //pasamos a muestrear el potenciometro
-            }
+{   
+    conversion_ADC(&Ventana_LCD[0][pospoten],Poten_value); //escribimos el valor de la potencia en la posicion correspondiente
+    conversion_ADC(&Ventana_LCD[0][postemp],Temp_value); //escribimos el valor de la temperatura en la posicion correspondiente
+    
+    flag_ADC=0;
+}
+
+void _ISR_NO_PSV _ADC1Interrupt(){
+    static int num_muestras=0;
+    if (!flag_ADC){
+        switch(AD1CHS0bits.CH0SA){
+            case potenciometro:
+                Poten_value = ADC1BUF0;
+                AD1CHS0bits.CH0SA = termometro;
+                num_muestras++;
+                break;
+            case termometro:
+                Temp_value = ADC1BUF0;
+                AD1CHS0bits.CH0SA = potenciometro;
+                num_muestras++;
+                break;
+            default:
+                break;
         }
-        comienzo_muestreo(); // Comienza el muestreo y 31Tad despues comienza la digit
+        if(num_muestras==TOTAL_MUESTRAS){
+            flag_ADC=1;
+            num_muestras=0; //Hacer
+        }
     }
+    comienzo_muestreo(); // Comienza el muestreo y 31Tad despues comienza la digit
+    IFS0bits.AD1IF=0;
 }
 
 
