@@ -27,7 +27,7 @@
       <itemPath>../GPIO.c</itemPath>
       <itemPath>../LCD.c</itemPath>
       <itemPath>../UART2_RS232.c</itemPath>
-      <itemPath>../main_P5_CAD_v1.c</itemPath>
+      <itemPath>../main_P5_ADC_v2.c</itemPath>
       <itemPath>../memoria.c</itemPath>
       <itemPath>../oscilator.c</itemPath>
       <itemPath>../timers.c</itemPath>
