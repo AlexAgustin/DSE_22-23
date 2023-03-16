@@ -9,10 +9,13 @@ Fecha: Marzo 2023
 #include "utilidades.h"
 #include "memoria.h"
 
-#define TOTAL_MUESTRAS 2
+#define INDIV_MUESTRAS 8
+#define TOTAL_MUESTRAS (INDIV_MUESTRAS * 4)
 
-unsigned int Poten_value;
-unsigned int Temp_value;
+unsigned int Poten_value[8];
+unsigned int Temp_value[8];
+unsigned int X_value[8];
+unsigned int Y_value[8];
 int flag_ADC =0;
 
 void inic_ADC1 (void)
@@ -94,32 +97,62 @@ void comienzo_muestreo ()
 // Funcion que recoge el valor del convertidor por encuesta
 void recoger_valorADC1 () 
 {   
-    conversion_ADC(&Ventana_LCD[0][pospoten],Poten_value); //escribimos el valor de la potencia en la posicion correspondiente
-    conversion_ADC(&Ventana_LCD[0][postemp],Temp_value); //escribimos el valor de la temperatura en la posicion correspondiente
+    unsigned float Poten_media = 0, Temp_media=0, X_media=0, Y_media=0; ////////////////TODO: preguntar tipo
+    int i;
+
+    // Calcular la media de la potencia, temperatura, coordenada x y coordenada y
+    for(i=0; i<INDIV_MUESTRAS; i++)
+    {
+        Poten_media += Poten_value[i]; //Sumar los 8 valores recogidos de la potencia
+        Temp_media += Temp_value[i]; //Sumar los 8 valores recogidos de la temperatura
+        X_media += X_value[i]; //Sumar los 8 valores recogidos de la coordenada x
+        Y_media += Y_value[i]; //Sumar los 8 valores recogidos de la coordenada y
+    }
+    Poten_media = Poten_media / INDIV_MUESTRAS; // Dividir la suma realizada por el numero de muestras tomadas (potencia)
+    Temp_media = Temp_media / INDIV_MUESTRAS; // Dividir la suma realizada por el numero de muestras tomadas (temperatura)
+    X_media = X_media / INDIV_MUESTRAS; // Dividir la suma realizada por el numero de muestras tomadas (coordenada x)
+    Y_media = Y_media / INDIV_MUESTRAS; // Dividir la suma realizada por el numero de muestras tomadas (coordenada y)
+
+    conversion_ADC(&Ventana_LCD[0][pospoten],Poten_media); //escribimos el valor de la potencia en la posicion correspondiente
+    conversion_ADC(&Ventana_LCD[0][postemp],Temp_media); //escribimos el valor de la temperatura en la posicion correspondiente
+    conversion_ADC(&Ventana_LCD[0][posx],X_media); //escribimos el valor de la coordenada x en la posicion correspondiente
+    conversion_ADC(&Ventana_LCD[0][posy],Y_media); //escribimos el valor de la coordenada y en la posicion correspondiente
     
-    flag_ADC=0;
+    flag_ADC=0; //Puesta a 0 del flag 
 }
 
 void _ISR_NO_PSV _ADC1Interrupt(){
     static int num_muestras=0;
+    static int i = 0;
     if (!flag_ADC){
         switch(AD1CHS0bits.CH0SA){
             case potenciometro:
-                Poten_value = ADC1BUF0;
+                Poten_value[i] = ADC1BUF0;
                 AD1CHS0bits.CH0SA = termometro;
                 num_muestras++;
                 break;
             case termometro:
-                Temp_value = ADC1BUF0;
-                AD1CHS0bits.CH0SA = potenciometro;
+                Temp_value[i] = ADC1BUF0;
+                AD1CHS0bits.CH0SA = coordx;
                 num_muestras++;
                 break;
+            case coordx:
+                X_value[i] = ADC1BUF0;
+                AD1CHS0bits.CH0SA = coordy;
+                num_muestras ++;
+                break;
+            case coordy:
+                Y_value[i] = ADC1BUF0;
+                AD1CHS0bits.CH0SA = potenciometro;
+                num_muestras ++;
+                i++;
             default:
                 break;
         }
         if(num_muestras==TOTAL_MUESTRAS){
-            flag_ADC=1;
-            num_muestras=0; //Hacer
+            flag_ADC=1; //Puesta a 1 del flag
+            num_muestras=0; //Resetear num_muestras
+            i=0; //Resetear indice de escritura
         }
     }
     comienzo_muestreo(); // Comienza el muestreo y 31Tad despues comienza la digit
