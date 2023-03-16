@@ -4,11 +4,11 @@ Tool Name:
   c:\program files (x86)\microchip\xc16\v1.36\bin\bin\..\bin/elf-ld.exe
 
 Command:
-  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00002610.00 \
-  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00002610.01 \
-  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00002610.02 \
-  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00002610.03 \
-  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00002610.04 \
+  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00003104.00 \
+  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00003104.01 \
+  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00003104.02 \
+  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00003104.03 \
+  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00003104.04 \
   -p24HJ256GP610A \
   -o \
   dist/default/debug/P5_ADC_v2.X.debug.elf \
@@ -202,7 +202,7 @@ External Symbols in Program Memory (by address):
                   0x000acc                  _inic_Timer5
                   0x000aec                  _inic_ADC1
                   0x000b36                  _comienzo_muestreo
-                  0x000b3e                  _recoger_valorADC1
+                  0x000b3e                  _tratar_valorADC1
                   0x000c20                  _lcd_cmd
                   0x000c56                  _lcd_data
                   0x000c8e                  _Init_LCD
@@ -274,7 +274,7 @@ External Symbols in Program Memory (by name):
                   0x000d16                  _line_2
                   0x000df8                  _main
                   0x000ce4                  _puts_lcd
-                  0x000b3e                  _recoger_valorADC1
+                  0x000b3e                  _tratar_valorADC1
 
 Memory Configuration
 
@@ -474,18 +474,18 @@ __FUID3
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x4dd8
+.debug_info       0x000000       0x4dd7
  *(.debug_info)
- .debug_info      0x000000        0xe2b build/default/debug/_ext/1472/ADC1.o
- .debug_info      0x000e2b        0xa2d build/default/debug/_ext/1472/CN.o
- .debug_info      0x001858        0x37f build/default/debug/_ext/1472/GPIO.o
- .debug_info      0x001bd7        0x8c9 build/default/debug/_ext/1472/LCD.o
- .debug_info      0x0024a0        0xbb0 build/default/debug/_ext/1472/UART2_RS232.o
- .debug_info      0x003050        0x436 build/default/debug/_ext/1472/main_P5_ADC_v2.o
- .debug_info      0x003486        0x28e build/default/debug/_ext/1472/memoria.o
- .debug_info      0x003714        0x63d build/default/debug/_ext/1472/oscilator.o
- .debug_info      0x003d51        0xe57 build/default/debug/_ext/1472/timers.o
- .debug_info      0x004ba8        0x230 build/default/debug/_ext/1472/utilidades.o
+ .debug_info      0x000000        0xe2a build/default/debug/_ext/1472/ADC1.o
+ .debug_info      0x000e2a        0xa2d build/default/debug/_ext/1472/CN.o
+ .debug_info      0x001857        0x37f build/default/debug/_ext/1472/GPIO.o
+ .debug_info      0x001bd6        0x8c9 build/default/debug/_ext/1472/LCD.o
+ .debug_info      0x00249f        0xbb0 build/default/debug/_ext/1472/UART2_RS232.o
+ .debug_info      0x00304f        0x436 build/default/debug/_ext/1472/main_P5_ADC_v2.o
+ .debug_info      0x003485        0x28e build/default/debug/_ext/1472/memoria.o
+ .debug_info      0x003713        0x63d build/default/debug/_ext/1472/oscilator.o
+ .debug_info      0x003d50        0xe57 build/default/debug/_ext/1472/timers.o
+ .debug_info      0x004ba7        0x230 build/default/debug/_ext/1472/utilidades.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000        0x942
@@ -501,18 +501,18 @@ __FUID3
  .debug_abbrev    0x00071b        0x196 build/default/debug/_ext/1472/timers.o
  .debug_abbrev    0x0008b1         0x91 build/default/debug/_ext/1472/utilidades.o
 
-.debug_line       0x000000        0xa60
+.debug_line       0x000000        0xa63
  *(.debug_line)
- .debug_line      0x000000        0x15d build/default/debug/_ext/1472/ADC1.o
- .debug_line      0x00015d        0x114 build/default/debug/_ext/1472/CN.o
- .debug_line      0x000271         0xf7 build/default/debug/_ext/1472/GPIO.o
- .debug_line      0x000368        0x126 build/default/debug/_ext/1472/LCD.o
- .debug_line      0x00048e        0x171 build/default/debug/_ext/1472/UART2_RS232.o
- .debug_line      0x0005ff        0x136 build/default/debug/_ext/1472/main_P5_ADC_v2.o
- .debug_line      0x000735         0x3c build/default/debug/_ext/1472/memoria.o
- .debug_line      0x000771         0xf8 build/default/debug/_ext/1472/oscilator.o
- .debug_line      0x000869        0x19b build/default/debug/_ext/1472/timers.o
- .debug_line      0x000a04         0x5c build/default/debug/_ext/1472/utilidades.o
+ .debug_line      0x000000        0x15f build/default/debug/_ext/1472/ADC1.o
+ .debug_line      0x00015f        0x114 build/default/debug/_ext/1472/CN.o
+ .debug_line      0x000273         0xf7 build/default/debug/_ext/1472/GPIO.o
+ .debug_line      0x00036a        0x126 build/default/debug/_ext/1472/LCD.o
+ .debug_line      0x000490        0x171 build/default/debug/_ext/1472/UART2_RS232.o
+ .debug_line      0x000601        0x137 build/default/debug/_ext/1472/main_P5_ADC_v2.o
+ .debug_line      0x000738         0x3c build/default/debug/_ext/1472/memoria.o
+ .debug_line      0x000774         0xf8 build/default/debug/_ext/1472/oscilator.o
+ .debug_line      0x00086c        0x19b build/default/debug/_ext/1472/timers.o
+ .debug_line      0x000a07         0x5c build/default/debug/_ext/1472/utilidades.o
 
 .debug_frame      0x000000        0x494
  *(.debug_frame)
@@ -547,28 +547,28 @@ __FUID3
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000        0x3ac
+                  0x000000        0x3ab
  *(.debug_pubnames)
  .debug_pubnames
-                  0x000000         0xa3 build/default/debug/_ext/1472/ADC1.o
+                  0x000000         0xa2 build/default/debug/_ext/1472/ADC1.o
  .debug_pubnames
-                  0x0000a3         0x43 build/default/debug/_ext/1472/CN.o
+                  0x0000a2         0x43 build/default/debug/_ext/1472/CN.o
  .debug_pubnames
-                  0x0000e6         0x34 build/default/debug/_ext/1472/GPIO.o
+                  0x0000e5         0x34 build/default/debug/_ext/1472/GPIO.o
  .debug_pubnames
-                  0x00011a         0x5b build/default/debug/_ext/1472/LCD.o
+                  0x000119         0x5b build/default/debug/_ext/1472/LCD.o
  .debug_pubnames
-                  0x000175         0x47 build/default/debug/_ext/1472/UART2_RS232.o
+                  0x000174         0x47 build/default/debug/_ext/1472/UART2_RS232.o
  .debug_pubnames
-                  0x0001bc         0x1b build/default/debug/_ext/1472/main_P5_ADC_v2.o
+                  0x0001bb         0x1b build/default/debug/_ext/1472/main_P5_ADC_v2.o
  .debug_pubnames
-                  0x0001d7         0x91 build/default/debug/_ext/1472/memoria.o
+                  0x0001d6         0x91 build/default/debug/_ext/1472/memoria.o
  .debug_pubnames
-                  0x000268         0x25 build/default/debug/_ext/1472/oscilator.o
+                  0x000267         0x25 build/default/debug/_ext/1472/oscilator.o
  .debug_pubnames
-                  0x00028d         0xd4 build/default/debug/_ext/1472/timers.o
+                  0x00028c         0xd4 build/default/debug/_ext/1472/timers.o
  .debug_pubnames
-                  0x000361         0x4b build/default/debug/_ext/1472/utilidades.o
+                  0x000360         0x4b build/default/debug/_ext/1472/utilidades.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -1914,7 +1914,7 @@ __c30_signature
  .text            0x000aec        0x134 build/default/debug/_ext/1472/ADC1.o
                   0x000aec                  _inic_ADC1
                   0x000b36                  _comienzo_muestreo
-                  0x000b3e                  _recoger_valorADC1
+                  0x000b3e                  _tratar_valorADC1
  .text            0x000c20        0x104 build/default/debug/_ext/1472/LCD.o
                   0x000c20                  _lcd_cmd
                   0x000c56                  _lcd_data

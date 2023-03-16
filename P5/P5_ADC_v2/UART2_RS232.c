@@ -3,7 +3,7 @@
  * Contiene las funciones de inicializacion y rutinas de atencion
  * a las interrupciones del emisor y receptor del modulo UART2.
 Autores: Alex y Amanda
-Fecha:
+Fecha: Febrero 2023
 */
 
 #include "p24HJ256GP610A.h"

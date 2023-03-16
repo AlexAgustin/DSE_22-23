@@ -1,5 +1,6 @@
 /* Funciones para el modulo ADC1
-COMENTARIOS!!!!!
+================================================
+ * Contiene las funciones de inicializacion del módulo ADC, comienzo del muestreo,
 Autores: Alex y Amanda
 Fecha: Marzo 2023
 */
@@ -8,10 +9,6 @@ Fecha: Marzo 2023
 #include "commons.h"
 #include "utilidades.h"
 #include "memoria.h"
-
-#define INDIV_MUESTRAS 8
-#define NUM_ASIG 4
-#define TOTAL_MUESTRAS (INDIV_MUESTRAS * NUM_ASIG)
 
 unsigned int Poten_value[8];
 unsigned int Temp_value[8];
@@ -77,8 +74,8 @@ AD1PCFGL = 0xFFFF;      // Puerto B, todos digitales
 // Inicializar como analogicas solo las que vayamos a usar
 AD1PCFGLbits.PCFG5=0;   // potenciometro
 AD1PCFGLbits.PCFG4=0;   // sensor temperatura
-AD1PCFGLbits.PCFG0=0;
-AD1PCFGLbits.PCFG1=0;
+AD1PCFGLbits.PCFG0=0;   // coordenada X
+AD1PCFGLbits.PCFG1=0;   // coordenada Y
 
 // Bits y campos relacionados con las interrupciones
 IFS0bits.AD1IF=0;    
@@ -90,36 +87,38 @@ AD1CON1bits.ADON=1;  // Habilitar el modulo ADC
 }
 
 
-// comienzo del muestreo por programa
+// Comienzo del muestreo por programa
 void comienzo_muestreo ()
 {
     AD1CON1bits.SAMP=1; // Comienza el muestreo y 31Tad despues comienza la digit
 }
 
-
-// Funcion que recoge el valor del convertidor por encuesta
-void recoger_valorADC1 () 
+// Funcion que calcula la media de las muestras tomadas y prepara los datos para ser visualizados
+void tratar_valorADC1 () 
 {   
-    float Poten_media = 0, Temp_media=0, X_media=0, Y_media=0; ////////////////TODO: preguntar tipo
+    float Poten_media = 0, Temp_media=0, X_media=0, Y_media=0;
     int i;
 
     // Calcular la media de la potencia, temperatura, coordenada x y coordenada y
-    for(i=0; i<INDIV_MUESTRAS; i++)
+    for(i=0; i<INDIV_MUESTRAS; i++) //Sumar los 8 valores recogidos de cada entrada analogica
     {
-        Poten_media += Poten_value[i]; //Sumar los 8 valores recogidos de la potencia
-        Temp_media += Temp_value[i]; //Sumar los 8 valores recogidos de la temperatura
-        X_media += X_value[i]; //Sumar los 8 valores recogidos de la coordenada x
-        Y_media += Y_value[i]; //Sumar los 8 valores recogidos de la coordenada y
+        Poten_media += Poten_value[i]; //potencia
+        Temp_media += Temp_value[i]; //temperatura
+        X_media += X_value[i]; //coordenada x
+        Y_media += Y_value[i]; //coordenada y
     }
-    Poten_media = Poten_media / INDIV_MUESTRAS; // Dividir la suma realizada por el numero de muestras tomadas (potencia)
-    Temp_media = Temp_media / INDIV_MUESTRAS; // Dividir la suma realizada por el numero de muestras tomadas (temperatura)
-    X_media = X_media / INDIV_MUESTRAS; // Dividir la suma realizada por el numero de muestras tomadas (coordenada x)
-    Y_media = Y_media / INDIV_MUESTRAS; // Dividir la suma realizada por el numero de muestras tomadas (coordenada y)
+    
+    //Dividir la suma realizada por el numero de muestras tomadas
+    Poten_media = Poten_media / INDIV_MUESTRAS; 
+    Temp_media = Temp_media / INDIV_MUESTRAS;
+    X_media = X_media / INDIV_MUESTRAS;
+    Y_media = Y_media / INDIV_MUESTRAS;
 
-    conversion_ADC(&Ventana_LCD[0][pospoten],Poten_media); //escribimos el valor de la potencia en la posicion correspondiente
-    //conversion_ADC(&Ventana_LCD[0][postemp],Temp_media); //escribimos el valor de la temperatura en la posicion correspondiente
-    //conversion_ADC(&Ventana_LCD[0][posx],X_media); //escribimos el valor de la coordenada x en la posicion correspondiente
-    conversion_ADC(&Ventana_LCD[0][posy],Y_media); //escribimos el valor de la coordenada y en la posicion correspondiente
+    //Escribir el valor de cada dato a visualizar en la posicion correspondiente de Ventana_LCD
+    conversion_ADC(&Ventana_LCD[0][pospoten],Poten_media); 
+    //conversion_ADC(&Ventana_LCD[0][postemp],Temp_media); 
+    //conversion_ADC(&Ventana_LCD[0][posx],X_media); 
+    conversion_ADC(&Ventana_LCD[0][posy],Y_media);
     
     flag_ADC=0; //Puesta a 0 del flag 
 }
@@ -127,18 +126,17 @@ void recoger_valorADC1 ()
 void _ISR_NO_PSV _ADC1Interrupt(){
     static int num_muestras=0;
     static int i = 0;
-    if (!flag_ADC){
-        switch(AD1CHS0bits.CH0SA){
-            case potenciometro:
-                Poten_value[i] = ADC1BUF0;
-                AD1CHS0bits.CH0SA = termometro;
-                num_muestras++;
+    if (!flag_ADC){ //Comprobacion de que el programa principal ha terminado con las muestras anteriores
+        switch(AD1CHS0bits.CH0SA){ //Switch de las diferentes entradas analogicas
+            case potenciometro: //Entrada del prtoenciometro
+                Poten_value[i] = ADC1BUF0; //Se guarde el valor recogido en la posicion de la tabla de muestras que le corresponde
+                AD1CHS0bits.CH0SA = termometro; //Se define la siguiente señal a muestrear
+                num_muestras++; //Incrementa el numero de muestras tomadas
                 break;
             case termometro:
                 Temp_value[i] = ADC1BUF0;
                 AD1CHS0bits.CH0SA = coordx;
                 num_muestras++;
-                //i++;
                 break;
             case coordx:
                 X_value[i] = ADC1BUF0;
@@ -149,7 +147,7 @@ void _ISR_NO_PSV _ADC1Interrupt(){
                 Y_value[i] = ADC1BUF0;
                 AD1CHS0bits.CH0SA = potenciometro;
                 num_muestras ++;
-                i++;
+                i++; //Sincrementa la posicion de la tabla de muestras
             default:
                 break;
         }

@@ -42,9 +42,11 @@
 
 /////////////////////
 // definiciones posiciones valores recogidos
-//////////////////////
+// linea de visualizacion actual:
+// {"P:0000  X:0000  "}
+////////////////////// 
 #define pospoten 2 //potencia
-#define postemp 7 //temperatura
+#define postemp 10 //temperatura
 #define posx 10 // coordenada x
 #define posy 10 // coordenada y
 
@@ -67,8 +69,13 @@
 #define CR 0x0D		// carriage return
 #define LF 0x0A		// line feed
 
-// Definiciones relacionadas con el valor de CHOSA /////pls fix no se como explicarlo mejor
+// Definiciones de las entradas analógicas
 #define potenciometro 5
 #define termometro 4
 #define coordx 0
 #define coordy 1
+
+// Definiciones relacionadas con el numero de muestras a tomar
+#define INDIV_MUESTRAS 8    // Numero de muestras de cada entrada
+#define NUM_ASIG 4          // Numero de entradas analogicas que se muestrean
+#define TOTAL_MUESTRAS (INDIV_MUESTRAS * NUM_ASIG)   //Total de muestras que se tomaran cada vez
