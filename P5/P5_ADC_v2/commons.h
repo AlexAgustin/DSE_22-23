@@ -43,10 +43,10 @@
 /////////////////////
 // definiciones posiciones valores recogidos
 //////////////////////
-#define pospoten 1 //potencia
+#define pospoten 2 //potencia
 #define postemp 7 //temperatura
-#define posx 13 // coordenada x
-#define posy 15 // coordenada y
+#define posx 10 // coordenada x
+#define posy 10 // coordenada y
 
 
 // Definiciones ligadas a la velocidad de transmision de UART2
@@ -70,5 +70,5 @@
 // Definiciones relacionadas con el valor de CHOSA /////pls fix no se como explicarlo mejor
 #define potenciometro 5
 #define termometro 4
-#define coordx 4
-#define coordy 4
+#define coordx 0
+#define coordy 1
