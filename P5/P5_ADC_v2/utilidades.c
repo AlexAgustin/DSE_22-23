@@ -33,7 +33,7 @@ void conversion_tiempo (unsigned char * dir, unsigned int val)
     }
 }
 	
-// Funcion para obtener los caracteres de un valor de cuatro digitos (<1023)
+// Funcion para obtener los caracteres de un valor de cuatro digitos (<9999)
 // Parametros:
 // val, valor numerico del que se quieren obtener los caracteres ASCII
 // dir, direccion a partir de la cual queremos que la funcion devuelva los codigos ASCII
