@@ -3,4 +3,5 @@ build/default/debug/_ext/1472/timers.o:  \
 ../commons.h  \
  ../memoria.h  \
 ../utilidades.h  \
-../LCD.h 
+../LCD.h  \
+../ADC1.h 

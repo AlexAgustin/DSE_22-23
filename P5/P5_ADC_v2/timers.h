@@ -11,3 +11,4 @@ void inic_Timer7 ();
 void inic_crono();
 void cronometro();
 void inic_Timer5 ();
+void inic_Timer3 ();

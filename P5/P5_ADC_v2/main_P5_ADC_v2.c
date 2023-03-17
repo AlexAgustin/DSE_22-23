@@ -4,7 +4,7 @@ Una vez pulsado, proyecta un nuevo texto en pantalla y queda a la espera de que 
 S4 para inicializar el cronometro (encuesta de S4).
 Una vez pulsado, se inicializa el cronometro y se muestra tanto por pantalla como en los leds el 
 tiempo transcurrido (led D3 -> ms, led D5 -> seg, led D9 -> min). Asi como los valores del potenciometro
-y el termometro/coordenada X/coordenada Y.
+y el termometro/coordenada X/coordenada Y (hay que cambiar el codigo para ver uno u otro).
 A partir de este punto se permite la interrupcion de los pulsadores S3 y S6:
 * pulsador S3 -> parar/reanudar cronometro
 * pulsador S6 -> inicializar cronometro (puesta a 0)
@@ -80,10 +80,11 @@ int main()
     inic_UART2();   // Inicializar modulo UART2
     U2TXREG = 'Z';  // Asignacion de un primer caracter para que UART2 TX empiece a interrumpir
     inic_ADC1();    //Inicializar el modulo ADC
-    comienzo_muestreo();    //Comenzar con el muestro de las señales analogicas
+    //comienzo_muestreo();    //Comenzar con el muestro de las señales analogicas
     
     //------------------------A partir de ahora refresco distribuido-------------------------//
     inic_Timer5(); // Inicializacion del temporizador T5
+    inic_Timer3(); // Inicializacion del temporizador T3
     
     while(1) {
         cronometro(); //Bucle infinito para la ejecucion del cronometro

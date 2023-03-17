@@ -13,7 +13,7 @@ const unsigned char Mens_LCD_1[]={"- DSE 2022-23 --"};  //linea 1.1, 16 caracter
 const unsigned char Mens_LCD_2[]={"--- Pulsa S3  --"};  //linea 2.1, 16 caracteres
 const unsigned char Mens_LCD_3[]={"---- ADC_v2 ----"};  //linea 1.2, 16 caracteres
 const unsigned char Mens_LCD_4[]={"-- S4 comienza--"};  //linea 2.2, 16 caracteres
-const unsigned char Mens_LCD_5[]={"P:0000  X:0000  "};  //linea 1.3, 16 caracteres
+const unsigned char Mens_LCD_5[]={"P:0000  Y:0000  "};  //linea 1.3, 16 caracteres
 const unsigned char Mens_LCD_6[]={"Crono: 00:00,0  "};  //linea 2.3, 16 caracteres
 
 unsigned char Ventana_LCD[2][16];

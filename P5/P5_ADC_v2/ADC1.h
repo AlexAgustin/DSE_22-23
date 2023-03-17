@@ -8,6 +8,7 @@ void tratar_valorADC1 ();
 
 //extern unsigned int poten_value;
 extern int flag_ADC;
+extern unsigned long num_conversiones;
 
 
 

@@ -16,6 +16,7 @@ Fecha: Febrero 2023
 #include "memoria.h"
 #include "utilidades.h"
 #include "LCD.h"
+#include "ADC1.h"
 
 #define LCD_LINE1 0
 #define LCD_DATA1 1
@@ -158,6 +159,9 @@ void cronometro()
         LATAbits.LATA0=!LATAbits.LATA0; //conmutar LED D3
 
         if (deci>=10){ //cada 10 decimas de segundo
+            Nop();//Comprobacion de cuantas mconversiones del ADC se han hecho
+            Nop();
+            num_conversiones=0;
             seg+=1; //se suma 1 segundo
             deci-=10; //reset decimas
             LATAbits.LATA2=!LATAbits.LATA2; //conmuntar LED D5
@@ -230,4 +234,24 @@ void _ISR_NO_PSV _T5Interrupt()
     }
     
     IFS1bits.T5IF = 0;      // Puesta a 0 del flag IF del temporizador 5
+}
+
+void inic_Timer3 ()
+{
+    //Inicializar modulo T3
+    TMR3 = 0 ; 	// Inicializar el registro de cuenta
+    PR3 =  40000-1 ;	// Periodo del timer
+		// Queremos que cuente 1 ms.
+		// Fosc= 80 MHz (vease Inic_oscilator()) de modo que
+		// Fcy = 40 MHz (cada instruccion dos ciclos de reloj)
+		// Por tanto, Tcy= 25 ns para ejecutar una instruccion
+		// Para contar 1 ms se necesitan 40.000 ciclos.
+    T3CONbits.TCKPS = 0;	// escala del prescaler 00
+    T3CONbits.TCS = 0;	// reloj interno
+    T3CONbits.TGATE = 0;	// Deshabilitar el modo Gate
+    
+    IEC0bits.T3IE = 0;      // habilitacion de la interrupcion general de T3
+    IFS0bits.T3IF = 0;      // Puesta a 0 del flag IF del temporizador 3
+    
+    T3CONbits.TON = 1;	// encender el timer
 }

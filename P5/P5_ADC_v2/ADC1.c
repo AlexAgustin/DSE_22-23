@@ -15,6 +15,7 @@ unsigned int Temp_value[8];
 unsigned int X_value[8];
 unsigned int Y_value[8];
 int flag_ADC =0;
+unsigned long num_conversiones=0;
 
 void inic_ADC1 (void)
 {
@@ -26,13 +27,13 @@ AD1CON1 = 0;       // todos los campos a 0
 
 // Comienzo digitalizacion automatico
 // 111=Auto-convert / 010=TMR3 ADC1 y TMR5 ADC2 / 001=INT0 / 000= SAMP 
-AD1CON1bits.SSRC= 7;  //Finaliza con el temporizador interno	
+AD1CON1bits.SSRC= 2;  //Funciona con T3	
 
 // Muestreo simultaneo o secuencial
 //AD1CON1bits.SIMSAM = 0; 
              
-// Comienzo muestreo automático o por programa (SAMP=1) 		
-//AD1CON1bits.ASAM = 0;
+// Comienzo muestreo automatico o por programa (SAMP=1) 		
+AD1CON1bits.ASAM = 1;
 
                     
 // Inicializacion registro control AD1CON2
@@ -124,6 +125,8 @@ void tratar_valorADC1 ()
 }
 
 void _ISR_NO_PSV _ADC1Interrupt(){
+    
+    num_conversiones++;
     static int num_muestras=0;
     static int i = 0;
     if (!flag_ADC){ //Comprobacion de que el programa principal ha terminado con las muestras anteriores
@@ -157,7 +160,7 @@ void _ISR_NO_PSV _ADC1Interrupt(){
             i=0; //Resetear indice de escritura
         }
     }
-    comienzo_muestreo(); // Comienza el muestreo y 31Tad despues comienza la digit
+    //comienzo_muestreo(); // Comienza el muestreo y 31Tad despues comienza la digit
     IFS0bits.AD1IF=0;
 }
 
