@@ -1,7 +1,7 @@
 /* 
 Contiene dos funciones auxiliares:
  * conversion_tiempo: para la conversion del tiempo (digito -> caracteres).
- * conversion_poten: para la conversion de la potencia (digito -> caracteres).
+ * conversion_ADC: para la conversion de un valor de 4 digitos (digito -> caracteres).
 
 Autores: Alex Agustin y Amanda Sin
 Fecha: Febrero 2023
@@ -42,10 +42,9 @@ void conversion_ADC (unsigned char * dir, unsigned int val)
 {
     unsigned int dig;
     int i,divisor = 1000;
-    //int i;
     if (val>9999) {
         while(1);    
-    } else { //bulce
+    } else { 
         dig=val;
         for(i=0; i<3; i++){
             dig=dig/divisor;
