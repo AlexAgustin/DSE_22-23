@@ -1,6 +1,7 @@
 /* Funciones para el modulo ADC1
 ================================================
- * Contiene las funciones de inicializacion del módulo ADC, comienzo del muestreo,
+ * Contiene las funciones de inicializacion del modulo ADC, comienzo del muestreo, 
+ * tratamiento de valores (obtener medias y guardarlas en las posiciones debidas de Ventana_LCD) y la rutina de atencion.
 Autores: Alex y Amanda
 Fecha: Marzo 2023
 */
@@ -17,7 +18,7 @@ unsigned int Y_value[8];
 int flag_ADC =0;
 unsigned long num_conversiones=0;
 
-void inic_ADC1 (void)
+void inic_ADC1 (void) // inicializacion del modulo
 {
 // Inicializacion registro control AD1CON1
 AD1CON1 = 0;       // todos los campos a 0
@@ -101,7 +102,7 @@ void tratar_valorADC1 ()
     int i;
 
     // Calcular la media de la potencia, temperatura, coordenada x y coordenada y
-    for(i=0; i<INDIV_MUESTRAS; i++) //Sumar los 8 valores recogidos de cada entrada analogica
+    for(i=0; i<INDIV_MUESTRAS; i++) //Sumar los valores recogidos de cada entrada analogica
     {
         Poten_media += Poten_value[i]; //potencia
         Temp_media += Temp_value[i]; //temperatura
@@ -131,37 +132,37 @@ void _ISR_NO_PSV _ADC1Interrupt(){
     static int i = 0;
     if (!flag_ADC){ //Comprobacion de que el programa principal ha terminado con las muestras anteriores
         switch(AD1CHS0bits.CH0SA){ //Switch de las diferentes entradas analogicas
-            case potenciometro: //Entrada del prtoenciometro
+            case potenciometro: //Entrada del potenciometro
                 Poten_value[i] = ADC1BUF0; //Se guarde el valor recogido en la posicion de la tabla de muestras que le corresponde
-                AD1CHS0bits.CH0SA = termometro; //Se define la siguiente señal a muestrear
-                num_muestras++; //Incrementa el numero de muestras tomadas
+                AD1CHS0bits.CH0SA = termometro; //Se define la siguiente senhal a muestrear
+                num_muestras++; //Incrementar el numero de muestras tomadas
                 break;
-            case termometro:
-                Temp_value[i] = ADC1BUF0;
-                AD1CHS0bits.CH0SA = coordx;
-                num_muestras++;
+            case termometro: //entrada del termometro
+                Temp_value[i] = ADC1BUF0; //Se guarde el valor recogido en la posicion de la tabla de muestras que le corresponde
+                AD1CHS0bits.CH0SA = coordx; //Se define la siguiente senhal a muestrear
+                num_muestras++; //Incrementar el numero de muestras tomadas
                 break;
-            case coordx:
-                X_value[i] = ADC1BUF0;
-                AD1CHS0bits.CH0SA = coordy;
-                num_muestras ++;
+            case coordx: //entrada de la coordenada x del joystick
+                X_value[i] = ADC1BUF0; //Se guarde el valor recogido en la posicion de la tabla de muestras que le corresponde
+                AD1CHS0bits.CH0SA = coordy; //Se define la siguiente senhal a muestrear
+                num_muestras ++; //Incrementar el numero de muestras tomadas
                 break;
-            case coordy:
-                Y_value[i] = ADC1BUF0;
-                AD1CHS0bits.CH0SA = potenciometro;
-                num_muestras ++;
-                i++; //Sincrementa la posicion de la tabla de muestras
+            case coordy: //entrada de la coordenada y del joystick
+                Y_value[i] = ADC1BUF0; //Se guarde el valor recogido en la posicion de la tabla de muestras que le corresponde
+                AD1CHS0bits.CH0SA = potenciometro; //Se define la siguiente senhal a muestrear
+                num_muestras ++; //Incrementar el numero de muestras tomadas
+                i++; //incrementar la posicion de la tabla de muestras (indice de escritura)
             default:
                 break;
         }
-        if(num_muestras==TOTAL_MUESTRAS){
+        if(num_muestras==TOTAL_MUESTRAS){ // se han tomado todas las muestras requeridas
             flag_ADC=1; //Puesta a 1 del flag
             num_muestras=0; //Resetear num_muestras
             i=0; //Resetear indice de escritura
         }
     }
     //comienzo_muestreo(); // Comienza el muestreo y 31Tad despues comienza la digit
-    IFS0bits.AD1IF=0;
+    IFS0bits.AD1IF=0; // Puesta a 0 del flag IF
 }
 
 

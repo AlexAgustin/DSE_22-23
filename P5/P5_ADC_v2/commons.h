@@ -43,7 +43,7 @@
 /////////////////////
 // definiciones posiciones valores recogidos
 // linea de visualizacion actual:
-// {"P:0000  X:0000  "}
+// {"P:0000  Y:0000  "}
 ////////////////////// 
 #define pospoten 2 //potencia
 #define postemp 10 //temperatura
@@ -69,7 +69,7 @@
 #define CR 0x0D		// carriage return
 #define LF 0x0A		// line feed
 
-// Definiciones de las entradas analógicas
+// Definiciones de las entradas analogicas
 #define potenciometro 5
 #define termometro 4
 #define coordx 0

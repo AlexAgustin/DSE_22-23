@@ -17,6 +17,8 @@ Ademas, visualizamos en el ordenador (a traves del emisor de UART2) la informaci
  * El resto de caracteres no afectaran al cronometro.
 Se mostrara la tecla presionada en la ultima posicion de la segunda linea tanto en el modulo LCD como
 en la pantalla del PC.
+Se mostrara la media de las muestras tomadas para las entradas analogicas de "potencia" y "coordenada y" del joystick
+en la primera linea.
 Autores: Alex Agustin y Amanda Sin
 Fecha: Merzo 2023
 */
@@ -80,16 +82,16 @@ int main()
     inic_UART2();   // Inicializar modulo UART2
     U2TXREG = 'Z';  // Asignacion de un primer caracter para que UART2 TX empiece a interrumpir
     inic_ADC1();    //Inicializar el modulo ADC
-    //comienzo_muestreo();    //Comenzar con el muestro de las señales analogicas
+    //comienzo_muestreo();    //Comenzar con el muestro de las senhales analogicas
     
     //------------------------A partir de ahora refresco distribuido-------------------------//
     inic_Timer5(); // Inicializacion del temporizador T5
     inic_Timer3(); // Inicializacion del temporizador T3
     
-    while(1) {
-        cronometro(); //Bucle infinito para la ejecucion del cronometro
+    while(1) { // bucle infinito
+        cronometro(); // ejecucion del cronometro
         if (flag_ADC)   //Una vez se han recogido todas las muestras necesarias
-            tratar_valorADC1(); // Calcular la media de las muestras tomadas
+            tratar_valorADC1(); // Calcular la media de las muestras tomadas y visualizar la informacion pertinente
     }
     
 	return (0);

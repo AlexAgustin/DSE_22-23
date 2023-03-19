@@ -4,7 +4,7 @@ Contiene dos funciones auxiliares:
  * conversion_ADC: para la conversion de un valor de 4 digitos (digito -> caracteres).
 
 Autores: Alex Agustin y Amanda Sin
-Fecha: Febrero 2023
+Fecha: Marzo 2023
 */
 
 #include "p24HJ256GP610A.h"
@@ -20,9 +20,9 @@ unsigned char tabla_carac[16]="0123456789";
 void conversion_tiempo (unsigned char * dir, unsigned int val)
 {
     unsigned char dig;
-    if (val>99) {
-        while(1);    
-    } else {
+    if (val>99) { //valor superior a lo contemplado (2 digitos)
+        while(1); //espera infinita
+    } else { //conversion
         dig=val/10;
         dig=tabla_carac[dig];
         *dir=dig;
@@ -42,9 +42,9 @@ void conversion_ADC (unsigned char * dir, unsigned int val)
 {
     unsigned int dig;
     int i,divisor = 1000;
-    if (val>9999) {
-        while(1);    
-    } else { 
+    if (val>9999) { //valor superior a lo contemplado (4 digitos)
+        while(1);  //espera infinita
+    } else {  // conversion
         dig=val;
         for(i=0; i<3; i++){
             dig=dig/divisor;
@@ -53,7 +53,7 @@ void conversion_ADC (unsigned char * dir, unsigned int val)
             *dir=dig;
             dir++;
             dig=val%divisor;
-            divisor/=10;
+            divisor/=10; //actualizar divisor
         }
         dig=dig/divisor;
         dig=tabla_carac[dig];

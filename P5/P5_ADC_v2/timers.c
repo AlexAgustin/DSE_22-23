@@ -7,10 +7,12 @@ y a su correspondiente cronometro (inicializacion y gestion del paso del tiempo)
 
 Por otro lado, contiene la funcion para inicializar el modulo T5 y su correspondiente rutina de atencion.
 
-Autores: Alex Agustin y Amanda Sin
-Fecha: Febrero 2023
+Ademas, contiene la funcion para inicializar el modulo T3.
 
+Autores: Alex Agustin y Amanda Sin
+Fecha: Marzo 2023
 */
+
 #include "p24HJ256GP610A.h"
 #include "commons.h"
 #include "memoria.h"
@@ -250,7 +252,7 @@ void inic_Timer3 ()
     T3CONbits.TCS = 0;	// reloj interno
     T3CONbits.TGATE = 0;	// Deshabilitar el modo Gate
     
-    IEC0bits.T3IE = 0;      // habilitacion de la interrupcion general de T3
+    IEC0bits.T3IE = 0;      // deshabilitar la interrupcion general de T3
     IFS0bits.T3IF = 0;      // Puesta a 0 del flag IF del temporizador 3
     
     T3CONbits.TON = 1;	// encender el timer

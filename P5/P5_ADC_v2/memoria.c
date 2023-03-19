@@ -3,7 +3,7 @@ Contiene las lineas a mostrar en la pantalla, la variable que contendra el
 texto a mostrar y la funcion necesaria para copiar datos de FLASH a RAM.
 
 Autores: Alex Agustin y Amanda Sin
-Fecha: Febrero 2023
+Fecha: Marzo 2023
 */
 
 #include "p24HJ256GP610A.h"
