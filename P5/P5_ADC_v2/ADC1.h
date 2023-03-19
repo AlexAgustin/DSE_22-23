@@ -8,7 +8,7 @@ void tratar_valorADC1 ();
 
 // variables usadas en otros modulos
 extern int flag_ADC;
-extern unsigned long num_conversiones;
+//extern unsigned long num_conversiones;
 
 
 
