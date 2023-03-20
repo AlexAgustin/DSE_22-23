@@ -3,8 +3,9 @@ Proyecta texto en la pantalla y queda a la espera de que se pulse S3 (encuesta).
 Una vez pulsado, proyecta un nuevo texto en pantalla y queda a la espera de que se pulse 
 S4 para inicializar el cronometro (encuesta de S4).
 Una vez pulsado, se inicializa el cronometro y se muestra tanto por pantalla como en los leds el 
-tiempo transcurrido (led D3 -> ms, led D5 -> seg, led D9 -> min). Asi como los valores del potenciometro
-y el termometro/coordenada X/coordenada Y (hay que cambiar el codigo para ver uno u otro).
+tiempo transcurrido (led D3 -> ms, led D5 -> seg, led D9 -> min). 
+Tambien se mostrara la media de las muestras tomadas de la potencia y 
+la temperatura/coordenada X/coordenada Y (hay que cambiar el codigo para ver una u otra).
 A partir de este punto se permite la interrupcion de los pulsadores S3 y S6:
 * pulsador S3 -> parar/reanudar cronometro
 * pulsador S6 -> inicializar cronometro (puesta a 0)
@@ -17,8 +18,6 @@ Ademas, visualizamos en el ordenador (a traves del emisor de UART2) la informaci
  * El resto de caracteres no afectaran al cronometro.
 Se mostrara la tecla presionada en la ultima posicion de la segunda linea tanto en el modulo LCD como
 en la pantalla del PC.
-Se mostrara la media de las muestras tomadas para las entradas analogicas de "potencia" y "coordenada y" del joystick
-en la primera linea.
 Autores: Alex Agustin y Amanda Sin
 Fecha: Merzo 2023
 */
@@ -81,7 +80,7 @@ int main()
     inic_Timer7();  // Inicializar modulo T7
     inic_UART2();   // Inicializar modulo UART2
     U2TXREG = 'Z';  // Asignacion de un primer caracter para que UART2 TX empiece a interrumpir
-    inic_ADC1();    //Inicializar el modulo ADC
+    inic_ADC1();    //Inicializar el modulo ADC1
     //comienzo_muestreo();    //Comenzar con el muestro de las senhales analogicas
     
     //------------------------A partir de ahora refresco distribuido-------------------------//

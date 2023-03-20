@@ -161,9 +161,9 @@ void cronometro()
         LATAbits.LATA0=!LATAbits.LATA0; //conmutar LED D3
 
         if (deci>=10){ //cada 10 decimas de segundo
-            Nop();//Comprobacion de cuantas mconversiones del ADC se han hecho
+            Nop();//Comprobacion de cuantas conversiones del ADC se han hecho
             Nop();
-            num_conversiones=0;
+            num_conversiones=0; // resetear numero de conversiones
             seg+=1; //se suma 1 segundo
             deci-=10; //reset decimas
             LATAbits.LATA2=!LATAbits.LATA2; //conmuntar LED D5

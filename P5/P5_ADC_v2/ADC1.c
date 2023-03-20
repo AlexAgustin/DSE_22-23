@@ -80,7 +80,7 @@ AD1PCFGLbits.PCFG0=0;   // coordenada X
 AD1PCFGLbits.PCFG1=0;   // coordenada Y
 
 // Bits y campos relacionados con las interrupciones
-IFS0bits.AD1IF=0;    
+IFS0bits.AD1IF=0;  // Puesta a 0 del flag IF  
 IEC0bits.AD1IE=1; //trabajaremos por interrupcion   
 //IPC3bits.AD1IP=xx;    
 
