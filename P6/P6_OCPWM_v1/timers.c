@@ -259,9 +259,8 @@ void inic_Timer3 ()
 }
 
 void inic_Timer2_PWM(){
-    T2CON=0;
-    
-    TMR2 = 0;
+    //Inicializar modulo T2
+    TMR2 = 0; // Inicializar el registro de cuenta
     PR2 = 12500-1;	// Periodo del timer
 		// Queremos que cuente 20 ms.
 		// Fosc= 80 MHz (vease Inic_oscilator()) de modo que
@@ -270,6 +269,8 @@ void inic_Timer2_PWM(){
 		// Para contar 20 ms se necesitan 800.000 ciclos.
     
     T2CONbits.TCKPS = 2;	// escala del prescaler 1:64
+    T2CONbits.TCS = 0;	// reloj interno
+    T2CONbits.TGATE = 0;	// Deshabilitar el modo Gate
     
     IEC0bits.T2IE = 0;      // deshabilitar la interrupcion general de T2
     IFS0bits.T2IF = 0;      // Puesta a 0 del flag IF del temporizador 2

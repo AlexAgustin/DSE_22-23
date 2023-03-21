@@ -4,17 +4,21 @@ Una vez pulsado, proyecta un nuevo texto en pantalla y queda a la espera de que 
 S4 para inicializar el cronometro (encuesta de S4).
 Una vez pulsado, se inicializa el cronometro y se muestra tanto por pantalla como en los leds el 
 tiempo transcurrido (led D3 -> ms, led D5 -> seg, led D9 -> min). 
-Tambien se mostrara la media de las muestras tomadas de la potencia y 
-la temperatura/coordenada X/coordenada Y (hay que cambiar el codigo para ver una u otra).
+Tambien se mostrara la media de las muestras tomadas de la potencia 
+(hay que cambiar el codigo para ver la temperatura/coordenada X/coordenada Y ).
+Ademas, se mostrara el contenido de OC1RS (DUTY).
+
 A partir de este punto se permite la interrupcion de los pulsadores S3 y S6:
 * pulsador S3 -> parar/reanudar cronometro
 * pulsador S6 -> inicializar cronometro (puesta a 0)
 A partir de este momento se da refresco distribuido para actualizar la informacion en la pantalla LCD.
 Ademas, visualizamos en el ordenador (a traves del emisor de UART2) la informacion que mandamos a la LCD.
-6 teclas presionadas en el PC tienen efecto sobre el cronometro gracias al receptor del modulo UART2: 
+10 teclas presionadas en el PC tienen efecto sobre el cronometro gracias al receptor del modulo UART2: 
  * I e i, inicializar el crono; 
  * P y p, parar el crono; 
  * C y c, poner en marcha el crono. 
+ * R y r, mover el servo a la derecha (+10) si se respetan los limites (<= DUTY_MAX)
+ * L y l, mover el servo a la izquierda (-10) si se respetan los limites (>= DUTY_MIN)
  * El resto de caracteres no afectaran al cronometro.
 Se mostrara la tecla presionada en la ultima posicion de la segunda linea tanto en el modulo LCD como
 en la pantalla del PC.

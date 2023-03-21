@@ -46,9 +46,9 @@
 // {"P:0000 DUTY:0000"}
 ////////////////////// 
 #define pospoten 2 //potencia
-#define postemp 10 //temperatura
-#define posx 10 // coordenada x
-#define posy 10 // coordenada y
+#define postemp 2 //temperatura
+#define posx 2 // coordenada x
+#define posy 2 // coordenada y
 #define posduty 12 //valor del duty
 
 
@@ -86,7 +86,7 @@
 //=========================================================  
 #define PR20ms  12500 	// Periodo adecuado para conseguir 20 ms
                         // teniendo en cuenta un prescaler de 1:64.
-                        // Fosc= xx Fcy= xx Tcy=xx
+                        // Fosc= 80 MHz Fcy = 40 MHz Tcy= 25 ns
 #define MINPWM 0.5      // Duracion minima pulso PWM (en milisegundos)
 #define MAXPWM 2.1      // Duracion maxima pulso PWM (en milisegundos)
 
