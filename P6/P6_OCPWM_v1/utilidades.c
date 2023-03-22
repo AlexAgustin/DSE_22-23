@@ -1,7 +1,7 @@
 /* 
 Contiene dos funciones auxiliares:
  * conversion_tiempo: para la conversion del tiempo (digito -> caracteres).
- * conversion_ADC: para la conversion de un valor de 4 digitos (digito -> caracteres).
+ * conversion_4dig: para la conversion de un valor de 4 digitos (digito -> caracteres).
 
 Autores: Alex Agustin y Amanda Sin
 Fecha: Marzo 2023
@@ -38,7 +38,7 @@ void conversion_tiempo (unsigned char * dir, unsigned int val)
 // val, valor numerico del que se quieren obtener los caracteres ASCII
 // dir, direccion a partir de la cual queremos que la funcion devuelva los codigos ASCII
 // En dir estara el caracter de mas peso y en dir+3 el de menos peso
-void conversion_ADC (unsigned char * dir, unsigned int val)
+void conversion_4dig (unsigned char * dir, unsigned int val)
 {
     unsigned int dig;
     int i,divisor = 1000;

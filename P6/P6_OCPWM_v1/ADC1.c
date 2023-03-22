@@ -117,10 +117,10 @@ void tratar_valorADC1 ()
     Y_media = Y_media / INDIV_MUESTRAS;
 
     //Escribir el valor de cada dato a visualizar en la posicion correspondiente de Ventana_LCD
-    conversion_ADC(&Ventana_LCD[0][pospoten],Poten_media); 
-    //conversion_ADC(&Ventana_LCD[0][postemp],Temp_media); 
-    //conversion_ADC(&Ventana_LCD[0][posx],X_media); 
-    //conversion_ADC(&Ventana_LCD[0][posy],Y_media);
+    conversion_4dig(&Ventana_LCD[0][pospoten],Poten_media); 
+    //conversion_4dig(&Ventana_LCD[0][postemp],Temp_media); 
+    //conversion_4dig(&Ventana_LCD[0][posx],X_media); 
+    //conversion_4dig(&Ventana_LCD[0][posy],Y_media);
     
     flag_ADC=0; //Puesta a 0 del flag 
 }
