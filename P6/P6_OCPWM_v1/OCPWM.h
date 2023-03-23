@@ -5,6 +5,7 @@
 //=========================================================
 extern unsigned int DUTY_MIN;
 extern unsigned int DUTY_MAX;
+extern unsigned int flag_DUTY;    
 
 // FUNCIONES
 //=========================================================

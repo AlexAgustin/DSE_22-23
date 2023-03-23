@@ -9,7 +9,7 @@ Fecha: Febrero 2023
 #include "p24HJ256GP610A.h"
 #include "commons.h"
 #include "timers.h"
-int cont3=0, cont6=0;
+int cont3=0, cont4=0, cont6=0;
 // Funcion para inicializar el modulo CN
 //==================
 void inic_CN()
@@ -17,6 +17,9 @@ void inic_CN()
   	CNEN1bits.CN15IE = 1;	// habilitacion de la interrupcion del pin CN15
                             // que es al que esta conectado el pulsador S3
     
+  	CNEN2bits.CN19IE = 1;	// habilitacion de la interrupcion del pin CN19
+                            // que es al que esta conectado el pulsador S4
+
     CNEN2bits.CN16IE = 1;	// habilitacion de la interrupcion del pin CN16
                             // que es al que esta conectado el pulsador S6
     
@@ -35,7 +38,12 @@ void _ISR_NO_PSV _CNInterrupt()
         // se ha pulsado S3
         T7CONbits.TON = !T7CONbits.TON; //puesta en marcha y detencion del crono
         cont3 ++; //se suma uno al contador de interrupciones recibidas (S3)
-	}
+	}if(!PORTDbits.RD13)    // pulsador S4
+	{
+        //Se ha pulsado S4
+        flag_DUTY = !flag_DUTY; // cambiar la obtencion del DUTY de modo que se obtenga a partir de la potencia (0) o por UART (1)
+        cont4 ++; //se suma uno al contador de interrupciones recibidas (S4)
+    }
     if(!PORTDbits.RD7)     //pulsador S6
 	{
         // se ha pulsado S6

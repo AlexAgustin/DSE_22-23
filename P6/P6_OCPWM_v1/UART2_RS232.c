@@ -72,12 +72,12 @@ void _ISR_NO_PSV _U2RXInterrupt()
             inicializar_crono = 1; //Poner el flag a uno para no alargar la rutina de atencion
             break;
         case 'r':
-        case 'R': //si es r o R, se mueve el servo a la derecha (+10) si se respetan los limites (<= DUTY_MAX)
-            if(OC1RS+10<=DUTY_MAX) OC1RS+=10; // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites
+        case 'R': //si es r o R, se mueve el servo a la derecha (+10) si se respetan los limites (<= DUTY_MAX) y si flag_DUTY == 1 (se gestiona DUTY por UART)
+            if(flag_DUTY && OC1RS+10<=DUTY_MAX) OC1RS+=10; // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona DUTY por UART)
             break;
         case 'l':
-        case 'L': //si es l o L, se mueve el servo a la izquierda (-10) si se respetan los limites (>= DUTY_MIN)
-            if(OC1RS-10>=DUTY_MIN) OC1RS-=10; // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites
+        case 'L': //si es l o L, se mueve el servo a la izquierda (-10) si se respetan los limites (>= DUTY_MIN) y si flag_DUTY == 1 (se gestiona DUTY por UART)
+            if(flag_DUTY && OC1RS-10>=DUTY_MIN) OC1RS-=10; // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona DUTY por UART)
             break;
         default:
             break;
