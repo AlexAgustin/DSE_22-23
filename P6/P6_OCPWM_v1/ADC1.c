@@ -10,6 +10,7 @@ Fecha: Marzo 2023
 #include "commons.h"
 #include "utilidades.h"
 #include "memoria.h"
+#include "OCPWM.h"
 
 unsigned int Poten_value[8];
 unsigned int Temp_value[8];
@@ -115,6 +116,11 @@ void tratar_valorADC1 ()
     Temp_media = Temp_media / INDIV_MUESTRAS;
     X_media = X_media / INDIV_MUESTRAS;
     Y_media = Y_media / INDIV_MUESTRAS;
+    
+    if(!flag_DUTY){
+        OC1RS = (Poten_media/1023) * (DUTY_MAX - DUTY_MIN) + DUTY_MIN;
+        flag_Duty_LCD = 1;
+    }
 
     //Escribir el valor de cada dato a visualizar en la posicion correspondiente de Ventana_LCD
     conversion_4dig(&Ventana_LCD[0][pospoten],Poten_media); 

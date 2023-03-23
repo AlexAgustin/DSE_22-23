@@ -100,6 +100,7 @@ int main()
         cronometro(); // ejecucion del cronometro
         if (flag_ADC)   //Una vez se han recogido todas las muestras necesarias
             tratar_valorADC1(); // Calcular la media de las muestras tomadas y visualizar la informacion pertinente
+        visualizar_Duty();
     }
     
 	return (0);
