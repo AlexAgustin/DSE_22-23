@@ -41,7 +41,7 @@ void _ISR_NO_PSV _CNInterrupt()
 	}if(!PORTDbits.RD13)    // pulsador S4
 	{
         //Se ha pulsado S4
-        flag_DUTY = !flag_DUTY; // cambiar la obtencion del DUTY de modo que se obtenga a partir de la potencia (0) o por UART (1)
+        flag_DUTY = !flag_DUTY; // cambiar la gestion de DUTY de modo que se obtenga a partir de la potencia (0) o por UART (1)
         cont4 ++; //se suma uno al contador de interrupciones recibidas (S4)
     }
     if(!PORTDbits.RD7)     //pulsador S6
