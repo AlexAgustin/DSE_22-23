@@ -38,7 +38,7 @@ Fecha: Merzo 2023
 #include "utilidades.h"
 #include "UART2_RS232.h"
 #include "ADC1.h"
-#include "OCPWM.h"
+//#include "OCPWM.h"
 
 
 int main()
@@ -100,8 +100,7 @@ int main()
         cronometro(); // ejecucion del cronometro
         if (flag_ADC)   //Una vez se han recogido todas las muestras necesarias
             tratar_valorADC1(); // Calcular la media de las muestras tomadas y visualizar la informacion pertinente
-        if (flag_Duty_LCD)
-            visualizar_Duty();
+        //visualizar_Duty();
     }
     
 	return (0);

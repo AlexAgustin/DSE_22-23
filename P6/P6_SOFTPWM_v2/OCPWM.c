@@ -33,6 +33,8 @@ void inic_OC1 ()
 }
 
 void visualizar_Duty(){
-    conversion_4dig(&Ventana_LCD[0][posduty],OC1RS);
-    flag_Duty_LCD = 0;
+    if (flag_Duty_LCD){
+        conversion_4dig(&Ventana_LCD[0][posduty],OC1RS);
+        flag_Duty_LCD = 0;
+    }
 }

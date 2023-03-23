@@ -4,11 +4,11 @@ Tool Name:
   c:\program files (x86)\microchip\xc16\v1.36\bin\bin\..\bin/elf-ld.exe
 
 Command:
-  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00000890.00 \
-  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00000890.01 \
-  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00000890.02 \
-  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00000890.03 \
-  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00000890.04 \
+  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00004444.00 \
+  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00004444.01 \
+  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00004444.02 \
+  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00004444.03 \
+  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00004444.04 \
   -p24HJ256GP610A \
   -o \
   dist/default/debug/P6_OCPWM_v1.X.debug.elf \
@@ -98,11 +98,11 @@ section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0x706           0xa89  (2697)
 .const                       0x906                0x6a            0x9f  (159)
-.text                        0x970               0x70e           0xa95  (2709)
-.dinit                      0x107e                0x44            0x66  (102)
-.text                       0x10c2                0xbc           0x11a  (282)
+.text                        0x970               0x718           0xaa4  (2724)
+.dinit                      0x1088                0x44            0x66  (102)
+.text                       0x10cc                0xb6           0x111  (273)
 
-                 Total "program" memory used (bytes):         0x173d  (5949) 2%
+                 Total "program" memory used (bytes):         0x1743  (5955) 2%
 
 
 "data" Memory  [Origin = 0x800, Length = 0x4000]
@@ -232,14 +232,14 @@ External Symbols in Program Memory (by address):
                   0x000eb8                  _conversion_tiempo
                   0x000f00                  _conversion_4dig
                   0x000f8c                  _main
-                  0x00102c                  _inic_oscilator
-                  0x0010c2                  _inic_OC1
-                  0x0010e4                  _visualizar_Duty
-                  0x0010fa                  _copiar_FLASH_RAM
-                  0x001124                  _inic_pulsadores
-                  0x001134                  _inic_leds
-                  0x00114a                  _inic_UART2
-                  0x00116e                  _inic_CN
+                  0x001036                  _inic_oscilator
+                  0x0010cc                  _inic_OC1
+                  0x0010ee                  _visualizar_Duty
+                  0x0010fe                  _copiar_FLASH_RAM
+                  0x001128                  _inic_pulsadores
+                  0x001138                  _inic_leds
+                  0x00114e                  _inic_UART2
+                  0x001172                  _inic_CN
 
 External Symbols in Program Memory (by name):
 
@@ -279,21 +279,21 @@ External Symbols in Program Memory (by name):
                   0x000c9c                  _comienzo_muestreo
                   0x000f00                  _conversion_4dig
                   0x000eb8                  _conversion_tiempo
-                  0x0010fa                  _copiar_FLASH_RAM
+                  0x0010fe                  _copiar_FLASH_RAM
                   0x000b02                  _cronometro
                   0x000c4e                  _inic_ADC1
-                  0x00116e                  _inic_CN
-                  0x0010c2                  _inic_OC1
+                  0x001172                  _inic_CN
+                  0x0010cc                  _inic_OC1
                   0x000c2e                  _inic_Timer2_PWM
                   0x000c10                  _inic_Timer3
                   0x000bf0                  _inic_Timer5
                   0x000ad4                  _inic_Timer7
                   0x000970                  _inic_Timer9
-                  0x00114a                  _inic_UART2
+                  0x00114e                  _inic_UART2
                   0x000af4                  _inic_crono
-                  0x001134                  _inic_leds
-                  0x00102c                  _inic_oscilator
-                  0x001124                  _inic_pulsadores
+                  0x001138                  _inic_leds
+                  0x001036                  _inic_oscilator
+                  0x001128                  _inic_pulsadores
                   0x000db4                  _lcd_cmd
                   0x000dea                  _lcd_data
                   0x000e9c                  _line_1
@@ -301,7 +301,7 @@ External Symbols in Program Memory (by name):
                   0x000f8c                  _main
                   0x000e78                  _puts_lcd
                   0x000ca4                  _tratar_valorADC1
-                  0x0010e4                  _visualizar_Duty
+                  0x0010ee                  _visualizar_Duty
 
 Memory Configuration
 
@@ -504,7 +504,7 @@ __FUID3
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x5897
+.debug_info       0x000000       0x58b1
  *(.debug_info)
  .debug_info      0x000000        0xed5 build/default/debug/_ext/1472/ADC1.o
  .debug_info      0x000ed5        0xa6e build/default/debug/_ext/1472/CN.o
@@ -516,7 +516,7 @@ __FUID3
  .debug_info      0x0037f4        0x641 build/default/debug/_ext/1472/oscilator.o
  .debug_info      0x003e35       0x13f1 build/default/debug/_ext/1472/timers.o
  .debug_info      0x005226        0x235 build/default/debug/_ext/1472/utilidades.o
- .debug_info      0x00545b        0x43c build/default/debug/_ext/1472/main_P6_OCPWM_v1.o
+ .debug_info      0x00545b        0x456 build/default/debug/_ext/1472/main_P6_OCPWM_v1.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000        0xa81
@@ -533,19 +533,19 @@ __FUID3
  .debug_abbrev    0x00092b         0x91 build/default/debug/_ext/1472/utilidades.o
  .debug_abbrev    0x0009bc         0xc5 build/default/debug/_ext/1472/main_P6_OCPWM_v1.o
 
-.debug_line       0x000000        0xbc6
+.debug_line       0x000000        0xbd5
  *(.debug_line)
  .debug_line      0x000000        0x170 build/default/debug/_ext/1472/ADC1.o
  .debug_line      0x000170        0x126 build/default/debug/_ext/1472/CN.o
  .debug_line      0x000296         0xf7 build/default/debug/_ext/1472/GPIO.o
  .debug_line      0x00038d        0x126 build/default/debug/_ext/1472/LCD.o
- .debug_line      0x0004b3        0x106 build/default/debug/_ext/1472/OCPWM.o
- .debug_line      0x0005b9        0x181 build/default/debug/_ext/1472/UART2_RS232.o
- .debug_line      0x00073a         0x3c build/default/debug/_ext/1472/memoria.o
- .debug_line      0x000776         0xf8 build/default/debug/_ext/1472/oscilator.o
- .debug_line      0x00086e        0x1c1 build/default/debug/_ext/1472/timers.o
- .debug_line      0x000a2f         0x5c build/default/debug/_ext/1472/utilidades.o
- .debug_line      0x000a8b        0x13b build/default/debug/_ext/1472/main_P6_OCPWM_v1.o
+ .debug_line      0x0004b3        0x105 build/default/debug/_ext/1472/OCPWM.o
+ .debug_line      0x0005b8        0x181 build/default/debug/_ext/1472/UART2_RS232.o
+ .debug_line      0x000739         0x3c build/default/debug/_ext/1472/memoria.o
+ .debug_line      0x000775         0xf8 build/default/debug/_ext/1472/oscilator.o
+ .debug_line      0x00086d        0x1c1 build/default/debug/_ext/1472/timers.o
+ .debug_line      0x000a2e         0x5c build/default/debug/_ext/1472/utilidades.o
+ .debug_line      0x000a8a        0x14b build/default/debug/_ext/1472/main_P6_OCPWM_v1.o
 
 .debug_frame      0x000000        0x516
  *(.debug_frame)
@@ -561,7 +561,7 @@ __FUID3
  .debug_frame     0x00049a         0x4c build/default/debug/_ext/1472/utilidades.o
  .debug_frame     0x0004e6         0x30 build/default/debug/_ext/1472/main_P6_OCPWM_v1.o
 
-.debug_str        0x000000        0x376
+.debug_str        0x000000        0x384
  *(.debug_str)
  .debug_str       0x000000         0xcf build/default/debug/_ext/1472/ADC1.o
  .debug_str       0x0000cf         0x56 build/default/debug/_ext/1472/CN.o
@@ -573,7 +573,7 @@ __FUID3
  .debug_str       0x000223         0x1f build/default/debug/_ext/1472/oscilator.o
  .debug_str       0x000242         0xc7 build/default/debug/_ext/1472/timers.o
  .debug_str       0x000309          0xc build/default/debug/_ext/1472/utilidades.o
- .debug_str       0x000315         0x61 build/default/debug/_ext/1472/main_P6_OCPWM_v1.o
+ .debug_str       0x000315         0x6f build/default/debug/_ext/1472/main_P6_OCPWM_v1.o
 
 .debug_loc
  *(.debug_loc)
@@ -1958,7 +1958,7 @@ __c30_signature
                     0x895b                  _Mens_LCD_6
  .const             0x896c          0x4 build/default/debug/_ext/1472/UART2_RS232.o
 
-.text             0x000970        0x70e
+.text             0x000970        0x718
  .text            0x000970        0x2de build/default/debug/_ext/1472/timers.o
                   0x000970                  _inic_Timer9
                   0x000a12                  _Delay_ms
@@ -1983,24 +1983,24 @@ __c30_signature
  .text            0x000eb8         0xd4 build/default/debug/_ext/1472/utilidades.o
                   0x000eb8                  _conversion_tiempo
                   0x000f00                  _conversion_4dig
- .text            0x000f8c         0xa0 build/default/debug/_ext/1472/main_P6_OCPWM_v1.o
+ .text            0x000f8c         0xaa build/default/debug/_ext/1472/main_P6_OCPWM_v1.o
                   0x000f8c                  _main
- .text            0x00102c         0x52 build/default/debug/_ext/1472/oscilator.o
-                  0x00102c                  _inic_oscilator
+ .text            0x001036         0x52 build/default/debug/_ext/1472/oscilator.o
+                  0x001036                  _inic_oscilator
 
-.dinit            0x00107e         0x44
- .dinit           0x00107e         0x44 data_init
+.dinit            0x001088         0x44
+ .dinit           0x001088         0x44 data_init
 
-.text             0x0010c2         0xbc
- .text            0x0010c2         0x38 build/default/debug/_ext/1472/OCPWM.o
-                  0x0010c2                  _inic_OC1
-                  0x0010e4                  _visualizar_Duty
- .text            0x0010fa         0x2a build/default/debug/_ext/1472/memoria.o
-                  0x0010fa                  _copiar_FLASH_RAM
- .text            0x001124         0x26 build/default/debug/_ext/1472/GPIO.o
-                  0x001124                  _inic_pulsadores
-                  0x001134                  _inic_leds
- .text            0x00114a         0x24 build/default/debug/_ext/1472/UART2_RS232.o
-                  0x00114a                  _inic_UART2
- .text            0x00116e         0x10 build/default/debug/_ext/1472/CN.o
-                  0x00116e                  _inic_CN
+.text             0x0010cc         0xb6
+ .text            0x0010cc         0x32 build/default/debug/_ext/1472/OCPWM.o
+                  0x0010cc                  _inic_OC1
+                  0x0010ee                  _visualizar_Duty
+ .text            0x0010fe         0x2a build/default/debug/_ext/1472/memoria.o
+                  0x0010fe                  _copiar_FLASH_RAM
+ .text            0x001128         0x26 build/default/debug/_ext/1472/GPIO.o
+                  0x001128                  _inic_pulsadores
+                  0x001138                  _inic_leds
+ .text            0x00114e         0x24 build/default/debug/_ext/1472/UART2_RS232.o
+                  0x00114e                  _inic_UART2
+ .text            0x001172         0x10 build/default/debug/_ext/1472/CN.o
+                  0x001172                  _inic_CN
