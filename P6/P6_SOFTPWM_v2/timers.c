@@ -19,17 +19,24 @@ Fecha: Marzo 2023
 #include "utilidades.h"
 #include "LCD.h"
 #include "ADC1.h"
+#include "OCPWM.h"
 
 #define LCD_LINE1 0
 #define LCD_DATA1 1
 #define LCD_LINE2 2
 #define LCD_DATA2 3
 
+#define PWM_ACTIVE 0
+#define PWM_INACTIVE 1
+
 void cronometro();
+
+
 
 //Variables globales
 int inicializar_crono = 0;
 unsigned int mili,deci,seg,min;
+unsigned int duty = (DUTY_MAX+DUTY_MIN)/2;
 
 
 // inicializacion del timer 9
@@ -258,39 +265,41 @@ void inic_Timer3 ()
     T3CONbits.TON = 1;	// encender el timer
 }
 
-void inic_Timer2_PWM(int ciclos){
+void inic_Timer2_PWM(){
     //Inicializar modulo T2
     TMR2 = 0; // Inicializar el registro de cuenta
-    if (ciclos < 65535) { //65535 es el maximo numero de ciclos que entra en un tamanho de 2^16 (tamanho de PR) 
-         T2CONbits.TCKPS = 0;	// escala del prescaler 00
-         PR2 =  ciclos-1 ;	// Periodo del timer con prescaler 00
-    }else{
-        if ((ciclos/8) < 65535){
-            T2CONbits.TCKPS = 1;	// escala del prescaler 01
-            PR2 =  (ciclos/8)-1 ;	// Periodo del timer con prescaler 01
-        }else{
-            if ((ciclos/64) < 65535){
-                T2CONbits.TCKPS = 2;	// escala del prescaler 10
-                PR2 =  (ciclos/64)-1 ;	// Periodo del timer con prescaler 10
-            }else{
-                if ((ciclos/256) < 65535) {
-                    T2CONbits.TCKPS = 3;	// escala del prescaler 11
-                    PR2 =  (ciclos/256)-1 ;	// Periodo del timer con prescaler 11
-                }
-            }
-        }
-    }   // Queremos que cuente 20 ms.
+    PR2 =  12500-1 ;	// Periodo del timer
+        // Queremos que cuente 20 ms.
 		// Fosc= 80 MHz (vease Inic_oscilator()) de modo que
 		// Fcy = 40 MHz (cada instruccion dos ciclos de reloj)
 		// Por tanto, Tcy= 25 ns para ejecutar una instruccion
-		// Para contar 20 ms se necesitan 800.000 ciclos.
+		// El valor de ciclos ira cambiando.
     
     T2CONbits.TCKPS = 2;	// escala del prescaler 1:64
     T2CONbits.TCS = 0;	// reloj interno
     T2CONbits.TGATE = 0;	// Deshabilitar el modo Gate
     
-    IEC0bits.T2IE = 0;      // deshabilitar la interrupcion general de T2
+    IEC0bits.T2IE = 1;      // habilitar la interrupcion general de T2
     IFS0bits.T2IF = 0;      // Puesta a 0 del flag IF del temporizador 2
     
     T2CONbits.TON = 1;	// encender el timer
+}
+
+void _ISR_NO_PSV _T2Interrupt(){
+    static unsigned int estado_PWM = PWM_ACTIVE;
+    switch (estado_PWM){
+        case PWM_ACTIVE:
+            LATDbits.LATD0 = 1;
+            PR2 = duty;
+            estado_PWM = PWM_INACTIVE;
+            break;
+        case PWM_INACTIVE:
+            LATDbits.LATD0 = 0;
+            PR2 = (PR20ms-PR2);
+            estado_PWM = PWM_ACTIVE;
+            break;
+        default:
+            break;
+    }
+    IFS0bits.T2IF = 0;      // Puesta a 0 del flag IF del temporizador 2
 }

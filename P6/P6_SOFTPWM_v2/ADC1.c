@@ -11,6 +11,7 @@ Fecha: Marzo 2023
 #include "utilidades.h"
 #include "memoria.h"
 #include "OCPWM.h"
+#include "timers.h"
 
 unsigned int Poten_value[8];
 unsigned int Temp_value[8];
@@ -79,7 +80,7 @@ AD1PCFGLbits.PCFG5=0;   // potenciometro
 AD1PCFGLbits.PCFG4=0;   // sensor temperatura
 AD1PCFGLbits.PCFG0=0;   // coordenada X
 AD1PCFGLbits.PCFG1=0;   // coordenada Y
-AD1PCFGLbits.PCFG2=0;   // Usaremos este pin para el servo
+
 
 // Bits y campos relacionados con las interrupciones
 IFS0bits.AD1IF=0;  // Puesta a 0 del flag IF  
@@ -119,7 +120,7 @@ void tratar_valorADC1 ()
     Y_media = Y_media / INDIV_MUESTRAS;
     
     if(!flag_DUTY){
-        OC1RS = (Poten_media/1023) * (DUTY_MAX - DUTY_MIN) + DUTY_MIN;
+        t = (Poten_media/1023) * (DUTY_MAX - DUTY_MIN) + DUTY_MIN;
         flag_Duty_LCD = 1;
     }
 

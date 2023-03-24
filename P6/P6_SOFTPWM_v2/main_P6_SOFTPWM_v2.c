@@ -38,7 +38,7 @@ Fecha: Merzo 2023
 #include "utilidades.h"
 #include "UART2_RS232.h"
 #include "ADC1.h"
-//#include "OCPWM.h"
+#include "OCPWM.h"
 
 
 int main()
@@ -86,8 +86,8 @@ int main()
     inic_UART2();   // Inicializar modulo UART2
     U2TXREG = 'Z';  // Asignacion de un primer caracter para que UART2 TX empiece a interrumpir
     inic_ADC1();    //Inicializar el modulo ADC1
-    inic_OC1();     //Inicializar el modulo OC1
-    inic_Timer2_PWM();  //Inicializar el temporizador T2
+    //inic_OC1();     //Inicializar el modulo OC1
+    //inic_Timer2_PWM();  //Inicializar el temporizador T2
     
     
     //comienzo_muestreo();    //Comenzar con el muestro de las senhales analogicas
@@ -100,7 +100,8 @@ int main()
         cronometro(); // ejecucion del cronometro
         if (flag_ADC)   //Una vez se han recogido todas las muestras necesarias
             tratar_valorADC1(); // Calcular la media de las muestras tomadas y visualizar la informacion pertinente
-        //visualizar_Duty();
+        if (flag_Duty_LCD)
+            visualizar_Duty();
     }
     
 	return (0);

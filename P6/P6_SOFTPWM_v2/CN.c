@@ -10,6 +10,7 @@ Fecha: Febrero 2023
 #include "commons.h"
 #include "timers.h"
 #include "OCPWM.h"
+
 int cont3=0, cont4=0, cont6=0;
 // Funcion para inicializar el modulo CN
 //==================

@@ -17,7 +17,7 @@ unsigned int DUTY_MAX=(PR20ms/20) * MAXPWM;	// mediante los "define" PR20ms, MIN
 unsigned int flag_DUTY = 1;  // DUTY se gestionara por defecto a traves de UART
 unsigned int flag_Duty_LCD = 1; //cuando Duty cambie, se haga la conversion para visualizarlo en la LCDs
 
-void inic_OC1 ()
+/*void inic_OC1 ()
 {
     OC1CON=0; // Deshabilita modulo Output Compare
     
@@ -30,11 +30,11 @@ void inic_OC1 ()
     //conversion_ADC(&Ventana_LCD[0][posduty],OC1R);
     
     OC1CONbits.OCM=0b110;       // habilitar OC1 en modo PWM
-}
+}*/
 
 void visualizar_Duty(){
-    if (flag_Duty_LCD){
-        conversion_4dig(&Ventana_LCD[0][posduty],OC1RS);
-        flag_Duty_LCD = 0;
-    }
+    conversion_4dig(&Ventana_LCD[0][posduty],OC1RS);
+    flag_Duty_LCD = 0;
 }
+
+//anadir funcion de iniclaizacion: valor medio, estado, ...

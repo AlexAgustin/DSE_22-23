@@ -8,14 +8,13 @@
       <itemPath>../CN.h</itemPath>
       <itemPath>../GPIO.h</itemPath>
       <itemPath>../LCD.h</itemPath>
-      <itemPath>../OCPWM.h</itemPath>
       <itemPath>../UART2_RS232.h</itemPath>
       <itemPath>../commons.h</itemPath>
-      <itemPath>../commons_P6.h</itemPath>
       <itemPath>../memoria.h</itemPath>
       <itemPath>../oscilator.h</itemPath>
       <itemPath>../timers.h</itemPath>
       <itemPath>../utilidades.h</itemPath>
+      <itemPath>../OCPWM.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -28,13 +27,13 @@
       <itemPath>../CN.c</itemPath>
       <itemPath>../GPIO.c</itemPath>
       <itemPath>../LCD.c</itemPath>
-      <itemPath>../OCPWM.c</itemPath>
       <itemPath>../UART2_RS232.c</itemPath>
       <itemPath>../main_P6_SOFTPWM_v2.c</itemPath>
       <itemPath>../memoria.c</itemPath>
       <itemPath>../oscilator.c</itemPath>
       <itemPath>../timers.c</itemPath>
       <itemPath>../utilidades.c</itemPath>
+      <itemPath>../OCPWM.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -257,6 +256,7 @@
         <property key="UART 1" value="true"/>
         <property key="UART 2" value="true"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="firmware.download.all" value="false"/>
         <property key="hwtoolclock.frcindebug" value="false"/>
         <property key="hwtoolclock.instructionspeed" value="4"/>
         <property key="hwtoolclock.units" value="mips"/>

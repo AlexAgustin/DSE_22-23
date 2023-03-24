@@ -9,6 +9,8 @@ Fecha: Febrero 2023
 #include "p24HJ256GP610A.h"
 #include "commons.h"
 
+int PWM;
+
 void inic_pulsadores ()
 {
 	// Definir pines AN16 - AN31 como pines digitales para evitar problemas
@@ -24,6 +26,8 @@ void inic_pulsadores ()
     TRISDbits.TRISD6 = 1;
     TRISDbits.TRISD13 = 1;
     TRISDbits.TRISD7 = 1;
+    
+    TRISDbits.TRISD0 = 0; //Definir como salida el pin que se usara para la señal PWM
 }
 
 void inic_leds()
@@ -33,4 +37,3 @@ void inic_leds()
   Nop();
   LATA=LATA & 0xff00; 	// Apagar los leds	
 }
-      

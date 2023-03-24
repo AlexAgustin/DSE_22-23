@@ -1,6 +1,8 @@
 // Exporta una variable y funciones invocadas en otros modulos
 //Flag para inicializar el cronometro
 extern int inicializar_crono;
+extern unsigned int flag_PWM_T2;
+extern unsigned int t;
 // declaracion de las funciones relacionadas con los temporizadores
 // que se usan en otros modulos
 
@@ -13,3 +15,4 @@ void cronometro();
 void inic_Timer5 ();
 void inic_Timer3 ();
 void inic_Timer2_PWM ();
+void calcular_ciclos_T2();
