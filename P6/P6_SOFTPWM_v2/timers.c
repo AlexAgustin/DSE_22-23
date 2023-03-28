@@ -24,10 +24,13 @@ Fecha: Marzo 2023
 
 void cronometro();
 
+int sum=0; 
+
 //Variables globales
 int inicializar_crono = 0;
 unsigned int mili,deci,seg,min;
-unsigned int duty;
+unsigned int duty0;
+unsigned int duty1;
 unsigned int estado_PWM;
 
 
@@ -279,15 +282,23 @@ void inic_Timer2_PWM(){
 
 void _ISR_NO_PSV _T2Interrupt(){
     switch (estado_PWM){
-        case PWM_ACTIVE:
+        case PWM0_ACTIVE:
             LATDbits.LATD0 = 1;
-            PR2 = duty;
-            estado_PWM = PWM_INACTIVE;
+            PR2 = duty0;
+            sum=duty0;
+            estado_PWM = PWM1_ACTIVE;
             break;
-        case PWM_INACTIVE:
+        case PWM1_ACTIVE:
             LATDbits.LATD0 = 0;
-            PR2 = (PR20ms-PR2);
-            estado_PWM = PWM_ACTIVE;
+            LATDbits.LATD1 = 1;
+            PR2 = duty1;
+            sum+=duty1;
+            estado_PWM = PWM_RESTO;
+            break;
+        case PWM_RESTO: 
+            LATDbits.LATD1 = 0;
+            PR2 = (PR20ms-sum);
+            estado_PWM = PWM0_ACTIVE;
             break;
         default:
             break;

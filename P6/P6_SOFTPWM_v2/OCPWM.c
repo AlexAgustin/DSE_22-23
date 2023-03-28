@@ -40,7 +40,9 @@ void visualizar_Duty(){
 
 //anadir funcion de iniclaizacion: valor medio, estado, ...
 void inic_PWM(){
-    estado_PWM=PWM_ACTIVE;
-    duty = (DUTY_MAX+DUTY_MIN)/2;
+    estado_PWM=PWM0_ACTIVE;
+    duty0 = (DUTY_MAX+DUTY_MIN)/2;
+    duty1 = (DUTY_MAX+DUTY_MIN)/2;
     TRISDbits.TRISD0 = 0; //Definir como salida el pin que se usara para la señal PWM
+    TRISDbits.TRISD1 = 0; //Definir como salida el pin que se usara para la señal PWM
 }
