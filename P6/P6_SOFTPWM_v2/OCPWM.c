@@ -1,7 +1,7 @@
 /*
-Funciones relacionadas con el modulo OC para generar seÃ±al PWM
+Funciones relacionadas con la gestion de la senhal PWM
 
-Contiene la funcion de inicializacion del modulo OC1
+Contiene la funcion de inicializacion de las variables para la gestion de PWM y la funcion para visualizar duty en la pantalla.
 
 Autores: Alex y Amanda
 Fecha: Marzo 2023
@@ -34,13 +34,13 @@ unsigned int flag_Duty_LCD = 1; //cuando Duty cambie, se haga la conversion para
 }*/
 
 void visualizar_Duty(){
-    conversion_4dig(&Ventana_LCD[0][posduty],duty);
-    flag_Duty_LCD = 0;
+    conversion_4dig(&Ventana_LCD[0][posduty],duty);  // Guardar valor de duty en Ventana_LCD para su visualizacion en la pantalla
+    flag_Duty_LCD = 0; //Puesta a 0 del flag para guardar duty en Ventana_LCD para su visualizacion en la pantalla
 }
 
-//anadir funcion de iniclaizacion: valor medio, estado, ...
+
 void inic_PWM(){
-    estado_PWM=PWM_ACTIVE;
-    duty = (DUTY_MAX+DUTY_MIN)/2;
-    TRISDbits.TRISD0 = 0; //Definir como salida el pin que se usara para la señal PWM
+    estado_PWM=PWM_ACTIVE; //Definir estado inicial
+    duty = (DUTY_MAX+DUTY_MIN)/2; // Inicializar pulso con duracion intermedia (1,3ms))
+    TRISDbits.TRISD0 = 0; //Definir como salida el pin que se usara para la seï¿½al PWM
 }

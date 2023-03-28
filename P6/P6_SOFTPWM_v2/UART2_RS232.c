@@ -3,7 +3,7 @@
  * Contiene las funciones de inicializacion y rutinas de atencion
  * a las interrupciones del emisor y receptor del modulo UART2.
 Autores: Alex y Amanda
-Fecha: Febrero 2023
+Fecha: Marzo 2023
 */
 
 #include "p24HJ256GP610A.h"
@@ -72,17 +72,17 @@ void _ISR_NO_PSV _U2RXInterrupt()
             inicializar_crono = 1; //Poner el flag a uno para no alargar la rutina de atencion
             break;
         case 'r':
-        case 'R': //si es r o R, se mueve el servo a la derecha (+10) si se respetan los limites (<= DUTY_MAX) y si flag_DUTY == 1 (se gestiona DUTY por UART)
-            if(flag_DUTY && duty+10<=DUTY_MAX) {
-               duty+=10; // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona DUTY por UART)
-               flag_Duty_LCD = 1;
+        case 'R': //si es r o R, se mueve el servo incrementando el valor de duty (+10) si se respetan los limites (<= DUTY_MAX) y si flag_DUTY == 1 (se gestiona duty por UART)
+            if(flag_DUTY && duty+10<=DUTY_MAX) { // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona duty por UART)
+               duty+=10; //Incrementar el valor de duty: +10
+               flag_Duty_LCD = 1; // Poner a 1 el flag para guardar el nuevo valor de duty en Ventana_LCD para su visualizacion en la pantalla
             }
             break;
         case 'l':
-        case 'L': //si es l o L, se mueve el servo a la izquierda (-10) si se respetan los limites (>= DUTY_MIN) y si flag_DUTY == 1 (se gestiona DUTY por UART)
-            if(flag_DUTY && duty-10>=DUTY_MIN) {
-                duty-=10; // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona DUTY por UART)
-                flag_Duty_LCD = 1;
+        case 'L': //si es l o L, se mueve el servo decrementando el valor de duty (-10) si se respetan los limites (>= DUTY_MIN) y si flag_DUTY == 1 (se gestiona duty por UART)
+            if(flag_DUTY && duty-10>=DUTY_MIN) { // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona duty por UART)
+                duty-=10; // Decrementar el valor de duty: -10
+                flag_Duty_LCD = 1; // Poner a 1 el flag para guardar el nuevo valor de duty en Ventana_LCD para su su visualizacion en la pantalla
             }
             break;
         default:

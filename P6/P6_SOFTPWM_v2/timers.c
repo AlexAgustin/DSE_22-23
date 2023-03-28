@@ -279,15 +279,15 @@ void inic_Timer2_PWM(){
 
 void _ISR_NO_PSV _T2Interrupt(){
     switch (estado_PWM){
-        case PWM_ACTIVE:
-            LATDbits.LATD0 = 1;
-            PR2 = duty;
-            estado_PWM = PWM_INACTIVE;
+        case PWM_ACTIVE: //Activar PWM 
+            LATDbits.LATD0 = 1; // Puesta a 1 (D0)
+            PR2 = duty; //Determinar periodo del temporizador 2 a partir de duty
+            estado_PWM = PWM_INACTIVE;  // Estado siguiente: senhal desactivada
             break;
-        case PWM_INACTIVE:
-            LATDbits.LATD0 = 0;
-            PR2 = (PR20ms-PR2);
-            estado_PWM = PWM_ACTIVE;
+        case PWM_INACTIVE: // Senhal desactivada
+            LATDbits.LATD0 = 0; // Puesta a 0 (D1)
+            PR2 = (PR20ms-PR2); // Determinar periodo del temporizador 2 a partir de los ciclos restantes
+            estado_PWM = PWM_ACTIVE; // Estado siguiente: activar PWM
             break;
         default:
             break;

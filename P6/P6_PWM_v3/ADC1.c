@@ -119,9 +119,9 @@ void tratar_valorADC1 ()
     X_media = X_media / INDIV_MUESTRAS;
     Y_media = Y_media / INDIV_MUESTRAS;
     
-    if(!flag_DUTY){
-        duty0 = (Poten_media/1023) * (DUTY_MAX - DUTY_MIN) + DUTY_MIN;
-        flag_Duty_LCD = 1;
+    if(!flag_DUTY){ //Si flag_DUTY==0 se obtiene duty0 a partir de la potencia
+        duty0 = (Poten_media/1023) * (DUTY_MAX - DUTY_MIN) + DUTY_MIN; // Obtener duty0 a partir de la potencia
+        flag_Duty_LCD = 1; // Poner a 1 el flag para guardar el nuevo valor de duty0 en Ventana_LCD para su visualizacion en la pantalla
     }
 
     //Escribir el valor de cada dato a visualizar en la posicion correspondiente de Ventana_LCD
