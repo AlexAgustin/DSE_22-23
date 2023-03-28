@@ -120,7 +120,7 @@ void tratar_valorADC1 ()
     Y_media = Y_media / INDIV_MUESTRAS;
     
     if(!flag_DUTY){
-        t = (Poten_media/1023) * (DUTY_MAX - DUTY_MIN) + DUTY_MIN;
+        duty = (Poten_media/1023) * (DUTY_MAX - DUTY_MIN) + DUTY_MIN;
         flag_Duty_LCD = 1;
     }
 

@@ -87,7 +87,8 @@ int main()
     U2TXREG = 'Z';  // Asignacion de un primer caracter para que UART2 TX empiece a interrumpir
     inic_ADC1();    //Inicializar el modulo ADC1
     //inic_OC1();     //Inicializar el modulo OC1
-    //inic_Timer2_PWM();  //Inicializar el temporizador T2
+    inic_PWM();
+    inic_Timer2_PWM();  //Inicializar el temporizador T2
     
     
     //comienzo_muestreo();    //Comenzar con el muestro de las senhales analogicas
@@ -95,6 +96,7 @@ int main()
     //------------------------A partir de ahora refresco distribuido-------------------------//
     inic_Timer5(); // Inicializar el temporizador T5
     inic_Timer3(); // Inicializar el temporizador T3
+ 
     
     while(1) { // bucle infinito
         cronometro(); // ejecucion del cronometro

@@ -12,3 +12,4 @@ extern unsigned int flag_Duty_LCD;
 //=========================================================
 void inic_OC1 ();
 void visualizar_Duty();
+void inic_PWM();

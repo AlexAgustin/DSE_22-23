@@ -20,23 +20,15 @@ Fecha: Marzo 2023
 #include "LCD.h"
 #include "ADC1.h"
 #include "OCPWM.h"
-
-#define LCD_LINE1 0
-#define LCD_DATA1 1
-#define LCD_LINE2 2
-#define LCD_DATA2 3
-
-#define PWM_ACTIVE 0
-#define PWM_INACTIVE 1
+#include "timers.h"
 
 void cronometro();
-
-
 
 //Variables globales
 int inicializar_crono = 0;
 unsigned int mili,deci,seg,min;
-unsigned int duty = (DUTY_MAX+DUTY_MIN)/2;
+unsigned int duty;
+unsigned int estado_PWM;
 
 
 // inicializacion del timer 9
@@ -286,7 +278,6 @@ void inic_Timer2_PWM(){
 }
 
 void _ISR_NO_PSV _T2Interrupt(){
-    static unsigned int estado_PWM = PWM_ACTIVE;
     switch (estado_PWM){
         case PWM_ACTIVE:
             LATDbits.LATD0 = 1;

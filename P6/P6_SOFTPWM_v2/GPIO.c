@@ -26,8 +26,6 @@ void inic_pulsadores ()
     TRISDbits.TRISD6 = 1;
     TRISDbits.TRISD13 = 1;
     TRISDbits.TRISD7 = 1;
-    
-    TRISDbits.TRISD0 = 0; //Definir como salida el pin que se usara para la señal PWM
 }
 
 void inic_leds()

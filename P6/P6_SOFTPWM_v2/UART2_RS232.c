@@ -73,15 +73,15 @@ void _ISR_NO_PSV _U2RXInterrupt()
             break;
         case 'r':
         case 'R': //si es r o R, se mueve el servo a la derecha (+10) si se respetan los limites (<= DUTY_MAX) y si flag_DUTY == 1 (se gestiona DUTY por UART)
-            if(flag_DUTY && t+10<=DUTY_MAX) {
-               t+=10; // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona DUTY por UART)
+            if(flag_DUTY && duty+10<=DUTY_MAX) {
+               duty+=10; // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona DUTY por UART)
                flag_Duty_LCD = 1;
             }
             break;
         case 'l':
         case 'L': //si es l o L, se mueve el servo a la izquierda (-10) si se respetan los limites (>= DUTY_MIN) y si flag_DUTY == 1 (se gestiona DUTY por UART)
-            if(flag_DUTY && t-10>=DUTY_MIN) {
-                t-=10; // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona DUTY por UART)
+            if(flag_DUTY && duty-10>=DUTY_MIN) {
+                duty-=10; // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona DUTY por UART)
                 flag_Duty_LCD = 1;
             }
             break;

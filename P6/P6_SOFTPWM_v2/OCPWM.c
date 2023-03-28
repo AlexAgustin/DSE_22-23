@@ -11,6 +11,7 @@ Fecha: Marzo 2023
 #include "commons.h"
 #include "utilidades.h"
 #include "memoria.h"
+#include "timers.h"
 
 unsigned int DUTY_MIN=(PR20ms/20) * MINPWM;	// valor minimo y maximo de DUTY. Se calculan 
 unsigned int DUTY_MAX=(PR20ms/20) * MAXPWM;	// mediante los "define" PR20ms, MINPWM y MAXPWM
@@ -33,8 +34,13 @@ unsigned int flag_Duty_LCD = 1; //cuando Duty cambie, se haga la conversion para
 }*/
 
 void visualizar_Duty(){
-    conversion_4dig(&Ventana_LCD[0][posduty],OC1RS);
+    conversion_4dig(&Ventana_LCD[0][posduty],duty);
     flag_Duty_LCD = 0;
 }
 
 //anadir funcion de iniclaizacion: valor medio, estado, ...
+void inic_PWM(){
+    estado_PWM=PWM_ACTIVE;
+    duty = (DUTY_MAX+DUTY_MIN)/2;
+    TRISDbits.TRISD0 = 0; //Definir como salida el pin que se usara para la señal PWM
+}
