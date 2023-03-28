@@ -34,7 +34,7 @@ unsigned int flag_Duty_LCD = 1; //cuando Duty cambie, se haga la conversion para
 }*/
 
 void visualizar_Duty(){
-    conversion_4dig(&Ventana_LCD[0][posduty],duty);
+    conversion_4dig(&Ventana_LCD[0][posduty],duty0);
     flag_Duty_LCD = 0;
 }
 
