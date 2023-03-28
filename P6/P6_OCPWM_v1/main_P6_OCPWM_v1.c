@@ -6,20 +6,20 @@ Una vez pulsado, se inicializa el cronometro y se muestra tanto por pantalla com
 tiempo transcurrido (led D3 -> ms, led D5 -> seg, led D9 -> min). 
 Tambien se mostrara la media de las muestras tomadas de la potencia 
 (hay que cambiar el codigo para ver la temperatura/coordenada X/coordenada Y ).
-Ademas, se mostrara el contenido de OC1RS (DUTY).
+Ademas, se mostrara el contenido de OC1RS (duty).
 
 A partir de este punto se permite la interrupcion de los pulsadores S3 y S6:
 * pulsador S3 -> parar/reanudar cronometro
 * pulsador S6 -> inicializar cronometro (puesta a 0)
 A partir de este momento se da refresco distribuido para actualizar la informacion en la pantalla LCD.
 Ademas, visualizamos en el ordenador (a traves del emisor de UART2) la informacion que mandamos a la LCD.
-10 teclas presionadas en el PC tienen efecto sobre el cronometro gracias al receptor del modulo UART2: 
- * I e i, inicializar el crono; 
- * P y p, parar el crono; 
+10 teclas presionadas en el PC tienen efecto sobre el programa gracias al receptor del modulo UART2: 
+ * I e i, inicializar el crono.
+ * P y p, parar el crono.
  * C y c, poner en marcha el crono. 
- * R y r, mover el servo a la derecha (+10) si se respetan los limites (<= DUTY_MAX)
- * L y l, mover el servo a la izquierda (-10) si se respetan los limites (>= DUTY_MIN)
- * El resto de caracteres no afectaran al cronometro.
+ * R y r, mover el servo incrementando duty (+10) si se respetan los limites (<= DUTY_MAX) y se gestiona duty por UART (flag_DUTY == 1).
+ * L y l, mover el servo decrementando duty (-10) si se respetan los limites (>= DUTY_MIN) y se gestiona duty por UART (flag_DUTY == 1).
+ * El resto de caracteres no afectaran al programa.
 Se mostrara la tecla presionada en la ultima posicion de la segunda linea tanto en el modulo LCD como
 en la pantalla del PC.
 Autores: Alex Agustin y Amanda Sin
@@ -100,8 +100,8 @@ int main()
         cronometro(); // ejecucion del cronometro
         if (flag_ADC)   //Una vez se han recogido todas las muestras necesarias
             tratar_valorADC1(); // Calcular la media de las muestras tomadas y visualizar la informacion pertinente
-        if (flag_Duty_LCD)
-            visualizar_Duty();
+        if (flag_Duty_LCD) // Cuando se actualiza el valor de duty y se pone a 1 el flag correspondiente (flag_Duty_LCD) ...
+            visualizar_Duty(); // se guarda el valor de duty en Ventana_LCD para su visualizacion en la pantalla
     }
     
 	return (0);

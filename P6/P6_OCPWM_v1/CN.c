@@ -3,7 +3,7 @@ Funciones relacionadas con el modulo CN: inicializacion del modulo
 y rutina de atencion.
 
 Autores: Alex y Amanda
-Fecha: Febrero 2023
+Fecha: Marzo 2023
 */
 
 #include "p24HJ256GP610A.h"
@@ -42,7 +42,7 @@ void _ISR_NO_PSV _CNInterrupt()
 	}if(!PORTDbits.RD13)    // pulsador S4
 	{
         //Se ha pulsado S4
-        flag_DUTY = !flag_DUTY; // cambiar la gestion de DUTY de modo que se obtenga a partir de la potencia (0) o por UART (1)
+        flag_DUTY = !flag_DUTY; // cambiar la gestion de duty de modo que se obtenga a partir de la potencia (0) o se modifique por UART (1)
         cont4 ++; //se suma uno al contador de interrupciones recibidas (S4)
     }
     if(!PORTDbits.RD7)     //pulsador S6

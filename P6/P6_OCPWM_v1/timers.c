@@ -9,6 +9,8 @@ Por otro lado, contiene la funcion para inicializar el modulo T5 y su correspond
 
 Ademas, contiene la funcion para inicializar el modulo T3.
 
+Por otro lado, contiene la funcion para inicializar el modulo T2.
+
 Autores: Alex Agustin y Amanda Sin
 Fecha: Marzo 2023
 */
