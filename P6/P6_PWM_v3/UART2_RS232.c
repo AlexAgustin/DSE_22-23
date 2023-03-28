@@ -71,17 +71,27 @@ void _ISR_NO_PSV _U2RXInterrupt()
         case 'I': // si es I o i, se inicializa el temporizador a 0
             inicializar_crono = 1; //Poner el flag a uno para no alargar la rutina de atencion
             break;
-        case 'r':
+        case 'r': //si es r o R, se mueve el servo a la derecha (+10) si se respetan los limites (<= DUTY_MAX) y si flag_DUTY == 1 (se gestiona DUTY por UART)
+            if(flag_DUTY && duty0+10<=DUTY_MAX) {
+               duty0+=10; // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona DUTY por UART)
+               flag_Duty_LCD = 1;
+            }
+            break;
         case 'R': //si es r o R, se mueve el servo a la derecha (+10) si se respetan los limites (<= DUTY_MAX) y si flag_DUTY == 1 (se gestiona DUTY por UART)
-            if(flag_DUTY && duty+10<=DUTY_MAX) {
-               duty+=10; // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona DUTY por UART)
+            if(duty1+10<=DUTY_MAX) {
+               duty1+=10; // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona DUTY por UART)
                flag_Duty_LCD = 1;
             }
             break;
         case 'l':
+            if(flag_DUTY && duty0-10>=DUTY_MIN) {
+                duty0-=10; // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona DUTY por UART)
+                flag_Duty_LCD = 1;
+            }
+            break;
         case 'L': //si es l o L, se mueve el servo a la izquierda (-10) si se respetan los limites (>= DUTY_MIN) y si flag_DUTY == 1 (se gestiona DUTY por UART)
-            if(flag_DUTY && duty-10>=DUTY_MIN) {
-                duty-=10; // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona DUTY por UART)
+            if(duty1-10>=DUTY_MIN) {
+                duty1-=10; // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona DUTY por UART)
                 flag_Duty_LCD = 1;
             }
             break;
