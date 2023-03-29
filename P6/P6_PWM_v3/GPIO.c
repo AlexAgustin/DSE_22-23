@@ -9,8 +9,6 @@ Fecha: Febrero 2023
 #include "p24HJ256GP610A.h"
 #include "commons.h"
 
-int PWM;
-
 void inic_pulsadores ()
 {
 	// Definir pines AN16 - AN31 como pines digitales para evitar problemas

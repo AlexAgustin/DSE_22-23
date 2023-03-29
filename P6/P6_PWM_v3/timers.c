@@ -9,6 +9,8 @@ Por otro lado, contiene la funcion para inicializar el modulo T5 y su correspond
 
 Ademas, contiene la funcion para inicializar el modulo T3.
 
+Por otro lado, contiene las funciones asociadas al modulo T2 (inicializacion y rutina de atencion) 
+
 Autores: Alex Agustin y Amanda Sin
 Fecha: Marzo 2023
 */
@@ -264,11 +266,12 @@ void inic_Timer2_PWM(){
     //Inicializar modulo T2
     TMR2 = 0; // Inicializar el registro de cuenta
     PR2 =  12500-1 ;	// Periodo del timer
-        // Queremos que cuente 20 ms.
+        // Inicialmente queremos que cuente 20 ms.
 		// Fosc= 80 MHz (vease Inic_oscilator()) de modo que
 		// Fcy = 40 MHz (cada instruccion dos ciclos de reloj)
 		// Por tanto, Tcy= 25 ns para ejecutar una instruccion
-		// El valor de ciclos ira cambiando.
+        // Para contar 20 ms se necesitan 800.000 ciclos.
+		// Posteriormente, el valor de PR2 ira cambiando.
     
     T2CONbits.TCKPS = 2;	// escala del prescaler 1:64
     T2CONbits.TCS = 0;	// reloj interno
@@ -285,7 +288,7 @@ void _ISR_NO_PSV _T2Interrupt(){
         case PWM0_ACTIVE: //Activar PWM (0)
             LATDbits.LATD0 = 1; // Puesta a 1 (D0)
             PR2 = duty0; //Determinar periodo del temporizador 2 a partir de duty0
-            sum=duty0; // Acumular ciclos transcurridos
+            sum=duty0; // Guardar ciclos transcurridos
             estado_PWM = PWM1_ACTIVE; // Estado siguiente: activar PWM (1)
             break;
         case PWM1_ACTIVE: //Activar PWM (1)

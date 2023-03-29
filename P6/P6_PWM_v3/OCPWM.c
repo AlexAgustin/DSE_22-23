@@ -13,10 +13,10 @@ Fecha: Marzo 2023
 #include "memoria.h"
 #include "timers.h"
 
-unsigned int DUTY_MIN=(PR20ms/20) * MINPWM;	// valor minimo y maximo de DUTY. Se calculan 
+unsigned int DUTY_MIN=(PR20ms/20) * MINPWM;	// valor minimo y maximo de duty. Se calculan 
 unsigned int DUTY_MAX=(PR20ms/20) * MAXPWM;	// mediante los "define" PR20ms, MINPWM y MAXPWM
-unsigned int flag_DUTY = 1;  // DUTY se gestionara por defecto a traves de UART
-unsigned int flag_Duty_LCD = 1; //cuando Duty cambie, se haga la conversion para visualizarlo en la LCDs
+unsigned int flag_DUTY = 1;  // duty0 se gestionara por defecto a traves de UART
+unsigned int flag_Duty_LCD = 1; //cuando duty0 cambia, se hace la conversion para visualizarlo en la pantalla  (flag a 1)
 
 /*void inic_OC1 ()
 {

@@ -49,7 +49,7 @@
 #define postemp 2 //temperatura
 #define posx 2 // coordenada x
 #define posy 2 // coordenada y
-#define posduty 12 //valor del duty
+#define posduty 12 // duty
 
 
 // Definiciones ligadas a la velocidad de transmision de UART2

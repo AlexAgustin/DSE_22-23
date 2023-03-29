@@ -13,10 +13,10 @@ Fecha: Marzo 2023
 #include "memoria.h"
 #include "timers.h"
 
-unsigned int DUTY_MIN=(PR20ms/20) * MINPWM;	// valor minimo y maximo de DUTY. Se calculan 
+unsigned int DUTY_MIN=(PR20ms/20) * MINPWM;	// valor minimo y maximo de duty. Se calculan 
 unsigned int DUTY_MAX=(PR20ms/20) * MAXPWM;	// mediante los "define" PR20ms, MINPWM y MAXPWM
-unsigned int flag_DUTY = 1;  // DUTY se gestionara por defecto a traves de UART
-unsigned int flag_Duty_LCD = 1; //cuando Duty cambie, se haga la conversion para visualizarlo en la LCDs
+unsigned int flag_DUTY = 1;  // duty se gestionara por defecto a traves de UART
+unsigned int flag_Duty_LCD = 1; //cuando duty cambia, se hace la conversion para visualizarlo en la pantalla (flag a 1)
 
 /*void inic_OC1 ()
 {
@@ -42,5 +42,5 @@ void visualizar_Duty(){
 void inic_PWM(){
     estado_PWM=PWM_ACTIVE; //Definir estado inicial
     duty = (DUTY_MAX+DUTY_MIN)/2; // Inicializar pulso con duracion intermedia (1,3ms))
-    TRISDbits.TRISD0 = 0; //Definir como salida el pin que se usara para la se�al PWM
+    TRISDbits.TRISD0 = 0; //Definir como salida el pin que se usara para la senhal PWM
 }
