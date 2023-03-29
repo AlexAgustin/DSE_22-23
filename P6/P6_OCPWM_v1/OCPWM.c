@@ -22,12 +22,12 @@ void inic_OC1 ()
     OC1CON=0; // Deshabilita modulo Output Compare
     
     //OC1CONbits.OCM=0b000;     // deshabilitar OC1 
-    OC1CONbits.OCTSEL=0;      // seleccionar T2 para el OC
+    OC1CONbits.OCTSEL=0;      // seleccionar T2 para el OC (OCTSEL= 0 -> Selecciona T2 (1 -> T3))
     
-    OC1R =  (DUTY_MAX+DUTY_MIN)/2; 		// Inicializar pulso con duracion intermedia (1,3ms))
-    OC1RS = OC1R;               // inicializar registro secundario
+    OC1R =  (DUTY_MAX+DUTY_MIN)/2; 		// Inicializar pulso con duracion intermedia (1,3ms)) (duty cycle para el primer pulso PWM)
+    OC1RS = OC1R;               // inicializar registro secundario (duty cycle para el siguiente pulso PWM)
     
-    OC1CONbits.OCM=0b110;       // habilitar OC1 en modo PWM
+    OC1CONbits.OCM=0b110;       // habilitar OC1 en modo PWM sin prot
 }
 
 void visualizar_Duty(){
