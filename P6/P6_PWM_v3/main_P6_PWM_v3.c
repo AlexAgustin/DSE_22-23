@@ -9,8 +9,9 @@ Tambien se mostrara la media de las muestras tomadas de la potencia
 Ademas, se mostrara duty0. 
 Mencionar que en esta version se gestionan 2 servomotores con un unico temporizador.
 
-A partir de este punto se permite la interrupcion de los pulsadores S3 y S6:
+A partir de este punto se permite la interrupcion de los pulsadores S3, S4 y S6:
 * pulsador S3 -> parar/reanudar cronometro
+* pulsador S4 -> cambiar la gestion de duty0 de modo que se obtenga a partir de la potencia o se modifique por UART
 * pulsador S6 -> inicializar cronometro (puesta a 0)
 A partir de este momento se da refresco distribuido para actualizar la informacion en la pantalla LCD.
 Ademas, visualizamos en el ordenador (a traves del emisor de UART2) la informacion que mandamos a la LCD.
