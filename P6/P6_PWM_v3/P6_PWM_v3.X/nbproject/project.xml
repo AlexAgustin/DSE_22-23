@@ -3,8 +3,8 @@
     <type>com.microchip.mplab.nbide.embedded.makeproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
-            <name>P6_SOFTPWM_v2</name>
-            <creation-uuid>8be4a97a-9133-42d3-9404-fe7fc9dafb52</creation-uuid>
+            <name>P6_PWM_v3</name>
+            <creation-uuid>f1bc11ca-418e-4663-bf0a-c2cac5111851</creation-uuid>
             <make-project-type>0</make-project-type>
             <c-extensions>c</c-extensions>
             <cpp-extensions/>
