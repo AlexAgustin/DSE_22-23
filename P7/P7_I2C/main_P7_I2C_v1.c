@@ -43,6 +43,7 @@ Fecha: Merzo 2023
 #include "UART2_RS232.h"
 #include "ADC1.h"
 #include "OCPWM.h"
+#include "srf08.h"
 
 
 int main()
@@ -90,11 +91,10 @@ int main()
     inic_UART2();   // Inicializar modulo UART2
     U2TXREG = 'Z';  // Asignacion de un primer caracter para que UART2 TX empiece a interrumpir
     inic_ADC1();    //Inicializar el modulo ADC1
-    //inic_OC1();     //Inicializar el modulo OC1
     inic_PWM(); // Inicializar las variables requeridas para la gestion de PWM
     inic_Timer2_PWM();  //Inicializar el temporizador T2
-    
-    
+    inic_medicion_dis(); // Puesta en marcha de una nueva medicion
+    inic_Timer6();  // Inicializar el temporizador T6 
     //comienzo_muestreo();    //Comenzar con el muestro de las senhales analogicas
     
     //------------------------A partir de ahora refresco distribuido-------------------------//
@@ -108,6 +108,8 @@ int main()
             tratar_valorADC1(); // Calcular la media de las muestras tomadas y visualizar la informacion pertinente
         if (flag_Duty_LCD!=0) // Cuando se actualiza el valor de duty0 y se pone a 1 el flag correspondiente (flag_Duty_LCD) ...
             visualizar_Duty(); // se guarda el valor de duty0 en Ventana_LCD para su visualizacion en la pantalla
+        if(flag_dist) //Si se puede leer la medicion de la distancia...
+            gestion_dis();  //Gestionar la medicion de la distancia
     }
     
 	return (0);

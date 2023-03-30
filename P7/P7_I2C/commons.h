@@ -43,13 +43,14 @@
 /////////////////////
 // definiciones posiciones valores recogidos
 // linea de visualizacion actual:
-// {"P:0000 DUTY:0000"}
+// {"P:0000 dist:0000"}
 ////////////////////// 
 #define pospoten 2 //potencia
 #define postemp 2 //temperatura
 #define posx 2 // coordenada x
 #define posy 2 // coordenada y
 #define posduty 12 // duty
+#define posdis 12 // distancia
 
 
 // Definiciones ligadas a la velocidad de transmision de UART2

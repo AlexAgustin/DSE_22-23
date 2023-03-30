@@ -11,7 +11,7 @@ Ademas, contiene la funcion para inicializar el modulo T3.
 
 Por otro lado, contiene las funciones asociadas al modulo T2 (inicializacion y rutina de atencion).
  
-Ademas, contiene las funciones asociadas al modulo T2 (inicializacion, rutina de atencion y puesta en marcha) 
+Ademas, contiene las funciones asociadas al modulo T6 (inicializacion, rutina de atencion y puesta en marcha) 
 
 Autores: Alex Agustin y Amanda Sin
 Fecha: Marzo 2023
@@ -25,6 +25,7 @@ Fecha: Marzo 2023
 #include "ADC1.h"
 #include "OCPWM.h"
 #include "timers.h"
+#include "i2c_funciones.h"
 
 void cronometro();
 
@@ -332,7 +333,8 @@ void inic_Timer6(){
 }
 
 void _ISR_NO_PSV _T6Interrupt(){
-    
+    flag_dis = 1; //Poner a 1 el flag para realizar la medicion de la distancia
+    T6CONbits.TON = 0;	// apagar el timer
     IFS2bits.T6IF = 0;      // Puesta a 0 del flag IF del temporizador 6
 }
 
