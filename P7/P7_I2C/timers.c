@@ -9,7 +9,9 @@ Por otro lado, contiene la funcion para inicializar el modulo T5 y su correspond
 
 Ademas, contiene la funcion para inicializar el modulo T3.
 
-Por otro lado, contiene las funciones asociadas al modulo T2 (inicializacion y rutina de atencion) 
+Por otro lado, contiene las funciones asociadas al modulo T2 (inicializacion y rutina de atencion).
+ 
+Ademas, contiene las funciones asociadas al modulo T2 (inicializacion, rutina de atencion y puesta en marcha) 
 
 Autores: Alex Agustin y Amanda Sin
 Fecha: Marzo 2023
@@ -312,22 +314,32 @@ void _ISR_NO_PSV _T2Interrupt(){
 void inic_Timer6(){
     //Inicializar modulo T6
     TMR6 = 0; // Inicializar el registro de cuenta
-    PR6 =  12500-1 ;	// Periodo del timer
-        // Inicialmente queremos que cuente 20 ms.
+    PR6 =  40625-1 ;	// Periodo del timer
+        // Inicialmente queremos que cuente 65 ms.
 		// Fosc= 80 MHz (vease Inic_oscilator()) de modo que
 		// Fcy = 40 MHz (cada instruccion dos ciclos de reloj)
 		// Por tanto, Tcy= 25 ns para ejecutar una instruccion
-        // Para contar 20 ms se necesitan 800.000 ciclos.
-		// Posteriormente, el valor de PR2 ira cambiando.
+        // Para contar 65 ms se necesitan 2.600.000 ciclos.
     
-    T2CONbits.TCKPS = 2;	// escala del prescaler 1:64
-    T2CONbits.TCS = 0;	// reloj interno
-    T2CONbits.TGATE = 0;	// Deshabilitar el modo Gate
+    T6CONbits.TCKPS = 2;	// escala del prescaler 1:64
+    T6CONbits.TCS = 0;	// reloj interno
+    T6CONbits.TGATE = 0;	// Deshabilitar el modo Gate
     
-    IEC0bits.T2IE = 1;      // habilitar la interrupcion general de T6
-    IFS0bits.T2IF = 0;      // Puesta a 0 del flag IF del temporizador 6
+    IEC2bits.T6IE = 1;      // habilitar la interrupcion general de T6
+    IFS2bits.T6IF = 0;      // Puesta a 0 del flag IF del temporizador 6
     
-    T2CONbits.TON = 1;	// encender el timer
+    T6CONbits.TON = 1;	// encender el timer
 }
 
-//funcion para que llame mas de una vez
+void _ISR_NO_PSV _T6Interrupt(){
+    
+    IFS2bits.T6IF = 0;      // Puesta a 0 del flag IF del temporizador 6
+}
+
+
+void restart_Timer6(){
+    TMR6 = 0; // Inicializar el registro de cuenta
+    T6CONbits.TON = 1;	// encender el timer
+}
+
+
