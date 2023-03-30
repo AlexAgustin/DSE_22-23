@@ -90,4 +90,7 @@
 #define MINPWM 0.5      // Duracion minima pulso PWM (en milisegundos)
 #define MAXPWM 2.1      // Duracion maxima pulso PWM (en milisegundos)
 
+// Definiciones relacionadas con el bus I2C
+#define dirI2C 0xE2
+
 

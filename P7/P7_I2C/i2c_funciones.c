@@ -22,7 +22,7 @@ void InitI2C_1()
   //I2C1BRG = 246; 	//100 kHz & Fcy= 25 MHz
   //I2C1BRG = 197; 	//100 kHz & Fcy= 20 MHz
     
-  I2C1BRG = xx;            // 100 kHz & Fcy= xx MHz //First set the I2C(1) BRG Baud Rate
+  I2C1BRG = 395;            // 100 kHz & Fcy= 40 MHz //First set the I2C(1) BRG Baud Rate
   I2C1CON = 0x1200;         // Iniciar en modo maestro, No Slew Rate, I2C deshabilitado
   I2C1CONbits.I2CEN = 1;	// Habilitar I2C 
 }

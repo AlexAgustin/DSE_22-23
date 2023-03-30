@@ -1,9 +1,9 @@
 /*
 Funciones para utilizar el sensor de distancia
 
-Autoras/es:
+Autoras/es: Alex y Amanda
 
-Fecha:
+Fecha: Marzo 2023
 */
 
 
@@ -13,7 +13,8 @@ unsigned int inic_medicion_dis (unsigned char dirI2C)
  // Puesta en marcha de una medicion
  // Parametro dirI2C corresponde a la direccion I2C del sensor
 {
-   // A completar
+   LDByteWriteI2C_1(dirI2C,&I2C1RCV,0x51); //Mandar a la direccion &I2C1RCV del esclavo 
+                                           //dirI2C  el comando para que de los resultados en cm.
 }
 
 unsigned int leer_medicion (unsigned char dirI2C, unsigned char *dis) 
@@ -22,7 +23,7 @@ unsigned int leer_medicion (unsigned char dirI2C, unsigned char *dis)
  // Parametro dis proporciona la direccion de un array en el que devolver la medicion
  // Cada medicion 2 bytes
 {
-   // A completar
+    LDByteReadI2C_1(dirI2C,&I2C1TRN,dis,16);
 }
 
 

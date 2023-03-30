@@ -308,3 +308,26 @@ void _ISR_NO_PSV _T2Interrupt(){
     }
     IFS0bits.T2IF = 0;      // Puesta a 0 del flag IF del temporizador 2
 }
+
+void inic_Timer6(){
+    //Inicializar modulo T6
+    TMR6 = 0; // Inicializar el registro de cuenta
+    PR6 =  12500-1 ;	// Periodo del timer
+        // Inicialmente queremos que cuente 20 ms.
+		// Fosc= 80 MHz (vease Inic_oscilator()) de modo que
+		// Fcy = 40 MHz (cada instruccion dos ciclos de reloj)
+		// Por tanto, Tcy= 25 ns para ejecutar una instruccion
+        // Para contar 20 ms se necesitan 800.000 ciclos.
+		// Posteriormente, el valor de PR2 ira cambiando.
+    
+    T2CONbits.TCKPS = 2;	// escala del prescaler 1:64
+    T2CONbits.TCS = 0;	// reloj interno
+    T2CONbits.TGATE = 0;	// Deshabilitar el modo Gate
+    
+    IEC0bits.T2IE = 1;      // habilitar la interrupcion general de T6
+    IFS0bits.T2IF = 0;      // Puesta a 0 del flag IF del temporizador 6
+    
+    T2CONbits.TON = 1;	// encender el timer
+}
+
+//funcion para que llame mas de una vez
