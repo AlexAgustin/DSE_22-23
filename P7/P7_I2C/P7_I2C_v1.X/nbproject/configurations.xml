@@ -11,8 +11,10 @@
       <itemPath>../OCPWM.h</itemPath>
       <itemPath>../UART2_RS232.h</itemPath>
       <itemPath>../commons.h</itemPath>
+      <itemPath>../i2c_funciones.h</itemPath>
       <itemPath>../memoria.h</itemPath>
       <itemPath>../oscilator.h</itemPath>
+      <itemPath>../srf08.h</itemPath>
       <itemPath>../timers.h</itemPath>
       <itemPath>../utilidades.h</itemPath>
     </logicalFolder>
@@ -29,11 +31,13 @@
       <itemPath>../LCD.c</itemPath>
       <itemPath>../OCPWM.c</itemPath>
       <itemPath>../UART2_RS232.c</itemPath>
+      <itemPath>../i2c_funciones.c</itemPath>
+      <itemPath>../main_P7_I2C_v1.c</itemPath>
       <itemPath>../memoria.c</itemPath>
       <itemPath>../oscilator.c</itemPath>
+      <itemPath>../srf08.c</itemPath>
       <itemPath>../timers.c</itemPath>
       <itemPath>../utilidades.c</itemPath>
-      <itemPath>../main_P6_OCPWM_v1.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -256,7 +260,6 @@
         <property key="UART 1" value="true"/>
         <property key="UART 2" value="true"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
-        <property key="firmware.download.all" value="false"/>
         <property key="hwtoolclock.frcindebug" value="false"/>
         <property key="hwtoolclock.instructionspeed" value="4"/>
         <property key="hwtoolclock.units" value="mips"/>
