@@ -35,7 +35,7 @@ unsigned int flag_Duty_LCD = 1; //cuando duty0 cambia, se hace la conversion par
 
 void visualizar_Duty(){
     //if (flag_Duty_LCD==1){
-        conversion_4dig(&Ventana_LCD[0][posduty],duty0);  // Guardar valor de duty0 en Ventana_LCD para su visualizacion en la pantalla
+        //conversion_4dig(&Ventana_LCD[0][posduty],duty0);  // Guardar valor de duty0 en Ventana_LCD para su visualizacion en la pantalla
     //}else if (flag_Duty_LCD==2){
         //conversion_4dig(&Ventana_LCD[0][posduty],duty1); //Descomentar para visualizar duty1 // Guardar valor de duty1 en Ventana_LCD para su visualizacion en la pantalla
     //}

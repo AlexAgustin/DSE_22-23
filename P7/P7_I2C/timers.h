@@ -27,4 +27,6 @@ void cronometro();
 void inic_Timer5 ();
 void inic_Timer3 ();
 void inic_Timer2_PWM ();
+void inic_Timer6();
+void restart_Timer6();
 

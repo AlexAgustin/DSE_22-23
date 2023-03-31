@@ -26,6 +26,7 @@ Fecha: Marzo 2023
 #include "OCPWM.h"
 #include "timers.h"
 #include "i2c_funciones.h"
+#include "srf08.h"
 
 void cronometro();
 
@@ -315,12 +316,12 @@ void _ISR_NO_PSV _T2Interrupt(){
 void inic_Timer6(){
     //Inicializar modulo T6
     TMR6 = 0; // Inicializar el registro de cuenta
-    PR6 =  40625-1 ;	// Periodo del timer
-        // Inicialmente queremos que cuente 65 ms.
+    PR6 =  43750-1 ;	// Periodo del timer
+        // Inicialmente queremos que cuente 70 ms.
 		// Fosc= 80 MHz (vease Inic_oscilator()) de modo que
 		// Fcy = 40 MHz (cada instruccion dos ciclos de reloj)
 		// Por tanto, Tcy= 25 ns para ejecutar una instruccion
-        // Para contar 65 ms se necesitan 2.600.000 ciclos.
+        // Para contar 70 ms se necesitan 2.800.000 ciclos.
     
     T6CONbits.TCKPS = 2;	// escala del prescaler 1:64
     T6CONbits.TCS = 0;	// reloj interno

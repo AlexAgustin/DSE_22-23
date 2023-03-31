@@ -44,6 +44,7 @@ Fecha: Merzo 2023
 #include "ADC1.h"
 #include "OCPWM.h"
 #include "srf08.h"
+#include "i2c_funciones.h"
 
 
 int main()
@@ -93,7 +94,11 @@ int main()
     inic_ADC1();    //Inicializar el modulo ADC1
     inic_PWM(); // Inicializar las variables requeridas para la gestion de PWM
     inic_Timer2_PWM();  //Inicializar el temporizador T2
-    inic_medicion_dis(); // Puesta en marcha de una nueva medicion
+    InitI2C_1();
+    if (inic_medicion_dis(dirsI2C)){ // Puesta en marcha de una nueva medicion
+       LATAbits.LATA3=1; //activar led 6
+       while(1);
+    }
     inic_Timer6();  // Inicializar el temporizador T6 
     //comienzo_muestreo();    //Comenzar con el muestro de las senhales analogicas
     
@@ -108,8 +113,8 @@ int main()
             tratar_valorADC1(); // Calcular la media de las muestras tomadas y visualizar la informacion pertinente
         if (flag_Duty_LCD!=0) // Cuando se actualiza el valor de duty0 y se pone a 1 el flag correspondiente (flag_Duty_LCD) ...
             visualizar_Duty(); // se guarda el valor de duty0 en Ventana_LCD para su visualizacion en la pantalla
-        if(flag_dist) //Si se puede leer la medicion de la distancia...
-            gestion_dis();  //Gestionar la medicion de la distancia
+        if(flag_dis) //Si se puede leer la medicion de la distancia...
+            gestion_dis(dirsI2C);  //Gestionar la medicion de la distancia
     }
     
 	return (0);

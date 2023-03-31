@@ -92,6 +92,6 @@
 #define MAXPWM 2.1      // Duracion maxima pulso PWM (en milisegundos)
 
 // Definiciones relacionadas con el bus I2C
-#define dirI2C 0xE2
+#define dirsI2C 0xEE
 
 

@@ -1,5 +1,3 @@
-
-
 // Funciones visibles desde otros ficheros
 void gestion_dis(unsigned char dirI2C);
 unsigned int inic_medicion_dis (unsigned char dirI2C);
