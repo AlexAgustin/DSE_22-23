@@ -46,9 +46,10 @@ Fecha: Merzo 2023
 #include "srf08.h"
 #include "i2c_funciones.h"
 
-
 int main()
 {
+    unsigned char dirI2C;
+    
     inic_oscilator();	// Seleccion e inicializacion del reloj: 80 MHz
     
     Init_LCD(); //Inicializacion del LCD
@@ -95,7 +96,20 @@ int main()
     inic_PWM(); // Inicializar las variables requeridas para la gestion de PWM
     inic_Timer2_PWM();  //Inicializar el temporizador T2
     InitI2C_1();
-    if (inic_medicion_dis(dirsI2C)){ // Puesta en marcha de una nueva medicion
+    
+    if (detectar_direccion (&dirI2C)) {
+        LATAbits.LATA7=1; // Encender led D10
+        while(1); //Espera infinita
+    }
+    Nop();
+    Nop();
+    Nop();
+    cambiar_direccion (dirI2C, newdirsI2C);
+    
+    dirI2C=newdirsI2C;
+    
+    
+    if (inic_medicion_dis(dirI2C)){ // Puesta en marcha de una nueva medicion
        LATAbits.LATA3=1; //activar led 6
        while(1);
     }
@@ -114,7 +128,7 @@ int main()
         if (flag_Duty_LCD!=0) // Cuando se actualiza el valor de duty0 y se pone a 1 el flag correspondiente (flag_Duty_LCD) ...
             visualizar_Duty(); // se guarda el valor de duty0 en Ventana_LCD para su visualizacion en la pantalla
         if(flag_dis) //Si se puede leer la medicion de la distancia...
-            gestion_dis(dirsI2C);  //Gestionar la medicion de la distancia
+            gestion_dis(dirI2C);  //Gestionar la medicion de la distancia
     }
     
 	return (0);

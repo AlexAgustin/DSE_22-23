@@ -82,9 +82,15 @@ unsigned int detectar_direccion (unsigned char *dirI2C)
  // Si el sensor responde, la funcion devuelve 0 y actualiza el parametro dirI2C
  // Si no responde ningun sensor, devuelve 1
 {
-   // A completar
-    //Bucle de comprobaciones del registro 0 de las direcciones de sensores.
-    //Ir variando la direccion del sensor hasta que devuelva algo que no se ni 00 ni FF
-    return(0);
+    unsigned char dis;
+    unsigned char i;
+    for (i=0xE0; i<=0xFE;i+=2){
+        LDByteReadI2C_1(i,REG_COM,&dis,1);
+        if (dis!=0xFF && dis!=0x00) {
+            *dirI2C = i;
+            return (0);
+        }
+    }
+    return(1);
 }
 
