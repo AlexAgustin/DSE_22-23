@@ -2,7 +2,7 @@
 ;   Programa adaptado: i2c_Func.c  ;February 21, 2007   ;Martin Bowman                                                            
 ;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;	Filename:	i2c_funtzioak.c            
-;	Date:       March, 2022                                		    
+;	Date:       March, 2023                                		    
 ;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 #include <p24HJ256GP610A.h>
 

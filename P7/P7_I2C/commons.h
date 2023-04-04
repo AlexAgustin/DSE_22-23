@@ -93,7 +93,7 @@
 
 // Definiciones relacionadas con el bus I2C
 //==========================================
-#define newdirsI2C 0xEE //Direccion del esclavo
+#define newdirsI2C 0xEE //Direccion a asignar al sensor
 #define REG_COM 0 //Registro de comandos
 #define REG_DATA 2 //Registro de datos
 

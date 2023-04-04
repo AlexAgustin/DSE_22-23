@@ -330,19 +330,19 @@ void inic_Timer6(){
     IEC2bits.T6IE = 1;      // habilitar la interrupcion general de T6
     IFS2bits.T6IF = 0;      // Puesta a 0 del flag IF del temporizador 6
     
-    T6CONbits.TON = 1;	// encender el timer
+    T6CONbits.TON = 1;	// encender el timer T6
 }
 
 void _ISR_NO_PSV _T6Interrupt(){
     flag_dis = 1; //Poner a 1 el flag para realizar la medicion de la distancia
-    T6CONbits.TON = 0;	// apagar el timer
+    T6CONbits.TON = 0;	// apagar el timer T6
     IFS2bits.T6IF = 0;      // Puesta a 0 del flag IF del temporizador 6
 }
 
 
 void restart_Timer6(){
     TMR6 = 0; // Inicializar el registro de cuenta
-    T6CONbits.TON = 1;	// encender el timer
+    T6CONbits.TON = 1;	// encender el timer T6
 }
 
 

@@ -5,8 +5,9 @@ S4 para inicializar el cronometro (encuesta de S4).
 Una vez pulsado, se inicializa el cronometro y se muestra tanto por pantalla como en los leds el 
 tiempo transcurrido (led D3 -> ms, led D5 -> seg, led D9 -> min). 
 Tambien se mostrara la media de las muestras tomadas de la potencia 
-(hay que cambiar el codigo para ver la temperatura/coordenada X/coordenada Y ).
-Ademas, se mostrara duty0. 
+(hay que cambiar el codigo para ver la temperatura/coordenada X/coordenada Y/duty0/duty1 ).
+Se detecta la direccion del sensor conectado y se modifica su valor mediante la constante newdirsI2C (commos.h).
+Ademas, se mostrara la distacia recogida por el sensor. 
 Mencionar que en esta version se gestionan 2 servomotores con un unico temporizador.
 
 A partir de este punto se permite la interrupcion de los pulsadores S3, S4 y S6:
@@ -48,7 +49,7 @@ Fecha: Merzo 2023
 
 int main()
 {
-    unsigned char dirI2C;
+    unsigned char dirI2C; //Variable que representa la direccion del sensor
     
     inic_oscilator();	// Seleccion e inicializacion del reloj: 80 MHz
     
@@ -95,23 +96,28 @@ int main()
     inic_ADC1();    //Inicializar el modulo ADC1
     inic_PWM(); // Inicializar las variables requeridas para la gestion de PWM
     inic_Timer2_PWM();  //Inicializar el temporizador T2
-    InitI2C_1();
+    InitI2C_1();    //Inicializar el modulo I2C
     
-    if (detectar_direccion (&dirI2C)) {
+    
+    if (detectar_direccion (&dirI2C)) { //Detectar la direccion del sensor
+        //No se ha encontrado ningun sensor conectado
         LATAbits.LATA7=1; // Encender led D10
         while(1); //Espera infinita
     }
     Nop();
     Nop();
-    Nop();
-    cambiar_direccion (dirI2C, newdirsI2C);
+    cambiar_direccion (dirI2C, newdirsI2C); //Cambiar la direccion del sensor
     
-    dirI2C=newdirsI2C;
-    
+    if (detectar_direccion (&dirI2C)) { //Detectar la nueva direccion del sensor
+        //No se ha encontrado ningun sensor conectado
+        LATAbits.LATA7=1; // Encender led D10
+        while(1); //Espera infinita
+    }
     
     if (inic_medicion_dis(dirI2C)){ // Puesta en marcha de una nueva medicion
-       LATAbits.LATA3=1; //activar led 6
-       while(1);
+        //Ha ocurrido un error en la puesta en marcha de la medicion
+        LATAbits.LATA3=1; //activar led 6
+        while(1); //Espera infinita
     }
     inic_Timer6();  // Inicializar el temporizador T6 
     //comienzo_muestreo();    //Comenzar con el muestro de las senhales analogicas

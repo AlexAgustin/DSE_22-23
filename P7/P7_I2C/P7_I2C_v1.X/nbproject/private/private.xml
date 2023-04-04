@@ -3,17 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/xelab/Documents/Uni/Curso3/Cuatri2/DSE/DSE_22-23/P7/P7_I2C/GPIO.c</file>
-            <file>file:/C:/Users/xelab/Documents/Uni/Curso3/Cuatri2/DSE/DSE_22-23/P7/P7_I2C/OCPWM.c</file>
             <file>file:/C:/Users/xelab/Documents/Uni/Curso3/Cuatri2/DSE/DSE_22-23/P7/P7_I2C/i2c_funciones.c</file>
             <file>file:/C:/Users/xelab/Documents/Uni/Curso3/Cuatri2/DSE/DSE_22-23/P7/P7_I2C/srf08.c</file>
-            <file>file:/C:/Users/xelab/Documents/Uni/Curso3/Cuatri2/DSE/DSE_22-23/P7/P7_I2C/utilidades.c</file>
-            <file>file:/C:/Users/xelab/Documents/Uni/Curso3/Cuatri2/DSE/DSE_22-23/P7/P7_I2C/srf08.h</file>
+            <file>file:/C:/Users/xelab/Documents/Uni/Curso3/Cuatri2/DSE/DSE_22-23/P7/P7_I2C/timers.h</file>
             <file>file:/C:/Users/xelab/Documents/Uni/Curso3/Cuatri2/DSE/DSE_22-23/P7/P7_I2C/main_P7_I2C_v1.c</file>
             <file>file:/C:/Users/xelab/Documents/Uni/Curso3/Cuatri2/DSE/DSE_22-23/P7/P7_I2C/commons.h</file>
-            <file>file:/C:/Users/xelab/Documents/Uni/Curso3/Cuatri2/DSE/DSE_22-23/P7/P7_I2C/memoria.c</file>
             <file>file:/C:/Users/xelab/Documents/Uni/Curso3/Cuatri2/DSE/DSE_22-23/P7/P7_I2C/timers.c</file>
-            <file>file:/C:/Users/xelab/Documents/Uni/Curso3/Cuatri2/DSE/DSE_22-23/P7/P7_I2C/ADC1.c</file>
         </group>
     </open-files>
 </project-private>
