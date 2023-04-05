@@ -58,7 +58,7 @@ unsigned int leer_medicion (unsigned char dirI2C, unsigned char *dis)
  // Parametro dis proporciona la direccion de un array en el que devolver la medicion
  // Cada medicion 2 bytes
 {
-   return(LDByteReadI2C_1(dirI2C,REG_DATA,dis,2));  //Leer del registro 2 (distancia) del esclavo (dirI2C)
+   return(LDByteReadI2C_1(dirI2C,REG_DATA,dis,2));  //Leer a partir del registro 2 (distancia) del esclavo (dirI2C)
                                                     //los dos bytes corresponientes a la distancia media.
 }
 
