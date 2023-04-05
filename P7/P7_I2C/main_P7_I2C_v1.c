@@ -116,7 +116,7 @@ int main()
     
     if (inic_medicion_dis(dirI2C)){ // Puesta en marcha de una nueva medicion
         //Ha ocurrido un error en la puesta en marcha de la medicion
-        LATAbits.LATA3=1; //activar led 6
+        LATAbits.LATA3=1; //Encender led 6
         while(1); //Espera infinita
     }
     inic_Timer6();  // Inicializar el temporizador T6 
