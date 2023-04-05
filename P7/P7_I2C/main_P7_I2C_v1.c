@@ -109,7 +109,7 @@ int main()
     cambiar_direccion (dirI2C, newdirsI2C); //Cambiar la direccion del sensor
     
     if (detectar_direccion (&dirI2C)) { //Detectar la nueva direccion del sensor
-        //No se ha encontrado ningun sensor conectado
+        //Comportamiento inesperado
         LATAbits.LATA7=1; // Encender led D10
         while(1); //Espera infinita
     }
