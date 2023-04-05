@@ -3,7 +3,7 @@ Funciones para utilizar el sensor de distancia.
 
 Contiene las funciones para gestionar la medicion de la distancia, 
 iniciar la medicion, leer la medicion, 
-cambiar la direccion y detectar la direccion.
+cambiar la direccion del sensor y detectar la direccion del sensor.
 
 Autoras/es: Alex y Amanda
 
