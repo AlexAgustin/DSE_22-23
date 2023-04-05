@@ -4,11 +4,11 @@ Tool Name:
   c:\program files (x86)\microchip\xc16\v1.36\bin\bin\..\bin/elf-ld.exe
 
 Command:
-  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00004e60.00 \
-  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00004e60.01 \
-  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00004e60.02 \
-  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00004e60.03 \
-  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00004e60.04 \
+  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp000042e8.00 \
+  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp000042e8.01 \
+  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp000042e8.02 \
+  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp000042e8.03 \
+  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp000042e8.04 \
   -p24HJ256GP610A \
   -o \
   dist/default/debug/P7_I2C_v1.X.debug.elf \
@@ -100,11 +100,11 @@ section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0x796           0xb61  (2913)
 .const                       0x996                0x6a            0x9f  (159)
-.text                        0xa00               0xb8c          0x1152  (4434)
-.dinit                      0x158c                0x4a            0x6f  (111)
-.text                       0x15d6                0xac           0x102  (258)
+.text                        0xa00               0xb94          0x115e  (4446)
+.dinit                      0x1594                0x4a            0x6f  (111)
+.text                       0x15de                0xac           0x102  (258)
 
-                 Total "program" memory used (bytes):         0x1ec3  (7875) 3%
+                 Total "program" memory used (bytes):         0x1ecf  (7887) 3%
 
 
 "data" Memory  [Origin = 0x800, Length = 0x4000]
@@ -258,22 +258,22 @@ External Symbols in Program Memory (by address):
                   0x001260                  _puts_lcd
                   0x001284                  _line_1
                   0x001292                  _line_2
-                  0x0012a0                  _main
-                  0x001386                  _gestion_dis
-                  0x0013c4                  _inic_medicion_dis
-                  0x0013d4                  _leer_medicion
-                  0x0013e8                  _cambiar_direccion
-                  0x001426                  _detectar_direccion
-                  0x001466                  _conversion_tiempo
-                  0x0014ae                  _conversion_4dig
-                  0x00153a                  _inic_oscilator
-                  0x0015d6                  _copiar_FLASH_RAM
-                  0x001600                  _visualizar_Duty
-                  0x001608                  _inic_PWM
-                  0x001628                  _inic_pulsadores
-                  0x001638                  _inic_leds
-                  0x00164e                  _inic_UART2
-                  0x001672                  _inic_CN
+                  0x0012a0                  _gestion_dis
+                  0x0012de                  _inic_medicion_dis
+                  0x0012ee                  _leer_medicion
+                  0x001302                  _cambiar_direccion
+                  0x001340                  _detectar_direccion
+                  0x001388                  _main
+                  0x00146e                  _conversion_tiempo
+                  0x0014b6                  _conversion_4dig
+                  0x001542                  _inic_oscilator
+                  0x0015de                  _copiar_FLASH_RAM
+                  0x001608                  _visualizar_Duty
+                  0x001610                  _inic_PWM
+                  0x001630                  _inic_pulsadores
+                  0x001640                  _inic_leds
+                  0x001656                  _inic_UART2
+                  0x00167a                  _inic_CN
 
 External Symbols in Program Memory (by name):
 
@@ -323,41 +323,41 @@ External Symbols in Program Memory (by name):
                   0x0008a0                  __funpack2
                   0x00023c                  __psv_init
                   0x000200                  __resetPRI
-                  0x0013e8                  _cambiar_direccion
+                  0x001302                  _cambiar_direccion
                   0x001084                  _comienzo_muestreo
-                  0x0014ae                  _conversion_4dig
-                  0x001466                  _conversion_tiempo
-                  0x0015d6                  _copiar_FLASH_RAM
+                  0x0014b6                  _conversion_4dig
+                  0x00146e                  _conversion_tiempo
+                  0x0015de                  _copiar_FLASH_RAM
                   0x000ec0                  _cronometro
-                  0x001426                  _detectar_direccion
-                  0x001386                  _gestion_dis
+                  0x001340                  _detectar_direccion
+                  0x0012a0                  _gestion_dis
                   0x000b98                  _getI2C_1
                   0x000be0                  _getsI2C_1
                   0x001036                  _inic_ADC1
-                  0x001672                  _inic_CN
-                  0x001608                  _inic_PWM
+                  0x00167a                  _inic_CN
+                  0x001610                  _inic_PWM
                   0x000fec                  _inic_Timer2_PWM
                   0x000fce                  _inic_Timer3
                   0x000fae                  _inic_Timer5
                   0x00100c                  _inic_Timer6
                   0x000e92                  _inic_Timer7
                   0x000d2e                  _inic_Timer9
-                  0x00164e                  _inic_UART2
+                  0x001656                  _inic_UART2
                   0x000eb2                  _inic_crono
-                  0x001638                  _inic_leds
-                  0x0013c4                  _inic_medicion_dis
-                  0x00153a                  _inic_oscilator
-                  0x001628                  _inic_pulsadores
+                  0x001640                  _inic_leds
+                  0x0012de                  _inic_medicion_dis
+                  0x001542                  _inic_oscilator
+                  0x001630                  _inic_pulsadores
                   0x00119c                  _lcd_cmd
                   0x0011d2                  _lcd_data
-                  0x0013d4                  _leer_medicion
+                  0x0012ee                  _leer_medicion
                   0x001284                  _line_1
                   0x001292                  _line_2
-                  0x0012a0                  _main
+                  0x001388                  _main
                   0x001260                  _puts_lcd
                   0x00102c                  _restart_Timer6
                   0x00108c                  _tratar_valorADC1
-                  0x001600                  _visualizar_Duty
+                  0x001608                  _visualizar_Duty
 
 Memory Configuration
 
@@ -597,7 +597,7 @@ __FUID3
  .debug_abbrev    0x000a17        0x1cd build/default/debug/_ext/1472/timers.o
  .debug_abbrev    0x000be4         0x91 build/default/debug/_ext/1472/utilidades.o
 
-.debug_line       0x000000        0xf00
+.debug_line       0x000000        0xf02
  *(.debug_line)
  .debug_line      0x000000        0x17f build/default/debug/_ext/1472/ADC1.o
  .debug_line      0x00017f        0x126 build/default/debug/_ext/1472/CN.o
@@ -609,9 +609,9 @@ __FUID3
  .debug_line      0x0008c1        0x16b build/default/debug/_ext/1472/main_P7_I2C_v1.o
  .debug_line      0x000a2c         0x3c build/default/debug/_ext/1472/memoria.o
  .debug_line      0x000a68         0xf8 build/default/debug/_ext/1472/oscilator.o
- .debug_line      0x000b60        0x133 build/default/debug/_ext/1472/srf08.o
- .debug_line      0x000c93        0x211 build/default/debug/_ext/1472/timers.o
- .debug_line      0x000ea4         0x5c build/default/debug/_ext/1472/utilidades.o
+ .debug_line      0x000b60        0x135 build/default/debug/_ext/1472/srf08.o
+ .debug_line      0x000c95        0x211 build/default/debug/_ext/1472/timers.o
+ .debug_line      0x000ea6         0x5c build/default/debug/_ext/1472/utilidades.o
 
 .debug_frame      0x000000        0x7b6
  *(.debug_frame)
@@ -2060,7 +2060,7 @@ __c30_signature
                     0x89eb                  _Mens_LCD_6
  .const             0x89fc          0x4 build/default/debug/_ext/1472/UART2_RS232.o
 
-.text             0x000a00        0xb8c
+.text             0x000a00        0xb94
  .text            0x000a00        0x32e build/default/debug/_ext/1472/i2c_funciones.o
                   0x000a00                  _InitI2C_1
                   0x000a10                  _StartI2C_1
@@ -2098,33 +2098,33 @@ __c30_signature
                   0x001260                  _puts_lcd
                   0x001284                  _line_1
                   0x001292                  _line_2
- .text            0x0012a0         0xe6 build/default/debug/_ext/1472/main_P7_I2C_v1.o
-                  0x0012a0                  _main
- .text            0x001386         0xe0 build/default/debug/_ext/1472/srf08.o
-                  0x001386                  _gestion_dis
-                  0x0013c4                  _inic_medicion_dis
-                  0x0013d4                  _leer_medicion
-                  0x0013e8                  _cambiar_direccion
-                  0x001426                  _detectar_direccion
- .text            0x001466         0xd4 build/default/debug/_ext/1472/utilidades.o
-                  0x001466                  _conversion_tiempo
-                  0x0014ae                  _conversion_4dig
- .text            0x00153a         0x52 build/default/debug/_ext/1472/oscilator.o
-                  0x00153a                  _inic_oscilator
+ .text            0x0012a0         0xe8 build/default/debug/_ext/1472/srf08.o
+                  0x0012a0                  _gestion_dis
+                  0x0012de                  _inic_medicion_dis
+                  0x0012ee                  _leer_medicion
+                  0x001302                  _cambiar_direccion
+                  0x001340                  _detectar_direccion
+ .text            0x001388         0xe6 build/default/debug/_ext/1472/main_P7_I2C_v1.o
+                  0x001388                  _main
+ .text            0x00146e         0xd4 build/default/debug/_ext/1472/utilidades.o
+                  0x00146e                  _conversion_tiempo
+                  0x0014b6                  _conversion_4dig
+ .text            0x001542         0x52 build/default/debug/_ext/1472/oscilator.o
+                  0x001542                  _inic_oscilator
 
-.dinit            0x00158c         0x4a
- .dinit           0x00158c         0x4a data_init
+.dinit            0x001594         0x4a
+ .dinit           0x001594         0x4a data_init
 
-.text             0x0015d6         0xac
- .text            0x0015d6         0x2a build/default/debug/_ext/1472/memoria.o
-                  0x0015d6                  _copiar_FLASH_RAM
- .text            0x001600         0x28 build/default/debug/_ext/1472/OCPWM.o
-                  0x001600                  _visualizar_Duty
-                  0x001608                  _inic_PWM
- .text            0x001628         0x26 build/default/debug/_ext/1472/GPIO.o
-                  0x001628                  _inic_pulsadores
-                  0x001638                  _inic_leds
- .text            0x00164e         0x24 build/default/debug/_ext/1472/UART2_RS232.o
-                  0x00164e                  _inic_UART2
- .text            0x001672         0x10 build/default/debug/_ext/1472/CN.o
-                  0x001672                  _inic_CN
+.text             0x0015de         0xac
+ .text            0x0015de         0x2a build/default/debug/_ext/1472/memoria.o
+                  0x0015de                  _copiar_FLASH_RAM
+ .text            0x001608         0x28 build/default/debug/_ext/1472/OCPWM.o
+                  0x001608                  _visualizar_Duty
+                  0x001610                  _inic_PWM
+ .text            0x001630         0x26 build/default/debug/_ext/1472/GPIO.o
+                  0x001630                  _inic_pulsadores
+                  0x001640                  _inic_leds
+ .text            0x001656         0x24 build/default/debug/_ext/1472/UART2_RS232.o
+                  0x001656                  _inic_UART2
+ .text            0x00167a         0x10 build/default/debug/_ext/1472/CN.o
+                  0x00167a                  _inic_CN

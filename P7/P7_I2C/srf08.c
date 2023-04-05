@@ -1,7 +1,7 @@
 /*
 Funciones para utilizar el sensor de distancia.
 
-Contiene las funciones para gesetionar la medicion de la distancia, 
+Contiene las funciones para gestionar la medicion de la distancia, 
 iniciar la medicion, leer la medicion, 
 cambiar la direccion y detectar la direccion.
 
@@ -88,7 +88,11 @@ unsigned int detectar_direccion (unsigned char *dirI2C)
     unsigned char dis=0x00;
     unsigned char i;
     for (i=0xE0; i<=0xFE;i+=2){ //Iteracion de las posibles direcciones que puede tener el sensor
-        LDByteReadI2C_1(i,REG_COM,&dis,1); //Lectura del registro de comandos
+        if (LDByteReadI2C_1(i,REG_COM,&dis,1) ) { //Lectura del registro de comandos
+            //Se ha dado un error en la lectura
+            LATAbits.LATA1=1; // Encender led D4
+            while(1); //Espera infinita
+        }
         if (dis!=0xFF && dis!=0x00) { //Comprobacion de la lectura recibida del registro
             Nop();
             Nop();
@@ -96,7 +100,7 @@ unsigned int detectar_direccion (unsigned char *dirI2C)
             return (0);
         }
     }
-    //No se ha encontrado ningun sensor conectado
+    //Comportamiento inesperado
     return(1);
 }
 

@@ -100,7 +100,7 @@ int main()
     
     
     if (detectar_direccion (&dirI2C)) { //Detectar la direccion del sensor
-        //No se ha encontrado ningun sensor conectado
+        //Comportamiento inesperado
         LATAbits.LATA7=1; // Encender led D10
         while(1); //Espera infinita
     }
