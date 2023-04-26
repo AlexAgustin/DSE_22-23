@@ -1,5 +1,7 @@
 // Exporta variables y funciones invocadas en otros modulos
 
+// CONSTANTES
+//=========================================================
 #define LCD_LINE1 0
 #define LCD_DATA1 1
 #define LCD_LINE2 2
@@ -7,17 +9,21 @@
 
 #define PWM0_ACTIVE 0
 #define PWM1_ACTIVE 1
-#define PWM_RESTO 2
+#define PWM2_ACTIVE 2
+#define PWM3_ACTIVE 3
+#define PWM4_ACTIVE 4
+#define PWM_RESTO 5
 
 
+// VARIABLES
+//=========================================================
 extern int inicializar_crono; //Flag para inicializar el cronometro
-extern unsigned int flag_PWM_T2;
-extern unsigned int duty0;
-extern unsigned int duty1;
-extern unsigned int estado_PWM;
+extern unsigned int flag_PWM_T2; 
 
+// FUNCIONES
 // declaracion de las funciones relacionadas con los temporizadores
 // que se usan en otros modulos
+//=========================================================
 void inic_Timer9(unsigned long ciclos);
 void Delay_ms(unsigned int ms);
 void Delay_us(unsigned int us);

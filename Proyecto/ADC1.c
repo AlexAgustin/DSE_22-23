@@ -17,6 +17,7 @@ unsigned int Poten_value[8];
 unsigned int Temp_value[8];
 unsigned int X_value[8];
 unsigned int Y_value[8];
+unsigned int Z_value[8];
 int flag_ADC =0;
 unsigned long num_conversiones=0;
 
@@ -80,6 +81,7 @@ AD1PCFGLbits.PCFG5=0;   // potenciometro
 AD1PCFGLbits.PCFG4=0;   // sensor temperatura
 AD1PCFGLbits.PCFG0=0;   // coordenada X
 AD1PCFGLbits.PCFG1=0;   // coordenada Y
+AD1PCFGLbits.PCFG2=0;   // coordenada Z
 
 
 // Bits y campos relacionados con las interrupciones
@@ -92,11 +94,6 @@ AD1CON1bits.ADON=1;  // Habilitar el modulo ADC
 }
 
 
-// Comienzo del muestreo por programa
-void comienzo_muestreo ()
-{
-    AD1CON1bits.SAMP=1; // Comienza el muestreo y 31Tad despues comienza la digit
-}
 
 // Funcion que calcula la media de las muestras tomadas y prepara los datos para ser visualizados
 void tratar_valorADC1 () 
@@ -111,6 +108,7 @@ void tratar_valorADC1 ()
         Temp_media += Temp_value[i]; //temperatura
         X_media += X_value[i]; //coordenada x
         Y_media += Y_value[i]; //coordenada y
+        Z_media += Z_value[i]; //coordenada z
     }
     
     //Dividir la suma realizada por el numero de muestras tomadas
@@ -118,17 +116,23 @@ void tratar_valorADC1 ()
     Temp_media = Temp_media / INDIV_MUESTRAS;
     X_media = X_media / INDIV_MUESTRAS;
     Y_media = Y_media / INDIV_MUESTRAS;
+    Z_media = Z_media / INDIV_MUESTRAS;
     
     if(!flag_DUTY){ //Si flag_DUTY==0 se obtiene duty0 a partir de la potencia
         duty0 = (Poten_media/1023) * (DUTY_MAX - DUTY_MIN) + DUTY_MIN; // Obtener duty0 a partir de la potencia
-        flag_Duty_LCD = 1; // Poner a 1 el flag para guardar el nuevo valor de duty0 en Ventana_LCD para su visualizacion en la pantalla
+        duty1 = (Temp_media/999) * (DUTY_MAX - DUTY_MIN) + DUTY_MIN; // Obtener duty1 a partir de la temperatura
+        duty2 = (X_media/9999) * (DUTY_MAX - DUTY_MIN) + DUTY_MIN; // Obtener duty2 a partir de la coordenada X
+        duty3 = (Y_media/9999) * (DUTY_MAX - DUTY_MIN) + DUTY_MIN; // Obtener duty3 a partir de la coordenada Y
+        duty4 = (Z_media/9999) * (DUTY_MAX - DUTY_MIN) + DUTY_MIN; // Obtener duty4 a partir de la coordenada Z
+        flag_Duty_LCD = 1; // Poner a 1 el flag para guardar el nuevo valor de duty[0-4] en Ventana_LCD para su visualizacion en la pantalla
     }
 
     //Escribir el valor de cada dato a visualizar en la posicion correspondiente de Ventana_LCD
-    conversion_4dig(&Ventana_LCD[0][pospoten],Poten_media); 
-    //conversion_4dig(&Ventana_LCD[0][postemp],Temp_media); 
-    //conversion_4dig(&Ventana_LCD[0][posx],X_media); 
-    //conversion_4dig(&Ventana_LCD[0][posy],Y_media);
+    conversion_4dig(&Ventana_LCD[filapoten][pos4dig],Poten_media); 
+    conversion_4dig(&Ventana_LCD[filatemp][pos3dig],Temp_media); 
+    conversion_4dig(&Ventana_LCD[filax][pos4dig],X_media); 
+    conversion_4dig(&Ventana_LCD[filay][pos4dig],Y_media);
+    conversion_4dig(&Ventana_LCD[filaz][pos4dig],Z_media);
     
     flag_ADC=0; //Puesta a 0 del flag 
 }
@@ -150,13 +154,17 @@ void _ISR_NO_PSV _ADC1Interrupt(){
                 AD1CHS0bits.CH0SA = coordx; //Se define la siguiente senhal a muestrear
                 num_muestras++; //Incrementar el numero de muestras tomadas
                 break;
-            case coordx: //entrada de la coordenada x del joystick
+            case coordx: //entrada de la coordenada X del joystick
                 X_value[i] = ADC1BUF0; //Se guarde el valor recogido en la posicion de la tabla de muestras que le corresponde
                 AD1CHS0bits.CH0SA = coordy; //Se define la siguiente senhal a muestrear
                 num_muestras ++; //Incrementar el numero de muestras tomadas
                 break;
-            case coordy: //entrada de la coordenada y del joystick
+            case coordy: //entrada de la coordenada Y del joystick
                 Y_value[i] = ADC1BUF0; //Se guarde el valor recogido en la posicion de la tabla de muestras que le corresponde
+                AD1CHS0bits.CH0SA = coordz; //Se define la siguiente senhal a muestrear
+                num_muestras ++; //Incrementar el numero de muestras tomadas
+            case coordz: //entrada de la coordenada Z del joystick
+                Z_value[i] = ADC1BUF0; //Se guarde el valor recogido en la posicion de la tabla de muestras que le corresponde
                 AD1CHS0bits.CH0SA = potenciometro; //Se define la siguiente senhal a muestrear
                 num_muestras ++; //Incrementar el numero de muestras tomadas
                 i++; //incrementar la posicion de la tabla de muestras (indice de escritura)

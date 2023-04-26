@@ -35,9 +35,6 @@ int sum=0;
 //Variables globales
 int inicializar_crono = 0;
 unsigned int mili,deci,seg,min;
-unsigned int duty0;
-unsigned int duty1;
-unsigned int estado_PWM;
 
 
 // inicializacion del timer 9
@@ -300,6 +297,27 @@ void _ISR_NO_PSV _T2Interrupt(){
             LATDbits.LATD1 = 1; // Puesta a 1 (RD1)
             PR2 = duty1; //Determinar periodo del temporizador 2 a partir de duty1
             sum+=duty1; // Acumular ciclos transcurridos
+            estado_PWM = PWM2_ACTIVE; // Estado siguiente: senhales desactivadas
+            break;
+        case PWM2_ACTIVE: //Activar PWM (2)
+            LATDbits.LATD1 = 0; // Puesta a 0 (RD1)
+            LATDbits.LATD2 = 1; // Puesta a 1 (RD2)
+            PR2 = duty2; //Determinar periodo del temporizador 2 a partir de duty2
+            sum+=duty2; // Acumular ciclos transcurridos
+            estado_PWM = PWM3_ACTIVE; // Estado siguiente: senhales desactivadas
+            break;
+        case PWM3_ACTIVE: //Activar PWM (3)
+            LATDbits.LATD2 = 0; // Puesta a 0 (RD2)
+            LATDbits.LATD3 = 1; // Puesta a 1 (RD3)
+            PR2 = duty3; //Determinar periodo del temporizador 2 a partir de duty3
+            sum+=duty3; // Acumular ciclos transcurridos
+            estado_PWM = PWM4_ACTIVE; // Estado siguiente: senhales desactivadas
+            break;
+        case PWM4_ACTIVE: //Activar PWM (4)
+            LATDbits.LATD3 = 0; // Puesta a 0 (RD3)
+            LATDbits.LATD4 = 1; // Puesta a 1 (RD4)
+            PR2 = duty4; //Determinar periodo del temporizador 2 a partir de duty4
+            sum+=duty4; // Acumular ciclos transcurridos
             estado_PWM = PWM_RESTO; // Estado siguiente: senhales desactivadas
             break;
         case PWM_RESTO: // Senhales desactivadas

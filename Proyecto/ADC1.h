@@ -1,9 +1,6 @@
 
 // Funciones que se llaman desde otros modulos
-
-
 void inic_ADC1 ();
-void comienzo_muestreo ();
 void tratar_valorADC1 ();
 
 // variables usadas en otros modulos

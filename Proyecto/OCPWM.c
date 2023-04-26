@@ -18,27 +18,25 @@ unsigned int DUTY_MAX=(PR20ms/20) * MAXPWM;	// mediante los "define" PR20ms, MIN
 unsigned int flag_DUTY = 1;  // duty0 se gestionara por defecto a traves de UART
 unsigned int flag_Duty_LCD = 1; //cuando duty0 cambia, se hace la conversion para visualizarlo en la pantalla  (flag a 1)
 
-/*void inic_OC1 ()
-{
-    OC1CON=0; // Deshabilita modulo Output Compare
-    
-    //OC1CONbits.OCM=0b000;     // deshabilitar OC1 
-    OC1CONbits.OCTSEL=0;      // seleccionar T2 para el OC
-    
-    OC1R =  (DUTY_MAX+DUTY_MIN)/2; 		// Inicializar pulso con duracion intermedia (1,3ms))
-    OC1RS = OC1R;               // inicializar registro secundario
-
-    //conversion_ADC(&Ventana_LCD[0][posduty],OC1R);
-    
-    OC1CONbits.OCM=0b110;       // habilitar OC1 en modo PWM
-}*/
+unsigned int duty0;
+unsigned int duty1;
+unsigned int duty2;
+unsigned int duty3;
+unsigned int duty4;
+unsigned int estado_PWM;
 
 void visualizar_Duty(){
-    //if (flag_Duty_LCD==1){
-        //conversion_4dig(&Ventana_LCD[0][posduty],duty0);  // Guardar valor de duty0 en Ventana_LCD para su visualizacion en la pantalla
-    //}else if (flag_Duty_LCD==2){
-        //conversion_4dig(&Ventana_LCD[0][posduty],duty1); //Descomentar para visualizar duty1 // Guardar valor de duty1 en Ventana_LCD para su visualizacion en la pantalla
-    //}
+    if (flag_Duty_LCD==1)
+        conversion_4dig(&Ventana_LCD[filaduty01][posdutyl],duty0);  // Guardar valor de duty0 en Ventana_LCD para su visualizacion en la pantalla
+    else if (flag_Duty_LCD==2)
+        conversion_4dig(&Ventana_LCD[filaduty01][posdutyr],duty1); // Guardar valor de duty1 en Ventana_LCD para su visualizacion en la pantalla
+    else if (flag_Duty_LCD==3)
+        conversion_4dig(&Ventana_LCD[filaduty23][posdutyl],duty2); // Guardar valor de duty2 en Ventana_LCD para su visualizacion en la pantalla
+    else if (flag_Duty_LCD==4)
+        conversion_4dig(&Ventana_LCD[filaduty34][posdutyr],duty3); // Guardar valor de duty3 en Ventana_LCD para su visualizacion en la pantalla
+    else if (flag_Duty_LCD==5)
+        conversion_4dig(&Ventana_LCD[filaduty4][posdutyl],duty4); // Guardar valor de duty4 en Ventana_LCD para su visualizacion en la pantalla
+    
     
     flag_Duty_LCD = 0; //Puesta a 0 del flag para guardar duty en Ventana_LCD para su visualizacion en la pantalla
 }
@@ -47,7 +45,13 @@ void visualizar_Duty(){
 void inic_PWM(){
     estado_PWM=PWM0_ACTIVE; //Definir estado inicial
     duty0 = (DUTY_MAX+DUTY_MIN)/2; // Inicializar pulso con duracion intermedia (1,3ms))
-    duty1 = (DUTY_MAX+DUTY_MIN)/2; // Inicializar pulso con duracion intermedia (1,3ms))
+    duty1 = duty0; // Inicializar pulso con duracion intermedia (1,3ms))
+    duty2 = duty0; // Inicializar pulso con duracion intermedia (1,3ms))
+    duty3 = duty0; // Inicializar pulso con duracion intermedia (1,3ms))
+    duty4 = duty0; // Inicializar pulso con duracion intermedia (1,3ms))
     TRISDbits.TRISD0 = 0; //Definir como salida el pin que se usara para la senhal PWM (0)
     TRISDbits.TRISD1 = 0; //Definir como salida el pin que se usara para la senhal PWM (1)
+    TRISDbits.TRISD2 = 0; //Definir como salida el pin que se usara para la senhal PWM (2)
+    TRISDbits.TRISD3 = 0; //Definir como salida el pin que se usara para la senhal PWM (3)
+    TRISDbits.TRISD4 = 0; //Definir como salida el pin que se usara para la senhal PWM (4)
 }
