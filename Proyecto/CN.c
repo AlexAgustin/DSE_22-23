@@ -12,7 +12,7 @@ Fecha: Marzo 2023
 #include "OCPWM.h"
 #include "LCD.h"
 
-int cont3=0, cont4=0, cont6=0;
+int cont3=0, cont4=0, cont5=0, cont6=0;
 // Funcion para inicializar el modulo CN
 //==================
 void inic_CN()
@@ -54,7 +54,7 @@ void _ISR_NO_PSV _CNInterrupt()
         fila2--; //Actualizar segunda fila a mostrar (-1)        
         cont4 ++; //se suma uno al contador de interrupciones recibidas (S4)
     }
-    if(!PORTAbits.RA7 && fila1<16) //pulsador S5
+    if(!PORTAbits.RA7 && fila1<nfilas-1) //pulsador S5
     {
         // se ha pulsado S5: scroll hacia abajo de la informacion a mostrar en la LCD
         fila1++; //Actualizar primera fila a mostrar (+1)

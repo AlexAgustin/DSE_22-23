@@ -98,7 +98,7 @@ AD1CON1bits.ADON=1;  // Habilitar el modulo ADC
 // Funcion que calcula la media de las muestras tomadas y prepara los datos para ser visualizados
 void tratar_valorADC1 () 
 {   
-    float Poten_media = 0, Temp_media=0, X_media=0, Y_media=0;
+    float Poten_media = 0, Temp_media=0, X_media=0, Y_media=0, Z_media=0;
     int i;
 
     // Calcular la media de la potencia, temperatura, coordenada x y coordenada y

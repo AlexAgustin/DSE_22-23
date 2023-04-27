@@ -33,7 +33,7 @@ void visualizar_Duty(){
     else if (flag_Duty_LCD==3)
         conversion_4dig(&Ventana_LCD[filaduty23][posdutyl],duty2); // Guardar valor de duty2 en Ventana_LCD para su visualizacion en la pantalla
     else if (flag_Duty_LCD==4)
-        conversion_4dig(&Ventana_LCD[filaduty34][posdutyr],duty3); // Guardar valor de duty3 en Ventana_LCD para su visualizacion en la pantalla
+        conversion_4dig(&Ventana_LCD[filaduty23][posdutyr],duty3); // Guardar valor de duty3 en Ventana_LCD para su visualizacion en la pantalla
     else if (flag_Duty_LCD==5)
         conversion_4dig(&Ventana_LCD[filaduty4][posdutyl],duty4); // Guardar valor de duty4 en Ventana_LCD para su visualizacion en la pantalla
     

@@ -53,6 +53,7 @@
 #define filaduty01 11 // fila duty0 y duty1
 #define filaduty23 12 // fila duty2 y duty3
 #define filaduty4 13 // fila duty4
+#define filadis 19 //fila distancia
 
 //Posiciones
 #define poscarac 15 // caracter presionado
@@ -66,7 +67,7 @@
 //========================================================= 
 #define Fosc 80000000        		// Frecuencia de reloj de la CPU (oscillator) 80MHz
 #define Fcy	 Fosc/2		// Velocidad de ejecucion de las instrucciones
-#define BAUDRATE2 4800  		// Velocidad de transmision de UART2 (baudios)
+#define BAUDRATE2 38400  		// Velocidad de transmision de UART2 (baudios)
 #define T_1BIT_US (1000000/BAUDRATE2)+1 // Duracion de 1 bit 
 
 #define BAUD_RATEREG_2_BRGH1 ((Fcy/BAUDRATE2)/4)-1	// valor U2BRG si BRGH=1
@@ -110,5 +111,8 @@
 #define newdirsI2C 0xFE //Direccion a asignar al sensor
 #define REG_COM 0 //Registro de comandos
 #define REG_DATA 2 //Registro de datos
+
+#define nfilas 19
+#define ncolumnas 18
 
 

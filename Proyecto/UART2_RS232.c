@@ -159,10 +159,10 @@ void _ISR_NO_PSV _U2TXInterrupt()
             U2TXREG = Ventana_LCD[fila][caracter]; //se envia un caracter
             caracter++; // se incrementa la posicion
             
-            if (caracter == 18) {
+            if (caracter == ncolumnas) {
                 caracter=0; //Si es la ultima iteracion, se vuelve a la posicion 0
                 fila++; //Salto a la siguiente linea a mostrar
-                if (fila==18) {
+                if (fila==nfilas) {
                     estado_UART = UART_HOME; // volvemos al principio
                     fila=0;
                 }

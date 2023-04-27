@@ -60,7 +60,7 @@ int main()
     
     
     inic_UART2();   // Inicializar modulo UART2
-    U2TXREG = 'Z';  // Asignacion de un primer caracter para que UART2 TX empiece a interrumpir
+    U2TXREG = 0;  // Asignacion de un primer caracter para que UART2 TX empiece a interrumpir
     
     inic_Timer5(); // Inicializar el temporizador T5 //Siempre refresco ditribuido
     
