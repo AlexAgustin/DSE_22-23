@@ -19,7 +19,7 @@ const unsigned char Mens_LCD_6[]={"Crono: 00:00,0  "};  //linea 2.3, 16 caracter
 unsigned char Ventana_LCD[16][18] = {
     {"- DSE 2022-23 --""\x0D\x0A"},
     {"-- S4 comienza--""\x0D\x0A"},
-    {"titulo xd""\x0D\x0A"},
+    {"==== Titulo ====""\x0D\x0A"},
     {"Crono: 00:00,0  ""\x0D\x0A"},
     {"= INFOR PIC24H =""\x0D\x0A"},
     {"Potenciom:  ----""\x0D\x0A"},
@@ -37,9 +37,10 @@ unsigned char Ventana_LCD[16][18] = {
     {"      M S-: ----""\x0D\x0A"},
 };
 
-void copiar_FLASH_RAM (const unsigned char *texto, unsigned int i)
+void actualizar_Ventana_LCD ()
 {
-  unsigned int j;
-  for (j=0;j<16;j++) Ventana_LCD[i][j]=texto[j]; //Copiar datos de FLASH a RAM
+  fila1 = 2;
+  fila2 = 3;
+  Ventana_LCD[1] = {"--En curso... --""\x0D\x0A"};
 }
 

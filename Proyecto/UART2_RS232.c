@@ -69,6 +69,10 @@ void _ISR_NO_PSV _U2RXInterrupt()
         case 'I': // si es I o i, se inicializa el temporizador a 0
             inicializar_crono = 1; //Poner el flag a uno para no alargar la rutina de atencion
             break;
+        case 'x':
+        case 'X':
+            flag_DUTY = !flag_DUTY; // cambiar la gestion de duty[0-4] de modo que se obtenga a partir de la potencia (0) o se modifique por UART (1)
+            break;
         case 'r': //si es r, se mueve el servo incrementando el valor de duty0 (+10) si se respetan los limites (<= DUTY_MAX) y si flag_DUTY == 1 (se gestiona duty0 por UART)
             if(flag_DUTY && duty0+10<=DUTY_MAX) { // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona duty0 por UART)
                duty0+=10; //Incrementar el valor de duty0: +10

@@ -68,9 +68,7 @@ int main()
     
     while(PORTDbits.RD13); //Esperar a que se pulse S4 (RD13)
     
-    //poner segundos textos
-    fila1=2;
-    fila2=3;
+    actualizar_Ventana_LCD(); //Actualizar la variable Ventana_LCD
     
     inic_crono();   // Inicializar cronometro
     

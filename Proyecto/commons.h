@@ -56,10 +56,10 @@
 
 //Posiciones
 #define poscarac 15 // caracter presionado
-#define pos4dig 12 // potencia, coordenadas (4 digitos)
-#define pos3dig 13 // temperatura (3 digitos)
+#define pos4dig 12 // cifras 4 digitos
+#define pos3dig 13 // cifras de 3 digitos
 #define posdutyl 3 // duty a la izquierda
-#define posdutyr 11 // duty a la deracha
+#define posdutyr 11 // duty a la derecha
 
  
 // Definiciones ligadas a la velocidad de transmision de UART2

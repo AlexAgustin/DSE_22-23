@@ -81,6 +81,7 @@ void Init_LCD ()             // initialize LCD display
   lcd_cmd (0x06);	// Entry mode set (0x06)
   Delay_us (40);      // 40 us delay
   
+  //Inicializar las filas a mostrar en la LCD
   fila1=0;
   fila2=1;
 }
