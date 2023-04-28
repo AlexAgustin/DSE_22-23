@@ -54,10 +54,10 @@ int main()
     inic_oscilator();	// Seleccion e inicializacion del reloj: 80 MHz
     
     Init_LCD(); //Inicializacion del LCD
-    inic_CN();      // Inicializar modulo CN
-    inic_leds();	// Inicializacion leds: sentido y valor inicial.
-    inic_pulsadores(); // inicializacion pulsadores
     
+    inic_leds();	// Inicializacion leds: sentido y valor inicial.
+    
+    inic_pulsadores(); // inicializacion pulsadores
     
     inic_UART2();   // Inicializar modulo UART2
     U2TXREG = 0;  // Asignacion de un primer caracter para que UART2 TX empiece a interrumpir
@@ -67,11 +67,14 @@ int main()
     //poner textos iniciales
     
     while(PORTDbits.RD13); //Esperar a que se pulse S4 (RD13)
+    inic_crono();   // Inicializar cronometro
+
+    Nop();
+    Nop();
+    inic_CN();      // Inicializar modulo CN
     
     actualizar_Ventana_LCD(); //Actualizar la variable Ventana_LCD
-    
-    inic_crono();   // Inicializar cronometro
-    
+
     inic_Timer7();  // Inicializar el temporizador T7
     
     inic_ADC1();    //Inicializar el modulo ADC1

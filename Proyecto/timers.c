@@ -151,10 +151,10 @@ void cronometro()
         LATA=LATA & 0xff00; 	// Apagar los leds
 
         //Puesta a 0 de lo mostrado en la pantalla
-        conversion_tiempo(&Ventana_LCD[1][posmin],min); //asignacion del valor de los minutos en la posicion correspondiente de la linea a mostrar en pantalla  
-        conversion_tiempo(&Ventana_LCD[1][posseg],seg); //asignacion del valor de los segundos en la posicion correspondiente de la linea a mostrar en pantalla
-        conversion_tiempo(&Ventana_LCD[1][posds], deci); //asignacion del valor de las decimas de segundo en la posicion correspondiente de la linea a mostrar en pantalla
-        Ventana_LCD[1][poscs]=' '; // Poner un ' ' en la posicion asociada a las centesimas de segundo
+        conversion_tiempo(&Ventana_LCD[filacrono][posmin],min); //asignacion del valor de los minutos en la posicion correspondiente de la linea a mostrar en pantalla  
+        conversion_tiempo(&Ventana_LCD[filacrono][posseg],seg); //asignacion del valor de los segundos en la posicion correspondiente de la linea a mostrar en pantalla
+        conversion_tiempo(&Ventana_LCD[filacrono][posds], deci); //asignacion del valor de las decimas de segundo en la posicion correspondiente de la linea a mostrar en pantalla
+        Ventana_LCD[filacrono][poscs]=' '; // Poner un ' ' en la posicion asociada a las centesimas de segundo
         
         inicializar_crono = 0; //puesta a 0 del flag inicializar_crono
     }
@@ -177,12 +177,12 @@ void cronometro()
                 min+=1; //se suma 1 minuto
                 seg-=60; //reset segundos
                 LATAbits.LATA6=!LATAbits.LATA6; //conmuntar LED D9
-                conversion_tiempo(&Ventana_LCD[1][posmin],min); //asignacion del valor de los minutos en la posicion correspondiente de la linea a mostrar en pantalla  
+                conversion_tiempo(&Ventana_LCD[filacrono][posmin],min); //asignacion del valor de los minutos en la posicion correspondiente de la linea a mostrar en pantalla  
             }
-            conversion_tiempo(&Ventana_LCD[1][posseg],seg); //asignacion del valor de los segundos en la posicion correspondiente de la linea a mostrar en pantalla
+            conversion_tiempo(&Ventana_LCD[filacrono][posseg],seg); //asignacion del valor de los segundos en la posicion correspondiente de la linea a mostrar en pantalla
         }
-        conversion_tiempo(&Ventana_LCD[1][posds], deci*10); //asignacion del valor de las decimas de segundo en la posicion correspondiente de la linea a mostrar en pantalla
-        Ventana_LCD[1][poscs]=' '; // Poner un ' ' en la posicion asociada a las centesimas de segundo
+        conversion_tiempo(&Ventana_LCD[filacrono][posds], deci*10); //asignacion del valor de las decimas de segundo en la posicion correspondiente de la linea a mostrar en pantalla
+        Ventana_LCD[filacrono][poscs]=' '; // Poner un ' ' en la posicion asociada a las centesimas de segundo
 
     }
 }
