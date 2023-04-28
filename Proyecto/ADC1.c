@@ -124,7 +124,7 @@ void tratar_valorADC1 ()
         duty2 = (X_media/9999) * (DUTY_MAX - DUTY_MIN) + DUTY_MIN; // Obtener duty2 a partir de la coordenada X
         duty3 = (Y_media/9999) * (DUTY_MAX - DUTY_MIN) + DUTY_MIN; // Obtener duty3 a partir de la coordenada Y
         duty4 = (Z_media/9999) * (DUTY_MAX - DUTY_MIN) + DUTY_MIN; // Obtener duty4 a partir de la coordenada Z
-        flag_Duty_LCD = 1; // Poner a 1 el flag para guardar el nuevo valor de duty[0-4] en Ventana_LCD para su visualizacion en la pantalla
+        flag_Duty_LCD = 6; // Poner a 6 el flag para guardar los nuevos valores de duty[0-4] en Ventana_LCD para su visualizacion en la pantalla
     }
 
     //Escribir el valor de cada dato a visualizar en la posicion correspondiente de Ventana_LCD
