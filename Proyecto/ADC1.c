@@ -129,7 +129,7 @@ void tratar_valorADC1 ()
 
     //Escribir el valor de cada dato a visualizar en la posicion correspondiente de Ventana_LCD
     conversion_4dig(&Ventana_LCD[filapoten][pos4dig],Poten_media); 
-    conversion_4dig(&Ventana_LCD[filatemp][pos3dig],Temp_media); 
+    conversion_4dig(&Ventana_LCD[filatemp][pos4dig],Temp_media); 
     conversion_4dig(&Ventana_LCD[filax][pos4dig],X_media); 
     conversion_4dig(&Ventana_LCD[filay][pos4dig],Y_media);
     conversion_4dig(&Ventana_LCD[filaz][pos4dig],Z_media);

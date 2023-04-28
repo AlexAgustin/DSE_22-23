@@ -106,8 +106,9 @@ int main()
     inic_Timer6();  // Inicializar el temporizador T6 
     
     inic_Timer3(); // Inicializar el temporizador T3
- 
     
+    Nop();
+    Nop();
     while(1) { // bucle infinito
         cronometro(); // ejecucion del cronometro
         if (flag_ADC)   //Una vez se han recogido todas las muestras necesarias
