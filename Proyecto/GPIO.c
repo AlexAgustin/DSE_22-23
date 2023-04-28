@@ -20,10 +20,11 @@ void inic_pulsadores ()
 	*/
    	
 	// Definir los pines de los pulsadores S3, S4 y S6 como entrada
-	// S6(RD7),  S4(RD13), S3 (RD6)
+	// S6(RD7),  S4(RD13), S3 (RD6), S5 (RA7)
     TRISDbits.TRISD6 = 1;
     TRISDbits.TRISD13 = 1;
     TRISDbits.TRISD7 = 1;
+    TRISAbits.TRISA7 = 1;
 }
 
 void inic_leds()

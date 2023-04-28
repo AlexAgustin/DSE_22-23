@@ -38,7 +38,7 @@ void gestion_dis(unsigned char dirI2C)
    
     if (inic_medicion_dis(dirI2C)){ // Puesta en marcha de una nueva medicion
         //Se ha dado un error en la puesta en marcha de la medicion
-        LATAbits.LATA3=1; // Encender led D6
+        LATAbits.LATA1=1; // Encender led D4
         while(1); //Espera infinita
     }
     restart_Timer6(); // Puesta en marcha del temporizador T6
@@ -75,7 +75,7 @@ void cambiar_direccion (unsigned char dirI2C, unsigned char newdirI2C)
                     return;
     
     //Ha ocurrido un error en alguna de las escrituras en el sensor
-    LATAbits.LATA7=1; // Encender led D10
+    LATAbits.LATA3=1; // Encender led D6
     while(1); //Espera infinita
     
 }

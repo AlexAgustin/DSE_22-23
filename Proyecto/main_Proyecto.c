@@ -85,7 +85,7 @@ int main()
     
     if (detectar_direccion (&dirI2C)) { //Detectar la direccion del sensor
         //Comportamiento inesperado
-        LATAbits.LATA7=1; // Encender led D10
+        LATAbits.LATA3=1; // Encender led D6
         while(1); //Espera infinita
     }
     Nop();
@@ -94,18 +94,16 @@ int main()
     
     if (detectar_direccion (&dirI2C)) { //Detectar la nueva direccion del sensor
         //Comportamiento inesperado
-        LATAbits.LATA7=1; // Encender led D10
+        LATAbits.LATA3=1; // Encender led D6
         while(1); //Espera infinita
     }
     
     if (inic_medicion_dis(dirI2C)){ // Puesta en marcha de una nueva medicion
         //Ha ocurrido un error en la puesta en marcha de la medicion
-        LATAbits.LATA3=1; //Encender led D6
+        LATAbits.LATA1=1; // Encender led D4
         while(1); //Espera infinita
     }
     inic_Timer6();  // Inicializar el temporizador T6 
-    //comienzo_muestreo();    //Comenzar con el muestro de las senhales analogicas
-
     
     inic_Timer3(); // Inicializar el temporizador T3
  

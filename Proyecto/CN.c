@@ -39,8 +39,6 @@ void inic_CN()
 //==============================
 void _ISR_NO_PSV _CNInterrupt()
 {
-    TRISAbits.TRISA7 = 1; // pulsador S5 como entrada
-
     if(!PORTDbits.RD6)     //pulsador S3
 	{
         // se ha pulsado S3
@@ -68,7 +66,6 @@ void _ISR_NO_PSV _CNInterrupt()
         inicializar_crono = 1; // Poner a 1 el flag para inicializar el cronometro
         cont6 ++; //se suma uno al contador de interrupciones recibidas (S6)
 	}
-    TRISAbits.TRISA7 = 0;
 	IFS1bits.CNIF = 0;	//se marca que la interrupcion ha sido atendida	
 }
 
