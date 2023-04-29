@@ -18,7 +18,6 @@
 // VARIABLES
 //=========================================================
 extern int inicializar_crono; //Flag para inicializar el cronometro
-extern unsigned int flag_PWM_T2; 
 
 // FUNCIONES
 // declaracion de las funciones relacionadas con los temporizadores
@@ -32,7 +31,9 @@ void inic_crono();
 void cronometro();
 void inic_Timer5 ();
 void inic_Timer3 ();
-void inic_Timer2_PWM ();
+void inic_Timer2_OC1 ();
+void inic_Timer4_OC3 ();
+void inic_Timer8_PWM();
 void inic_Timer6();
 void restart_Timer6();
 

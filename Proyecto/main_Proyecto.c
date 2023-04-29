@@ -79,7 +79,9 @@ int main()
     
     inic_ADC1();    //Inicializar el modulo ADC1
     inic_PWM(); // Inicializar las variables requeridas para la gestion de PWM
-    inic_Timer2_PWM();  //Inicializar el temporizador T2
+    inic_Timer2_OC1();  //Inicializar el temporizador T2
+    inic_Timer4_OC3();  //Inicializar el temporizador T4
+    inic_Timer8_PWM();  //Inicializar el temporizador T8
     InitI2C_1();    //Inicializar el modulo I2C
     
     
@@ -104,7 +106,6 @@ int main()
         while(1); //Espera infinita
     }
     inic_Timer6();  // Inicializar el temporizador T6 
-    
     inic_Timer3(); // Inicializar el temporizador T3
     
     Nop();

@@ -85,22 +85,34 @@ void _ISR_NO_PSV _U2RXInterrupt()
                 flag_Duty_LCD = 2; // Poner a 2 el flag para guardar el nuevo valor de duty1 en Ventana_LCD para su visualizacion en la pantalla
             }
             break;
-        case 'w': //si es W, se mueve el servo incrementando el valor de duty2 (+10) si se respetan los limites (<= DUTY_MAX) y si flag_DUTY == 1 (se gestiona duty2 por UART)
+        case 'w': //si es w, se mueve el servo incrementando el valor de duty2 (+10) si se respetan los limites (<= DUTY_MAX) y si flag_DUTY == 1 (se gestiona duty2 por UART)
             if(flag_DUTY && duty2+10<=DUTY_MAX) { // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona duty2 por UART)
                duty2+=10; //Incrementar el valor de duty2: +10
                flag_Duty_LCD = 3; // Poner a 1 el flag para guardar el nuevo valor de duty2 en Ventana_LCD para su visualizacion en la pantalla
             }
             break;
-        case 'W': //si es r, se mueve el servo incrementando el valor de duty3 (+10) si se respetan los limites (<= DUTY_MAX) y si flag_DUTY == 1 (se gestiona duty3 por UART)
+        case 'W': //si es W, se mueve el servo incrementando el valor de duty3 (+10) si se respetan los limites (<= DUTY_MAX) y si flag_DUTY == 1 (se gestiona duty3 por UART)
             if(flag_DUTY && duty3+10<=DUTY_MAX) { // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona duty3 por UART)
                duty3+=10; //Incrementar el valor de duty3: +10
                flag_Duty_LCD = 4; // Poner a 1 el flag para guardar el nuevo valor de duty3 en Ventana_LCD para su visualizacion en la pantalla
             }
             break;
-        case 'd': //si es r, se mueve el servo incrementando el valor de duty4 (+10) si se respetan los limites (<= DUTY_MAX) y si flag_DUTY == 1 (se gestiona duty4 por UART)
+        case 'd': //si es d, se mueve el servo incrementando el valor de duty4 (+10) si se respetan los limites (<= DUTY_MAX) y si flag_DUTY == 1 (se gestiona duty4 por UART)
             if(flag_DUTY && duty4+10<=DUTY_MAX) { // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona duty4 por UART)
                duty4+=10; //Incrementar el valor de duty4: +10
                flag_Duty_LCD = 5; // Poner a 1 el flag para guardar el nuevo valor de duty0 en Ventana_LCD para su visualizacion en la pantalla
+            }
+            break;
+        case 'm': //si es m, se incrementa el valor minimo de duty
+            if(DUTY_MIN+10<=DUTY_MAX) { // antes de actualizar el valor maximo de duty, se comprueba si al cambiarlo se seguiria dentro de los limites
+               DUTY_MIN+=10; //Incrementar el valor de DUTY_MIN: +10
+               flag_Duty_LCD = 7; // Poner a 7 el flag para guardar el nuevo valor de DUTY_MIN en Ventana_LCD para su su visualizacion en la pantalla
+            }
+            break;
+        case 'M': //si es M, se incrementa el valor maximo de duty
+            if(DUTY_MAX+10<=DEF_DUTY_MAX) { // antes de actualizar el valor maximo de duty, se comprueba si al cambiarlo se seguiria dentro de los limites
+               DUTY_MAX+=10; //Incrementar el valor de DUTY_MAX: +10
+               flag_Duty_LCD = 8; // Poner a 8 el flag para guardar el nuevo valor de DUTY_MAX en Ventana_LCD para su su visualizacion en la pantalla
             }
             break;
         case 'l': //si es l, se mueve el servo decrementando el valor de duty0 (-10) si se respetan los limites (>= DUTY_MIN) y si flag_DUTY == 1 (se gestiona duty0 por UART)
@@ -131,6 +143,19 @@ void _ISR_NO_PSV _U2RXInterrupt()
             if(flag_DUTY && duty0-10>=DUTY_MIN) { // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona duty4 por UART)
                 duty4-=10; // Decrementar el valor de duty4: -10
                 flag_Duty_LCD = 5; // Poner a 5 el flag para guardar el nuevo valor de duty4 en Ventana_LCD para su su visualizacion en la pantalla
+            }
+            break;
+        case 'n': //si es n, se decrementa el valor minimo de duty
+            if(DUTY_MIN-10>=DEF_DUTY_MIN) { // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites
+                DUTY_MIN-=10; // Decrementar el valor de DUTY_MIN: -10
+                flag_Duty_LCD = 7; // Poner a 7 el flag para guardar el nuevo valor de DUTY_MIN en Ventana_LCD para su su visualizacion en la pantalla
+
+            }
+            break;
+        case 'N': //si es N, se decrementa el valor maximo de duty
+            if(DUTY_MAX-10>=DUTY_MIN) { // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites
+                DUTY_MAX-=10; // Decrementar el valor de DUTY_MAX: -10
+                flag_Duty_LCD = 8; // Poner a 8 el flag para guardar el nuevo valor de DUTY_MAX en Ventana_LCD para su su visualizacion en la pantalla
             }
             break;
         default:

@@ -17,7 +17,7 @@ const unsigned char Mens_LCD_4[]={"-- S4 comienza--"};  //linea 2.2, 16 caracter
 const unsigned char Mens_LCD_5[]={"P:0000 dist:0000"};  //linea 1.3, 16 caracteres
 const unsigned char Mens_LCD_6[]={"Crono: 00:00,0  "};  //linea 2.3, 16 caracteres*/
 
-unsigned char Ventana_LCD[19][18] = {
+unsigned char Ventana_LCD[20][18] = {
     {"- DSE 2022-23 --""\x0D\x0A"},
     {"-- S4 comienza--""\x0D\x0A"},
     {"==== Titulo ====""\x0D\x0A"},
@@ -32,6 +32,7 @@ unsigned char Ventana_LCD[19][18] = {
     {"S1:---- S2:---- ""\x0D\x0A"},
     {"S3:---- S4:---- ""\x0D\x0A"},
     {"S5:----         ""\x0D\x0A"},
+    {" X:----  Y:---- ""\x0D\x0A"},
     {"CPU M: -- Un: --""\x0D\x0A"},
     {"Joy pequ X: ----""\x0D\x0A"},
     {"Calib m S-: ----""\x0D\x0A"},

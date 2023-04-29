@@ -263,72 +263,116 @@ void inic_Timer3 ()
     T3CONbits.TON = 1;	// encender el timer
 }
 
-void inic_Timer2_PWM(){
+
+void inic_Timer2_OC1(){
     //Inicializar modulo T2
     TMR2 = 0; // Inicializar el registro de cuenta
-    PR2 =  12500-1 ;	// Periodo del timer
-        // Inicialmente queremos que cuente 20 ms.
+    PR2 = 4000-1;	// Periodo del timer
+		// Queremos que cuente 0,1 ms.
 		// Fosc= 80 MHz (vease Inic_oscilator()) de modo que
 		// Fcy = 40 MHz (cada instruccion dos ciclos de reloj)
 		// Por tanto, Tcy= 25 ns para ejecutar una instruccion
-        // Para contar 20 ms se necesitan 800.000 ciclos.
-		// Posteriormente, el valor de PR2 ira cambiando.
+		// Para contar 0,1 ms se necesitan 4.000 ciclos.
     
-    T2CONbits.TCKPS = 2;	// escala del prescaler 1:64
+    T2CONbits.TCKPS = 0;	// escala del prescaler 1:1
     T2CONbits.TCS = 0;	// reloj interno
     T2CONbits.TGATE = 0;	// Deshabilitar el modo Gate
     
-    IEC0bits.T2IE = 1;      // habilitar la interrupcion general de T2
+    IEC0bits.T2IE = 0;      // deshabilitar la interrupcion general de T2
     IFS0bits.T2IF = 0;      // Puesta a 0 del flag IF del temporizador 2
     
     T2CONbits.TON = 1;	// encender el timer
 }
 
-void _ISR_NO_PSV _T2Interrupt(){
+
+void inic_Timer4_OC3(){
+    //Inicializar modulo T4
+    TMR4 = 0; // Inicializar el registro de cuenta
+    PR4 = 4000-1;	// Periodo del timer
+		// Queremos que cuente 0,1 ms.
+		// Fosc= 80 MHz (vease Inic_oscilator()) de modo que
+		// Fcy = 40 MHz (cada instruccion dos ciclos de reloj)
+		// Por tanto, Tcy= 25 ns para ejecutar una instruccion
+		// Para contar 0,1 ms se necesitan 4.000 ciclos.
+    
+    T4CONbits.TCKPS = 0;	// escala del prescaler 1:1
+    T4CONbits.TCS = 0;	// reloj interno
+    T4CONbits.TGATE = 0;	// Deshabilitar el modo Gate
+    
+    IEC0bits.T4IE = 0;      // deshabilitar la interrupcion general de T4
+    IFS0bits.T4IF = 0;      // Puesta a 0 del flag IF del temporizador 4
+    
+    T4CONbits.TON = 1;	// encender el timer
+}
+
+
+
+void inic_Timer8_PWM(){
+    //Inicializar modulo T8
+    TMR8 = 0; // Inicializar el registro de cuenta
+    PR8 =  12500-1 ;	// Periodo del timer
+        // Inicialmente queremos que cuente 20 ms.
+		// Fosc= 80 MHz (vease Inic_oscilator()) de modo que
+		// Fcy = 40 MHz (cada instruccion dos ciclos de reloj)
+		// Por tanto, Tcy= 25 ns para ejecutar una instruccion
+        // Para contar 20 ms se necesitan 800.000 ciclos.
+		// Posteriormente, el valor de PR8 ira cambiando.
+    
+    T8CONbits.TCKPS = 2;	// escala del prescaler 1:64
+    T8CONbits.TCS = 0;	// reloj interno
+    T8CONbits.TGATE = 0;	// Deshabilitar el modo Gate
+    
+    IEC0bits.T8IE = 1;      // habilitar la interrupcion general de T8
+    IFS0bits.T8IF = 0;      // Puesta a 0 del flag IF del temporizador 8
+    
+    T8CONbits.TON = 1;	// encender el timer
+}
+
+void _ISR_NO_PSV _T8Interrupt(){
     switch (estado_PWM){
         case PWM0_ACTIVE: //Activar PWM (0)
-            LATDbits.LATD0 = 1; // Puesta a 1 (RD0)
-            PR2 = duty0; //Determinar periodo del temporizador 2 a partir de duty0
+            LATEbits.LATE10 = 1; // Puesta a 1 (RE10)
+            PR8 = duty0; //Determinar periodo del temporizador 8 a partir de duty0
             sum=duty0; // Guardar ciclos transcurridos
             estado_PWM = PWM1_ACTIVE; // Estado siguiente: activar PWM (1)
             break;
         case PWM1_ACTIVE: //Activar PWM (1)
-            LATDbits.LATD0 = 0; // Puesta a 0 (RD0)
-            LATDbits.LATD1 = 1; // Puesta a 1 (RD1)
-            PR2 = duty1; //Determinar periodo del temporizador 2 a partir de duty1
+            LATEbits.LATE10 = 0; // Puesta a 0 (RE10)
+            LATEbits.LATE11 = 1; // Puesta a 1 (RE11)
+            PR8 = duty1; //Determinar periodo del temporizador 8 a partir de duty1
             sum+=duty1; // Acumular ciclos transcurridos
             estado_PWM = PWM2_ACTIVE; // Estado siguiente: senhales desactivadas
             break;
         case PWM2_ACTIVE: //Activar PWM (2)
-            LATDbits.LATD1 = 0; // Puesta a 0 (RD1)
-            LATDbits.LATD2 = 1; // Puesta a 1 (RD2)
-            PR2 = duty2; //Determinar periodo del temporizador 2 a partir de duty2
+            LATEbits.LATE11 = 0; // Puesta a 0 (RE11)
+            LATEbits.LATE12 = 1; // Puesta a 1 (RE12)
+            PR8 = duty2; //Determinar periodo del temporizador 8 a partir de duty2
             sum+=duty2; // Acumular ciclos transcurridos
             estado_PWM = PWM3_ACTIVE; // Estado siguiente: senhales desactivadas
             break;
         case PWM3_ACTIVE: //Activar PWM (3)
-            LATDbits.LATD2 = 0; // Puesta a 0 (RD2)
-            LATDbits.LATD3 = 1; // Puesta a 1 (RD3)
-            PR2 = duty3; //Determinar periodo del temporizador 2 a partir de duty3
+            LATEbits.LATE12 = 0; // Puesta a 0 (RE12)
+            LATEbits.LATE13 = 1; // Puesta a 1 (RE13)
+            PR8 = duty3; //Determinar periodo del temporizador 8 a partir de duty3
             sum+=duty3; // Acumular ciclos transcurridos
             estado_PWM = PWM4_ACTIVE; // Estado siguiente: senhales desactivadas
             break;
         case PWM4_ACTIVE: //Activar PWM (4)
-            LATDbits.LATD3 = 0; // Puesta a 0 (RD3)
-            LATDbits.LATD4 = 1; // Puesta a 1 (RD4)
-            PR2 = duty4; //Determinar periodo del temporizador 2 a partir de duty4
+            LATEbits.LATE13 = 0; // Puesta a 0 (RE13)
+            LATEbits.LATE14 = 1; // Puesta a 1 (RE14)
+            PR8 = duty4; //Determinar periodo del temporizador 8 a partir de duty4
             sum+=duty4; // Acumular ciclos transcurridos
             estado_PWM = PWM_RESTO; // Estado siguiente: senhales desactivadas
             break;
         case PWM_RESTO: // Senhales desactivadas
-            LATDbits.LATD1 = 0; // Puesta a 0 (RD1)
-            PR2 = (PR20ms-sum); // Determinar periodo del temporizador 2 a partir de los ciclos restantes
+            LATEbits.LATE14 = 0; // Puesta a 0 (RE14)
+            PR8 = (PR20ms-sum); // Determinar periodo del temporizador 8 a partir de los ciclos restantes
             estado_PWM = PWM0_ACTIVE; // Estado siguiente: activar PWM (0)
             break;
         default:
             break;
     }
-    IFS0bits.T2IF = 0;      // Puesta a 0 del flag IF del temporizador 2
+    IFS0bits.T8IF = 0;      // Puesta a 0 del flag IF del temporizador 8
 }
 
 void inic_Timer6(){
