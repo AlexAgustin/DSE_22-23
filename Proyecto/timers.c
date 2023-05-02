@@ -299,8 +299,8 @@ void inic_Timer4_OC3(){
     T4CONbits.TCS = 0;	// reloj interno
     T4CONbits.TGATE = 0;	// Deshabilitar el modo Gate
     
-    IEC0bits.T4IE = 0;      // deshabilitar la interrupcion general de T4
-    IFS0bits.T4IF = 0;      // Puesta a 0 del flag IF del temporizador 4
+    IEC1bits.T4IE = 0;      // deshabilitar la interrupcion general de T4
+    IFS1bits.T4IF = 0;      // Puesta a 0 del flag IF del temporizador 4
     
     T4CONbits.TON = 1;	// encender el timer
 }
@@ -322,8 +322,8 @@ void inic_Timer8_PWM(){
     T8CONbits.TCS = 0;	// reloj interno
     T8CONbits.TGATE = 0;	// Deshabilitar el modo Gate
     
-    IEC0bits.T8IE = 1;      // habilitar la interrupcion general de T8
-    IFS0bits.T8IF = 0;      // Puesta a 0 del flag IF del temporizador 8
+    IEC3bits.T8IE = 1;      // habilitar la interrupcion general de T8
+    IFS3bits.T8IF = 0;      // Puesta a 0 del flag IF del temporizador 8
     
     T8CONbits.TON = 1;	// encender el timer
 }
@@ -331,48 +331,48 @@ void inic_Timer8_PWM(){
 void _ISR_NO_PSV _T8Interrupt(){
     switch (estado_PWM){
         case PWM0_ACTIVE: //Activar PWM (0)
-            LATEbits.LATE10 = 1; // Puesta a 1 (RE10)
+            LATDbits.LATD8 = 1; // Puesta a 1 (RE10)
             PR8 = duty0; //Determinar periodo del temporizador 8 a partir de duty0
             sum=duty0; // Guardar ciclos transcurridos
             estado_PWM = PWM1_ACTIVE; // Estado siguiente: activar PWM (1)
             break;
         case PWM1_ACTIVE: //Activar PWM (1)
-            LATEbits.LATE10 = 0; // Puesta a 0 (RE10)
-            LATEbits.LATE11 = 1; // Puesta a 1 (RE11)
+            LATDbits.LATD8 = 0; // Puesta a 0 (RE10)
+            LATDbits.LATD9 = 1; // Puesta a 1 (RE11)
             PR8 = duty1; //Determinar periodo del temporizador 8 a partir de duty1
             sum+=duty1; // Acumular ciclos transcurridos
             estado_PWM = PWM2_ACTIVE; // Estado siguiente: senhales desactivadas
             break;
         case PWM2_ACTIVE: //Activar PWM (2)
-            LATEbits.LATE11 = 0; // Puesta a 0 (RE11)
-            LATEbits.LATE12 = 1; // Puesta a 1 (RE12)
+            LATDbits.LATD9 = 0; // Puesta a 0 (RE11)
+            LATDbits.LATD10 = 1; // Puesta a 1 (RE12)
             PR8 = duty2; //Determinar periodo del temporizador 8 a partir de duty2
             sum+=duty2; // Acumular ciclos transcurridos
             estado_PWM = PWM3_ACTIVE; // Estado siguiente: senhales desactivadas
             break;
         case PWM3_ACTIVE: //Activar PWM (3)
-            LATEbits.LATE12 = 0; // Puesta a 0 (RE12)
-            LATEbits.LATE13 = 1; // Puesta a 1 (RE13)
+            LATDbits.LATD10 = 0; // Puesta a 0 (RE12)
+            LATDbits.LATD11 = 1; // Puesta a 1 (RE13)
             PR8 = duty3; //Determinar periodo del temporizador 8 a partir de duty3
             sum+=duty3; // Acumular ciclos transcurridos
             estado_PWM = PWM4_ACTIVE; // Estado siguiente: senhales desactivadas
             break;
         case PWM4_ACTIVE: //Activar PWM (4)
-            LATEbits.LATE13 = 0; // Puesta a 0 (RE13)
-            LATEbits.LATE14 = 1; // Puesta a 1 (RE14)
+            LATDbits.LATD11 = 0; // Puesta a 0 (RE13)
+            LATDbits.LATD12 = 1; // Puesta a 1 (RE14)
             PR8 = duty4; //Determinar periodo del temporizador 8 a partir de duty4
             sum+=duty4; // Acumular ciclos transcurridos
             estado_PWM = PWM_RESTO; // Estado siguiente: senhales desactivadas
             break;
         case PWM_RESTO: // Senhales desactivadas
-            LATEbits.LATE14 = 0; // Puesta a 0 (RE14)
+            LATDbits.LATD12 = 0; // Puesta a 0 (RE14)
             PR8 = (PR20ms-sum); // Determinar periodo del temporizador 8 a partir de los ciclos restantes
             estado_PWM = PWM0_ACTIVE; // Estado siguiente: activar PWM (0)
             break;
         default:
             break;
     }
-    IFS0bits.T8IF = 0;      // Puesta a 0 del flag IF del temporizador 8
+    IFS3bits.T8IF = 0;      // Puesta a 0 del flag IF del temporizador 8
 }
 
 void inic_Timer6(){

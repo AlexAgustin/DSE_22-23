@@ -3,8 +3,6 @@
 
 // VARIABLES
 //=========================================================
-extern unsigned int DEF_DUTY_MIN;
-extern unsigned int DEF_DUTY_MAX;
 extern unsigned int DUTY_MIN;
 extern unsigned int DUTY_MAX;
 extern unsigned int OC_DUTY_MIN;

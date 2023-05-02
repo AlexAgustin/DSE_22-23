@@ -62,37 +62,7 @@ int main()
     inic_UART2();   // Inicializar modulo UART2
     U2TXREG = 0;  // Asignacion de un primer caracter para que UART2 TX empiece a interrumpir
     
-    inic_Timer5(); // Inicializar el temporizador T5 //Siempre refresco ditribuido
-    
-    //poner textos iniciales
-    
-    while(PORTDbits.RD13); //Esperar a que se pulse S4 (RD13)
-    inic_crono();   // Inicializar cronometro
-
-    Nop();
-    Nop();
-    inic_CN();      // Inicializar modulo CN
-    
-    actualizar_Ventana_LCD(); //Actualizar la variable Ventana_LCD
-
-    inic_Timer7();  // Inicializar el temporizador T7
-    
-    inic_ADC1();    //Inicializar el modulo ADC1
-    inic_PWM(); // Inicializar las variables requeridas para la gestion de PWM
-    inic_Timer2_OC1();  //Inicializar el temporizador T2
-    inic_Timer4_OC3();  //Inicializar el temporizador T4
-    inic_Timer8_PWM();  //Inicializar el temporizador T8
     InitI2C_1();    //Inicializar el modulo I2C
-    
-    
-    if (detectar_direccion (&dirI2C)) { //Detectar la direccion del sensor
-        //Comportamiento inesperado
-        LATAbits.LATA3=1; // Encender led D6
-        while(1); //Espera infinita
-    }
-    Nop();
-    Nop();
-    cambiar_direccion (dirI2C, newdirsI2C); //Cambiar la direccion del sensor
     
     if (detectar_direccion (&dirI2C)) { //Detectar la nueva direccion del sensor
         //Comportamiento inesperado
@@ -105,11 +75,36 @@ int main()
         LATAbits.LATA1=1; // Encender led D4
         while(1); //Espera infinita
     }
+    
+    inic_Timer5(); // Inicializar el temporizador T5 //Siempre refresco ditribuido
+    
+    //poner textos iniciales
+    
+    while(PORTDbits.RD13); //Esperar a que se pulse S4 (RD13)
+    
+    inic_CN();      // Inicializar modulo CN
+    actualizar_Ventana_LCD(); //Actualizar la variable Ventana_LCD
+    inic_crono();   // Inicializar cronometro
+    inic_Timer7();  // Inicializar el temporizador T7
+    
+
+    
+ 
+    inic_PWM(); // Inicializar las variables requeridas para la gestion de PWM
+
+    //inic_Timer2_OC1();  //Inicializar el temporizador T2
+
+    //inic_Timer4_OC3();  //Inicializar el temporizador T4
+
+    inic_Timer8_PWM();  //Inicializar el temporizador T8
+    
+    
+
     inic_Timer6();  // Inicializar el temporizador T6 
+
+    inic_ADC1();    //Inicializar el modulo ADC1
     inic_Timer3(); // Inicializar el temporizador T3
     
-    Nop();
-    Nop();
     while(1) { // bucle infinito
         cronometro(); // ejecucion del cronometro
         if (flag_ADC)   //Una vez se han recogido todas las muestras necesarias

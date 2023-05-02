@@ -43,8 +43,8 @@
 
 // definiciones: filas y posiciones de valores recogidos
 //========================================================= 
-#define nfilas 19
-#define ncolumnas 18
+#define NFILAS 20
+#define NCOLUMNAS 18
 
 //Filas
 #define filacrono 3 // fila cronometro
@@ -57,18 +57,30 @@
 #define filaduty23 12 // fila duty2 y duty3
 #define filaduty4 13 // fila duty4
 #define filaruedas 14 // fila ruedas
-#define filadutymin 18 //fila min duty
-#define filadutymax 19 //fila max duty
-#define filadis 20 //fila distancia
+#define filadutymin 17 //fila min duty
+#define filadutymax 18 //fila max duty
+#define filadis 19 //fila distancia
 
 //Posiciones
 #define poscarac 15 // caracter presionado
 #define pos4dig 12 // cifras 4 digitos
-#define pos3dig 13 // cifras de 3 digitos
 #define posdutyl 3 // duty a la izquierda
 #define posdutyr 11 // duty a la derecha
 
  
+// definiciones: filas y posiciones de valores recogidos
+//========================================================= 
+#define VERDUTY0 1
+#define VERDUTY1 2
+#define VERDUTY2 3
+#define VERDUTY3 4
+#define VERDUTY4 5
+#define VERDUTYMIN 6
+#define VERDUTYMAX 7
+#define VERDUTYOC 8
+#define VERDUTYALL 9
+
+
 // Definiciones ligadas a la velocidad de transmision de UART2
 //========================================================= 
 #define Fosc 80000000        		// Frecuencia de reloj de la CPU (oscillator) 80MHz
@@ -113,6 +125,8 @@
 #define MINPWM 0.5      // Duracion minima pulso PWM (en milisegundos)
 #define MAXPWM 2.1      // Duracion maxima pulso PWM (en milisegundos)
 #define SECURE_DUTY (PR20ms/20) * (MINPWM+MAXPWM)/2    //Duty para una posicion segura
+#define DEF_DUTY_MIN (PR20ms/20) * MINPWM	// valor minimo y maximo por defecto de duty. Se calculan 
+#define DEF_DUTY_MAX (PR20ms/20) * MAXPWM	// mediante los "define" PR20ms, MINPWM y MAXPWM
 
 // Caso: ruedas
 #define PR100us  4000 	// Periodo adecuado para conseguir 0,1 ms (100us)

@@ -13,16 +13,14 @@ Fecha: Marzo 2023
 #include "memoria.h"
 #include "timers.h"
 
-unsigned int DEF_DUTY_MIN=(PR20ms/20) * MINPWM;	// valor minimo y maximo por defecto de duty. Se calculan 
-unsigned int DEF_DUTY_MAX=(PR20ms/20) * MAXPWM;	// mediante los "define" PR20ms, MINPWM y MAXPWM
 unsigned int DUTY_MIN = DEF_DUTY_MIN;	// valor minimo y maximo de duty. Se calculan 
 unsigned int DUTY_MAX = DEF_DUTY_MAX;	// mediante los "define" PR20ms, MINPWM y MAXPWM
 
-unsigned int OC_DUTY_MIN=(PR100us/0,1) * MINOCPWM;	// valor minimo y maximo por defecto de duty. Se calculan 
-unsigned int OC_DUTY_MAX=(PR100us/0,1) * MAXOCPWM;	// mediante los "define" PR20ms, MINPWM y MAXPWM
+unsigned int OC_DUTY_MIN=(PR100us/0.1) * MINOCPWM;	// valor minimo y maximo por defecto de duty. Se calculan 
+unsigned int OC_DUTY_MAX=(PR100us/0.1) * MAXOCPWM;	// mediante los "define" PR20ms, MINPWM y MAXPWM
 
 unsigned int flag_DUTY = 1;  // duty0 se gestionara por defecto a traves de UART
-unsigned int flag_Duty_LCD = 1; //cuando duty0 cambia, se hace la conversion para visualizarlo en la pantalla  (flag a 1)
+unsigned int flag_Duty_LCD = 9; //cuando duty0 cambia, se hace la conversion para visualizarlo en la pantalla  (flag a 1)
 
 unsigned int duty0;
 unsigned int duty1;
@@ -33,7 +31,7 @@ unsigned int estado_PWM;
 
 unsigned int flag_num_duty=0;
 
-
+void mover_servo(unsigned int num_duty, unsigned int objetivo);
 void inic_OC1 ()
 {
     OC1CON=0; // Deshabilita modulo Output Compare
@@ -80,24 +78,26 @@ void visualizar_Duty(){
         case 5://Caso: duty4
             conversion_4dig(&Ventana_LCD[filaduty4][posdutyl],duty4); // Guardar valor de duty4 en Ventana_LCD para su visualizacion en la pantalla
             break;
-        case 6: //Caso: duty[0-4]
+        case 6: //Caso: min duty
+            conversion_4dig(&Ventana_LCD[filadutymin][pos4dig], DUTY_MIN); // Guardar valor del duty minimo en Ventana_LCD para su visualizacion en la pantalla
+            break;
+        case 7: //Caso: max duty
+            conversion_4dig(&Ventana_LCD[filadutymax][pos4dig], DUTY_MAX); // Guardar valor del duty maximo en Ventana_LCD para su visualizacion en la pantalla
+            break;
+        case 8: //Caso: ruedas
+            conversion_4dig(&Ventana_LCD[filaruedas][posdutyl],OC1RS); // Guardar valor de OC1RS en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaruedas][posdutyr],OC3RS); // Guardar valor de OC3RS en Ventana_LCD para su visualizacion en la pantalla
+            break;
+        case 9: //Caso: duty[0-4]
             conversion_4dig(&Ventana_LCD[filaduty01][posdutyl],duty0);  // Guardar valor de duty0 en Ventana_LCD para su visualizacion en la pantalla
             conversion_4dig(&Ventana_LCD[filaduty01][posdutyr],duty1); // Guardar valor de duty1 en Ventana_LCD para su visualizacion en la pantalla
             conversion_4dig(&Ventana_LCD[filaduty23][posdutyl],duty2); // Guardar valor de duty2 en Ventana_LCD para su visualizacion en la pantalla
             conversion_4dig(&Ventana_LCD[filaduty23][posdutyr],duty3); // Guardar valor de duty3 en Ventana_LCD para su visualizacion en la pantalla
             conversion_4dig(&Ventana_LCD[filaduty4][posdutyl],duty4); // Guardar valor de duty4 en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filaruedas][posdutyl],OC1RS); // Guardar valor de OC1RS en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filaruedas][posdutyr],OC3RS); // Guardar valor de OC3RS en Ventana_LCD para su visualizacion en la pantalla
-            break;
-        case 7: //Caso: min duty
             conversion_4dig(&Ventana_LCD[filadutymin][pos4dig], DUTY_MIN); // Guardar valor del duty minimo en Ventana_LCD para su visualizacion en la pantalla
-            break;
-        case 8: //Caso: max duty
             conversion_4dig(&Ventana_LCD[filadutymax][pos4dig], DUTY_MAX); // Guardar valor del duty maximo en Ventana_LCD para su visualizacion en la pantalla
-            break;
-        case 9: //Caso: ruedas
-            conversion_4dig(&Ventana_LCD[filaruedas][posdutyl],OC1RS); // Guardar valor de OC1RS en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filaruedas][posdutyr],OC3RS); // Guardar valor de OC3RS en Ventana_LCD para su visualizacion en la pantalla
+            //conversion_4dig(&Ventana_LCD[filaruedas][posdutyl],OC1RS); // Guardar valor de OC1RS en Ventana_LCD para su visualizacion en la pantalla
+            //conversion_4dig(&Ventana_LCD[filaruedas][posdutyr],OC3RS); // Guardar valor de OC3RS en Ventana_LCD para su visualizacion en la pantalla
             break;
         default:
             //Inalcanzable
@@ -114,11 +114,11 @@ void inic_PWM(){
     duty2 = duty0; // Inicializar pulso con duracion intermedia (1,3ms))
     duty3 = duty0; // Inicializar pulso con duracion intermedia (1,3ms))
     duty4 = duty0; // Inicializar pulso con duracion intermedia (1,3ms))
-    TRISEbits.TRISE10 = 0; //Definir como salida el pin que se usara para la senhal PWM (0)
-    TRISEbits.TRISE11 = 0; //Definir como salida el pin que se usara para la senhal PWM (1)
-    TRISEbits.TRISE12 = 0; //Definir como salida el pin que se usara para la senhal PWM (2)
-    TRISEbits.TRISE13 = 0; //Definir como salida el pin que se usara para la senhal PWM (3)
-    TRISEbits.TRISE14 = 0; //Definir como salida el pin que se usara para la senhal PWM (4)
+    TRISDbits.TRISD8 = 0; //Definir como salida el pin que se usara para la senhal PWM (0)
+    TRISDbits.TRISD9 = 0; //Definir como salida el pin que se usara para la senhal PWM (1)
+    TRISDbits.TRISD10 = 0; //Definir como salida el pin que se usara para la senhal PWM (2)
+    TRISDbits.TRISD11 = 0; //Definir como salida el pin que se usara para la senhal PWM (3)
+    TRISDbits.TRISD12 = 0; //Definir como salida el pin que se usara para la senhal PWM (4)
 }
 
 void posicion_segura(){

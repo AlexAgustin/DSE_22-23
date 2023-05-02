@@ -34,7 +34,7 @@ void gestion_dis(unsigned char dirI2C)
     }
     dis_media = (dis[0]<<8) | dis[1]; //Obtener la distancia media a partir de las dos posiciones del array dis
 
-    conversion_4dig(&Ventana_LCD[filadis][pos3dig],dis_media); //Guardar distancia media en Ventana_LCD para su proyeccion en la pantalla
+    conversion_4dig(&Ventana_LCD[filadis][pos4dig],dis_media); //Guardar distancia media en Ventana_LCD para su proyeccion en la pantalla
    
     if (inic_medicion_dis(dirI2C)){ // Puesta en marcha de una nueva medicion
         //Se ha dado un error en la puesta en marcha de la medicion
