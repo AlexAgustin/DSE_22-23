@@ -112,6 +112,7 @@
                         // Fosc= 80 MHz Fcy = 40 MHz Tcy= 25 ns
 #define MINPWM 0.5      // Duracion minima pulso PWM (en milisegundos)
 #define MAXPWM 2.1      // Duracion maxima pulso PWM (en milisegundos)
+#define SECURE_DUTY (PR20ms/20) * (MINPWM+MAXPWM)/2    //Duty para una posicion segura
 
 // Caso: ruedas
 #define PR100us  4000 	// Periodo adecuado para conseguir 0,1 ms (100us)

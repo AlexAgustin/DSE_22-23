@@ -22,3 +22,4 @@ extern unsigned int estado_PWM;
 //=========================================================
 void visualizar_Duty();
 void inic_PWM();
+void posicion_segura();
