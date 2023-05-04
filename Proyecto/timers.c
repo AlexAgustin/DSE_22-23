@@ -332,36 +332,36 @@ void _ISR_NO_PSV _T8Interrupt(){
     switch (estado_PWM){
         case PWM0_ACTIVE: //Activar PWM (0)
             LATDbits.LATD8 = 1; // Puesta a 1 (RE10)
-            PR8 = duty0; //Determinar periodo del temporizador 8 a partir de duty0
-            sum=duty0; // Guardar ciclos transcurridos
+            PR8 = duty[DUTY0]; //Determinar periodo del temporizador 8 a partir de duty0
+            sum=duty[DUTY0]; // Guardar ciclos transcurridos
             estado_PWM = PWM1_ACTIVE; // Estado siguiente: activar PWM (1)
             break;
         case PWM1_ACTIVE: //Activar PWM (1)
             LATDbits.LATD8 = 0; // Puesta a 0 (RE10)
             LATDbits.LATD9 = 1; // Puesta a 1 (RE11)
-            PR8 = duty1; //Determinar periodo del temporizador 8 a partir de duty1
-            sum+=duty1; // Acumular ciclos transcurridos
+            PR8 = duty[DUTY1]; //Determinar periodo del temporizador 8 a partir de duty1
+            sum+=duty[DUTY1]; // Acumular ciclos transcurridos
             estado_PWM = PWM2_ACTIVE; // Estado siguiente: senhales desactivadas
             break;
         case PWM2_ACTIVE: //Activar PWM (2)
             LATDbits.LATD9 = 0; // Puesta a 0 (RE11)
             LATDbits.LATD10 = 1; // Puesta a 1 (RE12)
-            PR8 = duty2; //Determinar periodo del temporizador 8 a partir de duty2
-            sum+=duty2; // Acumular ciclos transcurridos
+            PR8 = duty[DUTY2]; //Determinar periodo del temporizador 8 a partir de duty2
+            sum+=duty[DUTY2]; // Acumular ciclos transcurridos
             estado_PWM = PWM3_ACTIVE; // Estado siguiente: senhales desactivadas
             break;
         case PWM3_ACTIVE: //Activar PWM (3)
             LATDbits.LATD10 = 0; // Puesta a 0 (RE12)
             LATDbits.LATD11 = 1; // Puesta a 1 (RE13)
-            PR8 = duty3; //Determinar periodo del temporizador 8 a partir de duty3
-            sum+=duty3; // Acumular ciclos transcurridos
+            PR8 = duty[DUTY3]; //Determinar periodo del temporizador 8 a partir de duty3
+            sum+=duty[DUTY3]; // Acumular ciclos transcurridos
             estado_PWM = PWM4_ACTIVE; // Estado siguiente: senhales desactivadas
             break;
         case PWM4_ACTIVE: //Activar PWM (4)
             LATDbits.LATD11 = 0; // Puesta a 0 (RE13)
             LATDbits.LATD12 = 1; // Puesta a 1 (RE14)
-            PR8 = duty4; //Determinar periodo del temporizador 8 a partir de duty4
-            sum+=duty4; // Acumular ciclos transcurridos
+            PR8 = duty[DUTY4]; //Determinar periodo del temporizador 8 a partir de duty4
+            sum+=duty[DUTY4]; // Acumular ciclos transcurridos
             estado_PWM = PWM_RESTO; // Estado siguiente: senhales desactivadas
             break;
         case PWM_RESTO: // Senhales desactivadas

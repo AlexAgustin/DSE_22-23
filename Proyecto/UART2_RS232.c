@@ -11,6 +11,7 @@ Fecha: Marzo 2023
 #include "memoria.h"
 #include "timers.h"
 #include "OCPWM.h"
+#include "LCD.h"
 
 #define UART_HOME 0
 #define UART_DATA 1
@@ -157,6 +158,22 @@ void _ISR_NO_PSV _U2RXInterrupt()
                 DUTY_MAX-=10; // Decrementar el valor de DUTY_MAX: -10
                 flag_Duty_LCD = VERDUTYMAX; // Poner a 8 el flag para guardar el nuevo valor de DUTY_MAX en Ventana_LCD para su su visualizacion en la pantalla
             }
+            break;
+        case '>': //si es >, se hace scroll hacia abajo de la informacion a mostrar en la LCD
+            if(fila1<NFILAS-2) 
+                {
+                    // scroll hacia abajo de la informacion a mostrar en la LCD
+                    fila1++; //Actualizar primera fila a mostrar (+1)
+                    fila2++; //Actualizar segunda fila a mostrar (+1)
+                }
+            break;
+        case '<': //si es <, se hace scroll hacia arriba de la informacion a mostrar en la LCD
+            if(fila1>2)
+                {
+                    //scroll hacia arriba de la informacion a mostrar en la LCD
+                    fila1--; //Actualizar primera fila a mostrar (-1)
+                    fila2--; //Actualizar segunda fila a mostrar (-1)
+                }
             break;
         default:
             break;
