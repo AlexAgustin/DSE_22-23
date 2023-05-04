@@ -135,6 +135,12 @@
 #define MINOCPWM 0.0025      // Duracion minima pulso PWM (en milisegundos)
 #define MAXOCPWM 0.0105      // Duracion maxima pulso PWM (en milisegundos)
 
+// Posiciones de duty en el array
+#define DUTY0 0
+#define DUTY1 1
+#define DUTY2 2
+#define DUTY3 3
+#define DUTY4 4
 
 // Definiciones relacionadas con el bus I2C
 //==========================================

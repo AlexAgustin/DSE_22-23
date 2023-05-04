@@ -1,7 +1,7 @@
 /*
 Funciones relacionadas con la gestion de la senhal PWM
 
-Contiene la funcion de inicializacion de las variables para la gestion de PWM y la funcion para visualizar duty0 en la pantalla.
+Contiene la funcion de inicializacion de las variables para la gestion de PWM y la funcion para visualizar duty en la pantalla.
 
 Autores: Alex y Amanda
 Fecha: Marzo 2023
@@ -19,14 +19,10 @@ unsigned int DUTY_MAX = DEF_DUTY_MAX;	// mediante los "define" PR20ms, MINPWM y 
 unsigned int OC_DUTY_MIN=(PR100us/0.1) * MINOCPWM;	// valor minimo y maximo por defecto de duty. Se calculan 
 unsigned int OC_DUTY_MAX=(PR100us/0.1) * MAXOCPWM;	// mediante los "define" PR20ms, MINPWM y MAXPWM
 
-unsigned int flag_DUTY = 1;  // duty0 se gestionara por defecto a traves de UART
-unsigned int flag_Duty_LCD = 9; //cuando duty0 cambia, se hace la conversion para visualizarlo en la pantalla  (flag a 1)
+unsigned int flag_DUTY = 1;  // duty se gestionara por defecto a traves de UART
+unsigned int flag_Duty_LCD = 9; //cuando duty cambia, se hace la conversion para visualizarlo en la pantalla  (flag a 1)
 
-unsigned int duty0;
-unsigned int duty1;
-unsigned int duty2;
-unsigned int duty3;
-unsigned int duty4;
+unsigned int duty[5];
 unsigned int estado_PWM;
 
 unsigned int flag_num_duty=0;
@@ -64,19 +60,19 @@ void visualizar_Duty(){
     switch(flag_Duty_LCD)
     {
         case 1: //Caso: duty0
-            conversion_4dig(&Ventana_LCD[filaduty01][posdutyl],duty0);  // Guardar valor de duty0 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaduty01][posdutyl],duty[DUTY0]);  // Guardar valor de duty0 en Ventana_LCD para su visualizacion en la pantalla
             break;
         case 2: //Caso: duty1
-            conversion_4dig(&Ventana_LCD[filaduty01][posdutyr],duty1); // Guardar valor de duty1 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaduty01][posdutyr],duty[DUTY1]); // Guardar valor de duty1 en Ventana_LCD para su visualizacion en la pantalla
             break;
         case 3: //Caso: duty2
-            conversion_4dig(&Ventana_LCD[filaduty23][posdutyl],duty2); // Guardar valor de duty2 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaduty23][posdutyl],duty[DUTY2]); // Guardar valor de duty2 en Ventana_LCD para su visualizacion en la pantalla
             break;
         case 4: //Caso: duty3
-            conversion_4dig(&Ventana_LCD[filaduty23][posdutyr],duty3); // Guardar valor de duty3 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaduty23][posdutyr],duty[DUTY3]); // Guardar valor de duty3 en Ventana_LCD para su visualizacion en la pantalla
             break;
         case 5://Caso: duty4
-            conversion_4dig(&Ventana_LCD[filaduty4][posdutyl],duty4); // Guardar valor de duty4 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaduty4][posdutyl],duty[DUTY4]); // Guardar valor de duty4 en Ventana_LCD para su visualizacion en la pantalla
             break;
         case 6: //Caso: min duty
             conversion_4dig(&Ventana_LCD[filadutymin][pos4dig], DUTY_MIN); // Guardar valor del duty minimo en Ventana_LCD para su visualizacion en la pantalla
@@ -89,11 +85,11 @@ void visualizar_Duty(){
             conversion_4dig(&Ventana_LCD[filaruedas][posdutyr],OC3RS); // Guardar valor de OC3RS en Ventana_LCD para su visualizacion en la pantalla
             break;
         case 9: //Caso: duty[0-4]
-            conversion_4dig(&Ventana_LCD[filaduty01][posdutyl],duty0);  // Guardar valor de duty0 en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filaduty01][posdutyr],duty1); // Guardar valor de duty1 en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filaduty23][posdutyl],duty2); // Guardar valor de duty2 en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filaduty23][posdutyr],duty3); // Guardar valor de duty3 en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filaduty4][posdutyl],duty4); // Guardar valor de duty4 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaduty01][posdutyl],duty[DUTY0]);  // Guardar valor de duty0 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaduty01][posdutyr],duty[DUTY1]); // Guardar valor de duty1 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaduty23][posdutyl],duty[DUTY2]); // Guardar valor de duty2 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaduty23][posdutyr],duty[DUTY3]); // Guardar valor de duty3 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaduty4][posdutyl],duty[DUTY4]); // Guardar valor de duty4 en Ventana_LCD para su visualizacion en la pantalla
             conversion_4dig(&Ventana_LCD[filadutymin][pos4dig], DUTY_MIN); // Guardar valor del duty minimo en Ventana_LCD para su visualizacion en la pantalla
             conversion_4dig(&Ventana_LCD[filadutymax][pos4dig], DUTY_MAX); // Guardar valor del duty maximo en Ventana_LCD para su visualizacion en la pantalla
             //conversion_4dig(&Ventana_LCD[filaruedas][posdutyl],OC1RS); // Guardar valor de OC1RS en Ventana_LCD para su visualizacion en la pantalla
@@ -109,11 +105,11 @@ void visualizar_Duty(){
 
 void inic_PWM(){
     estado_PWM=PWM0_ACTIVE; //Definir estado inicial
-    duty0 = (DUTY_MAX+DUTY_MIN)/2; // Inicializar pulso con duracion intermedia (1,3ms))
-    duty1 = duty0; // Inicializar pulso con duracion intermedia (1,3ms))
-    duty2 = duty0; // Inicializar pulso con duracion intermedia (1,3ms))
-    duty3 = duty0; // Inicializar pulso con duracion intermedia (1,3ms))
-    duty4 = duty0; // Inicializar pulso con duracion intermedia (1,3ms))
+    duty[DUTY0] = (DUTY_MAX+DUTY_MIN)/2; // Inicializar pulso con duracion intermedia (1,3ms))
+    duty[DUTY1] = duty[DUTY0]; // Inicializar pulso con duracion intermedia (1,3ms))
+    duty[DUTY2] = duty[DUTY0]; // Inicializar pulso con duracion intermedia (1,3ms))
+    duty[DUTY3] = duty[DUTY0]; // Inicializar pulso con duracion intermedia (1,3ms))
+    duty[DUTY4] = duty[DUTY0]; // Inicializar pulso con duracion intermedia (1,3ms))
     TRISDbits.TRISD8 = 0; //Definir como salida el pin que se usara para la senhal PWM (0)
     TRISDbits.TRISD9 = 0; //Definir como salida el pin que se usara para la senhal PWM (1)
     TRISDbits.TRISD10 = 0; //Definir como salida el pin que se usara para la senhal PWM (2)
@@ -122,11 +118,11 @@ void inic_PWM(){
 }
 
 void posicion_segura(){
-    mover_servo(0,SECURE_DUTY);
-    mover_servo(1,SECURE_DUTY);
-    mover_servo(2,SECURE_DUTY);
-    mover_servo(3,SECURE_DUTY);
-    mover_servo(4,SECURE_DUTY);
+    mover_servo(DUTY0,SECURE_DUTY);
+    mover_servo(DUTY1,SECURE_DUTY);
+    mover_servo(DUTY2,SECURE_DUTY);
+    mover_servo(DUTY3,SECURE_DUTY);
+    mover_servo(DUTY4,SECURE_DUTY);
 }
 
 /**
@@ -136,54 +132,54 @@ void posicion_segura(){
  */
 void mover_servo(unsigned int num_duty, unsigned int objetivo){
     switch (num_duty){
-        case 0:
-            if (duty0<objetivo) while (duty0 >= objetivo){  //si duty tiene que incrementar, esperar a que el temporizador haga que incremente
+        case DUTY0:
+            if (duty[DUTY0]<objetivo) while (duty[DUTY0] >= objetivo){  //si duty tiene que incrementar, esperar a que el temporizador haga que incremente
                 Delay_ms(10);
-                duty0 += 10;
+                duty[DUTY0] += 10;
             }
-            else while (duty0 <= objetivo){                 // si duty esta en el valor objetivo o tiene que decrementar, esperar a que el temporizador haga que incremente
+            else while (duty[DUTY0] <= objetivo){                 // si duty esta en el valor objetivo o tiene que decrementar, esperar a que el temporizador haga que incremente
                 Delay_ms(10);
-                duty0 -= 10;
-            }
-            break;
-        case 1:
-            if (duty1<objetivo) while (duty1 >= objetivo){  //si duty tiene que incrementar, esperar a que el temporizador haga que incremente
-                Delay_ms(10);
-                duty1 += 10;
-            }
-            else while (duty1 <= objetivo){                 // si duty esta en el valor objetivo o tiene que decrementar, esperar a que el temporizador haga que incremente
-                Delay_ms(10);
-                duty1 -= 10;
+                duty[DUTY0] -= 10;
             }
             break;
-        case 2:
-            if (duty2<objetivo) while (duty2 >= objetivo){  //si duty tiene que incrementar, esperar a que el temporizador haga que incremente
+        case DUTY1:
+            if (duty[DUTY1]<objetivo) while (duty[DUTY1] >= objetivo){  //si duty tiene que incrementar, esperar a que el temporizador haga que incremente
                 Delay_ms(10);
-                duty2 += 10;
+                duty[DUTY1] += 10;
             }
-            else while (duty2 <= objetivo){                 // si duty esta en el valor objetivo o tiene que decrementar, esperar a que el temporizador haga que incremente
+            else while (duty[DUTY1] <= objetivo){                 // si duty esta en el valor objetivo o tiene que decrementar, esperar a que el temporizador haga que incremente
                 Delay_ms(10);
-                duty2 -= 10;
-            }
-            break;
-        case 3:
-            if (duty3<objetivo) while (duty3 >= objetivo){  //si duty tiene que incrementar, esperar a que el temporizador haga que incremente
-                Delay_ms(10);
-                duty3 += 10;
-            }
-            else while (duty3 <= objetivo){                 // si duty esta en el valor objetivo o tiene que decrementar, esperar a que el temporizador haga que incremente
-                Delay_ms(10);
-                duty3 -= 10;
+                duty[DUTY1] -= 10;
             }
             break;
-        case 4:
-            if (duty4<objetivo) while (duty4 >= objetivo){  //si duty tiene que incrementar, esperar a que el temporizador haga que incremente
+        case DUTY2:
+            if (duty[DUTY2]<objetivo) while (duty[DUTY2] >= objetivo){  //si duty tiene que incrementar, esperar a que el temporizador haga que incremente
                 Delay_ms(10);
-                duty4 += 10;
+                duty[DUTY2] += 10;
             }
-            else while (duty4 <= objetivo){                 // si duty esta en el valor objetivo o tiene que decrementar, esperar a que el temporizador haga que incremente
+            else while (duty[DUTY2] <= objetivo){                 // si duty esta en el valor objetivo o tiene que decrementar, esperar a que el temporizador haga que incremente
                 Delay_ms(10);
-                duty4 -= 10;
+                duty[DUTY2] -= 10;
+            }
+            break;
+        case DUTY3:
+            if (duty[DUTY3]<objetivo) while (duty[DUTY3] >= objetivo){  //si duty tiene que incrementar, esperar a que el temporizador haga que incremente
+                Delay_ms(10);
+                duty[DUTY3] += 10;
+            }
+            else while (duty[DUTY3] <= objetivo){                 // si duty esta en el valor objetivo o tiene que decrementar, esperar a que el temporizador haga que incremente
+                Delay_ms(10);
+                duty[DUTY3] -= 10;
+            }
+            break;
+        case DUTY4:
+            if (duty[DUTY4]<objetivo) while (duty[DUTY4] >= objetivo){  //si duty tiene que incrementar, esperar a que el temporizador haga que incremente
+                Delay_ms(10);
+                duty[DUTY4] += 10;
+            }
+            else while (duty[DUTY4] <= objetivo){                 // si duty esta en el valor objetivo o tiene que decrementar, esperar a que el temporizador haga que incremente
+                Delay_ms(10);
+                duty[DUTY4] -= 10;
             }
             break;
         default:

@@ -122,12 +122,12 @@ void tratar_valorADC1 ()
     OC1RS = (X_media/9999) * (OC_DUTY_MAX - OC_DUTY_MIN) + OC_DUTY_MIN; // Obtener OC1RS a partir de la coordenada X
     OC3RS = (Y_media/9999) * (OC_DUTY_MAX - OC_DUTY_MIN) + OC_DUTY_MIN; // Obtener OC3RS a partir de la coordenada Y
 
-    if(!flag_DUTY){ //Si flag_DUTY==0 se obtiene duty0 a partir de la potencia
-        duty0 = (Poten_media/1023) * (DUTY_MAX - DUTY_MIN) + DUTY_MIN; // Obtener duty0 a partir de la potencia
+    if(!flag_DUTY){ //Si flag_DUTY==0 se obtiene duty0..4  a partir de la potencia
+        duty[DUTY0]  = (Poten_media/1023) * (DUTY_MAX - DUTY_MIN) + DUTY_MIN; // Obtener duty[DUTY0]  a partir de la potencia
         duty1 = (Temp_media/999) * (DUTY_MAX - DUTY_MIN) + DUTY_MIN; // Obtener duty1 a partir de la temperatura
         duty2 = (X_media/9999) * (DUTY_MAX - DUTY_MIN) + DUTY_MIN; // Obtener duty2 a partir de la coordenada X
         duty3 = (Y_media/9999) * (DUTY_MAX - DUTY_MIN) + DUTY_MIN; // Obtener duty3 a partir de la coordenada Y
-        duty4 = (Z_media/9999) * (DUTY_MAX - DUTY_MIN) + DUTY_MIN; // Obtener duty4 a partir de la coordenada Z
+        duty[DUTY4] = (Z_media/9999) * (DUTY_MAX - DUTY_MIN) + DUTY_MIN; // Obtener duty[DUTY4] a partir de la coordenada Z
         flag_Duty_LCD = VERDUTYALL; // Poner a 6 el flag para guardar los nuevos valores de duty[0-4], OC1RS y OC3RS en Ventana_LCD para su visualizacion en la pantalla
     } else {  
         flag_Duty_LCD = VERDUTYOC; // Poner a 7 el flag para guardar los nuevos valores de OC1RS y OC3RS en Ventana_LCD para su visualizacion en la pantalla
@@ -169,11 +169,13 @@ void _ISR_NO_PSV _ADC1Interrupt(){
                 Y_value[i] = ADC1BUF0; //Se guarde el valor recogido en la posicion de la tabla de muestras que le corresponde
                 AD1CHS0bits.CH0SA = coordz; //Se define la siguiente senhal a muestrear
                 num_muestras ++; //Incrementar el numero de muestras tomadas
+                break;
             case coordz: //entrada de la coordenada Z del joystick
                 Z_value[i] = ADC1BUF0; //Se guarde el valor recogido en la posicion de la tabla de muestras que le corresponde
                 AD1CHS0bits.CH0SA = potenciometro; //Se define la siguiente senhal a muestrear
                 num_muestras ++; //Incrementar el numero de muestras tomadas
                 i++; //incrementar la posicion de la tabla de muestras (indice de escritura)
+                break;
             default:
                 break;
         }
