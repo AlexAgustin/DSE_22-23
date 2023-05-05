@@ -81,7 +81,7 @@ int main()
     //poner textos iniciales
     
     while(PORTDbits.RD13); //Esperar a que se pulse S4 (RD13)
-    
+    flag_calib = 0; //Deshabilitar opcion de calibrado
     inic_CN();      // Inicializar modulo CN
     actualizar_Ventana_LCD(); //Actualizar la variable Ventana_LCD
     inic_crono();   // Inicializar cronometro

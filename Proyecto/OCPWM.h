@@ -11,6 +11,7 @@ extern unsigned int flag_DUTY;
 extern unsigned int flag_Duty_LCD;
 extern unsigned int duty[5];
 extern unsigned int estado_PWM;
+extern unsigned int flag_calib;
 
 // FUNCIONES
 //=========================================================

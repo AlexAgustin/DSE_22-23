@@ -104,14 +104,14 @@ void _ISR_NO_PSV _U2RXInterrupt()
                flag_Duty_LCD = VERDUTY4; // Poner a 1 el flag para guardar el nuevo valor de duty[DUTY4] en Ventana_LCD para su visualizacion en la pantalla
             }
             break;
-        case 'm': //si es m, se incrementa el valor minimo de duty
-            if(DUTY_MIN+10<=DUTY_MAX) { // antes de actualizar el valor maximo de duty, se comprueba si al cambiarlo se seguiria dentro de los limites
+        case 'n': //si es m, se incrementa el valor minimo de duty
+            if(flag_calib && DUTY_MIN+10<=DUTY_MAX) { // antes de actualizar el valor maximo de duty, se comprueba si al cambiarlo se seguiria dentro de los limites
                DUTY_MIN+=10; //Incrementar el valor de DUTY_MIN: +10
                flag_Duty_LCD = VERDUTYMIN; // Poner a 7 el flag para guardar el nuevo valor de DUTY_MIN en Ventana_LCD para su su visualizacion en la pantalla
             }
             break;
-        case 'M': //si es M, se incrementa el valor maximo de duty
-            if(DUTY_MAX+10 <= DEF_DUTY_MAX) { // antes de actualizar el valor maximo de duty, se comprueba si al cambiarlo se seguiria dentro de los limites
+        case 'm': //si es M, se incrementa el valor maximo de duty
+            if(flag_calib && DUTY_MAX+10 <= DEF_DUTY_MAX) { // antes de actualizar el valor maximo de duty, se comprueba si al cambiarlo se seguiria dentro de los limites
                DUTY_MAX+=10; //Incrementar el valor de DUTY_MAX: +10
                flag_Duty_LCD = VERDUTYMAX; // Poner a 8 el flag para guardar el nuevo valor de DUTY_MAX en Ventana_LCD para su su visualizacion en la pantalla
             }
@@ -146,15 +146,15 @@ void _ISR_NO_PSV _U2RXInterrupt()
                 flag_Duty_LCD = VERDUTY4; // Poner a 5 el flag para guardar el nuevo valor de duty[DUTY4] en Ventana_LCD para su su visualizacion en la pantalla
             }
             break;
-        case 'n': //si es n, se decrementa el valor minimo de duty
-            if(DUTY_MIN-10>=DEF_DUTY_MIN) { // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites
+        case 'N': //si es n, se decrementa el valor minimo de duty
+            if(flag_calib && DUTY_MIN-10>=DEF_DUTY_MIN) { // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites
                 DUTY_MIN-=10; // Decrementar el valor de DUTY_MIN: -10
                 flag_Duty_LCD = VERDUTYMIN; // Poner a 7 el flag para guardar el nuevo valor de DUTY_MIN en Ventana_LCD para su su visualizacion en la pantalla
 
             }
             break;
-        case 'N': //si es N, se decrementa el valor maximo de duty
-            if(DUTY_MAX-10>=DUTY_MIN) { // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites
+        case 'M': //si es N, se decrementa el valor maximo de duty
+            if(flag_calib && DUTY_MAX-10>=DUTY_MIN) { // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites
                 DUTY_MAX-=10; // Decrementar el valor de DUTY_MAX: -10
                 flag_Duty_LCD = VERDUTYMAX; // Poner a 8 el flag para guardar el nuevo valor de DUTY_MAX en Ventana_LCD para su su visualizacion en la pantalla
             }
