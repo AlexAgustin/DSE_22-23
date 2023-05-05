@@ -76,7 +76,7 @@ int main()
         while(1); //Espera infinita
     }
     
-    inic_Timer5(); // Inicializar el temporizador T5 //Siempre refresco ditribuido
+    inic_Timer5_LCD(); // Inicializar el temporizador T5 //Siempre refresco ditribuido
     
     //poner textos iniciales
     
@@ -85,25 +85,20 @@ int main()
     inic_CN();      // Inicializar modulo CN
     actualizar_Ventana_LCD(); //Actualizar la variable Ventana_LCD
     inic_crono();   // Inicializar cronometro
-    inic_Timer7();  // Inicializar el temporizador T7
-    
+    inic_Timer7_crono();  // Inicializar el temporizador T7
 
-    
- 
     inic_PWM(); // Inicializar las variables requeridas para la gestion de PWM
 
-    //inic_Timer2_OC1();  //Inicializar el temporizador T2
-
-    //inic_Timer4_OC3();  //Inicializar el temporizador T4
+    //inic_OC1(); //Inicializar el modulo OC1
+    //inic_OC2(); //Inicializar el modulo OC1
+    //inic_Timer2_OCx();  //Inicializar el temporizador T2
 
     inic_Timer8_PWM();  //Inicializar el temporizador T8
     
-    
-
-    inic_Timer6();  // Inicializar el temporizador T6 
+    inic_Timer6_dis();  // Inicializar el temporizador T6 
 
     inic_ADC1();    //Inicializar el modulo ADC1
-    inic_Timer3(); // Inicializar el temporizador T3
+    inic_Timer3_ADC(); // Inicializar el temporizador T3
     
     while(1) { // bucle infinito
         cronometro(); // ejecucion del cronometro

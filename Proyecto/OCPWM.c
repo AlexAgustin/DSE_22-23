@@ -43,17 +43,17 @@ void inic_OC1 ()
     OC1CONbits.OCM=0b110;       // habilitar OC1 en modo PWM sin prot
 }
 
-void inic_OC3 ()
+void inic_OC2 ()
 {
-    OC3CON=0; // Deshabilita modulo Output Compare
+    OC2CON=0; // Deshabilita modulo Output Compare
     
-    //OC3CONbits.OCM=0b000;     // deshabilitar OC3
-    OC3CONbits.OCTSEL=0;      // seleccionar T4 para el OC (OCTSEL= 0 -> Selecciona T4, OCTSEL= 1 -> T5)
+    //OC2CONbits.OCM=0b000;     // deshabilitar OC2
+    OC2CONbits.OCTSEL=0;      // seleccionar T2 para el OC (OCTSEL= 0 -> Selecciona T2, OCTSEL= 1 -> T3)
     
-    OC3R  =  (OC_DUTY_MAX + OC_DUTY_MIN)/2; 		// Inicializar pulso con duracion intermedia (0.0065ms)) (duty cycle para el primer pulso PWM)
-    OC3RS = OC3R;               // inicializar registro secundario (duty cycle para el siguiente pulso PWM)
+    OC2R  =  (OC_DUTY_MAX + OC_DUTY_MIN)/2; 		// Inicializar pulso con duracion intermedia (0.0065ms)) (duty cycle para el primer pulso PWM)
+    OC2RS = OC2R;               // inicializar registro secundario (duty cycle para el siguiente pulso PWM)
     
-    OC3CONbits.OCM=0b110;       // habilitar OC3 en modo PWM sin prot
+    OC2CONbits.OCM=0b110;       // habilitar OC2 en modo PWM sin prot
 }
 
 
@@ -84,7 +84,7 @@ void visualizar_Duty(){
             break;
         case 8: //Caso: ruedas
             conversion_4dig(&Ventana_LCD[filaruedas][posdutyl],OC1RS); // Guardar valor de OC1RS en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filaruedas][posdutyr],OC3RS); // Guardar valor de OC3RS en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaruedas][posdutyr],OC2RS); // Guardar valor de OC2RS en Ventana_LCD para su visualizacion en la pantalla
             break;
         case 9: //Caso: duty[0-4]
             conversion_4dig(&Ventana_LCD[filaduty01][posdutyl],duty[DUTY0]);  // Guardar valor de duty0 en Ventana_LCD para su visualizacion en la pantalla
@@ -95,7 +95,7 @@ void visualizar_Duty(){
             conversion_4dig(&Ventana_LCD[filadutymin][pos4dig], DUTY_MIN); // Guardar valor del duty minimo en Ventana_LCD para su visualizacion en la pantalla
             conversion_4dig(&Ventana_LCD[filadutymax][pos4dig], DUTY_MAX); // Guardar valor del duty maximo en Ventana_LCD para su visualizacion en la pantalla
             //conversion_4dig(&Ventana_LCD[filaruedas][posdutyl],OC1RS); // Guardar valor de OC1RS en Ventana_LCD para su visualizacion en la pantalla
-            //conversion_4dig(&Ventana_LCD[filaruedas][posdutyr],OC3RS); // Guardar valor de OC3RS en Ventana_LCD para su visualizacion en la pantalla
+            //conversion_4dig(&Ventana_LCD[filaruedas][posdutyr],OC2RS); // Guardar valor de OC2RS en Ventana_LCD para su visualizacion en la pantalla
             break;
         default:
             //Inalcanzable

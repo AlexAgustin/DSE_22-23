@@ -38,7 +38,7 @@ unsigned int mili,deci,seg,min;
 
 
 // inicializacion del timer 9
-void inic_Timer9(unsigned long ciclos){
+void inic_Timer9_delay(unsigned long ciclos){
     TMR9 = 0 ; 	// Inicializar el registro de cuenta
     if (ciclos < 65535) { //65535 es el maximo numero de ciclos que entra en un tamanho de 2^16 (tamanho de PR) 
          T9CONbits.TCKPS = 0;	// escala del prescaler 00
@@ -70,7 +70,7 @@ void Delay_ms(unsigned int ms){
     unsigned long ciclos = (unsigned long)ms * (unsigned long)40000; //el numero de ciclos equivale a ms * 40000
     
     if(ciclos < 16776960){// 65535 * 256. Valor maximo que puede aceptar el temporizador con el mayor prescaler
-        inic_Timer9(ciclos);// inicializa el T9
+        inic_Timer9_delay(ciclos);// inicializa el T9
         
         while(!IFS3bits.T9IF); // espera a que el temporizador indique que ha finalizado
         IFS3bits.T9IF = 0; // se marca la interrupcion como atendida
@@ -86,7 +86,7 @@ void Delay_us(unsigned int us){
     unsigned long ciclos = (unsigned long)us * (unsigned long)40; //el numero de ciclos equivale a us * 40
     
     if (ciclos < 16776960){// 65535 * 256. Valor maximo que puede aceptar el temporizador con el mayor prescaler
-        inic_Timer9(ciclos);// inicializa el T9
+        inic_Timer9_delay(ciclos);// inicializa el T9
         
         while(!IFS3bits.T9IF); // espera a que el temporizador indique que ha finalizado
         IFS3bits.T9IF = 0; // se marca la interrupcion como atendida
@@ -97,7 +97,7 @@ void Delay_us(unsigned int us){
     }
 }
 
-void inic_Timer7 ()
+void inic_Timer7_crono ()
 {
     //Inicializar modulo T7
     TMR7 = 0 ; 	// Inicializar el registro de cuenta
@@ -117,15 +117,12 @@ void inic_Timer7 ()
     T7CONbits.TON = 1;	// encender el timer
 }	
 
-
-
 void _ISR_NO_PSV _T7Interrupt()
 {
     //Han pasado 10 milesimas de segundo
     mili +=10; //se suman 10 milesimas de segundo
     IFS3bits.T7IF = 0;      // Puesta a 0 del flag IF del temporizador 7
 }
-
 
 void inic_crono()	
 // Inicializacion de las variables del cronometro: 
@@ -187,7 +184,7 @@ void cronometro()
     }
 }
 
-void inic_Timer5 ()
+void inic_Timer5_LCD ()
 {
     //Inicializar modulo T5
     TMR5 = 0 ; 	// Inicializar el registro de cuenta
@@ -243,7 +240,7 @@ void _ISR_NO_PSV _T5Interrupt()
     IFS1bits.T5IF = 0;      // Puesta a 0 del flag IF del temporizador 5
 }
 
-void inic_Timer3 ()
+void inic_Timer3_ADC()
 {
     //Inicializar modulo T3
     TMR3 = 0 ; 	// Inicializar el registro de cuenta
@@ -264,7 +261,7 @@ void inic_Timer3 ()
 }
 
 
-void inic_Timer2_OC1(){
+void inic_Timer2_OCx(){
     //Inicializar modulo T2
     TMR2 = 0; // Inicializar el registro de cuenta
     PR2 = 4000-1;	// Periodo del timer
@@ -283,28 +280,6 @@ void inic_Timer2_OC1(){
     
     T2CONbits.TON = 1;	// encender el timer
 }
-
-
-void inic_Timer4_OC3(){
-    //Inicializar modulo T4
-    TMR4 = 0; // Inicializar el registro de cuenta
-    PR4 = 4000-1;	// Periodo del timer
-		// Queremos que cuente 0,1 ms.
-		// Fosc= 80 MHz (vease Inic_oscilator()) de modo que
-		// Fcy = 40 MHz (cada instruccion dos ciclos de reloj)
-		// Por tanto, Tcy= 25 ns para ejecutar una instruccion
-		// Para contar 0,1 ms se necesitan 4.000 ciclos.
-    
-    T4CONbits.TCKPS = 0;	// escala del prescaler 1:1
-    T4CONbits.TCS = 0;	// reloj interno
-    T4CONbits.TGATE = 0;	// Deshabilitar el modo Gate
-    
-    IEC1bits.T4IE = 0;      // deshabilitar la interrupcion general de T4
-    IFS1bits.T4IF = 0;      // Puesta a 0 del flag IF del temporizador 4
-    
-    T4CONbits.TON = 1;	// encender el timer
-}
-
 
 
 void inic_Timer8_PWM(){
@@ -375,7 +350,7 @@ void _ISR_NO_PSV _T8Interrupt(){
     IFS3bits.T8IF = 0;      // Puesta a 0 del flag IF del temporizador 8
 }
 
-void inic_Timer6(){
+void inic_Timer6_dis(){
     //Inicializar modulo T6
     TMR6 = 0; // Inicializar el registro de cuenta
     PR6 =  43750-1 ;	// Periodo del timer

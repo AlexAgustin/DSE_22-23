@@ -120,7 +120,7 @@ void tratar_valorADC1 ()
     
     
     OC1RS = (X_media/999) * (OC_DUTY_MAX - OC_DUTY_MIN) + OC_DUTY_MIN; // Obtener OC1RS a partir de la coordenada X
-    OC3RS = (Y_media/999) * (OC_DUTY_MAX - OC_DUTY_MIN) + OC_DUTY_MIN; // Obtener OC3RS a partir de la coordenada Y
+    OC2RS = (Y_media/999) * (OC_DUTY_MAX - OC_DUTY_MIN) + OC_DUTY_MIN; // Obtener OC2RS a partir de la coordenada Y
 
     if(!flag_DUTY){ //Si flag_DUTY==0 se obtiene duty0..4  a partir de la potencia
         duty[DUTY0]  = (Poten_media/1023) * (DUTY_MAX - DUTY_MIN) + DUTY_MIN; // Obtener duty[DUTY0]  a partir de la potencia
@@ -128,9 +128,9 @@ void tratar_valorADC1 ()
         duty[DUTY2] = (X_media/999) * (DUTY_MAX - DUTY_MIN) + DUTY_MIN; // Obtener duty2 a partir de la coordenada X
         duty[DUTY3] = (Y_media/999) * (DUTY_MAX - DUTY_MIN) + DUTY_MIN; // Obtener duty3 a partir de la coordenada Y
         duty[DUTY4] = (Z_media/999) * (DUTY_MAX - DUTY_MIN) + DUTY_MIN; // Obtener duty[DUTY4] a partir de la coordenada Z
-        flag_Duty_LCD = VERDUTYALL; // Poner a 6 el flag para guardar los nuevos valores de duty[0-4], OC1RS y OC3RS en Ventana_LCD para su visualizacion en la pantalla
+        flag_Duty_LCD = VERDUTYALL; // Poner a 6 el flag para guardar los nuevos valores de duty[0-4], OC1RS y OC2RS en Ventana_LCD para su visualizacion en la pantalla
     } else {  
-        flag_Duty_LCD = VERDUTYOC; // Poner a 7 el flag para guardar los nuevos valores de OC1RS y OC3RS en Ventana_LCD para su visualizacion en la pantalla
+        flag_Duty_LCD = VERDUTYOC; // Poner a 7 el flag para guardar los nuevos valores de OC1RS y OC2RS en Ventana_LCD para su visualizacion en la pantalla
     }
 
     //Escribir el valor de cada dato a visualizar en la posicion correspondiente de Ventana_LCD

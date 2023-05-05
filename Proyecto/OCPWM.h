@@ -19,3 +19,5 @@ extern unsigned int flag_calib;
 void visualizar_Duty();
 void inic_PWM();
 void posicion_segura();
+void inic_OC1();
+void inic_OC2();
