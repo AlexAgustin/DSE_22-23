@@ -111,8 +111,10 @@ int main()
             tratar_valorADC1(); // Calcular la media de las muestras tomadas y visualizar la informacion pertinente
         if (flag_Duty_LCD!=0) // Cuando se actualiza el valor de duty0 y se pone a 1 el flag correspondiente (flag_Duty_LCD) ...
             visualizar_Duty(); // se guarda el valor de duty0 en Ventana_LCD para su visualizacion en la pantalla
-        if(flag_dis) //Si se puede leer la medicion de la distancia...
+        if (flag_dis) //Si se puede leer la medicion de la distancia...
             gestion_dis(dirI2C);  //Gestionar la medicion de la distancia
+        if (flag_posicion_segura)
+            posicion_segura(); //Llevar el brazo a una posicion segura
     }
     
 	return (0);

@@ -29,7 +29,7 @@ void inic_CN()
     CNEN2bits.CN16IE = 1;	// habilitacion de la interrupcion del pin CN16
                             // que es al que esta conectado el pulsador S6
     
-    //CNEN2bits.CN20IE = 1;   // habilitacion de la interrupcion del pin CN20
+    CNEN2bits.CN20IE = 1;   // habilitacion de la interrupcion del pin CN20
                             // que es al que esta conectado el pulsador del joystick
     
     
@@ -69,14 +69,14 @@ void _ISR_NO_PSV _CNInterrupt()
         inicializar_crono = 1; // Poner a 1 el flag para inicializar el cronometro
         cont6 ++; //se suma uno al contador de interrupciones recibidas (S6)
 	}
-//    if(!PORTDbits.RD14)     //pulsador joystick
-//	{
-//        // se ha pulsado el pulsador del joystick
-//        //flag
-//        //quita esto de aqui
-//        posicion_segura();
-//        cont6 ++; //se suma uno al contador de interrupciones recibidas (S6)
-//	}
+    if(!PORTDbits.RD14)     //pulsador joystick
+	{
+        // se ha pulsado el pulsador del joystick
+        //flag
+        //quita esto de aqui
+        flag_posicion_segura=1;
+        cont6 ++; //se suma uno al contador de interrupciones recibidas (S6)
+	}
 	IFS1bits.CNIF = 0;	//se marca que la interrupcion ha sido atendida	
 }
 

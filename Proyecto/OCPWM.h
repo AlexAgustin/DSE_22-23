@@ -9,6 +9,7 @@ extern unsigned int OC_DUTY_MIN;
 extern unsigned int OC_DUTY_MAX;
 extern unsigned int flag_DUTY;
 extern unsigned int flag_Duty_LCD;
+extern unsigned int flag_posicion_segura;
 extern unsigned int duty[5];
 extern unsigned int estado_PWM;
 extern unsigned int flag_calib;

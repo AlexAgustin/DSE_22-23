@@ -22,6 +22,7 @@ unsigned int OC_DUTY_MAX=(PR100us/0.1) * MAXOCPWM;	// mediante los "define" PR20
 unsigned int flag_DUTY = 1;  // duty se gestionara por defecto a traves de UART
 unsigned int flag_Duty_LCD = 9; //cuando duty cambia, se hace la conversion para visualizarlo en la pantalla  (flag a 1)
 unsigned int flag_calib = 1;
+unsigned int flag_posicion_segura=0; //se lleva el brazo a una posicion segura para apagar si el flag esta a 1 (desde el programa principal)
 
 unsigned int duty[5];
 unsigned int estado_PWM;
@@ -124,6 +125,7 @@ void posicion_segura(){
     mover_servo(DUTY2,SECURE_DUTY_2);
     mover_servo(DUTY3,SECURE_DUTY_3);
     mover_servo(DUTY4,SECURE_DUTY_4);
+    flag_posicion_segura=0;
 }
 
 /**
