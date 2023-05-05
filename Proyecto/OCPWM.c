@@ -106,12 +106,14 @@ void visualizar_Duty(){
 
 
 void inic_PWM(){
-    estado_PWM=PWM0_ACTIVE; //Definir estado inicial
-    duty[DUTY0] = (DUTY_MAX+DUTY_MIN)/2; // Inicializar pulso con duracion intermedia (1,3ms))
-    duty[DUTY1] = duty[DUTY0]; // Inicializar pulso con duracion intermedia (1,3ms))
-    duty[DUTY2] = duty[DUTY0]; // Inicializar pulso con duracion intermedia (1,3ms))
-    duty[DUTY3] = duty[DUTY0]; // Inicializar pulso con duracion intermedia (1,3ms))
-    duty[DUTY4] = duty[DUTY0]; // Inicializar pulso con duracion intermedia (1,3ms))
+    int duracion_intermedia = (DUTY_MAX + DUTY_MIN) / 2;
+    estado_PWM = PWM0_ACTIVE; //Definir estado inicial
+    mover_servo(DUTY0, duracion_intermedia); // Inicializar pulso con duracion intermedia (1,3ms))
+    mover_servo(DUTY1, duracion_intermedia); // Inicializar pulso con duracion intermedia (1,3ms))
+    mover_servo(DUTY2, duracion_intermedia); // Inicializar pulso con duracion intermedia (1,3ms))
+    mover_servo(DUTY3, duracion_intermedia); // Inicializar pulso con duracion intermedia (1,3ms))
+    mover_servo(DUTY4, duracion_intermedia); // Inicializar pulso con duracion intermedia (1,3ms))
+
     TRISDbits.TRISD8 = 0; //Definir como salida el pin que se usara para la senhal PWM (0)
     TRISDbits.TRISD9 = 0; //Definir como salida el pin que se usara para la senhal PWM (1)
     TRISDbits.TRISD10 = 0; //Definir como salida el pin que se usara para la senhal PWM (2)
@@ -125,7 +127,7 @@ void posicion_segura(){
     mover_servo(DUTY2,SECURE_DUTY_2);
     mover_servo(DUTY3,SECURE_DUTY_3);
     mover_servo(DUTY4,SECURE_DUTY_4);
-    flag_posicion_segura=0;
+    flag_posicion_segura = 0;
 }
 
 /**
@@ -136,53 +138,80 @@ void posicion_segura(){
 void mover_servo(unsigned int num_duty, unsigned int objetivo){
     switch (num_duty){
         case DUTY0:
-            if (duty[DUTY0]<objetivo) while (duty[DUTY0] >= objetivo){  //si duty tiene que incrementar, esperar a que el temporizador haga que incremente
+            if (duty[DUTY0]<objetivo) while (duty[DUTY0] < objetivo){  //si duty tiene que incrementar, esperar a que el temporizador haga que incremente
                 Delay_ms(10);
-                duty[DUTY0] += 10;
+                duty[DUTY0] += 5;
             }
-            else while (duty[DUTY0] <= objetivo){                 // si duty esta en el valor objetivo o tiene que decrementar, esperar a que el temporizador haga que incremente
+            else while (duty[DUTY0] > objetivo){                 // si duty esta en el valor objetivo o tiene que decrementar, esperar a que el temporizador haga que incremente
                 Delay_ms(10);
-                duty[DUTY0] -= 10;
+                duty[DUTY0] -= 5;
             }
+            duty[DUTY0] = objetivo;
             break;
         case DUTY1:
-            if (duty[DUTY1]<objetivo) while (duty[DUTY1] >= objetivo){  //si duty tiene que incrementar, esperar a que el temporizador haga que incremente
+            if (duty[DUTY1]<objetivo) while (duty[DUTY1] < objetivo){  //si duty tiene que incrementar, esperar a que el temporizador haga que incremente
                 Delay_ms(10);
-                duty[DUTY1] += 10;
+                duty[DUTY1] += 5;
             }
-            else while (duty[DUTY1] <= objetivo){                 // si duty esta en el valor objetivo o tiene que decrementar, esperar a que el temporizador haga que incremente
+            else while (duty[DUTY1] > objetivo){                 // si duty esta en el valor objetivo o tiene que decrementar, esperar a que el temporizador haga que incremente
                 Delay_ms(10);
-                duty[DUTY1] -= 10;
+                duty[DUTY1] -= 5;
             }
             break;
+            duty[DUTY1] = objetivo;
         case DUTY2:
-            if (duty[DUTY2]<objetivo) while (duty[DUTY2] >= objetivo){  //si duty tiene que incrementar, esperar a que el temporizador haga que incremente
+            if (duty[DUTY2]<objetivo) while (duty[DUTY2] < objetivo){  //si duty tiene que incrementar, esperar a que el temporizador haga que incremente
                 Delay_ms(10);
-                duty[DUTY2] += 10;
+                duty[DUTY2] += 5;
             }
-            else while (duty[DUTY2] <= objetivo){                 // si duty esta en el valor objetivo o tiene que decrementar, esperar a que el temporizador haga que incremente
+            else while (duty[DUTY2] > objetivo){                 // si duty esta en el valor objetivo o tiene que decrementar, esperar a que el temporizador haga que incremente
                 Delay_ms(10);
-                duty[DUTY2] -= 10;
+                duty[DUTY2] -= 5;
             }
             break;
+            duty[DUTY2] = objetivo;
         case DUTY3:
-            if (duty[DUTY3]<objetivo) while (duty[DUTY3] >= objetivo){  //si duty tiene que incrementar, esperar a que el temporizador haga que incremente
+            if (duty[DUTY3]<objetivo) while (duty[DUTY3] < objetivo){  //si duty tiene que incrementar, esperar a que el temporizador haga que incremente
                 Delay_ms(10);
-                duty[DUTY3] += 10;
+                duty[DUTY3] += 5;
             }
-            else while (duty[DUTY3] <= objetivo){                 // si duty esta en el valor objetivo o tiene que decrementar, esperar a que el temporizador haga que incremente
+            else while (duty[DUTY3] > objetivo){                 // si duty esta en el valor objetivo o tiene que decrementar, esperar a que el temporizador haga que incremente
                 Delay_ms(10);
-                duty[DUTY3] -= 10;
+                duty[DUTY3] -= 5;
             }
             break;
+            duty[DUTY3] = objetivo;
         case DUTY4:
-            if (duty[DUTY4]<objetivo) while (duty[DUTY4] >= objetivo){  //si duty tiene que incrementar, esperar a que el temporizador haga que incremente
+            if (duty[DUTY4]<objetivo) while (duty[DUTY4] < objetivo){  //si duty tiene que incrementar, esperar a que el temporizador haga que incremente
                 Delay_ms(10);
-                duty[DUTY4] += 10;
+                duty[DUTY4] += 5;
             }
-            else while (duty[DUTY4] <= objetivo){                 // si duty esta en el valor objetivo o tiene que decrementar, esperar a que el temporizador haga que incremente
+            else while (duty[DUTY4] > objetivo){                 // si duty esta en el valor objetivo o tiene que decrementar, esperar a que el temporizador haga que incremente
                 Delay_ms(10);
-                duty[DUTY4] -= 10;
+                duty[DUTY4] -= 5;
+            }
+            duty[DUTY4] = objetivo;
+            break;
+        case DUTYOC1:
+            if (OC1RS<objetivo) while (OC1RS < objetivo){  //si duty tiene que incrementar, esperar a que el temporizador haga que incremente
+                Delay_ms(10);
+                OC1RS += 5;
+            }
+            else while (OC1RS > objetivo){                 // si duty esta en el valor objetivo o tiene que decrementar, esperar a que el temporizador haga que incremente
+                Delay_ms(10);
+                OC1RS -= 5;
+            }
+            OC1RS = objetivo;
+
+            break;
+        case DUTYOC2:
+            if (OC2RS<objetivo) while (OC2RS < objetivo){  //si duty tiene que incrementar, esperar a que el temporizador haga que incremente
+                Delay_ms(10);
+                OC2RS += 5;
+            }
+            else while (OC2RS > objetivo){                 // si duty esta en el valor objetivo o tiene que decrementar, esperar a que el temporizador haga que incremente
+                Delay_ms(10);
+                OC2RS -= 5;
             }
             break;
         default:
