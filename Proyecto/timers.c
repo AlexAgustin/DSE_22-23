@@ -281,6 +281,67 @@ void inic_Timer2_OCx(){
     T2CONbits.TON = 1;	// encender el timer
 }
 
+void inic_Timer4_movservos ()
+{
+    //Inicializar modulo T4
+    TMR4 = 0 ; 	// Inicializar el registro de cuenta
+    PR4 =  50000-1 ;	// Periodo del timer
+		// Queremos que cuente 10 ms.
+		// Fosc= 80 MHz (vease Inic_oscilator()) de modo que
+		// Fcy = 40 MHz (cada instruccion dos ciclos de reloj)
+		// Por tanto, Tcy= 25 ns para ejecutar una instruccion
+		// Para contar 10 ms se necesitan 400.000 ciclos.
+    T4CONbits.TCKPS = 1;	// escala del prescaler 01
+    T4CONbits.TCS = 0;	// reloj interno
+    T4CONbits.TGATE = 0;	// Deshabilitar el modo Gate
+    
+    IEC1bits.T4IE = 1;      // habilitacion de la interrupcion general de T4
+    IFS1bits.T4IF = 0;      // Puesta a 0 del flag IF del temporizador 4
+    
+    T4CONbits.TON = 1;	// encender el timer
+}	
+
+
+/**
+ * Mueve el servo correspondiente al duty num_duty a la posicion objetivo
+ */
+void _ISR_NO_PSV _T4Interrupt(){
+    //Caso: duty 0
+    if((duty[DUTY0] + 5) < objetivopwm[DUTY0]) duty[DUTY0] += 5;
+    else if ((duty[DUTY0] - 5) > objetivopwm[DUTY0]) duty[DUTY0] -= 5;
+    else if(duty[DUTY0] != objetivopwm[DUTY0]) duty[DUTY0] = objetivopwm[DUTY0]; 
+    
+    //Caso: duty 1
+    if((duty[DUTY1] + 5) < objetivopwm[DUTY1]) duty[DUTY1] += 5;
+    else if ((duty[DUTY1] - 5) > objetivopwm[DUTY1]) duty[DUTY1] -= 5;
+    else if(duty[DUTY1] != objetivopwm[DUTY1]) duty[DUTY1] = objetivopwm[DUTY1]; 
+    
+    //Caso: duty 2
+    if((duty[DUTY2] + 5) < objetivopwm[DUTY2]) duty[DUTY2] += 5;
+    else if ((duty[DUTY2] - 5) > objetivopwm[DUTY2]) duty[DUTY2] -= 5;
+    else if(duty[DUTY2] != objetivopwm[DUTY2]) duty[DUTY2] = objetivopwm[DUTY2]; 
+
+    //Caso: duty 3
+    if((duty[DUTY3] + 5) < objetivopwm[DUTY3]) duty[DUTY3] += 5;
+    else if ((duty[DUTY3] - 5) > objetivopwm[DUTY3]) duty[DUTY3] -= 5;
+    else if(duty[DUTY3] != objetivopwm[DUTY3]) duty[DUTY3] = objetivopwm[DUTY3]; 
+
+    //Caso: duty 4
+    if((duty[DUTY4] + 5) < objetivopwm[DUTY4]) duty[DUTY4] += 5;
+    else if ((duty[DUTY4] - 5) > objetivopwm[DUTY4]) duty[DUTY4] -= 5;
+    else if(duty[DUTY4] != objetivopwm[DUTY4]) duty[DUTY4] = objetivopwm[DUTY4]; 
+
+    //Caso: OC1RS
+    if((OC1RS + 5) < objetivopwm[DUTYOC1]) OC1RS += 5;
+    else if ((OC1RS - 5) > objetivopwm[DUTYOC1]) OC1RS -= 5;
+    else if(OC1RS != objetivopwm[DUTYOC1]) OC1RS = objetivopwm[DUTYOC1]; 
+
+    //Caso: OC2RS
+    if((OC2RS + 5) < objetivopwm[DUTYOC2]) OC2RS += 5;
+    else if ((OC2RS - 5) > objetivopwm[DUTYOC2]) OC2RS -= 5;
+    else if(OC2RS != objetivopwm[DUTYOC2]) OC2RS = objetivopwm[DUTYOC2]; 
+
+}
 
 void inic_Timer8_PWM(){
     //Inicializar modulo T8
