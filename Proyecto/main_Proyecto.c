@@ -112,6 +112,10 @@ int main()
             gestion_dis(dirI2C);  //Gestionar la medicion de la distancia
         if (flag_posicion_segura)
             posicion_segura(); //Llevar el brazo a una posicion segura
+        if (flag_estrella)
+            dibujar_estrella(); //dibujar una estrella
+        if (flag_casa)
+            dibujar_casa(); //dibujar una casa
     }
     
 	return (0);

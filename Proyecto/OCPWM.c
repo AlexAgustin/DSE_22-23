@@ -13,6 +13,11 @@ Fecha: Marzo 2023
 #include "memoria.h"
 #include "timers.h"
 
+//Estados
+#define LAPIZ 0
+#define STAR 1
+#define CASA 1
+
 unsigned int DUTY_MIN = DEF_DUTY_MIN;	// valor minimo y maximo de duty. Se calculan 
 unsigned int DUTY_MAX = DEF_DUTY_MAX;	// mediante los "define" PR20ms, MINPWM y MAXPWM
 
@@ -136,5 +141,88 @@ void posicion_segura(){
     objetivopwm[DUTY3] = SECURE_DUTY_3;
     objetivopwm[DUTY4] = SECURE_DUTY_4;
     flag_posicion_segura = 0;
+}
+
+
+
+void dibujar_estrella(){
+    /*
+    static int linea = LAPIZ;
+    static int index = 0;
+    static int pos_star0[8] = {POS_STAR0_0, POS_STAR1_0, POS_STAR2_0, POS_STAR3_0, POS_STAR4_0};
+    static int pos_star1[8] = {POS_STAR0_1, POS_STAR1_1, POS_STAR2_1, POS_STAR3_1, POS_STAR4_1};
+    static int pos_star2[8] = {POS_STAR0_2, POS_STAR1_2, POS_STAR2_2, POS_STAR3_2, POS_STAR4_2};
+    static int pos_star3[8] = {POS_STAR0_3, POS_STAR1_3, POS_STAR2_3, POS_STAR3_3, POS_STAR4_3};
+
+
+    switch(linea)
+    {
+        case LAPIZ:
+            objetivopwm[DUTY4] = POS_LAPIZ_4;
+            linea = STAR1;
+        break;
+
+        case STAR:
+            objetivopwm[DUTY0] = pos_star0[index];
+            objetivopwm[DUTY1] = pos_star1[index];
+            objetivopwm[DUTY2] = pos_star2[index];
+            objetivopwm[DUTY3] = pos_star3[index];
+            index ++;
+
+            if(index == 5){
+                linea = LAPIZ;
+                flag_star = 0;
+                flag_posicion_segura = 1;
+            }
+        break;
+
+        default:
+            //Inalcanzable
+        break;
+    }
+
+    flag_allreached = 0;
+    */
+}
+
+
+
+void dibujar_casa(){
+    /*
+    static int linea = LAPIZ;
+    static int index = 0;
+    static int pos_casa0[8] = {POS_CASA0_0, POS_CASA1_0, POS_CASA2_0, POS_CASA3_0, POS_CASA4_0, POS_CASA5_0, POS_CASA6_0, POS_CASA7_0};
+    static int pos_casa1[8] = {POS_CASA0_1, POS_CASA1_1, POS_CASA2_1, POS_CASA3_1, POS_CASA4_1, POS_CASA5_1, POS_CASA6_1, POS_CASA7_1};
+    static int pos_casa2[8] = {POS_CASA0_2, POS_CASA1_2, POS_CASA2_2, POS_CASA3_2, POS_CASA4_2, POS_CASA5_2, POS_CASA6_2, POS_CASA7_2};
+    static int pos_casa3[8] = {POS_CASA0_3, POS_CASA1_3, POS_CASA2_3, POS_CASA3_3, POS_CASA4_3, POS_CASA5_3, POS_CASA6_3, POS_CASA7_3};
+
+    switch(linea)
+    {
+        case LAPIZ:
+            objetivopwm[DUTY4] = POS_LAPIZ_4;
+            linea = CASA1;
+        break;
+
+        case CASA:
+            objetivopwm[DUTY0] = pos_casa0[index];
+            objetivopwm[DUTY1] = pos_casa1[index];
+            objetivopwm[DUTY2] = pos_casa2[index];
+            objetivopwm[DUTY3] = pos_casa3[index];
+            index ++;
+
+            if(index == 8){
+                linea = LAPIZ;
+                flag_casa = 0;
+                flag_posicion_segura = 1;
+            }
+        break;
+
+        default:
+            //Inalcanzable
+        break;
+    }
+
+    flag_allreached = 0;
+    */
 }
 
