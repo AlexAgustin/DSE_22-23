@@ -107,8 +107,14 @@ void visualizar_Duty(){
 
 
 void inic_PWM(){
+    T4CONbits.TON = 1;	// encender el timer
+    
     int duracion_intermedia = (DUTY_MAX + DUTY_MIN) / 2;
     estado_PWM = PWM0_ACTIVE; //Definir estado inicial
+    
+    duty[DUTY1]=DUTY_MAX;
+    duty[DUTY2]=DUTY_MAX;
+    
     objetivopwm[DUTY0] = duracion_intermedia; // Inicializar pulso con duracion intermedia (1,3ms))
     objetivopwm[DUTY1] = duracion_intermedia; // Inicializar pulso con duracion intermedia (1,3ms))
     objetivopwm[DUTY2] = duracion_intermedia; // Inicializar pulso con duracion intermedia (1,3ms))
@@ -123,6 +129,7 @@ void inic_PWM(){
 }
 
 void posicion_segura(){
+    T4CONbits.TON = 1;	// encender el timer
     objetivopwm[DUTY0] = SECURE_DUTY_0;
     objetivopwm[DUTY1] = SECURE_DUTY_1;
     objetivopwm[DUTY2] = SECURE_DUTY_2;

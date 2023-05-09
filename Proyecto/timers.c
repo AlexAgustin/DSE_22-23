@@ -36,6 +36,7 @@ int sum=0;
 int inicializar_crono = 0;
 unsigned int mili,deci,seg,min;
 
+unsigned int flag_All_Reached=0;
 
 // inicializacion del timer 9
 void inic_Timer9_delay(unsigned long ciclos){
@@ -298,7 +299,7 @@ void inic_Timer4_movservos ()
     IEC1bits.T4IE = 1;      // habilitacion de la interrupcion general de T4
     IFS1bits.T4IF = 0;      // Puesta a 0 del flag IF del temporizador 4
     
-    T4CONbits.TON = 1;	// encender el timer
+    T4CONbits.TON = 0;	// apagar el timer
 }	
 
 
@@ -306,41 +307,65 @@ void inic_Timer4_movservos ()
  * Mueve el servo correspondiente al duty num_duty a la posicion objetivo
  */
 void _ISR_NO_PSV _T4Interrupt(){
+    static unsigned int reached=0;
+    
     //Caso: duty 0
     if((duty[DUTY0] + 5) < objetivopwm[DUTY0]) duty[DUTY0] += 5;
     else if ((duty[DUTY0] - 5) > objetivopwm[DUTY0]) duty[DUTY0] -= 5;
-    else if(duty[DUTY0] != objetivopwm[DUTY0]) duty[DUTY0] = objetivopwm[DUTY0]; 
+    else if(duty[DUTY0] != objetivopwm[DUTY0]) {
+        duty[DUTY0] = objetivopwm[DUTY0];
+        reached++;
+    }
     
     //Caso: duty 1
     if((duty[DUTY1] + 5) < objetivopwm[DUTY1]) duty[DUTY1] += 5;
     else if ((duty[DUTY1] - 5) > objetivopwm[DUTY1]) duty[DUTY1] -= 5;
-    else if(duty[DUTY1] != objetivopwm[DUTY1]) duty[DUTY1] = objetivopwm[DUTY1]; 
+    else if(duty[DUTY1] != objetivopwm[DUTY1]) {
+        duty[DUTY1] = objetivopwm[DUTY1];
+        reached++;
+    }
     
     //Caso: duty 2
     if((duty[DUTY2] + 5) < objetivopwm[DUTY2]) duty[DUTY2] += 5;
     else if ((duty[DUTY2] - 5) > objetivopwm[DUTY2]) duty[DUTY2] -= 5;
-    else if(duty[DUTY2] != objetivopwm[DUTY2]) duty[DUTY2] = objetivopwm[DUTY2]; 
+    else if(duty[DUTY2] != objetivopwm[DUTY2]) {
+        duty[DUTY2] = objetivopwm[DUTY2]; 
+        reached++;
+    }
 
     //Caso: duty 3
     if((duty[DUTY3] + 5) < objetivopwm[DUTY3]) duty[DUTY3] += 5;
     else if ((duty[DUTY3] - 5) > objetivopwm[DUTY3]) duty[DUTY3] -= 5;
-    else if(duty[DUTY3] != objetivopwm[DUTY3]) duty[DUTY3] = objetivopwm[DUTY3]; 
+    else if(duty[DUTY3] != objetivopwm[DUTY3]) {
+        duty[DUTY3] = objetivopwm[DUTY3];
+        reached++;
+    } 
 
     //Caso: duty 4
     if((duty[DUTY4] + 5) < objetivopwm[DUTY4]) duty[DUTY4] += 5;
     else if ((duty[DUTY4] - 5) > objetivopwm[DUTY4]) duty[DUTY4] -= 5;
-    else if(duty[DUTY4] != objetivopwm[DUTY4]) duty[DUTY4] = objetivopwm[DUTY4]; 
+    else if(duty[DUTY4] != objetivopwm[DUTY4]) {
+        duty[DUTY4] = objetivopwm[DUTY4]; 
+        reached++;
+    }
 
-    //Caso: OC1RS
-    if((OC1RS + 5) < objetivopwm[DUTYOC1]) OC1RS += 5;
-    else if ((OC1RS - 5) > objetivopwm[DUTYOC1]) OC1RS -= 5;
-    else if(OC1RS != objetivopwm[DUTYOC1]) OC1RS = objetivopwm[DUTYOC1]; 
+//    //Caso: OC1RS
+//    if((OC1RS + 5) < objetivopwm[DUTYOC1]) OC1RS += 5;
+//    else if ((OC1RS - 5) > objetivopwm[DUTYOC1]) OC1RS -= 5;
+//    else if(OC1RS != objetivopwm[DUTYOC1]) OC1RS = objetivopwm[DUTYOC1]; 
+//
+//    //Caso: OC2RS
+//    if((OC2RS + 5) < objetivopwm[DUTYOC2]) OC2RS += 5;
+//    else if ((OC2RS - 5) > objetivopwm[DUTYOC2]) OC2RS -= 5;
+//    else if(OC2RS != objetivopwm[DUTYOC2]) OC2RS = objetivopwm[DUTYOC2]; 
 
-    //Caso: OC2RS
-    if((OC2RS + 5) < objetivopwm[DUTYOC2]) OC2RS += 5;
-    else if ((OC2RS - 5) > objetivopwm[DUTYOC2]) OC2RS -= 5;
-    else if(OC2RS != objetivopwm[DUTYOC2]) OC2RS = objetivopwm[DUTYOC2]; 
-
+    if (reached==5){
+        reached=0;
+        flag_All_Reached=1;
+        T4CONbits.TON = 0;	// encender el timer
+    }
+    flag_Duty_LCD=9;
+    IFS1bits.T4IF = 0;      // Puesta a 0 del flag IF del temporizador 4
 }
 
 void inic_Timer8_PWM(){

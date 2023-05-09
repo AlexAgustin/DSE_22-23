@@ -18,6 +18,7 @@
 // VARIABLES
 //=========================================================
 extern int inicializar_crono; //Flag para inicializar el cronometro
+extern unsigned int flag_All_Reached;
 
 // FUNCIONES
 // declaracion de las funciones relacionadas con los temporizadores

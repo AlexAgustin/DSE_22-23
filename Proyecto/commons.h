@@ -145,6 +145,8 @@
 #define DUTY2 2
 #define DUTY3 3
 #define DUTY4 4
+#define DUTYOC1 5
+#define DUTYOC2 6
 
 // Definiciones relacionadas con el bus I2C
 //==========================================

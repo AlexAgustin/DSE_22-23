@@ -84,11 +84,13 @@ int main()
     flag_calib = 0; //Deshabilitar opcion de calibrado
     inic_CN();      // Inicializar modulo CN
     actualizar_Ventana_LCD(); //Actualizar la variable Ventana_LCD
+
     inic_crono();   // Inicializar cronometro
     inic_Timer7_crono();  // Inicializar el temporizador T7
 
     inic_PWM(); // Inicializar las variables requeridas para la gestion de PWM
-
+    inic_Timer4_movservos(); //Inicializar Timer del movimiento
+    
     //inic_OC1(); //Inicializar el modulo OC1
     //inic_OC2(); //Inicializar el modulo OC1
     //inic_Timer2_OCx();  //Inicializar el temporizador T2

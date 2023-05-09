@@ -13,6 +13,7 @@ extern unsigned int flag_posicion_segura;
 extern unsigned int duty[5];
 extern unsigned int estado_PWM;
 extern unsigned int flag_calib;
+extern unsigned int objetivopwm[7];
 
 // FUNCIONES
 //=========================================================
