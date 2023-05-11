@@ -18,22 +18,25 @@ Fecha: Marzo 2023
 #define STAR 1
 #define CASA 1
 
-unsigned int DUTY_MIN = DEF_DUTY_MIN;	// valor minimo y maximo de duty. Se calculan 
-unsigned int DUTY_MAX = DEF_DUTY_MAX;	// mediante los "define" PR20ms, MINPWM y MAXPWM
+
+unsigned int estado_PWM;
 
 unsigned int OC_DUTY_MIN=(PR100us/0.1) * MINOCPWM;	// valor minimo y maximo por defecto de duty. Se calculan 
 unsigned int OC_DUTY_MAX=(PR100us/0.1) * MAXOCPWM;	// mediante los "define" PR20ms, MINPWM y MAXPWM
 
 unsigned int flag_DUTY = 1;  // duty se gestionara por defecto a traves de UART
-unsigned int flag_Duty_LCD = 9; //cuando duty cambia, se hace la conversion para visualizarlo en la pantalla  (flag a 1)
+unsigned int flag_Duty_LCD = VERDUTYALL; //cuando duty cambia, se hace la conversion para visualizarlo en la pantalla  (flag a 1)
 unsigned int flag_calib = 1;
 unsigned int flag_posicion_segura=0; //se lleva el brazo a una posicion segura para apagar si el flag esta a 1 (desde el programa principal)
+unsigned int flag_num_duty = 0;
+unsigned int flag_estrella = 0;
+unsigned int flag_casa = 0;
+
 
 unsigned int duty[5];
 unsigned int objetivopwm[7];
-unsigned int estado_PWM;
-
-unsigned int flag_num_duty=0;
+unsigned int duty_min[5];
+unsigned int duty_max[5];
 
 void mover_servo(unsigned int num_duty, unsigned int objetivo);
 void inic_OC1 ()
@@ -89,37 +92,35 @@ void inic_OC4 ()
     OC4CONbits.OCM=0b110;       // habilitar OC4 en modo PWM sin prot
 }
 
-
-
 void visualizar_Duty(){
     switch(flag_Duty_LCD)
     {
-        case 1: //Caso: duty0
+        case VERDUTY0: //Caso: duty0
             conversion_4dig(&Ventana_LCD[filaduty01][posdutyl],duty[DUTY0]);  // Guardar valor de duty0 en Ventana_LCD para su visualizacion en la pantalla
             break;
-        case 2: //Caso: duty1
+        case VERDUTY1: //Caso: duty1
             conversion_4dig(&Ventana_LCD[filaduty01][posdutyr],duty[DUTY1]); // Guardar valor de duty1 en Ventana_LCD para su visualizacion en la pantalla
             break;
-        case 3: //Caso: duty2
+        case VERDUTY2: //Caso: duty2
             conversion_4dig(&Ventana_LCD[filaduty23][posdutyl],duty[DUTY2]); // Guardar valor de duty2 en Ventana_LCD para su visualizacion en la pantalla
             break;
-        case 4: //Caso: duty3
+        case VERDUTY3: //Caso: duty3
             conversion_4dig(&Ventana_LCD[filaduty23][posdutyr],duty[DUTY3]); // Guardar valor de duty3 en Ventana_LCD para su visualizacion en la pantalla
             break;
-        case 5://Caso: duty4
+        case VERDUTY4://Caso: duty4
             conversion_4dig(&Ventana_LCD[filaduty4][posdutyl],duty[DUTY4]); // Guardar valor de duty4 en Ventana_LCD para su visualizacion en la pantalla
             break;
-        case 6: //Caso: min duty
+        case VERDUTYMIN: //Caso: min duty
             conversion_4dig(&Ventana_LCD[filadutymin][pos4dig], DUTY_MIN); // Guardar valor del duty minimo en Ventana_LCD para su visualizacion en la pantalla
             break;
-        case 7: //Caso: max duty
+        case VERDUTYMAX: //Caso: max duty
             conversion_4dig(&Ventana_LCD[filadutymax][pos4dig], DUTY_MAX); // Guardar valor del duty maximo en Ventana_LCD para su visualizacion en la pantalla
             break;
         case 8: //Caso: ruedas
             conversion_4dig(&Ventana_LCD[filaruedas][posdutyl],OC1RS); // Guardar valor de OC1RS en Ventana_LCD para su visualizacion en la pantalla
             conversion_4dig(&Ventana_LCD[filaruedas][posdutyr],OC2RS); // Guardar valor de OC2RS en Ventana_LCD para su visualizacion en la pantalla
             break;
-        case 9: //Caso: duty[0-4]
+        case VERDUTYALL: //Caso: duty[0-4]
             conversion_4dig(&Ventana_LCD[filaduty01][posdutyl],duty[DUTY0]);  // Guardar valor de duty0 en Ventana_LCD para su visualizacion en la pantalla
             conversion_4dig(&Ventana_LCD[filaduty01][posdutyr],duty[DUTY1]); // Guardar valor de duty1 en Ventana_LCD para su visualizacion en la pantalla
             conversion_4dig(&Ventana_LCD[filaduty23][posdutyl],duty[DUTY2]); // Guardar valor de duty2 en Ventana_LCD para su visualizacion en la pantalla
@@ -152,6 +153,20 @@ void inic_PWM(){
     objetivopwm[DUTY2] = duracion_intermedia; // Inicializar pulso con duracion intermedia (1,3ms))
     objetivopwm[DUTY3] = duracion_intermedia; // Inicializar pulso con duracion intermedia (1,3ms))
     objetivopwm[DUTY4] = duracion_intermedia; // Inicializar pulso con duracion intermedia (1,3ms))
+
+    //Inicializar duty minimo: valor por defecto
+    duty_min[DUTY0] = DEF_DUTY_MIN;
+    duty_min[DUTY1] = DEF_DUTY_MIN;
+    duty_min[DUTY2] = DEF_DUTY_MIN;
+    duty_min[DUTY3] = DEF_DUTY_MIN;
+    duty_min[DUTY4] = DEF_DUTY_MIN;
+
+    //Inicializar duty maximo: valor por defecto
+    duty_max[DUTY0] = DEF_DUTY_MAX;
+    duty_max[DUTY1] = DEF_DUTY_MAX;
+    duty_max[DUTY2] = DEF_DUTY_MAX;
+    duty_max[DUTY3] = DEF_DUTY_MAX;
+    duty_max[DUTY4] = DEF_DUTY_MAX;
 
     TRISDbits.TRISD8 = 0; //Definir como salida el pin que se usara para la senhal PWM (0)
     TRISDbits.TRISD9 = 0; //Definir como salida el pin que se usara para la senhal PWM (1)
