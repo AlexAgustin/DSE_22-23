@@ -88,7 +88,7 @@ int main()
     inic_crono();   // Inicializar cronometro
     inic_Timer7_crono();  // Inicializar el temporizador T7
 
-    inic_PWM(); // Inicializar las variables requeridas para la gestion de PWM
+    
     
     //inic_OC1(); //Inicializar el modulo OC1
     //inic_OC2(); //Inicializar el modulo OC1
@@ -96,6 +96,7 @@ int main()
 
     inic_Timer8_PWM();  //Inicializar el temporizador T8
     inic_Timer4_movservos(); //Inicializar Timer del movimiento
+    inic_PWM(); // Inicializar las variables requeridas para la gestion de PWM
     
     inic_Timer6_dis();  // Inicializar el temporizador T6 
 

@@ -4,11 +4,11 @@ Tool Name:
   c:\program files (x86)\microchip\xc16\v1.36\bin\bin\..\bin/elf-ld.exe
 
 Command:
-  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00002d3c.00 \
-  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00002d3c.01 \
-  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00002d3c.02 \
-  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00002d3c.03 \
-  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp00002d3c.04 \
+  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp0000089c.00 \
+  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp0000089c.01 \
+  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp0000089c.02 \
+  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp0000089c.03 \
+  -TC:\\Users\\xelab\\AppData\\Local\\Temp\\tmp0000089c.04 \
   -p24HJ256GP610A \
   -o \
   dist/default/debug/Proyecto.X.debug.elf \
@@ -106,11 +106,11 @@ section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0xba2          0x1173  (4467)
 .const                       0xda2                 0x4             0x6  (6)
-.text                        0xda6               0xaca          0x102f  (4143)
-.dinit                      0x1870               0x150           0x1f8  (504)
-.text                       0x19c0               0x3fc           0x5fa  (1530)
+.text                        0xda6               0xad6          0x1041  (4161)
+.dinit                      0x187c               0x150           0x1f8  (504)
+.text                       0x19cc               0x40e           0x615  (1557)
 
-                 Total "program" memory used (bytes):         0x299a  (10650) 4%
+                 Total "program" memory used (bytes):         0x29c7  (10695) 4%
 
 
 "data" Memory  [Origin = 0x800, Length = 0x4000]
@@ -124,12 +124,12 @@ reserve_data_0x824           0x824                 0x2             0x2  (2)
 reserve_data_0x826           0x826                0x2a            0x2a  (42)
 .nbss                        0x850                   0            0x14  (20)
 .ndata                       0x864                   0             0xe  (14)
-.nbss                        0x872                   0            0x24  (36)
-.data                        0x896                   0           0x168  (360)
-.bss                         0x9fe                   0            0x68  (104)
-.data                        0xa66                   0            0x10  (16)
+.nbss                        0x872                   0            0x28  (40)
+.data                        0x89a                   0           0x168  (360)
+.bss                         0xa02                   0            0x68  (104)
+.data                        0xa6a                   0            0x10  (16)
 
-                 Total "data" memory used (bytes):          0x276  (630) 3%
+                 Total "data" memory used (bytes):          0x27a  (634) 3%
 
 
 Dynamic Memory Usage
@@ -137,9 +137,9 @@ Dynamic Memory Usage
 region                     address                      maximum length  (dec)
 ------                     -------                      ---------------------
 heap                             0                                   0  (0)
-stack                        0xa76                              0x3d8a  (15754)
+stack                        0xa7a                              0x3d86  (15750)
 
-                 Maximum dynamic memory (bytes):         0x3d8a  (15754)
+                 Maximum dynamic memory (bytes):         0x3d86  (15750)
 
 
 External Symbols in Data Memory (by address):
@@ -160,25 +160,27 @@ External Symbols in Data Memory (by address):
                     0x0870                  _flag_calib
                     0x0872                  _flag_ADC
                     0x0874                  _num_conversiones
-                    0x087c                  _cont3
-                    0x087e                  _cont4
-                    0x0880                  _cont5
-                    0x0882                  _cont6
-                    0x0884                  _flag_posicion_segura
-                    0x0886                  _estado_PWM
-                    0x0888                  _flag_num_duty
-                    0x0890                  _fila1
-                    0x0892                  _fila2
-                    0x0894                  _flag_dis
-                    0x0896                  _Ventana_LCD
-                    0x09fe                  _Poten_value
-                    0x0a0e                  _Temp_value
-                    0x0a1e                  _X_value
-                    0x0a2e                  _Y_value
-                    0x0a3e                  _Z_value
-                    0x0a4e                  _duty
-                    0x0a58                  _objetivopwm
-                    0x0a66                  _tabla_carac
+                    0x087c                  _flag_posicion_segura
+                    0x087e                  _estado_PWM
+                    0x0880                  _flag_num_duty
+                    0x0882                  _flag_estrella
+                    0x0884                  _flag_casa
+                    0x0886                  _cont3
+                    0x0888                  _cont4
+                    0x088a                  _cont5
+                    0x088c                  _cont6
+                    0x0894                  _fila1
+                    0x0896                  _fila2
+                    0x0898                  _flag_dis
+                    0x089a                  _Ventana_LCD
+                    0x0a02                  _Poten_value
+                    0x0a12                  _Temp_value
+                    0x0a22                  _X_value
+                    0x0a32                  _Y_value
+                    0x0a42                  _Z_value
+                    0x0a52                  _duty
+                    0x0a5c                  _objetivopwm
+                    0x0a6a                  _tabla_carac
 
 External Symbols in Data Memory (by name):
 
@@ -186,37 +188,39 @@ External Symbols in Data Memory (by name):
                     0x0864                  _DUTY_MIN
                     0x086a                  _OC_DUTY_MAX
                     0x0868                  _OC_DUTY_MIN
-                    0x09fe                  _Poten_value
-                    0x0a0e                  _Temp_value
-                    0x0896                  _Ventana_LCD
-                    0x0a1e                  _X_value
-                    0x0a2e                  _Y_value
-                    0x0a3e                  _Z_value
-                    0x087c                  _cont3
-                    0x087e                  _cont4
-                    0x0880                  _cont5
-                    0x0882                  _cont6
+                    0x0a02                  _Poten_value
+                    0x0a12                  _Temp_value
+                    0x089a                  _Ventana_LCD
+                    0x0a22                  _X_value
+                    0x0a32                  _Y_value
+                    0x0a42                  _Z_value
+                    0x0886                  _cont3
+                    0x0888                  _cont4
+                    0x088a                  _cont5
+                    0x088c                  _cont6
                     0x0856                  _deci
-                    0x0a4e                  _duty
-                    0x0886                  _estado_PWM
-                    0x0890                  _fila1
-                    0x0892                  _fila2
+                    0x0a52                  _duty
+                    0x087e                  _estado_PWM
+                    0x0894                  _fila1
+                    0x0896                  _fila2
                     0x0872                  _flag_ADC
                     0x085c                  _flag_All_Reached
                     0x086c                  _flag_DUTY
                     0x086e                  _flag_Duty_LCD
                     0x0870                  _flag_calib
-                    0x0894                  _flag_dis
-                    0x0888                  _flag_num_duty
-                    0x0884                  _flag_posicion_segura
+                    0x0884                  _flag_casa
+                    0x0898                  _flag_dis
+                    0x0882                  _flag_estrella
+                    0x0880                  _flag_num_duty
+                    0x087c                  _flag_posicion_segura
                     0x0852                  _inicializar_crono
                     0x0854                  _mili
                     0x085a                  _min
                     0x0874                  _num_conversiones
-                    0x0a58                  _objetivopwm
+                    0x0a5c                  _objetivopwm
                     0x0858                  _seg
                     0x0850                  _sum
-                    0x0a66                  _tabla_carac
+                    0x0a6a                  _tabla_carac
 
 External Symbols in Program Memory (by address):
 
@@ -238,10 +242,10 @@ External Symbols in Program Memory (by address):
                   0x000a80                  ___addsf3
                   0x000b3a                  ___divsf3
                   0x000bbe                  ___eqsf2
-                  0x000bbe                  ___lesf2
                   0x000bbe                  ___ltsf2
-                  0x000bc2                  ___gtsf2
+                  0x000bbe                  ___lesf2
                   0x000bc2                  ___gesf2
+                  0x000bc2                  ___gtsf2
                   0x000bc6                  ___fixunssfsi
                   0x000bfc                  ___floatunsisf
                   0x000c00                  __fpack
@@ -286,26 +290,28 @@ External Symbols in Program Memory (by address):
                   0x00174a                  _visualizar_Duty
                   0x001818                  _inic_PWM
                   0x001852                  _posicion_segura
-                  0x0019c0                  _lcd_cmd
-                  0x0019f6                  _lcd_data
-                  0x001a2e                  _Init_LCD
-                  0x001a8a                  _puts_lcd
-                  0x001aae                  _line_1
-                  0x001abc                  _line_2
-                  0x001aca                  _gestion_dis
-                  0x001b08                  _inic_medicion_dis
-                  0x001b18                  _leer_medicion
-                  0x001b2c                  _cambiar_direccion
-                  0x001b6a                  _detectar_direccion
-                  0x001bb2                  _conversion_tiempo
-                  0x001bfa                  _conversion_4dig
-                  0x001c86                  _main
-                  0x001cfc                  _inic_oscilator
-                  0x001d4e                  _inic_pulsadores
-                  0x001d60                  _inic_leds
-                  0x001d76                  _inic_UART2
-                  0x001d9a                  _inic_CN
-                  0x001dae                  _actualizar_Ventana_LCD
+                  0x001870                  _dibujar_estrella
+                  0x001876                  _dibujar_casa
+                  0x0019cc                  _lcd_cmd
+                  0x001a02                  _lcd_data
+                  0x001a3a                  _Init_LCD
+                  0x001a96                  _puts_lcd
+                  0x001aba                  _line_1
+                  0x001ac8                  _line_2
+                  0x001ad6                  _gestion_dis
+                  0x001b14                  _inic_medicion_dis
+                  0x001b24                  _leer_medicion
+                  0x001b38                  _cambiar_direccion
+                  0x001b76                  _detectar_direccion
+                  0x001bbe                  _conversion_tiempo
+                  0x001c06                  _conversion_4dig
+                  0x001c92                  _main
+                  0x001d18                  _inic_oscilator
+                  0x001d6a                  _inic_pulsadores
+                  0x001d7e                  _inic_leds
+                  0x001d94                  _inic_UART2
+                  0x001db8                  _inic_CN
+                  0x001dcc                  _actualizar_Ventana_LCD
 
 External Symbols in Program Memory (by name):
 
@@ -315,7 +321,7 @@ External Symbols in Program Memory (by name):
                   0x000ea8                  _Delay_us
                   0x001186                  _IdleI2C_1
                   0x0010ec                  _InitI2C_1
-                  0x001a2e                  _Init_LCD
+                  0x001a3a                  _Init_LCD
                   0x00130c                  _LDByteReadI2C_1
                   0x0013a6                  _LDByteWriteI2C_1
                   0x001224                  _NotAckI2C_1
@@ -356,17 +362,19 @@ External Symbols in Program Memory (by name):
                   0x000c76                  __funpack2
                   0x00023c                  __psv_init
                   0x000200                  __resetPRI
-                  0x001dae                  _actualizar_Ventana_LCD
-                  0x001b2c                  _cambiar_direccion
-                  0x001bfa                  _conversion_4dig
-                  0x001bb2                  _conversion_tiempo
+                  0x001dcc                  _actualizar_Ventana_LCD
+                  0x001b38                  _cambiar_direccion
+                  0x001c06                  _conversion_4dig
+                  0x001bbe                  _conversion_tiempo
                   0x000f38                  _cronometro
-                  0x001b6a                  _detectar_direccion
-                  0x001aca                  _gestion_dis
+                  0x001b76                  _detectar_direccion
+                  0x001876                  _dibujar_casa
+                  0x001870                  _dibujar_estrella
+                  0x001ad6                  _gestion_dis
                   0x001284                  _getI2C_1
                   0x0012cc                  _getsI2C_1
                   0x00141a                  _inic_ADC1
-                  0x001d9a                  _inic_CN
+                  0x001db8                  _inic_CN
                   0x001706                  _inic_OC1
                   0x001728                  _inic_OC2
                   0x001818                  _inic_PWM
@@ -378,20 +386,20 @@ External Symbols in Program Memory (by name):
                   0x000f0a                  _inic_Timer7_crono
                   0x0010a2                  _inic_Timer8_PWM
                   0x000da6                  _inic_Timer9_delay
-                  0x001d76                  _inic_UART2
+                  0x001d94                  _inic_UART2
                   0x000f2a                  _inic_crono
-                  0x001d60                  _inic_leds
-                  0x001b08                  _inic_medicion_dis
-                  0x001cfc                  _inic_oscilator
-                  0x001d4e                  _inic_pulsadores
-                  0x0019c0                  _lcd_cmd
-                  0x0019f6                  _lcd_data
-                  0x001b18                  _leer_medicion
-                  0x001aae                  _line_1
-                  0x001abc                  _line_2
-                  0x001c86                  _main
+                  0x001d7e                  _inic_leds
+                  0x001b14                  _inic_medicion_dis
+                  0x001d18                  _inic_oscilator
+                  0x001d6a                  _inic_pulsadores
+                  0x0019cc                  _lcd_cmd
+                  0x001a02                  _lcd_data
+                  0x001b24                  _leer_medicion
+                  0x001aba                  _line_1
+                  0x001ac8                  _line_2
+                  0x001c92                  _main
                   0x001852                  _posicion_segura
-                  0x001a8a                  _puts_lcd
+                  0x001a96                  _puts_lcd
                   0x0010e2                  _restart_Timer6
                   0x00146a                  _tratar_valorADC1
                   0x00174a                  _visualizar_Duty
@@ -612,24 +620,24 @@ __FUID3
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x78db
+.debug_info       0x000000       0x79bf
  *(.debug_info)
  .debug_info      0x000000        0xf63 build/default/debug/_ext/1472/ADC1.o
  .debug_info      0x000f63        0xc0f build/default/debug/_ext/1472/CN.o
  .debug_info      0x001b72        0x4ef build/default/debug/_ext/1472/GPIO.o
  .debug_info      0x002061        0x90a build/default/debug/_ext/1472/LCD.o
- .debug_info      0x00296b        0x925 build/default/debug/_ext/1472/OCPWM.o
- .debug_info      0x003290        0xca4 build/default/debug/_ext/1472/UART2_RS232.o
- .debug_info      0x003f34        0x7b6 build/default/debug/_ext/1472/i2c_funciones.o
- .debug_info      0x0046ea        0x638 build/default/debug/_ext/1472/oscilator.o
- .debug_info      0x004d22        0x475 build/default/debug/_ext/1472/srf08.o
- .debug_info      0x005197       0x1e54 build/default/debug/_ext/1472/timers.o
- .debug_info      0x006feb        0x22c build/default/debug/_ext/1472/utilidades.o
- .debug_info      0x007217        0x1c9 build/default/debug/_ext/1472/memoria.o
- .debug_info      0x0073e0        0x4fb build/default/debug/_ext/1472/main_Proyecto.o
+ .debug_info      0x00296b        0x993 build/default/debug/_ext/1472/OCPWM.o
+ .debug_info      0x0032fe        0xca4 build/default/debug/_ext/1472/UART2_RS232.o
+ .debug_info      0x003fa2        0x7b6 build/default/debug/_ext/1472/i2c_funciones.o
+ .debug_info      0x004758        0x638 build/default/debug/_ext/1472/oscilator.o
+ .debug_info      0x004d90        0x475 build/default/debug/_ext/1472/srf08.o
+ .debug_info      0x005205       0x1e54 build/default/debug/_ext/1472/timers.o
+ .debug_info      0x007059        0x22c build/default/debug/_ext/1472/utilidades.o
+ .debug_info      0x007285        0x1c9 build/default/debug/_ext/1472/memoria.o
+ .debug_info      0x00744e        0x571 build/default/debug/_ext/1472/main_Proyecto.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000        0xccc
+.debug_abbrev     0x000000        0xcfe
  *(.debug_abbrev)
  .debug_abbrev    0x000000        0x163 build/default/debug/_ext/1472/ADC1.o
  .debug_abbrev    0x000163        0x109 build/default/debug/_ext/1472/CN.o
@@ -643,41 +651,41 @@ __FUID3
  .debug_abbrev    0x000927        0x1f1 build/default/debug/_ext/1472/timers.o
  .debug_abbrev    0x000b18         0x91 build/default/debug/_ext/1472/utilidades.o
  .debug_abbrev    0x000ba9         0x66 build/default/debug/_ext/1472/memoria.o
- .debug_abbrev    0x000c0f         0xbd build/default/debug/_ext/1472/main_Proyecto.o
+ .debug_abbrev    0x000c0f         0xef build/default/debug/_ext/1472/main_Proyecto.o
 
-.debug_line       0x000000       0x1021
+.debug_line       0x000000       0x102f
  *(.debug_line)
  .debug_line      0x000000        0x191 build/default/debug/_ext/1472/ADC1.o
  .debug_line      0x000191        0x13d build/default/debug/_ext/1472/CN.o
- .debug_line      0x0002ce         0xf8 build/default/debug/_ext/1472/GPIO.o
- .debug_line      0x0003c6        0x128 build/default/debug/_ext/1472/LCD.o
- .debug_line      0x0004ee        0x152 build/default/debug/_ext/1472/OCPWM.o
- .debug_line      0x000640        0x1cd build/default/debug/_ext/1472/UART2_RS232.o
- .debug_line      0x00080d        0x173 build/default/debug/_ext/1472/i2c_funciones.o
- .debug_line      0x000980         0xf8 build/default/debug/_ext/1472/oscilator.o
- .debug_line      0x000a78        0x135 build/default/debug/_ext/1472/srf08.o
- .debug_line      0x000bad        0x28b build/default/debug/_ext/1472/timers.o
- .debug_line      0x000e38         0x5c build/default/debug/_ext/1472/utilidades.o
- .debug_line      0x000e94         0x48 build/default/debug/_ext/1472/memoria.o
- .debug_line      0x000edc        0x145 build/default/debug/_ext/1472/main_Proyecto.o
+ .debug_line      0x0002ce         0xf9 build/default/debug/_ext/1472/GPIO.o
+ .debug_line      0x0003c7        0x128 build/default/debug/_ext/1472/LCD.o
+ .debug_line      0x0004ef        0x15a build/default/debug/_ext/1472/OCPWM.o
+ .debug_line      0x000649        0x1cd build/default/debug/_ext/1472/UART2_RS232.o
+ .debug_line      0x000816        0x173 build/default/debug/_ext/1472/i2c_funciones.o
+ .debug_line      0x000989         0xf8 build/default/debug/_ext/1472/oscilator.o
+ .debug_line      0x000a81        0x135 build/default/debug/_ext/1472/srf08.o
+ .debug_line      0x000bb6        0x28b build/default/debug/_ext/1472/timers.o
+ .debug_line      0x000e41         0x5c build/default/debug/_ext/1472/utilidades.o
+ .debug_line      0x000e9d         0x48 build/default/debug/_ext/1472/memoria.o
+ .debug_line      0x000ee5        0x14a build/default/debug/_ext/1472/main_Proyecto.o
 
-.debug_frame      0x000000        0x86e
+.debug_frame      0x000000        0x8a6
  *(.debug_frame)
  .debug_frame     0x000000         0x80 build/default/debug/_ext/1472/ADC1.o
  .debug_frame     0x000080         0x54 build/default/debug/_ext/1472/CN.o
  .debug_frame     0x0000d4         0x4c build/default/debug/_ext/1472/GPIO.o
  .debug_frame     0x000120         0xbc build/default/debug/_ext/1472/LCD.o
- .debug_frame     0x0001dc         0xa0 build/default/debug/_ext/1472/OCPWM.o
- .debug_frame     0x00027c         0xa6 build/default/debug/_ext/1472/UART2_RS232.o
- .debug_frame     0x000322        0x180 build/default/debug/_ext/1472/i2c_funciones.o
- .debug_frame     0x0004a2         0x30 build/default/debug/_ext/1472/oscilator.o
- .debug_frame     0x0004d2         0xa0 build/default/debug/_ext/1472/srf08.o
- .debug_frame     0x000572        0x250 build/default/debug/_ext/1472/timers.o
- .debug_frame     0x0007c2         0x4c build/default/debug/_ext/1472/utilidades.o
- .debug_frame     0x00080e         0x30 build/default/debug/_ext/1472/memoria.o
- .debug_frame     0x00083e         0x30 build/default/debug/_ext/1472/main_Proyecto.o
+ .debug_frame     0x0001dc         0xd8 build/default/debug/_ext/1472/OCPWM.o
+ .debug_frame     0x0002b4         0xa6 build/default/debug/_ext/1472/UART2_RS232.o
+ .debug_frame     0x00035a        0x180 build/default/debug/_ext/1472/i2c_funciones.o
+ .debug_frame     0x0004da         0x30 build/default/debug/_ext/1472/oscilator.o
+ .debug_frame     0x00050a         0xa0 build/default/debug/_ext/1472/srf08.o
+ .debug_frame     0x0005aa        0x250 build/default/debug/_ext/1472/timers.o
+ .debug_frame     0x0007fa         0x4c build/default/debug/_ext/1472/utilidades.o
+ .debug_frame     0x000846         0x30 build/default/debug/_ext/1472/memoria.o
+ .debug_frame     0x000876         0x30 build/default/debug/_ext/1472/main_Proyecto.o
 
-.debug_str        0x000000        0x4fc
+.debug_str        0x000000        0x514
  *(.debug_str)
  .debug_str       0x000000         0xf3 build/default/debug/_ext/1472/ADC1.o
  .debug_str       0x0000f3         0x6b build/default/debug/_ext/1472/CN.o
@@ -690,7 +698,7 @@ __FUID3
  .debug_str       0x000339         0x25 build/default/debug/_ext/1472/srf08.o
  .debug_str       0x00035e        0x13f build/default/debug/_ext/1472/timers.o
  .debug_str       0x00049d          0xc build/default/debug/_ext/1472/utilidades.o
- .debug_str       0x0004a9         0x53 build/default/debug/_ext/1472/main_Proyecto.o
+ .debug_str       0x0004a9         0x6b build/default/debug/_ext/1472/main_Proyecto.o
 
 .debug_loc
  *(.debug_loc)
@@ -699,7 +707,7 @@ __FUID3
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000        0x6e4
+                  0x000000        0x72a
  *(.debug_pubnames)
  .debug_pubnames
                   0x000000         0xad build/default/debug/_ext/1472/ADC1.o
@@ -710,23 +718,23 @@ __FUID3
  .debug_pubnames
                   0x000138         0x6f build/default/debug/_ext/1472/LCD.o
  .debug_pubnames
-                  0x0001a7        0x11d build/default/debug/_ext/1472/OCPWM.o
+                  0x0001a7        0x163 build/default/debug/_ext/1472/OCPWM.o
  .debug_pubnames
-                  0x0002c4         0x47 build/default/debug/_ext/1472/UART2_RS232.o
+                  0x00030a         0x47 build/default/debug/_ext/1472/UART2_RS232.o
  .debug_pubnames
-                  0x00030b         0xdb build/default/debug/_ext/1472/i2c_funciones.o
+                  0x000351         0xdb build/default/debug/_ext/1472/i2c_funciones.o
  .debug_pubnames
-                  0x0003e6         0x25 build/default/debug/_ext/1472/oscilator.o
+                  0x00042c         0x25 build/default/debug/_ext/1472/oscilator.o
  .debug_pubnames
-                  0x00040b         0x84 build/default/debug/_ext/1472/srf08.o
+                  0x000451         0x84 build/default/debug/_ext/1472/srf08.o
  .debug_pubnames
-                  0x00048f        0x1b1 build/default/debug/_ext/1472/timers.o
+                  0x0004d5        0x1b1 build/default/debug/_ext/1472/timers.o
  .debug_pubnames
-                  0x000640         0x4c build/default/debug/_ext/1472/utilidades.o
+                  0x000686         0x4c build/default/debug/_ext/1472/utilidades.o
  .debug_pubnames
-                  0x00068c         0x3d build/default/debug/_ext/1472/memoria.o
+                  0x0006d2         0x3d build/default/debug/_ext/1472/memoria.o
  .debug_pubnames
-                  0x0006c9         0x1b build/default/debug/_ext/1472/main_Proyecto.o
+                  0x00070f         0x1b build/default/debug/_ext/1472/main_Proyecto.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -2029,44 +2037,46 @@ __c30_signature
                     0x086e                  _flag_Duty_LCD
                     0x0870                  _flag_calib
 
-.nbss               0x0872         0x24
+.nbss               0x0872         0x28
  .nbss              0x0872          0xa build/default/debug/_ext/1472/ADC1.o
                     0x0872                  _flag_ADC
                     0x0874                  _num_conversiones
- .nbss              0x087c          0x8 build/default/debug/_ext/1472/CN.o
-                    0x087c                  _cont3
-                    0x087e                  _cont4
-                    0x0880                  _cont5
-                    0x0882                  _cont6
- .nbss              0x0884          0x6 build/default/debug/_ext/1472/OCPWM.o
-                    0x0884                  _flag_posicion_segura
-                    0x0886                  _estado_PWM
-                    0x0888                  _flag_num_duty
- .nbss              0x088a          0x6 build/default/debug/_ext/1472/UART2_RS232.o
- .nbss              0x0890          0x4 build/default/debug/_ext/1472/LCD.o
-                    0x0890                  _fila1
-                    0x0892                  _fila2
- .nbss              0x0894          0x2 build/default/debug/_ext/1472/srf08.o
-                    0x0894                  _flag_dis
+ .nbss              0x087c          0xa build/default/debug/_ext/1472/OCPWM.o
+                    0x087c                  _flag_posicion_segura
+                    0x087e                  _estado_PWM
+                    0x0880                  _flag_num_duty
+                    0x0882                  _flag_estrella
+                    0x0884                  _flag_casa
+ .nbss              0x0886          0x8 build/default/debug/_ext/1472/CN.o
+                    0x0886                  _cont3
+                    0x0888                  _cont4
+                    0x088a                  _cont5
+                    0x088c                  _cont6
+ .nbss              0x088e          0x6 build/default/debug/_ext/1472/UART2_RS232.o
+ .nbss              0x0894          0x4 build/default/debug/_ext/1472/LCD.o
+                    0x0894                  _fila1
+                    0x0896                  _fila2
+ .nbss              0x0898          0x2 build/default/debug/_ext/1472/srf08.o
+                    0x0898                  _flag_dis
 
-.data               0x0896        0x168
- .data              0x0896        0x168 build/default/debug/_ext/1472/memoria.o
-                    0x0896                  _Ventana_LCD
+.data               0x089a        0x168
+ .data              0x089a        0x168 build/default/debug/_ext/1472/memoria.o
+                    0x089a                  _Ventana_LCD
 
-.bss                0x09fe         0x68
- .bss               0x09fe         0x50 build/default/debug/_ext/1472/ADC1.o
-                    0x09fe                  _Poten_value
-                    0x0a0e                  _Temp_value
-                    0x0a1e                  _X_value
-                    0x0a2e                  _Y_value
-                    0x0a3e                  _Z_value
- .bss               0x0a4e         0x18 build/default/debug/_ext/1472/OCPWM.o
-                    0x0a4e                  _duty
-                    0x0a58                  _objetivopwm
+.bss                0x0a02         0x68
+ .bss               0x0a02         0x50 build/default/debug/_ext/1472/ADC1.o
+                    0x0a02                  _Poten_value
+                    0x0a12                  _Temp_value
+                    0x0a22                  _X_value
+                    0x0a32                  _Y_value
+                    0x0a42                  _Z_value
+ .bss               0x0a52         0x18 build/default/debug/_ext/1472/OCPWM.o
+                    0x0a52                  _duty
+                    0x0a5c                  _objetivopwm
 
-.data               0x0a66         0x10
- .data              0x0a66         0x10 build/default/debug/_ext/1472/utilidades.o
-                    0x0a66                  _tabla_carac
+.data               0x0a6a         0x10
+ .data              0x0a6a         0x10 build/default/debug/_ext/1472/utilidades.o
+                    0x0a6a                  _tabla_carac
 
 .ivt._ADC1Interrupt
                   0x00002e          0x2
@@ -2126,7 +2136,7 @@ __c30_signature
 .const              0x8da2          0x4 load address 0x000da2  
  .const             0x8da2          0x4 build/default/debug/_ext/1472/UART2_RS232.o
 
-.text             0x000da6        0xaca
+.text             0x000da6        0xad6
  .text            0x000da6        0x346 build/default/debug/_ext/1472/timers.o
                   0x000da6                  _inic_Timer9_delay
                   0x000e48                  _Delay_ms
@@ -2158,43 +2168,45 @@ __c30_signature
  .text            0x00141a        0x2ec build/default/debug/_ext/1472/ADC1.o
                   0x00141a                  _inic_ADC1
                   0x00146a                  _tratar_valorADC1
- .text            0x001706        0x16a build/default/debug/_ext/1472/OCPWM.o
+ .text            0x001706        0x176 build/default/debug/_ext/1472/OCPWM.o
                   0x001706                  _inic_OC1
                   0x001728                  _inic_OC2
                   0x00174a                  _visualizar_Duty
                   0x001818                  _inic_PWM
                   0x001852                  _posicion_segura
+                  0x001870                  _dibujar_estrella
+                  0x001876                  _dibujar_casa
 
-.dinit            0x001870        0x150
- .dinit           0x001870        0x150 data_init
+.dinit            0x00187c        0x150
+ .dinit           0x00187c        0x150 data_init
 
-.text             0x0019c0        0x3fc
- .text            0x0019c0        0x10a build/default/debug/_ext/1472/LCD.o
-                  0x0019c0                  _lcd_cmd
-                  0x0019f6                  _lcd_data
-                  0x001a2e                  _Init_LCD
-                  0x001a8a                  _puts_lcd
-                  0x001aae                  _line_1
-                  0x001abc                  _line_2
- .text            0x001aca         0xe8 build/default/debug/_ext/1472/srf08.o
-                  0x001aca                  _gestion_dis
-                  0x001b08                  _inic_medicion_dis
-                  0x001b18                  _leer_medicion
-                  0x001b2c                  _cambiar_direccion
-                  0x001b6a                  _detectar_direccion
- .text            0x001bb2         0xd4 build/default/debug/_ext/1472/utilidades.o
-                  0x001bb2                  _conversion_tiempo
-                  0x001bfa                  _conversion_4dig
- .text            0x001c86         0x76 build/default/debug/_ext/1472/main_Proyecto.o
-                  0x001c86                  _main
- .text            0x001cfc         0x52 build/default/debug/_ext/1472/oscilator.o
-                  0x001cfc                  _inic_oscilator
- .text            0x001d4e         0x28 build/default/debug/_ext/1472/GPIO.o
-                  0x001d4e                  _inic_pulsadores
-                  0x001d60                  _inic_leds
- .text            0x001d76         0x24 build/default/debug/_ext/1472/UART2_RS232.o
-                  0x001d76                  _inic_UART2
- .text            0x001d9a         0x14 build/default/debug/_ext/1472/CN.o
-                  0x001d9a                  _inic_CN
- .text            0x001dae          0xe build/default/debug/_ext/1472/memoria.o
-                  0x001dae                  _actualizar_Ventana_LCD
+.text             0x0019cc        0x40e
+ .text            0x0019cc        0x10a build/default/debug/_ext/1472/LCD.o
+                  0x0019cc                  _lcd_cmd
+                  0x001a02                  _lcd_data
+                  0x001a3a                  _Init_LCD
+                  0x001a96                  _puts_lcd
+                  0x001aba                  _line_1
+                  0x001ac8                  _line_2
+ .text            0x001ad6         0xe8 build/default/debug/_ext/1472/srf08.o
+                  0x001ad6                  _gestion_dis
+                  0x001b14                  _inic_medicion_dis
+                  0x001b24                  _leer_medicion
+                  0x001b38                  _cambiar_direccion
+                  0x001b76                  _detectar_direccion
+ .text            0x001bbe         0xd4 build/default/debug/_ext/1472/utilidades.o
+                  0x001bbe                  _conversion_tiempo
+                  0x001c06                  _conversion_4dig
+ .text            0x001c92         0x86 build/default/debug/_ext/1472/main_Proyecto.o
+                  0x001c92                  _main
+ .text            0x001d18         0x52 build/default/debug/_ext/1472/oscilator.o
+                  0x001d18                  _inic_oscilator
+ .text            0x001d6a         0x2a build/default/debug/_ext/1472/GPIO.o
+                  0x001d6a                  _inic_pulsadores
+                  0x001d7e                  _inic_leds
+ .text            0x001d94         0x24 build/default/debug/_ext/1472/UART2_RS232.o
+                  0x001d94                  _inic_UART2
+ .text            0x001db8         0x14 build/default/debug/_ext/1472/CN.o
+                  0x001db8                  _inic_CN
+ .text            0x001dcc          0xe build/default/debug/_ext/1472/memoria.o
+                  0x001dcc                  _actualizar_Ventana_LCD

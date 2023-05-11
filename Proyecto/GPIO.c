@@ -25,6 +25,7 @@ void inic_pulsadores ()
     TRISDbits.TRISD13 = 1;
     TRISDbits.TRISD7 = 1;
     TRISAbits.TRISA7 = 1;
+    TRISDbits.TRISD14 = 1;
 }
 
 void inic_leds()
