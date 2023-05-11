@@ -63,6 +63,33 @@ void inic_OC2 ()
 }
 
 
+void inic_OC3 ()
+{
+    OC3CON=0; // Deshabilita modulo Output Compare
+    
+    //OC3CONbits.OCM=0b000;     // deshabilitar OC3 
+    OC3CONbits.OCTSEL=0;      // seleccionar T2 para el OC (OCTSEL= 0 -> Selecciona T2, OCTSEL= 1 -> T3)
+    
+    OC3R =  (OC_DUTY_MAX + OC_DUTY_MIN)/2; 		// Inicializar pulso con duracion intermedia (0.0065ms)) (duty cycle para el primer pulso PWM)
+    OC3RS = OC3R;               // inicializar registro secundario (duty cycle para el siguiente pulso PWM)
+    
+    OC3CONbits.OCM=0b110;       // habilitar OC3 en modo PWM sin prot
+}
+
+void inic_OC4 ()
+{
+    OC4CON=0; // Deshabilita modulo Output Compare
+    
+    //OC4CONbits.OCM=0b000;     // deshabilitar OC4
+    OC4CONbits.OCTSEL=0;      // seleccionar T2 para el OC (OCTSEL= 0 -> Selecciona T2, OCTSEL= 1 -> T3)
+    
+    OC4R  =  (OC_DUTY_MAX + OC_DUTY_MIN)/2; 		// Inicializar pulso con duracion intermedia (0.0065ms)) (duty cycle para el primer pulso PWM)
+    OC4RS = OC4R;               // inicializar registro secundario (duty cycle para el siguiente pulso PWM)
+    
+    OC4CONbits.OCM=0b110;       // habilitar OC4 en modo PWM sin prot
+}
+
+
 
 void visualizar_Duty(){
     switch(flag_Duty_LCD)
