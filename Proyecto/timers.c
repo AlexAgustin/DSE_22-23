@@ -21,12 +21,14 @@ Fecha: Marzo 2023
 #include "commons.h"
 #include "memoria.h"
 #include "utilidades.h"
+#include "srf08.h"
 #include "LCD.h"
 #include "ADC1.h"
 #include "OCPWM.h"
 #include "timers.h"
 #include "i2c_funciones.h"
-#include "srf08.h"
+#include "UART2_RS232.h"
+
 
 void cronometro();
 
@@ -318,28 +320,34 @@ void _ISR_NO_PSV _T4Interrupt(){
     }
     
     //Caso: duty 1
-    if((duty[DUTY1] + 5) < objetivopwm[DUTY1]) duty[DUTY1] += 5;
-    else if ((duty[DUTY1] - 5) > objetivopwm[DUTY1]) duty[DUTY1] -= 5;
-    else if(duty[DUTY1] != objetivopwm[DUTY1]) {
-        duty[DUTY1] = objetivopwm[DUTY1];
-        reached++;
+    if (dis_media>=CHOQUE && !flag_inic_pwm){
+        if((duty[DUTY1] + 5) < objetivopwm[DUTY1]) duty[DUTY1] += 5;
+        else if ((duty[DUTY1] - 5) > objetivopwm[DUTY1]) duty[DUTY1] -= 5;
+        else if(duty[DUTY1] != objetivopwm[DUTY1]) {
+            duty[DUTY1] = objetivopwm[DUTY1];
+            reached++;
+        }
     }
     
     //Caso: duty 2
-    if((duty[DUTY2] + 5) < objetivopwm[DUTY2]) duty[DUTY2] += 5;
-    else if ((duty[DUTY2] - 5) > objetivopwm[DUTY2]) duty[DUTY2] -= 5;
-    else if(duty[DUTY2] != objetivopwm[DUTY2]) {
-        duty[DUTY2] = objetivopwm[DUTY2]; 
-        reached++;
+    if (dis_media>=CHOQUE && !flag_inic_pwm){
+        if((duty[DUTY2] + 5) < objetivopwm[DUTY2]) duty[DUTY2] += 5;
+        else if ((duty[DUTY2] - 5) > objetivopwm[DUTY2]) duty[DUTY2] -= 5;
+        else if(duty[DUTY2] != objetivopwm[DUTY2]) {
+            duty[DUTY2] = objetivopwm[DUTY2]; 
+            reached++;
+        }
     }
 
     //Caso: duty 3
-    if((duty[DUTY3] + 5) < objetivopwm[DUTY3]) duty[DUTY3] += 5;
-    else if ((duty[DUTY3] - 5) > objetivopwm[DUTY3]) duty[DUTY3] -= 5;
-    else if(duty[DUTY3] != objetivopwm[DUTY3]) {
-        duty[DUTY3] = objetivopwm[DUTY3];
-        reached++;
-    } 
+    if (dis_media>=CHOQUE && !flag_inic_pwm){
+        if((duty[DUTY3] + 5) < objetivopwm[DUTY3]) duty[DUTY3] += 5;
+        else if ((duty[DUTY3] - 5) > objetivopwm[DUTY3]) duty[DUTY3] -= 5;
+        else if(duty[DUTY3] != objetivopwm[DUTY3]) {
+            duty[DUTY3] = objetivopwm[DUTY3];
+            reached++;
+        } 
+    }
 
     //Caso: duty 4
     if((duty[DUTY4] + 5) < objetivopwm[DUTY4]) duty[DUTY4] += 5;
@@ -362,8 +370,10 @@ void _ISR_NO_PSV _T4Interrupt(){
     if (reached==5){
         reached=0;
         flag_All_Reached=1;
-        T4CONbits.TON = 0;	// encender el timer
+        T4CONbits.TON = 0;	// apagar el timer
+        flag_exit=0;
     }
+    if(flag_inic_pwm) flag_inic_pwm=0;
     flag_Duty_LCD=9;
     IFS1bits.T4IF = 0;      // Puesta a 0 del flag IF del temporizador 4
 }

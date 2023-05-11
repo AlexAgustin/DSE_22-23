@@ -12,6 +12,7 @@ extern unsigned int flag_posicion_segura;
 extern unsigned int flag_calib;
 extern unsigned int flag_estrella;
 extern unsigned int flag_casa;
+extern unsigned int flag_inic_pwm;
 extern unsigned int duty[5];
 extern unsigned int duty_min[5];
 extern unsigned int duty_max[5];

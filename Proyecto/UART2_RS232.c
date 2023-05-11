@@ -12,9 +12,12 @@ Fecha: Marzo 2023
 #include "timers.h"
 #include "OCPWM.h"
 #include "LCD.h"
+#include "srf08.h"
 
 #define UART_HOME 0
 #define UART_DATA 1
+
+unsigned int flag_exit=0;
 
 void inic_UART2 ()
 {
@@ -90,19 +93,19 @@ void _ISR_NO_PSV _U2RXInterrupt()
             }
             break;
         case 'l': //si es R, se mueve el servo incrementando el valor de duty[DUTY1] (+5) si se respetan los limites (<= duty_max[]) y si flag_DUTY == 1 (se gestiona duty[DUTY1] por UART)
-            if(duty[DUTY1]+5<=duty_max[DUTY1]) { // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona duty[DUTY1] por UART)
+            if(duty[DUTY1]+5<=duty_max[DUTY1] && dis_media>=CHOQUE) { // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona duty[DUTY1] por UART)
                duty[DUTY1]+=5; //Incrementar el valor de duty[DUTY1]: +5
                 flag_Duty_LCD = VERDUTY1; // Poner a 2 el flag para guardar el nuevo valor de duty[DUTY1] en Ventana_LCD para su visualizacion en la pantalla
             }
             break;
         case 'w': //si es w, se mueve el servo incrementando el valor de duty[DUTY2] (+5) si se respetan los limites (<= duty_max[]) y si flag_DUTY == 1 (se gestiona duty[DUTY2] por UART)
-            if(flag_DUTY && duty[DUTY2]+5<=duty_max[DUTY2]) { // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona duty[DUTY2] por UART)
+            if(flag_DUTY && duty[DUTY2]+5<=duty_max[DUTY2] && dis_media>=CHOQUE) { // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona duty[DUTY2] por UART)
                duty[DUTY2]+=5; //Incrementar el valor de duty[DUTY2]: +5
                flag_Duty_LCD = VERDUTY2; // Poner a 1 el flag para guardar el nuevo valor de duty[DUTY2] en Ventana_LCD para su visualizacion en la pantalla
             }
             break;
         case 'a': //si es W, se mueve el servo incrementando el valor de duty[DUTY3] (+5) si se respetan los limites (<= duty_max[]) y si flag_DUTY == 1 (se gestiona duty[DUTY3] por UART)
-            if(duty[DUTY3]+5<=duty_max[DUTY3]) { // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona duty[DUTY3] por UART)
+            if(duty[DUTY3]+5<=duty_max[DUTY3] && dis_media>=CHOQUE) { // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona duty[DUTY3] por UART)
                duty[DUTY3]+=5; //Incrementar el valor de duty[DUTY3]: +5
                flag_Duty_LCD = VERDUTY3; // Poner a 1 el flag para guardar el nuevo valor de duty[DUTY3] en Ventana_LCD para su visualizacion en la pantalla
             }
@@ -132,19 +135,19 @@ void _ISR_NO_PSV _U2RXInterrupt()
             }
             break;
         case 'L':  //si es L, se mueve el servo decrementando el valor de duty[DUTY1] (-5) si se respetan los limites (>= duty_min[]) y si flag_DUTY == 1 (se gestiona duty[DUTY1] por UART)
-            if(duty[DUTY1]-5>=duty_min[DUTY1]) { // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona duty[DUTY1] por UART)
+            if(duty[DUTY1]-5>=duty_min[DUTY1] && dis_media>=CHOQUE) { // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona duty[DUTY1] por UART)
                 duty[DUTY1]-=5; // Decrementar el valor de duty[DUTY1]: -5
                 flag_Duty_LCD = VERDUTY1; // Poner a 2 el flag para guardar el nuevo valor de duty[DUTY1] en Ventana_LCD para su su visualizacion en la pantalla
             }
             break;
         case 'W': //si es l, se mueve el servo decrementando el valor de duty[DUTY2] (-5) si se respetan los limites (>= duty_min[]) y si flag_DUTY == 1 (se gestiona duty[DUTY2] por UART)
-            if(flag_DUTY && duty[DUTY2]-5>=duty_min[DUTY2]) { // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona duty[DUTY2] por UART)
+            if(flag_DUTY && duty[DUTY2]-5>=duty_min[DUTY2] && dis_media>=CHOQUE) { // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona duty[DUTY2] por UART)
                 duty[DUTY2]-=5; // Decrementar el valor de duty[DUTY2]: -5
                 flag_Duty_LCD = VERDUTY2; // Poner a 3 el flag para guardar el nuevo valor de duty[DUTY2] en Ventana_LCD para su su visualizacion en la pantalla
             }
             break;
         case 'A': //si es l, se mueve el servo decrementando el valor de duty[DUTY3] (-5) si se respetan los limites (>= duty_min[]) y si flag_DUTY == 1 (se gestiona duty[DUTY3] por UART)
-            if(duty[DUTY3]-5>=duty_min[DUTY3]) { // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona duty[DUTY3] por UART)
+            if(duty[DUTY3]-5>=duty_min[DUTY3] && dis_media>=CHOQUE) { // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona duty[DUTY3] por UART)
                 duty[DUTY3]-=5; // Decrementar el valor de duty[DUTY3]: -5
                 flag_Duty_LCD = VERDUTY3; // Poner a 4 el flag para guardar el nuevo valor de duty[DUTY3] en Ventana_LCD para su su visualizacion en la pantalla
             }
@@ -183,6 +186,9 @@ void _ISR_NO_PSV _U2RXInterrupt()
                     fila1--; //Actualizar primera fila a mostrar (-1)
                     fila2--; //Actualizar segunda fila a mostrar (-1)
                 }
+            break;
+        case 'q':
+            flag_exit=1;
             break;
         default:
             break;

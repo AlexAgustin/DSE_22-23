@@ -7,3 +7,6 @@ Fecha: Febrero 2023
 
 // funciones que se utilizan desde otros modulos
 void inic_UART2 ();
+
+//variables que se usan en otros ficheros
+extern unsigned int flag_exit;

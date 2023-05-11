@@ -124,11 +124,11 @@
                         // Fosc= 80 MHz Fcy = 40 MHz Tcy= 25 ns
 #define MINPWM 0.5      // Duracion minima pulso PWM (en milisegundos)
 #define MAXPWM 2.1      // Duracion maxima pulso PWM (en milisegundos)
-#define SECURE_DUTY_0    0722 //Duty0 en una posicion segura
+#define SECURE_DUTY_0    951 //Duty0 en una posicion segura
 #define SECURE_DUTY_1    1292 //Duty0 en una posicion segura
-#define SECURE_DUTY_2    1312 //Duty0 en una posicion segura
-#define SECURE_DUTY_3    0722 //Duty0 en una posicion segura
-#define SECURE_DUTY_4    0462 //Duty0 en una posicion segura
+#define SECURE_DUTY_2    1292 //Duty0 en una posicion segura
+#define SECURE_DUTY_3    466 //Duty0 en una posicion segura
+#define SECURE_DUTY_4    302 //Duty0 en una posicion segura
 #define DEF_DUTY_MIN (PR20ms/20) * MINPWM	// valor minimo y maximo por defecto de duty. Se calculan 
 #define DEF_DUTY_MAX (PR20ms/20) * MAXPWM	// mediante los "define" PR20ms, MINPWM y MAXPWM
 
@@ -153,6 +153,7 @@
 #define newdirsI2C 0xFE //Direccion a asignar al sensor
 #define REG_COM 0 //Registro de comandos
 #define REG_DATA 2 //Registro de datos
+#define CHOQUE 5 
 
 
 

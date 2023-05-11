@@ -8,3 +8,4 @@ unsigned int detectar_direccion (unsigned char *dirI2C);
 
 //Variable a exportar
 extern unsigned int flag_dis;
+extern unsigned int dis_media;

@@ -31,6 +31,7 @@ unsigned int flag_posicion_segura=0; //se lleva el brazo a una posicion segura p
 unsigned int flag_num_duty = 0;
 unsigned int flag_estrella = 0;
 unsigned int flag_casa = 0;
+unsigned int flag_inic_pwm=0;
 
 
 unsigned int duty[5];
@@ -39,6 +40,7 @@ unsigned int duty_min[5];
 unsigned int duty_max[5];
 
 void mover_servo(unsigned int num_duty, unsigned int objetivo);
+void posicion_segura();
 void inic_OC1 ()
 {
     OC1CON=0; // Deshabilita modulo Output Compare
@@ -142,18 +144,22 @@ void visualizar_Duty(){
 void inic_PWM(){
     T4CONbits.TON = 1;	// encender el timer
     
-    int duracion_intermedia = (DEF_DUTY_MAX + DEF_DUTY_MIN) / 2;
+    flag_inic_pwm=1;
+    
+    //int duracion_intermedia = (DEF_DUTY_MAX + DEF_DUTY_MIN) / 2;
     estado_PWM = PWM0_ACTIVE; //Definir estado inicial
     
     duty[DUTY1]=DEF_DUTY_MAX;
     duty[DUTY2]=DEF_DUTY_MAX;
     
-    objetivopwm[DUTY0] = duracion_intermedia; // Inicializar pulso con duracion intermedia (1,3ms))
+    /*objetivopwm[DUTY0] = 951; // Inicializar pulso con duracion intermedia (1,3ms))
     objetivopwm[DUTY1] = duracion_intermedia; // Inicializar pulso con duracion intermedia (1,3ms))
     objetivopwm[DUTY2] = duracion_intermedia; // Inicializar pulso con duracion intermedia (1,3ms))
     objetivopwm[DUTY3] = duracion_intermedia; // Inicializar pulso con duracion intermedia (1,3ms))
-    objetivopwm[DUTY4] = duracion_intermedia; // Inicializar pulso con duracion intermedia (1,3ms))
+    objetivopwm[DUTY4] = duracion_intermedia; // Inicializar pulso con duracion intermedia (1,3ms))*/
 
+    posicion_segura();
+    
     //Inicializar duty minimo: valor por defecto
     duty_min[DUTY0] = DEF_DUTY_MIN;
     duty_min[DUTY1] = DEF_DUTY_MIN;

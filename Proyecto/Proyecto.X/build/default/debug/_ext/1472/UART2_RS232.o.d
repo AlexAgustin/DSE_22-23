@@ -4,4 +4,5 @@ build/default/debug/_ext/1472/UART2_RS232.o:  \
 ../memoria.h  \
 ../timers.h  \
 ../OCPWM.h  \
-../LCD.h 
+../LCD.h  \
+../srf08.h 

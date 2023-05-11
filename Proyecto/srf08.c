@@ -19,13 +19,13 @@ Fecha: Marzo 2023
 #include "srf08.h"
 
 unsigned int flag_dis = 0;
+unsigned int dis_media=11;
 
 //Gestionar la medicion de la distancia
 void gestion_dis(unsigned char dirI2C)
 {
     
     unsigned char dis[2];
-    unsigned int dis_media;
 
     if (leer_medicion(dirI2C,dis)) { // Lectura de la distancia media
         //Se ha dado un error en la lectura
