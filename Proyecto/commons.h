@@ -79,6 +79,7 @@
 #define VERDUTYMAX 7
 #define VERDUTYOC 8
 #define VERDUTYALL 9
+#define VERDUTYADC 10
 
 
 // Definiciones ligadas a la velocidad de transmision de UART2
@@ -129,6 +130,8 @@
 #define SECURE_DUTY_2    1292 //Duty0 en una posicion segura
 #define SECURE_DUTY_3    466 //Duty0 en una posicion segura
 #define SECURE_DUTY_4    302 //Duty0 en una posicion segura
+#define VEL_ALTA    0462 // Velocidad alta
+#define VEL_BAJA    0462 // Velocidad baja
 #define DEF_DUTY_MIN (PR20ms/20) * MINPWM	// valor minimo y maximo por defecto de duty. Se calculan 
 #define DEF_DUTY_MAX (PR20ms/20) * MAXPWM	// mediante los "define" PR20ms, MINPWM y MAXPWM
 
