@@ -32,7 +32,7 @@ unsigned char Ventana_LCD[20][18] = {
     {"S1:---- S2:---- ""\x0D\x0A"},
     {"S3:---- S4:---- ""\x0D\x0A"},
     {"S5:----         ""\x0D\x0A"},
-    {"SX:---- SY:---- ""\x0D\x0A"},
+    {"VA:---- VD:---- ""\x0D\x0A"},
     {"CPU M: -- Un: --""\x0D\x0A"}, //EN WHILe inicializad temp y abajo esperas a if, cuentas tiempo de 20 ms 
     {"Joy pequ X: ----""\x0D\x0A"},
     {"Calib m S-: ----""\x0D\x0A"},

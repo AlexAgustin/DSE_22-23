@@ -118,18 +118,29 @@ void tratar_valorADC1 ()
     Y_media = Y_media / INDIV_MUESTRAS;
     Z_media = Z_media / INDIV_MUESTRAS;
     
-    
-    OC1RS = (X_media/999) * (OC_DUTY_MAX - OC_DUTY_MIN) + OC_DUTY_MIN; // Obtener OC1RS a partir de la coordenada X
-    OC2RS = (Y_media/999) * (OC_DUTY_MAX - OC_DUTY_MIN) + OC_DUTY_MIN; // Obtener OC2RS a partir de la coordenada Y
+    if(Y_media > 800){
+        OC1RS = VEL_ALTA;
+        OC3RS = VEL_ALTA;
+    } 
+    else if(Y_media > 600){
+        OC1RS = VEL_BAJA;
+        OC3RS = VEL_BAJA;
+    } 
+    else if(Y_media < 400 && Y_media > 200){
+        OC2RS = VEL_BAJA;
+        OC4RS = VEL_BAJA;
+    } 
+    else if(Y_media <= 200){
+        OC2RS = VEL_ALTA;
+        OC4RS = VEL_ALTA;
+    } 
 
-    if(!flag_DUTY){ //Si flag_DUTY==0 se obtiene duty0..4  a partir de la potencia
+    if(!flag_DUTY){ //Si flag_DUTY==0 se obtiene duty0 duty2 y duty4  a partir de la potencia
         
         objetivopwm[DUTY0] =  (Poten_media/1023) * (duty_max[DUTY0] - duty_min[DUTY0]) + duty_min[DUTY0]; // Obtener duty[DUTY0]  a partir de la potencia
-        objetivopwm[DUTY1] = (Temp_media/999) * (duty_max[DUTY1] - duty_min[DUTY1]) + duty_min[DUTY1];  // Obtener duty1 a partir de la temperatura
         objetivopwm[DUTY2] = (X_media/999) * (duty_max[DUTY2] - duty_min[DUTY2]) + duty_min[DUTY2]; // Obtener duty2 a partir de la coordenada X
-        objetivopwm[DUTY3] = (Y_media/999) * (duty_max[DUTY3] - duty_min[DUTY3]) + duty_min[DUTY3]; // Obtener duty3 a partir de la coordenada Y
         objetivopwm[DUTY4] = (Z_media/999) * (duty_max[DUTY4] - duty_min[DUTY4]) + duty_min[DUTY4]; // Obtener duty[DUTY4] a partir de la coordenada Z
-        flag_Duty_LCD = VERDUTYALL; // Poner a 6 el flag para guardar los nuevos valores de duty[0-4], OC1RS y OC2RS en Ventana_LCD para su visualizacion en la pantalla
+        flag_Duty_LCD = VERDUTYADC; // Poner a 6 el flag para guardar los nuevos valores de duty[0-4], OC1RS y OC2RS en Ventana_LCD para su visualizacion en la pantalla
     } else {  
         flag_Duty_LCD = VERDUTYOC; // Poner a 7 el flag para guardar los nuevos valores de OC1RS y OC2RS en Ventana_LCD para su visualizacion en la pantalla
     }
