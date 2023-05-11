@@ -79,6 +79,7 @@
 #define VERDUTYMAX 7
 #define VERDUTYOC 8
 #define VERDUTYALL 9
+#define VERDUTYADC 10
 
 
 // Definiciones ligadas a la velocidad de transmision de UART2
@@ -124,11 +125,13 @@
                         // Fosc= 80 MHz Fcy = 40 MHz Tcy= 25 ns
 #define MINPWM 0.5      // Duracion minima pulso PWM (en milisegundos)
 #define MAXPWM 2.1      // Duracion maxima pulso PWM (en milisegundos)
-#define SECURE_DUTY_0    0722 //Duty0 en una posicion segura
-#define SECURE_DUTY_1    1292 //Duty0 en una posicion segura
-#define SECURE_DUTY_2    1312 //Duty0 en una posicion segura
-#define SECURE_DUTY_3    0722 //Duty0 en una posicion segura
-#define SECURE_DUTY_4    0462 //Duty0 en una posicion segura
+#define SECURE_DUTY_0    0722 //Duty0 => en una posicion segura
+#define SECURE_DUTY_1    1292 //Duty1 => en una posicion segura
+#define SECURE_DUTY_2    1312 //Duty2 => en una posicion segura
+#define SECURE_DUTY_3    0722 //Duty3 => en una posicion segura
+#define SECURE_DUTY_4    0462 //Duty4 => en una posicion segura
+#define VEL_ALTA    0462 // Velocidad alta
+#define VEL_BAJA    0462 // Velocidad baja
 #define DEF_DUTY_MIN (PR20ms/20) * MINPWM	// valor minimo y maximo por defecto de duty. Se calculan 
 #define DEF_DUTY_MAX (PR20ms/20) * MAXPWM	// mediante los "define" PR20ms, MINPWM y MAXPWM
 
@@ -136,8 +139,8 @@
 #define PR100us  4000 	// Periodo adecuado para conseguir 0,1 ms (100us)
                         // teniendo en cuenta un prescaler de 1:1.
                         // Fosc= 80 MHz Fcy = 40 MHz Tcy= 25 ns
-#define MINOCPWM 0.0025      // Duracion minima pulso PWM (en milisegundos)
-#define MAXOCPWM 0.0105      // Duracion maxima pulso PWM (en milisegundos)
+#define MINOCPWM 0.002      // Duracion minima pulso PWM (en milisegundos)
+#define MAXOCPWM 0.005      // Duracion maxima pulso PWM (en milisegundos)
 
 // Posiciones de duty en el array
 #define DUTY0 0
