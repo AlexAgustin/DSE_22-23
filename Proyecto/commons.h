@@ -140,7 +140,7 @@
                         // teniendo en cuenta un prescaler de 1:1.
                         // Fosc= 80 MHz Fcy = 40 MHz Tcy= 25 ns
 #define MINOCPWM 0.002      // Duracion minima pulso PWM (en milisegundos)
-#define MAXOCPWM 0.005      // Duracion maxima pulso PWM (en milisegundos)
+#define MAXOCPWM 0.008      // Duracion maxima pulso PWM (en milisegundos)
 
 // Posiciones de duty en el array
 #define DUTY0 0
