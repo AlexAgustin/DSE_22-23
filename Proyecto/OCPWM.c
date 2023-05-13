@@ -147,21 +147,13 @@ void visualizar_Duty(){
 
 
 void inic_PWM(){
-    T4CONbits.TON = 1;	// encender el timer
-    
-    flag_inic_pwm=1;
+    flag_inic_pwm = 1;
     
     //int duracion_intermedia = (DEF_DUTY_MAX + DEF_DUTY_MIN) / 2;
     estado_PWM = PWM0_ACTIVE; //Definir estado inicial
     
     duty[DUTY1]=DEF_DUTY_MAX;
     duty[DUTY2]=DEF_DUTY_MAX;
-    
-    /*objetivopwm[DUTY0] = 951; // Inicializar pulso con duracion intermedia (1,3ms))
-    objetivopwm[DUTY1] = duracion_intermedia; // Inicializar pulso con duracion intermedia (1,3ms))
-    objetivopwm[DUTY2] = duracion_intermedia; // Inicializar pulso con duracion intermedia (1,3ms))
-    objetivopwm[DUTY3] = duracion_intermedia; // Inicializar pulso con duracion intermedia (1,3ms))
-    objetivopwm[DUTY4] = duracion_intermedia; // Inicializar pulso con duracion intermedia (1,3ms))*/
 
     posicion_segura();
     
@@ -187,13 +179,14 @@ void inic_PWM(){
 }
 
 void posicion_segura(){
-    T4CONbits.TON = 1;	// encender el timer
     objetivopwm[DUTY0] = SECURE_DUTY_0;
     objetivopwm[DUTY1] = SECURE_DUTY_1;
     objetivopwm[DUTY2] = SECURE_DUTY_2;
     objetivopwm[DUTY3] = SECURE_DUTY_3;
     objetivopwm[DUTY4] = SECURE_DUTY_4;
+    reached = 0;
     flag_posicion_segura = 0;
+    restart_Timer4_movservos(); 
 }
 
 
@@ -212,6 +205,7 @@ void dibujar_estrella(){
     {
         case LAPIZ:
             objetivopwm[DUTY4] = POS_LAPIZ_4;
+            reached --;
             linea = STAR1;
         break;
 
@@ -220,6 +214,7 @@ void dibujar_estrella(){
             objetivopwm[DUTY1] = pos_star1[index];
             objetivopwm[DUTY2] = pos_star2[index];
             objetivopwm[DUTY3] = pos_star3[index];
+            reached -= 4;
             index ++;
 
             if(index == 5){
@@ -234,7 +229,6 @@ void dibujar_estrella(){
         break;
     }
 
-    flag_allreached = 0;
     */
 }
 
@@ -253,7 +247,9 @@ void dibujar_casa(){
     {
         case LAPIZ:
             objetivopwm[DUTY4] = POS_LAPIZ_4;
+            reached --;
             linea = CASA1;
+            restart_Timer4_movservos();
         break;
 
         case CASA:
@@ -261,7 +257,9 @@ void dibujar_casa(){
             objetivopwm[DUTY1] = pos_casa1[index];
             objetivopwm[DUTY2] = pos_casa2[index];
             objetivopwm[DUTY3] = pos_casa3[index];
+            reached -= 4;
             index ++;
+            restart_Timer4_movservos();
 
             if(index == 8){
                 linea = LAPIZ;

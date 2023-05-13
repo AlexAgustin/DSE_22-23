@@ -32,13 +32,12 @@ Fecha: Marzo 2023
 
 void cronometro();
 
-int sum=0; 
+
 
 //Variables globales
 int inicializar_crono = 0;
 unsigned int mili,deci,seg,min;
-
-unsigned int flag_All_Reached=0;
+unsigned int reached = 5;
 
 // inicializacion del timer 9
 void inic_Timer9_delay(unsigned long ciclos){
@@ -309,7 +308,6 @@ void inic_Timer4_movservos ()
  * Mueve el servo correspondiente al duty num_duty a la posicion objetivo
  */
 void _ISR_NO_PSV _T4Interrupt(){
-    static unsigned int reached=0;
     
     //Caso: duty 0
     if((duty[DUTY0] + 5) < objetivopwm[DUTY0]) duty[DUTY0] += 5;
@@ -357,26 +355,21 @@ void _ISR_NO_PSV _T4Interrupt(){
         reached++;
     }
 
-//    //Caso: OC1RS
-//    if((OC1RS + 5) < objetivopwm[DUTYOC1]) OC1RS += 5;
-//    else if ((OC1RS - 5) > objetivopwm[DUTYOC1]) OC1RS -= 5;
-//    else if(OC1RS != objetivopwm[DUTYOC1]) OC1RS = objetivopwm[DUTYOC1]; 
-//
-//    //Caso: OC2RS
-//    if((OC2RS + 5) < objetivopwm[DUTYOC2]) OC2RS += 5;
-//    else if ((OC2RS - 5) > objetivopwm[DUTYOC2]) OC2RS -= 5;
-//    else if(OC2RS != objetivopwm[DUTYOC2]) OC2RS = objetivopwm[DUTYOC2]; 
-
-    if (reached==5){
-        reached=0;
-        flag_All_Reached=1;
+    if (reached == 5){
         T4CONbits.TON = 0;	// apagar el timer
-        flag_exit=0;
+        flag_exit = 0;
     }
     if(flag_inic_pwm) flag_inic_pwm=0;
-    flag_Duty_LCD=9;
+    flag_Duty_LCD = VERDUTYALL;
     IFS1bits.T4IF = 0;      // Puesta a 0 del flag IF del temporizador 4
 }
+
+
+void restart_Timer4_movservos(){
+    TMR4 = 0; // Inicializar el registro de cuenta
+    T4CONbits.TON = 1;	// encender el timer T4
+}
+
 
 void inic_Timer8_PWM(){
     //Inicializar modulo T8
@@ -400,6 +393,7 @@ void inic_Timer8_PWM(){
 }
 
 void _ISR_NO_PSV _T8Interrupt(){
+    static int sum=0; 
     switch (estado_PWM){
         case PWM0_ACTIVE: //Activar PWM (0)
             LATDbits.LATD8 = 1; // Puesta a 1 (RE10)
@@ -473,7 +467,7 @@ void _ISR_NO_PSV _T6Interrupt(){
 }
 
 
-void restart_Timer6(){
+void restart_Timer6_dis(){
     TMR6 = 0; // Inicializar el registro de cuenta
     T6CONbits.TON = 1;	// encender el timer T6
 }
