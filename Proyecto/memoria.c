@@ -33,17 +33,34 @@ unsigned char Ventana_LCD[20][18] = {
     {"S3:---- S4:---- ""\x0D\x0A"},
     {"S5:----         ""\x0D\x0A"},
     {"VA:---- VD:---- ""\x0D\x0A"},
-    {"CPU M: -- Un: --""\x0D\x0A"}, //EN WHILe inicializad temp y abajo esperas a if, cuentas tiempo de 20 ms 
+    {"CPU M: -- Un: --""\x0D\x0A"}, //M:-- Un:--EN WHILe inicializad temp y abajo esperas a if, cuentas tiempo de 20 ms 
     {"Joy pequ X: ----""\x0D\x0A"},
     {"Calib m S-: ----""\x0D\x0A"},
     {"      M S-: ----""\x0D\x0A"},
     {"Distancia:  ----""\x0D\x0A"}
 };
 
-void actualizar_Ventana_LCD ()
+void actualizar_Ventana_LCD (unsigned char * dir)
 {
   fila1 = 2;
   fila2 = 3;
-  //Ventana_LCD[1] = {"--En curso... --""\x0D\x0A"};
+  *dir="--En curso... --""\x0D\x0A";
 }
 
+void gestion_cont(unsigned long cont)
+{
+  static unsigned long contmin = ULLONG_MAX;
+  static unsigned long contmax = ULLONG_MIN;
+
+  // TODO: Calcular porcentaje sobre 100, need el otro datito
+
+
+  if(cont<contmin){
+    contmin = cont;
+    conversion_2dig(&Ventana_LCD[filacpu][poscpumin], contmin); 
+  } 
+  else if (cont>contmax){
+    contmax = cont;
+    conversion_2dig(&Ventana_LCD[filacpu][poscpumax], contmax); 
+  }
+}

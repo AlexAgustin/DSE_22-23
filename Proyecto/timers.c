@@ -62,10 +62,44 @@ void inic_Timer9_delay(unsigned long ciclos){
         }
     }
     T9CONbits.TCS = 0;	// reloj interno
-    T9CONbits.TGATE = 0;	// Deshabilitar el modo Gate
+    T9CONbits.TGATE = 0;	// Deshabilitar el modo Gate    
+    IEC3bits.T9IE = 0;      // deshabilitar la interrupcion general de T9
     IFS3bits.T9IF = 0;      // Puesta a 0 del flag IF del temporizador 9
     T9CONbits.TON = 1;	// puesta en marcha del timer
 }
+
+
+void reinic_Timer9_CPU(){
+    TMR9 = 0; // Inicializar el registro de cuenta
+    PR9 =  12500-1 ;	// Periodo del timer
+        // Inicialmente queremos que cuente 20 ms.
+		// Fosc= 80 MHz (vease Inic_oscilator()) de modo que
+		// Fcy = 40 MHz (cada instruccion dos ciclos de reloj)
+		// Por tanto, Tcy= 25 ns para ejecutar una instruccion
+        // Para contar 20 ms se necesitan 800.000 ciclos.
+		// Posteriormente, el valor de PR8 ira cambiando.
+    
+    T9CONbits.TCKPS = 2;	// escala del prescaler 1:64
+    
+    IEC3bits.T9IE = 0;      // deshabilitar la interrupcion general de T9
+    IFS3bits.T9IF = 0;      // Puesta a 0 del flag IF del temporizador 9
+    
+    T9CONbits.TON = 1;	// encender el timer
+}
+
+void restart_timer9_CPU()
+{
+    TMR9 = 0; // Inicializar el registro de cuenta
+    T9CONbits.TON = 1;	// encender el timer
+}
+
+void stop_timer9_CPU()
+{
+    IFS3bits.T9IF = 0;      // Puesta a 0 del flag IF del temporizador 9
+    T9CONbits.TON = 0;	// encender el timer
+}
+
+
 
 //Espera un determinado numero de milisegundos
 void Delay_ms(unsigned int ms){
@@ -150,9 +184,9 @@ void cronometro()
         LATA=LATA & 0xff00; 	// Apagar los leds
 
         //Puesta a 0 de lo mostrado en la pantalla
-        conversion_tiempo(&Ventana_LCD[filacrono][posmin],min); //asignacion del valor de los minutos en la posicion correspondiente de la linea a mostrar en pantalla  
-        conversion_tiempo(&Ventana_LCD[filacrono][posseg],seg); //asignacion del valor de los segundos en la posicion correspondiente de la linea a mostrar en pantalla
-        conversion_tiempo(&Ventana_LCD[filacrono][posds], deci); //asignacion del valor de las decimas de segundo en la posicion correspondiente de la linea a mostrar en pantalla
+        conversion_2dig(&Ventana_LCD[filacrono][posmin],min); //asignacion del valor de los minutos en la posicion correspondiente de la linea a mostrar en pantalla  
+        conversion_2dig(&Ventana_LCD[filacrono][posseg],seg); //asignacion del valor de los segundos en la posicion correspondiente de la linea a mostrar en pantalla
+        conversion_2dig(&Ventana_LCD[filacrono][posds], deci); //asignacion del valor de las decimas de segundo en la posicion correspondiente de la linea a mostrar en pantalla
         Ventana_LCD[filacrono][poscs]=' '; // Poner un ' ' en la posicion asociada a las centesimas de segundo
         
         inicializar_crono = 0; //puesta a 0 del flag inicializar_crono
@@ -176,11 +210,11 @@ void cronometro()
                 min+=1; //se suma 1 minuto
                 seg-=60; //reset segundos
                 LATAbits.LATA6=!LATAbits.LATA6; //conmuntar LED D9
-                conversion_tiempo(&Ventana_LCD[filacrono][posmin],min); //asignacion del valor de los minutos en la posicion correspondiente de la linea a mostrar en pantalla  
+                conversion_2dig(&Ventana_LCD[filacrono][posmin],min); //asignacion del valor de los minutos en la posicion correspondiente de la linea a mostrar en pantalla  
             }
-            conversion_tiempo(&Ventana_LCD[filacrono][posseg],seg); //asignacion del valor de los segundos en la posicion correspondiente de la linea a mostrar en pantalla
+            conversion_2dig(&Ventana_LCD[filacrono][posseg],seg); //asignacion del valor de los segundos en la posicion correspondiente de la linea a mostrar en pantalla
         }
-        conversion_tiempo(&Ventana_LCD[filacrono][posds], deci*10); //asignacion del valor de las decimas de segundo en la posicion correspondiente de la linea a mostrar en pantalla
+        conversion_2dig(&Ventana_LCD[filacrono][posds], deci*10); //asignacion del valor de las decimas de segundo en la posicion correspondiente de la linea a mostrar en pantalla
         Ventana_LCD[filacrono][poscs]=' '; // Poner un ' ' en la posicion asociada a las centesimas de segundo
 
     }

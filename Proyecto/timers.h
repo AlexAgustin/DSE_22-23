@@ -25,6 +25,9 @@ extern unsigned int flag_All_Reached;
 // que se usan en otros modulos
 //=========================================================
 void inic_Timer9_delay(unsigned long ciclos);
+void reinic_Timer9_CPU();
+void restart_timer9_CPU();
+void stop_timer9_CPU();
 void Delay_ms(unsigned int ms);
 void Delay_us(unsigned int us);
 void inic_Timer7_crono ();

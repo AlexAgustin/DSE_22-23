@@ -49,6 +49,7 @@ Fecha: Merzo 2023
 
 int main()
 {
+    unsigned long cont = 0;
     unsigned char dirI2C; //Variable que representa la direccion del sensor
     
     inic_oscilator();	// Seleccion e inicializacion del reloj: 80 MHz
@@ -102,8 +103,12 @@ int main()
 
     inic_ADC1();    //Inicializar el modulo ADC1
     inic_Timer3_ADC(); // Inicializar el temporizador T3
+    reinic_Timer9_CPU();
     
     while(1) { // bucle infinito
+        cont = 0;
+        restart_Timer9_CPU();
+
         cronometro(); // ejecucion del cronometro
         if (flag_ADC)   //Una vez se han recogido todas las muestras necesarias
             tratar_valorADC1(); // Calcular la media de las muestras tomadas y visualizar la informacion pertinente
@@ -120,6 +125,10 @@ int main()
         if (flag_exit){
             break;
         }
+
+        while(IFS3bits.T9IF = 0) cont ++;
+        stop_timer9_CPU();
+        gestion_cont (cont);
     }
     
 	return (0);

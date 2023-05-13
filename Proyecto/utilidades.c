@@ -17,7 +17,7 @@ Fecha: Marzo 2023
 
 
 unsigned char tabla_carac[16]="0123456789";
-void conversion_tiempo (unsigned char * dir, unsigned int val)
+void conversion_2dig (unsigned char * dir, unsigned int val)
 {
     unsigned char dig;
     if (val>99) { //valor superior a lo contemplado (2 digitos)
