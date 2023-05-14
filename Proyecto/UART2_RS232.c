@@ -64,7 +64,7 @@ void _ISR_NO_PSV _U2RXInterrupt()
     char caracter = U2RXREG;
     if(reached != 5) flag_busy = 1; 
     else  flag_busy = 0;
-    
+
     switch (caracter){ // switch de comprobacion del caracter recibido
         case 'p':
         case 'P': //si es P o p, se para el temporizador

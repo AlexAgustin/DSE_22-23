@@ -57,6 +57,7 @@
 #define filaduty23 12 // fila duty2 y duty3
 #define filaduty4 13 // fila duty4
 #define filaruedas 14 // fila ruedas
+#define filacpu 15 //fila CPU
 #define filacalibs0 16 //fila min duty
 #define filacalibs1 17 //fila min duty
 #define filacalibs2 18 //fila min duty
@@ -69,9 +70,10 @@
 #define pos4dig 12 // cifras 4 digitos
 #define posdutyl 3 // duty a la izquierda
 #define posdutyr 11 // duty a la derecha
+#define poscpumin 7 // CPU: cont minimo
+#define poscpumax 14 // CPU: cont maximo
 #define poscalibmax 5
 #define poscalibmin 12
-
  
 // definiciones: filas y posiciones de valores recogidos
 //========================================================= 
