@@ -71,12 +71,8 @@ void _ISR_NO_PSV _CNInterrupt()
 	}
     if(!PORTDbits.RD14)     //pulsador joystick
 	{
-        // se ha pulsado el pulsador del joystick
-        //flag
-        //quita esto de aqui
-        Nop();
-        Nop();
-        flag_posicion_segura=1;
+        // se ha pulsado el gatillo del joystick
+        flag_posicion_segura=1; //se pone a uno el flag que hara que el brazo robotico se mueva a una posicion segura
         cont6 ++; //se suma uno al contador de interrupciones recibidas (S6)
 	}
 	IFS1bits.CNIF = 0;	//se marca que la interrupcion ha sido atendida	

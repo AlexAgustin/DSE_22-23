@@ -19,13 +19,13 @@ void inic_pulsadores ()
 	el pulsador S5 esta siempre pulsado aunque no sea asi
 	*/
    	
-	// Definir los pines de los pulsadores S3, S4 y S6 como entrada
-	// S6(RD7),  S4(RD13), S3 (RD6), S5 (RA7)
-    TRISDbits.TRISD6 = 1;
-    TRISDbits.TRISD13 = 1;
-    TRISDbits.TRISD7 = 1;
-    TRISAbits.TRISA7 = 1;
-    TRISDbits.TRISD14 = 1;
+	// Definir los pines de los pulsadores S3, S4, S5, S6 y el gatillo del Joystick como entrada
+	// S6(RD7),  S4(RD13), S3 (RD6), S5 (RA7), gatillo del Joystick (RD14)
+    TRISDbits.TRISD6 = 1;   // S3
+    TRISDbits.TRISD13 = 1;  // S4
+    TRISDbits.TRISD7 = 1;   // S6
+    TRISAbits.TRISA7 = 1;   // S5
+    TRISDbits.TRISD14 = 1;  // Gatillo del Joystick
 }
 
 void inic_leds()

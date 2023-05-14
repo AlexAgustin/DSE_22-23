@@ -80,7 +80,6 @@ int main()
     inic_Timer5_LCD(); // Inicializar el temporizador T5 //Siempre refresco ditribuido
     
     inic_calib();
-
     
     while(PORTDbits.RD13) visualizar_Duty(); //Esperar a que se pulse S4 (RD13)
     flag_calib = 0; //Deshabilitar opcion de calibrado

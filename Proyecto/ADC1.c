@@ -1,9 +1,10 @@
 /* Funciones para el modulo ADC1
 ================================================
  * Contiene las funciones de inicializacion del modulo ADC, comienzo del muestreo, 
- * tratamiento de valores (obtener medias y guardarlas en las posiciones debidas de Ventana_LCD) y la rutina de atencion.
+ * tratamiento de valores (obtener medias y guardarlas en las posiciones debidas de Ventana_LCD) 
+ * y la rutina de atencion.
 Autores: Alex y Amanda
-Fecha: Marzo 2023
+Fecha: Mayo 2023
 */
 
 #include <p24HJ256GP610A.h>
@@ -18,7 +19,7 @@ unsigned int Temp_value[8];
 unsigned int X_value[8];
 unsigned int Y_value[8];
 unsigned int Z_value[8];
-int flag_ADC =0;
+unsigned int flag_ADC =0;
 unsigned long num_conversiones=0;
 
 void inic_ADC1 (void) // inicializacion del modulo

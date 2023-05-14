@@ -31,8 +31,6 @@
 #define  DATAPORT  PORTE
 #define  TRISDATA  TRISE          // I/O setup for data Port
 
-
-
 // definiciones posiciones cronometro
 //=========================================================
 #define posds 13 //decimas de segundo
@@ -158,6 +156,7 @@
 #define DUTY4 4
 #define DUTYOC1 5
 #define DUTYOC2 6
+#define ENDCALIB 7
 
 // Definiciones relacionadas con el bus I2C
 //==========================================

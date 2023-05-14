@@ -10,14 +10,6 @@ Fecha: Marzo 2023
 #include "LCD.h"
 #include "commons.h"
 
-//Lineas a mostrar
-/*const unsigned char Mens_LCD_1[]={"- DSE 2022-23 --"};  //linea 1.1, 16 caracteres
-const unsigned char Mens_LCD_2[]={"--- Pulsa S3  --"};  //linea 2.1, 16 caracteres
-const unsigned char Mens_LCD_3[]={"---  I2C_v1  ---"};  //linea 1.2, 16 caracteres
-const unsigned char Mens_LCD_4[]={"-- S4 comienza--"};  //linea 2.2, 16 caracteres
-const unsigned char Mens_LCD_5[]={"P:0000 dist:0000"};  //linea 1.3, 16 caracteres
-const unsigned char Mens_LCD_6[]={"Crono: 00:00,0  "};  //linea 2.3, 16 caracteres*/
-
 unsigned char Ventana_LCD[NFILAS][NCOLUMNAS] = {
     {"- DSE 2022-23 --""\x0D\x0A"},
     {"-- S4 comienza--""\x0D\x0A"},
@@ -34,7 +26,7 @@ unsigned char Ventana_LCD[NFILAS][NCOLUMNAS] = {
     {"S3:---- S4:---- ""\x0D\x0A"},
     {"S5:----         ""\x0D\x0A"},
     {"VA:---- VD:---- ""\x0D\x0A"},
-    {"CPU M: -- Un: --""\x0D\x0A"}, //M:-- Un:--EN WHILe inicializad temp y abajo esperas a if, cuentas tiempo de 20 ms 
+    {"CPU M: -- Un: --""\x0D\x0A"}, 
     {"   = Calib =    ""\x0D\x0A"},
     {"S0 M:---- m:----""\x0D\x0A"},
     {"S1 M:---- m:----""\x0D\x0A"},
@@ -46,9 +38,9 @@ unsigned char Ventana_LCD[NFILAS][NCOLUMNAS] = {
 
 void actualizar_Ventana_LCD (unsigned char * dir)
 {
-  fila1 = 2;
-  fila2 = 3;
-  *dir="--En curso... --""\x0D\x0A";
+  fila1 = 2; // se muestra la tercera entrada de Ventana_LCD en la linea superior de la pantalla LCD
+  fila2 = 3; // se muestra la caurta entrada de Ventana_LCD en la linea inferior de la pantalla LCD
+  *dir="--En curso... --""\x0D\x0A"; // se muestra en la pantalla del PC que ya puede manejarse el brazo
 }
 
 void gestion_cont(unsigned long cont)
