@@ -25,7 +25,7 @@ unsigned int OC_DUTY_MIN=(PR100us/0.1) * MINOCPWM;	// valor minimo y maximo por 
 unsigned int OC_DUTY_MAX=(PR100us/0.1) * MAXOCPWM;	// mediante los "define" PR20ms, MINPWM y MAXPWM
 
 unsigned int flag_DUTY = 1;  // duty se gestionara por defecto a traves de UART
-unsigned int flag_Duty_LCD = VERDUTYALL; //cuando duty cambia, se hace la conversion para visualizarlo en la pantalla  (flag a 1)
+unsigned int flag_Duty_LCD; //cuando duty cambia, se hace la conversion para visualizarlo en la pantalla  (flag a 1)
 unsigned int flag_calib = 1;
 unsigned int flag_posicion_segura=0; //se lleva el brazo a una posicion segura para apagar si el flag esta a 1 (desde el programa principal)
 unsigned int flag_num_duty = 0;
@@ -113,12 +113,33 @@ void visualizar_Duty(){
             conversion_4dig(&Ventana_LCD[filaduty4][posdutyl],duty[DUTY4]); // Guardar valor de duty4 en Ventana_LCD para su visualizacion en la pantalla
             break;
         case VERDUTYMIN: //Caso: min duty
-            conversion_4dig(&Ventana_LCD[filadutymin][pos4dig], duty_min[DUTY0]); // Guardar valor del duty minimo en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs0][poscalibmin], duty_min[DUTY0]); // Guardar valor del duty minimo en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs1][poscalibmin], duty_min[DUTY1]); // Guardar valor del duty minimo en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs2][poscalibmin], duty_min[DUTY2]); // Guardar valor del duty minimo en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs3][poscalibmin], duty_min[DUTY3]); // Guardar valor del duty minimo en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs4][poscalibmin], duty_min[DUTY4]); // Guardar valor del duty minimo en Ventana_LCD para su visualizacion en la pantalla
             break;
         case VERDUTYMAX: //Caso: max duty
-            conversion_4dig(&Ventana_LCD[filadutymax][pos4dig], duty_min[DUTY0]); // Guardar valor del duty maximo en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs0][poscalibmax], duty_max[DUTY0]); // Guardar valor del duty minimo en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs1][poscalibmax], duty_max[DUTY1]); // Guardar valor del duty minimo en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs2][poscalibmax], duty_max[DUTY2]); // Guardar valor del duty minimo en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs3][poscalibmax], duty_max[DUTY3]); // Guardar valor del duty minimo en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs4][poscalibmax], duty_max[DUTY4]); // Guardar valor del duty minimo en Ventana_LCD para su visualizacion en la pantalla
             break;
-        case 8: //Caso: ruedas
+        case VERCALIB:
+            conversion_4dig(&Ventana_LCD[filacalibs0][poscalibmin], duty_min[DUTY0]); // Guardar valor del duty minimo en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs1][poscalibmin], duty_min[DUTY1]); // Guardar valor del duty minimo en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs2][poscalibmin], duty_min[DUTY2]); // Guardar valor del duty minimo en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs3][poscalibmin], duty_min[DUTY3]); // Guardar valor del duty minimo en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs4][poscalibmin], duty_min[DUTY4]); // Guardar valor del duty minimo en Ventana_LCD para su visualizacion en la pantalla
+            
+            conversion_4dig(&Ventana_LCD[filacalibs0][poscalibmax], duty_max[DUTY0]); // Guardar valor del duty minimo en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs1][poscalibmax], duty_max[DUTY1]); // Guardar valor del duty minimo en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs2][poscalibmax], duty_max[DUTY2]); // Guardar valor del duty minimo en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs3][poscalibmax], duty_max[DUTY3]); // Guardar valor del duty minimo en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs4][poscalibmax], duty_max[DUTY4]); // Guardar valor del duty minimo en Ventana_LCD para su visualizacion en la pantalla
+            break;
+        case VERDUTYOC: //Caso: ruedas
             conversion_4dig(&Ventana_LCD[filaruedas][posdutyl],OC1RS); // Guardar valor de OC1RS en Ventana_LCD para su visualizacion en la pantalla
             conversion_4dig(&Ventana_LCD[filaruedas][posdutyr],OC2RS); // Guardar valor de OC2RS en Ventana_LCD para su visualizacion en la pantalla
             break;
@@ -128,8 +149,6 @@ void visualizar_Duty(){
             conversion_4dig(&Ventana_LCD[filaduty23][posdutyl],duty[DUTY2]); // Guardar valor de duty2 en Ventana_LCD para su visualizacion en la pantalla
             conversion_4dig(&Ventana_LCD[filaduty23][posdutyr],duty[DUTY3]); // Guardar valor de duty3 en Ventana_LCD para su visualizacion en la pantalla
             conversion_4dig(&Ventana_LCD[filaduty4][posdutyl],duty[DUTY4]); // Guardar valor de duty4 en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filadutymin][pos4dig], duty_min[DUTY0]); // Guardar valor del duty minimo en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filadutymax][pos4dig], duty_max[DUTY0]); // Guardar valor del duty maximo en Ventana_LCD para su visualizacion en la pantalla
             //conversion_4dig(&Ventana_LCD[filaruedas][posdutyl], OC1RS); // Guardar valor de OC1RS en Ventana_LCD para su visualizacion en la pantalla
             //conversion_4dig(&Ventana_LCD[filaruedas][posdutyr], OC2RS); // Guardar valor de OC2RS en Ventana_LCD para su visualizacion en la pantalla
             break;
@@ -147,53 +166,52 @@ void visualizar_Duty(){
 
 
 void inic_PWM(){
-    T4CONbits.TON = 1;	// encender el timer
-    
     flag_inic_pwm=1;
     
     //int duracion_intermedia = (DEF_DUTY_MAX + DEF_DUTY_MIN) / 2;
     estado_PWM = PWM0_ACTIVE; //Definir estado inicial
     
-    duty[DUTY1]=DEF_DUTY_MAX;
-    duty[DUTY2]=DEF_DUTY_MAX;
+    duty[DUTY1]=duty_max[DUTY1];
+    duty[DUTY2]=duty_max[DUTY2];
     
-    /*objetivopwm[DUTY0] = 951; // Inicializar pulso con duracion intermedia (1,3ms))
-    objetivopwm[DUTY1] = duracion_intermedia; // Inicializar pulso con duracion intermedia (1,3ms))
-    objetivopwm[DUTY2] = duracion_intermedia; // Inicializar pulso con duracion intermedia (1,3ms))
-    objetivopwm[DUTY3] = duracion_intermedia; // Inicializar pulso con duracion intermedia (1,3ms))
-    objetivopwm[DUTY4] = duracion_intermedia; // Inicializar pulso con duracion intermedia (1,3ms))*/
-
     posicion_segura();
-    
-    //Inicializar duty minimo: valor por defecto
-    duty_min[DUTY0] = DEF_DUTY_MIN;
-    duty_min[DUTY1] = DEF_DUTY_MIN;
-    duty_min[DUTY2] = DEF_DUTY_MIN;
-    duty_min[DUTY3] = DEF_DUTY_MIN;
-    duty_min[DUTY4] = DEF_DUTY_MIN;
-
-    //Inicializar duty maximo: valor por defecto
-    duty_max[DUTY0] = DEF_DUTY_MAX;
-    duty_max[DUTY1] = DEF_DUTY_MAX;
-    duty_max[DUTY2] = DEF_DUTY_MAX;
-    duty_max[DUTY3] = DEF_DUTY_MAX;
-    duty_max[DUTY4] = DEF_DUTY_MAX;
 
     TRISDbits.TRISD8 = 0; //Definir como salida el pin que se usara para la senhal PWM (0)
     TRISDbits.TRISD9 = 0; //Definir como salida el pin que se usara para la senhal PWM (1)
     TRISDbits.TRISD10 = 0; //Definir como salida el pin que se usara para la senhal PWM (2)
     TRISDbits.TRISD11 = 0; //Definir como salida el pin que se usara para la senhal PWM (3)
     TRISDbits.TRISD12 = 0; //Definir como salida el pin que se usara para la senhal PWM (4)
+    flag_Duty_LCD = VERDUTYALL;
 }
 
+void inic_calib(){
+    //Inicializar duty minimo: valor por defecto
+    duty_min[DUTY0] = DEF_DUTY_MIN;
+    duty_min[DUTY1] = DEF_DUTY_MIN;
+    duty_min[DUTY2] = DEF_DUTY_MIN;
+    duty_min[DUTY3] = DEF_DUTY_MIN;
+    duty_min[DUTY4] = DEF_DUTY_MIN;
+    
+    //Inicializar duty maximo: valor por defecto
+    duty_max[DUTY0] = DEF_DUTY_MAX;
+    duty_max[DUTY1] = DEF_DUTY_MAX;
+    duty_max[DUTY2] = DEF_DUTY_MAX;
+    duty_max[DUTY3] = DEF_DUTY_MAX;
+    duty_max[DUTY4] = DEF_DUTY_MAX;
+    
+    flag_Duty_LCD = VERCALIB;
+}
+
+
 void posicion_segura(){
-    T4CONbits.TON = 1;	// encender el timer
     objetivopwm[DUTY0] = SECURE_DUTY_0;
     objetivopwm[DUTY1] = SECURE_DUTY_1;
     objetivopwm[DUTY2] = SECURE_DUTY_2;
     objetivopwm[DUTY3] = SECURE_DUTY_3;
     objetivopwm[DUTY4] = SECURE_DUTY_4;
+    reached =0;
     flag_posicion_segura = 0;
+    restart_Timer4_movservos(); 
 }
 
 
@@ -212,6 +230,7 @@ void dibujar_estrella(){
     {
         case LAPIZ:
             objetivopwm[DUTY4] = POS_LAPIZ_4;
+            reached--;
             linea = STAR1;
         break;
 
@@ -220,6 +239,7 @@ void dibujar_estrella(){
             objetivopwm[DUTY1] = pos_star1[index];
             objetivopwm[DUTY2] = pos_star2[index];
             objetivopwm[DUTY3] = pos_star3[index];
+            reached -=4;
             index ++;
 
             if(index == 5){
@@ -233,8 +253,6 @@ void dibujar_estrella(){
             //Inalcanzable
         break;
     }
-
-    flag_allreached = 0;
     */
 }
 
@@ -253,7 +271,9 @@ void dibujar_casa(){
     {
         case LAPIZ:
             objetivopwm[DUTY4] = POS_LAPIZ_4;
+            reached--;
             linea = CASA1;
+            restart_Timer4_movservos(); 
         break;
 
         case CASA:
@@ -261,7 +281,9 @@ void dibujar_casa(){
             objetivopwm[DUTY1] = pos_casa1[index];
             objetivopwm[DUTY2] = pos_casa2[index];
             objetivopwm[DUTY3] = pos_casa3[index];
+            reached -=4;
             index ++;
+            restart_Timer4_movservos(); 
 
             if(index == 8){
                 linea = LAPIZ;
@@ -278,4 +300,3 @@ void dibujar_casa(){
     flag_allreached = 0;
     */
 }
-

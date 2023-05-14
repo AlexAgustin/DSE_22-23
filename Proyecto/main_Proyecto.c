@@ -78,9 +78,10 @@ int main()
     
     inic_Timer5_LCD(); // Inicializar el temporizador T5 //Siempre refresco ditribuido
     
-    //poner textos iniciales
+    inic_calib();
+
     
-    while(PORTDbits.RD13); //Esperar a que se pulse S4 (RD13)
+    while(PORTDbits.RD13) visualizar_Duty(); //Esperar a que se pulse S4 (RD13)
     flag_calib = 0; //Deshabilitar opcion de calibrado
     inic_CN();      // Inicializar modulo CN
     actualizar_Ventana_LCD(); //Actualizar la variable Ventana_LCD
@@ -90,9 +91,11 @@ int main()
 
     
     
-    //inic_OC1(); //Inicializar el modulo OC1
-    //inic_OC2(); //Inicializar el modulo OC1
-    //inic_Timer2_OCx();  //Inicializar el temporizador T2
+    inic_OC1(); //Inicializar el modulo OC1
+    inic_OC2(); //Inicializar el modulo OC1
+    inic_OC3();
+    inic_OC4();
+    inic_Timer2_OCx();  //Inicializar el temporizador T2
 
     inic_Timer8_PWM();  //Inicializar el temporizador T8
     inic_Timer4_movservos(); //Inicializar Timer del movimiento
@@ -113,10 +116,10 @@ int main()
             gestion_dis(dirI2C);  //Gestionar la medicion de la distancia
         if (flag_posicion_segura)
             posicion_segura(); //Llevar el brazo a una posicion segura
-        /*if (flag_estrella)
+        if (flag_estrella)
             dibujar_estrella(); //dibujar una estrella
         if (flag_casa)
-            dibujar_casa(); //dibujar una casa*/
+            dibujar_casa(); //dibujar una casa
         if (flag_exit){
             break;
         }

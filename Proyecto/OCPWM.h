@@ -22,8 +22,11 @@ extern unsigned int objetivopwm[7];
 //=========================================================
 void visualizar_Duty();
 void inic_PWM();
+void inic_calib();
 void posicion_segura();
 void inic_OC1();
 void inic_OC2();
 void inic_OC3();
 void inic_OC4();
+void dibujar_estrella();
+void dibujar_casa();

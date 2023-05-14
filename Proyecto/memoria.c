@@ -8,6 +8,7 @@ Fecha: Marzo 2023
 
 #include "p24HJ256GP610A.h"
 #include "LCD.h"
+#include "commons.h"
 
 //Lineas a mostrar
 /*const unsigned char Mens_LCD_1[]={"- DSE 2022-23 --"};  //linea 1.1, 16 caracteres
@@ -17,7 +18,7 @@ const unsigned char Mens_LCD_4[]={"-- S4 comienza--"};  //linea 2.2, 16 caracter
 const unsigned char Mens_LCD_5[]={"P:0000 dist:0000"};  //linea 1.3, 16 caracteres
 const unsigned char Mens_LCD_6[]={"Crono: 00:00,0  "};  //linea 2.3, 16 caracteres*/
 
-unsigned char Ventana_LCD[20][18] = {
+unsigned char Ventana_LCD[NFILAS][NCOLUMNAS] = {
     {"- DSE 2022-23 --""\x0D\x0A"},
     {"-- S4 comienza--""\x0D\x0A"},
     {"==== Titulo ====""\x0D\x0A"},
@@ -33,10 +34,14 @@ unsigned char Ventana_LCD[20][18] = {
     {"S3:---- S4:---- ""\x0D\x0A"},
     {"S5:----         ""\x0D\x0A"},
     {"VA:---- VD:---- ""\x0D\x0A"},
-    {"CPU M: -- Un: --""\x0D\x0A"}, //EN WHILe inicializad temp y abajo esperas a if, cuentas tiempo de 20 ms 
-    {"Joy pequ X: ----""\x0D\x0A"},
-    {"Calib m S-: ----""\x0D\x0A"},
-    {"      M S-: ----""\x0D\x0A"},
+    //{"CPU M: -- Un: --""\x0D\x0A"}, //EN WHILe inicializad temp y abajo esperas a if, cuentas tiempo de 20 ms 
+    //{"Joy pequ X: ----""\x0D\x0A"},
+    {"   = Calib =    ""\x0D\x0A"},
+    {"S0 M:---- m:----""\x0D\x0A"},
+    {"S1 M:---- m:----""\x0D\x0A"},
+    {"S2 M:---- m:----""\x0D\x0A"},
+    {"S3 M:---- m:----""\x0D\x0A"},
+    {"S4 M:---- m:----""\x0D\x0A"},
     {"Distancia:  ----""\x0D\x0A"}
 };
 

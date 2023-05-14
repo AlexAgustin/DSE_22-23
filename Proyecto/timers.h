@@ -34,7 +34,8 @@ void inic_Timer5_LCD ();
 void inic_Timer3_ADC ();
 void inic_Timer2_OCx ();
 void inic_Timer4_movservos ();
+void restart_Timer4_movservos();
 void inic_Timer8_PWM();
 void inic_Timer6_dis();
-void restart_Timer6();
+void restart_Timer6_dis();
 

@@ -43,7 +43,7 @@
 
 // definiciones: filas y posiciones de valores recogidos
 //========================================================= 
-#define NFILAS 20
+#define NFILAS 22
 #define NCOLUMNAS 18
 
 //Filas
@@ -57,15 +57,20 @@
 #define filaduty23 12 // fila duty2 y duty3
 #define filaduty4 13 // fila duty4
 #define filaruedas 14 // fila ruedas
-#define filadutymin 17 //fila min duty
-#define filadutymax 18 //fila max duty
-#define filadis 19 //fila distancia
+#define filacalibs0 16 //fila min duty
+#define filacalibs1 17 //fila min duty
+#define filacalibs2 18 //fila min duty
+#define filacalibs3 19 //fila min duty
+#define filacalibs4 20 //fila min duty
+#define filadis 21 //fila distancia
 
 //Posiciones
 #define poscarac 15 // caracter presionado
 #define pos4dig 12 // cifras 4 digitos
 #define posdutyl 3 // duty a la izquierda
 #define posdutyr 11 // duty a la derecha
+#define poscalibmax 5
+#define poscalibmin 12
 
  
 // definiciones: filas y posiciones de valores recogidos
@@ -77,9 +82,10 @@
 #define VERDUTY4 5
 #define VERDUTYMIN 6
 #define VERDUTYMAX 7
-#define VERDUTYOC 8
-#define VERDUTYALL 9
-#define VERDUTYADC 10
+#define VERCALIB 8
+#define VERDUTYOC 9
+#define VERDUTYALL 10
+#define VERDUTYADC 11
 
 
 // Definiciones ligadas a la velocidad de transmision de UART2

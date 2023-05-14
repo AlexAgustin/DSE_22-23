@@ -19,7 +19,7 @@ Fecha: Marzo 2023
 #include "srf08.h"
 
 unsigned int flag_dis = 0;
-unsigned int dis_media=11;
+unsigned int dis_media = 11;
 
 //Gestionar la medicion de la distancia
 void gestion_dis(unsigned char dirI2C)
@@ -41,7 +41,7 @@ void gestion_dis(unsigned char dirI2C)
         LATAbits.LATA1=1; // Encender led D4
         while(1); //Espera infinita
     }
-    restart_Timer6(); // Puesta en marcha del temporizador T6
+    restart_Timer6_dis(); // Puesta en marcha del temporizador T6
     flag_dis = 0; // puesta a 0 del flag para medir la distancia
 }
 
