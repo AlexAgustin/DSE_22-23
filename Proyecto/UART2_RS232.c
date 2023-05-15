@@ -67,8 +67,7 @@ void _ISR_NO_PSV _U2RXInterrupt()
     static unsigned int flag_busy = 0;
     char caracter = U2RXREG;
     static unsigned int ismin=0;
-    Nop();
-    Nop();
+
     if(reached != 5) flag_busy = 1; 
     else  flag_busy = 0;
 
@@ -106,8 +105,6 @@ void _ISR_NO_PSV _U2RXInterrupt()
                     duty_max[duty_cur] = duty[duty_cur]; // asignar el valor actual del duty correspondiente como el valor maximo
                     if (duty[duty_cur]!=duty_seguro[duty_cur]){
                         objetivopwm[duty_cur]=duty_seguro[duty_cur];
-                        Nop();
-                        Nop();
                         reached--;
                         restart_Timer4_movservos();
                     }
@@ -115,8 +112,6 @@ void _ISR_NO_PSV _U2RXInterrupt()
                     duty_min[duty_cur] = duty[duty_cur]; // asignar el valor actual de duty0 como su valor minimo
                     if (duty[duty_cur]!=duty_seguro[duty_cur]){
                         objetivopwm[duty_cur]=duty_seguro[duty_cur];
-                        Nop();
-                        Nop();
                         reached--;
                         restart_Timer4_movservos();
                     }
@@ -151,8 +146,6 @@ void _ISR_NO_PSV _U2RXInterrupt()
             // si es r, se mueve el servo incrementando el valor de duty0 (+5) si al moverlo se seguirian respetando los limites (<= duty_max[DUTY0]), 
             // si flag_DUTY == 1 (se gestiona duty0 por UART) y 
             // si el servo no esta en movimiento actualmente (!flag_busy)
-            Nop();
-            Nop();
             if(!flag_busy && flag_DUTY && duty[DUTY0]+5<=duty_max[DUTY0]) { // Realizar comprobaciones
                 duty[DUTY0]+=5; //Incrementar el valor de duty[DUTY0]: +5
                 flag_Duty_LCD = VERDUTY0; // Poner a VERDUTY0 el flag para guardar el nuevo valor de duty0 en Ventana_LCD para su visualizacion en la pantalla

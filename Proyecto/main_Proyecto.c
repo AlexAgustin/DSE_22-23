@@ -91,42 +91,29 @@ int main()
     
 
     while(PORTDbits.RD13) visualizar_Duty(); //Esperar a que se pulse S4 (RD13)
-    Nop();
-    Nop();    flag_calib = 0; //Deshabilitar opcion de calibrado
+
+    flag_calib = 0; //Deshabilitar opcion de calibrado
     
     inic_CN();      // Inicializar modulo CN
     actualizar_Ventana_LCD(); //Actualizar la variable Ventana_LCD
-Nop();
-    Nop();
     
     inic_crono();   // Inicializar cronometro
     inic_Timer7_crono();  // Inicializar el temporizador T7
-
- Nop();
-    Nop();
        
-    
+    inic_Ruedas();
     inic_OC1(); //Inicializar el modulo OC1
     inic_OC2(); //Inicializar el modulo OC1
     inic_OC3();
     inic_OC4();
     inic_Timer2_OCx();  //Inicializar el temporizador T2
-    
-Nop();
-    Nop();
-    
 
     inic_ADC1();    //Inicializar el modulo ADC1
     inic_Timer3_ADC(); // Inicializar el temporizador T3
     reinic_Timer9_CPU();
     
-    Nop();
-    Nop();
     while(1) { // bucle infinito
         cont = 0;
         restart_timer9_CPU();
-        Nop();
-        Nop();
         cronometro(); // ejecucion del cronometro
         if (flag_ADC)   //Una vez se han recogido todas las muestras necesarias
             tratar_valorADC1(); // Calcular la media de las muestras tomadas y visualizar la informacion pertinente
@@ -136,9 +123,9 @@ Nop();
             gestion_dis(dirI2C);  //Gestionar la medicion de la distancia
         if (flag_posicion_segura)
             posicion_segura(); //Llevar el brazo a una posicion segura
-        if (flag_estrella)
+        if (flag_estrella && reached == 5)
             dibujar_estrella(); //dibujar una estrella
-        if (flag_casa)
+        if (flag_casa && reached == 5)
             dibujar_casa(); //dibujar una casa
         if (flag_exit){
             break;

@@ -29,5 +29,6 @@ void inic_OC1();
 void inic_OC2();
 void inic_OC3();
 void inic_OC4();
+void inic_Ruedas();
 void dibujar_estrella();
 void dibujar_casa();

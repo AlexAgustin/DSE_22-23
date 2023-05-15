@@ -21,8 +21,8 @@ Fecha: Marzo 2023
 
 unsigned int estado_PWM;
 
-unsigned int OC_DUTY_MIN=(PR100us/0.1) * MINOCPWM;	// valor minimo y maximo por defecto de duty. Se calculan 
-unsigned int OC_DUTY_MAX=(PR100us/0.1) * MAXOCPWM;	// mediante los "define" PR20ms, MINPWM y MAXPWM
+unsigned int OC_DUTY_MIN=(PR100us/0.1) * VEL_BAJA;	// valor minimo y maximo por defecto de duty. Se calculan 
+unsigned int OC_DUTY_MAX=(PR100us/0.1) * VEL_ALTA;	// mediante los "define" PR20ms, MINPWM y MAXPWM
 
 unsigned int flag_DUTY = 1;  // duty se gestionara por defecto a traves de UART
 unsigned int flag_Duty_LCD; //cuando duty cambia, se hace la conversion para visualizarlo en la pantalla  (flag a 1)
@@ -62,7 +62,7 @@ void inic_OC2 ()
     //OC2CONbits.OCM=0b000;     // deshabilitar OC2
     OC2CONbits.OCTSEL=0;      // seleccionar T2 para el OC (OCTSEL= 0 -> Selecciona T2, OCTSEL= 1 -> T3)
     
-    OC2R  =  (OC_DUTY_MAX + OC_DUTY_MIN)/2; 		// Inicializar pulso con duracion intermedia (0.0065ms)) (duty cycle para el primer pulso PWM)
+    OC2R  =  (OC_DUTY_MAX + OC_DUTY_MIN)/2; 		// Inicializar pulso con duracion intermedia
     OC2RS = OC2R;               // inicializar registro secundario (duty cycle para el siguiente pulso PWM)
     
     OC2CONbits.OCM=0b110;       // habilitar OC2 en modo PWM sin prot
@@ -93,6 +93,11 @@ void inic_OC4 ()
     OC4RS = OC4R;               // inicializar registro secundario (duty cycle para el siguiente pulso PWM)
     
     OC4CONbits.OCM=0b110;       // habilitar OC4 en modo PWM sin prot
+}
+
+void inic_Ruedas(){
+    TRISBbits.TRISB8=0;  
+    TRISBbits.TRISB9=0;
 }
 
 void visualizar_Duty(){
@@ -194,8 +199,6 @@ void inic_PWM(){
 
 void inic_calib(){
     //Inicializar duty minimo: valor por defecto
-    Nop();
-    Nop();
     duty_min[DUTY0] = DEF_DUTY_MIN;
     duty_min[DUTY1] = DEF_DUTY_MIN;
     duty_min[DUTY2] = DEF_DUTY_MIN;
@@ -214,8 +217,6 @@ void inic_calib(){
 
 
 void posicion_segura(){
-    Nop();
-    Nop();
     if (duty[DUTY0] != duty_seguro[DUTY0]) {
         objetivopwm[DUTY0] = duty_seguro[DUTY0];
         reached--;
@@ -250,21 +251,35 @@ void dibujar_estrella(){
     static int pos_star1[5] = {712, 842, 767, 772, 847};
     static int pos_star2[5] = {572, 732, 657, 652, 742};
 
-
     switch(linea)
     {
         case LAPIZ:
-            objetivopwm[DUTY4] = 811;
-            objetivopwm[DUTY4] = 1302;
-            reached-=2;
+            if (duty[DUTY3] != 811) {
+                objetivopwm[DUTY3] = 811;
+                reached--;
+            }
+            if (duty[DUTY4] != 1302) {
+                objetivopwm[DUTY4] = 1302;
+                reached--;
+            }
+            if (reached != 5) restart_Timer4_movservos();
             linea = STAR;
         break;
 
         case STAR:
-            objetivopwm[DUTY0] = pos_star0[index];
-            objetivopwm[DUTY1] = pos_star1[index];
-            objetivopwm[DUTY2] = pos_star2[index];
-            reached -=3;
+            if (duty[DUTY0] != pos_star0[index]) {
+                objetivopwm[DUTY0] = pos_star0[index];
+                reached--;
+            }
+            if (duty[DUTY1] != pos_star1[index]) {
+                objetivopwm[DUTY1] = pos_star1[index];
+                reached--;
+            }
+            if (duty[DUTY2] != pos_star2[index]) {
+                objetivopwm[DUTY2] = pos_star2[index];
+                reached--;
+            }
+            if (reached != 5) restart_Timer4_movservos();
             index ++;
 
             if(index == 5){

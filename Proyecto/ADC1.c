@@ -119,28 +119,40 @@ void tratar_valorADC1 ()
     Y_media = Y_media / INDIV_MUESTRAS;
     Z_media = Z_media / INDIV_MUESTRAS;
     
-    if(Y_media > 800){
-        OC1RS = VEL_ALTA;
-        OC3RS = VEL_ALTA;
-    } 
-    else if(Y_media > 600){
-        OC1RS = VEL_BAJA;
-        OC3RS = VEL_BAJA;
-    } 
-    else if(Y_media < 400 && Y_media > 200){
-        OC2RS = VEL_BAJA;
-        OC4RS = VEL_BAJA;
-    } 
-    else if(Y_media <= 200){
-        OC2RS = VEL_ALTA;
-        OC4RS = VEL_ALTA;
-    } 
+    if(Y_media>525 && Y_media<535){
+        LATBbits.LATB8=0;
+        LATBbits.LATB9=0;
+    }else{
+        LATBbits.LATB8=1;
+        LATBbits.LATB9=1;
+        if(Y_media > 800){
+            OC2RS = VEL_ALTA;
+            OC4RS = VEL_ALTA;
+        } 
+        else if(Y_media > 600){
+            OC2RS = VEL_BAJA;
+            OC4RS = VEL_BAJA;
+        } 
+        else if(Y_media < 400 && Y_media > 200){
+            OC1RS = VEL_BAJA;
+            OC3RS = VEL_BAJA;
+        } 
+        else if(Y_media <= 200){
+            OC1RS = VEL_ALTA;
+            OC3RS = VEL_ALTA;
+        } 
+    }
 
     if(!flag_DUTY){ //Si flag_DUTY==0 se obtiene duty0 duty2 y duty4  a partir de la potencia
         
         objetivopwm[DUTY0] =  (Poten_media/1023) * (duty_max[DUTY0] - duty_min[DUTY0]) + duty_min[DUTY0]; // Obtener duty[DUTY0]  a partir de la potencia
+        if(duty[DUTY0] != objetivopwm[DUTY0]) reached--;
         objetivopwm[DUTY2] = (X_media/999) * (duty_max[DUTY2] - duty_min[DUTY2]) + duty_min[DUTY2]; // Obtener duty2 a partir de la coordenada X
+        if(duty[DUTY2] != objetivopwm[DUTY2]) reached--;
         objetivopwm[DUTY4] = (Z_media/999) * (duty_max[DUTY4] - duty_min[DUTY4]) + duty_min[DUTY4]; // Obtener duty[DUTY4] a partir de la coordenada Z
+        if(duty[DUTY4] != objetivopwm[DUTY4]) reached--;
+        
+        if (reached!=5) restart_Timer4_movservos();
         flag_Duty_LCD = VERDUTYADC; // Poner a 6 el flag para guardar los nuevos valores de duty[0-4], OC1RS y OC2RS en Ventana_LCD para su visualizacion en la pantalla
     } else {  
         flag_Duty_LCD = VERDUTYOC; // Poner a 7 el flag para guardar los nuevos valores de OC1RS y OC2RS en Ventana_LCD para su visualizacion en la pantalla
@@ -174,8 +186,6 @@ void _ISR_NO_PSV _ADC1Interrupt(){
                 num_muestras++; //Incrementar el numero de muestras tomadas
                 break;
             case coordx: //entrada de la coordenada X del joystick
-                Nop();
-                Nop();
                 X_value[i] = ADC1BUF0; //Se guarde el valor recogido en la posicion de la tabla de muestras que le corresponde
                 AD1CHS0bits.CH0SA = coordy; //Se define la siguiente senhal a muestrear
                 num_muestras ++; //Incrementar el numero de muestras tomadas

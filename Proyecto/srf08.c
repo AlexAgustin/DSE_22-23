@@ -94,8 +94,6 @@ unsigned int detectar_direccion (unsigned char *dirI2C)
             while(1); //Espera infinita
         }
         if (dis!=0xFF && dis!=0x00) { //Comprobacion de la lectura recibida del registro
-            Nop();
-            Nop();
             *dirI2C = i; //Asignacion de la nueva direccion
             return (0);
         }
