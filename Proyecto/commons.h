@@ -68,7 +68,7 @@
 #define pos4dig 12 // cifras 4 digitos
 #define posdutyl 3 // duty a la izquierda
 #define posdutyr 11 // duty a la derecha
-#define poscpumin 7 // CPU: cont minimo
+#define poscpucur 7 // CPU: cont minimo
 #define poscpumax 14 // CPU: cont maximo
 #define poscalibmax 5
 #define poscalibmin 12
@@ -136,8 +136,8 @@
 #define SECURE_DUTY_2    1292 //Duty0 en una posicion segura
 #define SECURE_DUTY_3    466 //Duty0 en una posicion segura
 #define SECURE_DUTY_4    312 //Duty0 en una posicion segura
-#define VEL_ALTA    0.09  // Velocidad alta
-#define VEL_BAJA    0.05 // Velocidad baja
+#define VEL_ALTA    0.8  // Velocidad alta
+#define VEL_BAJA    0.6 // Velocidad baja
 #define DEF_DUTY_MIN (PR20ms/20) * MINPWM	// valor minimo y maximo por defecto de duty. Se calculan 
 #define DEF_DUTY_MAX (PR20ms/20) * MAXPWM	// mediante los "define" PR20ms, MINPWM y MAXPWM
 

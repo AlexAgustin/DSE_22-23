@@ -29,11 +29,11 @@ unsigned char Ventana_LCD[NFILAS][NCOLUMNAS] = {
     {"VA:---- VD:---- ""\x0D\x0A"},
     {"CPU M: -- Un: --""\x0D\x0A"}, 
     {"   = Calib =    ""\x0D\x0A"},
-    {"S0 M:---- m:----""\x0D\x0A"},
     {"S1 M:---- m:----""\x0D\x0A"},
     {"S2 M:---- m:----""\x0D\x0A"},
     {"S3 M:---- m:----""\x0D\x0A"},
     {"S4 M:---- m:----""\x0D\x0A"},
+    {"S5 M:---- m:----""\x0D\x0A"},
     {"Distancia:  ----""\x0D\x0A"}
 };
 
@@ -46,18 +46,16 @@ void actualizar_Ventana_LCD ()//unsigned char * dir
 
 void gestion_cont(unsigned long cont)
 {
-  static unsigned long contmin = 999999999; //
+    Nop();
+    Nop();
   static unsigned long contmax = 0;
-
+  unsigned int cont_aux=0;
   // TODO: Calcular porcentaje sobre 100, need el otro datito
+  cont_aux = 100-((float)cont / (float)80001) * 100;
+  conversion_2dig(&Ventana_LCD[filacpu][poscpucur], cont_aux);
 
-
-  if(cont<contmin){
-    contmin = cont;
-    conversion_2dig(&Ventana_LCD[filacpu][poscpumin], contmin); 
-  } 
-  else if (cont>contmax){
-    contmax = cont;
+  if (cont_aux>contmax){
+    contmax = cont_aux;
     conversion_2dig(&Ventana_LCD[filacpu][poscpumax], contmax); 
   }
 }

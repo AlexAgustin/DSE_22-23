@@ -318,54 +318,10 @@ void inic_Timer2_OCx(){
     T2CONbits.TCS = 0;	// reloj interno
     T2CONbits.TGATE = 0;	// Deshabilitar el modo Gate
     
-    IEC0bits.T2IE = 1;      // deshabilitar la interrupcion general de T2
+    IEC0bits.T2IE = 0;      // deshabilitar la interrupcion general de T2
     IFS0bits.T2IF = 0;      // Puesta a 0 del flag IF del temporizador 2
     
     T2CONbits.TON = 1;	// encender el timer
-}
-
-void _ISR_NO_PSV _T2Interrupt(){
-    
-    static int sum = 0;
-    static unsigned int estado_OC = OC1_ACTIVE;
-    
-    switch (estado_OC){
-        case OC1_ACTIVE: //Activar PWM (0)
-            LATDbits.LATD8 = 1; // Puesta a 1 (RE10)
-            PR8 = duty[DUTY0]; //Determinar periodo del temporizador 8 a partir de duty0
-            sum=duty[DUTY0]; // Guardar ciclos transcurridos
-            estado_PWM = PWM1_ACTIVE; // Estado siguiente: activar PWM (1)
-            break;
-        case OC2_ACTIVE: //Activar PWM (1)
-            LATDbits.LATD8 = 0; // Puesta a 0 (RE10)
-            LATDbits.LATD9 = 1; // Puesta a 1 (RE11)
-            PR8 = duty[DUTY1]; //Determinar periodo del temporizador 8 a partir de duty1
-            sum+=duty[DUTY1]; // Acumular ciclos transcurridos
-            estado_PWM = PWM2_ACTIVE; // Estado siguiente: senhales desactivadas
-            break;
-        case OC3_ACTIVE: //Activar PWM (2)
-            LATDbits.LATD9 = 0; // Puesta a 0 (RE11)
-            LATDbits.LATD10 = 1; // Puesta a 1 (RE12)
-            PR8 = duty[DUTY2]; //Determinar periodo del temporizador 8 a partir de duty2
-            sum+=duty[DUTY2]; // Acumular ciclos transcurridos
-            estado_PWM = PWM3_ACTIVE; // Estado siguiente: senhales desactivadas
-            break;
-        case OC4_ACTIVE: //Activar PWM (3)
-            LATDbits.LATD10 = 0; // Puesta a 0 (RE12)
-            LATDbits.LATD11 = 1; // Puesta a 1 (RE13)
-            PR8 = duty[DUTY3]; //Determinar periodo del temporizador 8 a partir de duty3
-            sum+=duty[DUTY3]; // Acumular ciclos transcurridos
-            estado_PWM = PWM4_ACTIVE; // Estado siguiente: senhales desactivadas
-            break;
-        case PWM_RESTO: // Senhales desactivadas
-            LATDbits.LATD12 = 0; // Puesta a 0 (RE14)
-            PR8 = (PR20ms-sum); // Determinar periodo del temporizador 8 a partir de los ciclos restantes
-            estado_PWM = PWM0_ACTIVE; // Estado siguiente: activar PWM (0)
-            break;
-        default:
-            break;
-    }
-    IFS3bits.T8IF = 0;      // Puesta a 0 del flag IF del temporizador 8
 }
 
 void inic_Timer4_movservos ()
@@ -399,6 +355,8 @@ void _ISR_NO_PSV _T4Interrupt(){
     else if ((duty[DUTY0] - 5) > objetivopwm[DUTY0]) duty[DUTY0] -= 5;
     else if(duty[DUTY0] != objetivopwm[DUTY0]) {
         duty[DUTY0] = objetivopwm[DUTY0];
+        Nop();
+        Nop();
         reached++;
     }
     
@@ -408,6 +366,8 @@ void _ISR_NO_PSV _T4Interrupt(){
         else if ((duty[DUTY1] - 5) > objetivopwm[DUTY1]) duty[DUTY1] -= 5;
         else if(duty[DUTY1] != objetivopwm[DUTY1]) {
             duty[DUTY1] = objetivopwm[DUTY1];
+            Nop();
+            Nop();
             reached++;
         }
     }
@@ -418,6 +378,8 @@ void _ISR_NO_PSV _T4Interrupt(){
         else if ((duty[DUTY2] - 5) > objetivopwm[DUTY2]) duty[DUTY2] -= 5;
         else if(duty[DUTY2] != objetivopwm[DUTY2]) {
             duty[DUTY2] = objetivopwm[DUTY2];
+            Nop();
+            Nop();
             reached++;
         }
     }
@@ -428,6 +390,8 @@ void _ISR_NO_PSV _T4Interrupt(){
         else if ((duty[DUTY3] - 5) > objetivopwm[DUTY3]) duty[DUTY3] -= 5;
         else if(duty[DUTY3] != objetivopwm[DUTY3]) {
             duty[DUTY3] = objetivopwm[DUTY3];
+            Nop();
+            Nop();
             reached++;
         } 
     }
@@ -437,6 +401,8 @@ void _ISR_NO_PSV _T4Interrupt(){
     else if ((duty[DUTY4] - 5) > objetivopwm[DUTY4]) duty[DUTY4] -= 5;
     else if(duty[DUTY4] != objetivopwm[DUTY4]) {
         duty[DUTY4] = objetivopwm[DUTY4];
+        Nop();
+        Nop();
         reached++;
     }
 
@@ -445,7 +411,6 @@ void _ISR_NO_PSV _T4Interrupt(){
         //reached=0;
         
         T4CONbits.TON = 0;	// apagar el timer
-        flag_exit = 0;
     }
     if(flag_inic_pwm) flag_inic_pwm=0;
     

@@ -14,10 +14,11 @@ Fecha: Marzo 2023
 #include "timers.h"
 
 //Estados
-#define LAPIZ 0
-#define STAR 1
-#define CASA 1
-
+#define SIT 1
+#define PLAS 2
+#define SHAKEIT_L 3
+#define SHAKEIT_R 4
+#define ENDRUTINA 5
 
 unsigned int estado_PWM;
 
@@ -29,8 +30,7 @@ unsigned int flag_Duty_LCD; //cuando duty cambia, se hace la conversion para vis
 unsigned int flag_calib = 1;
 unsigned int flag_posicion_segura=0; //se lleva el brazo a una posicion segura para apagar si el flag esta a 1 (desde el programa principal)
 unsigned int flag_num_duty = 0;
-unsigned int flag_estrella = 0;
-unsigned int flag_casa = 0;
+unsigned int flag_rutina_perro = 0;
 unsigned int flag_inic_pwm=0;
 
 
@@ -49,7 +49,7 @@ void inic_OC1 ()
     //OC1CONbits.OCM=0b000;     // deshabilitar OC1 
     OC1CONbits.OCTSEL=0;      // seleccionar T2 para el OC (OCTSEL= 0 -> Selecciona T2, OCTSEL= 1 -> T3)
     
-    OC1R =  (OC_DUTY_MAX + OC_DUTY_MIN)/2; 		// Inicializar pulso con duracion intermedia (0.0065ms)) (duty cycle para el primer pulso PWM)
+    OC1R =  0; 		// Inicializar pulso con duracion intermedia (0.0065ms)) (duty cycle para el primer pulso PWM)
     OC1RS = OC1R;               // inicializar registro secundario (duty cycle para el siguiente pulso PWM)
     
     OC1CONbits.OCM=0b110;       // habilitar OC1 en modo PWM sin prot
@@ -62,7 +62,7 @@ void inic_OC2 ()
     //OC2CONbits.OCM=0b000;     // deshabilitar OC2
     OC2CONbits.OCTSEL=0;      // seleccionar T2 para el OC (OCTSEL= 0 -> Selecciona T2, OCTSEL= 1 -> T3)
     
-    OC2R  =  (OC_DUTY_MAX + OC_DUTY_MIN)/2; 		// Inicializar pulso con duracion intermedia
+    OC2R  =  0; 		// Inicializar pulso con duracion intermedia
     OC2RS = OC2R;               // inicializar registro secundario (duty cycle para el siguiente pulso PWM)
     
     OC2CONbits.OCM=0b110;       // habilitar OC2 en modo PWM sin prot
@@ -76,7 +76,7 @@ void inic_OC3 ()
     //OC3CONbits.OCM=0b000;     // deshabilitar OC3 
     OC3CONbits.OCTSEL=0;      // seleccionar T2 para el OC (OCTSEL= 0 -> Selecciona T2, OCTSEL= 1 -> T3)
     
-    OC3R =  (OC_DUTY_MAX + OC_DUTY_MIN)/2; 		// Inicializar pulso con duracion intermedia (0.0065ms)) (duty cycle para el primer pulso PWM)
+    OC3R = 0; 		// Inicializar pulso con duracion intermedia (0.0065ms)) (duty cycle para el primer pulso PWM)
     OC3RS = OC3R;               // inicializar registro secundario (duty cycle para el siguiente pulso PWM)
     
     OC3CONbits.OCM=0b110;       // habilitar OC3 en modo PWM sin prot
@@ -89,7 +89,7 @@ void inic_OC4 ()
     //OC4CONbits.OCM=0b000;     // deshabilitar OC4
     OC4CONbits.OCTSEL=0;      // seleccionar T2 para el OC (OCTSEL= 0 -> Selecciona T2, OCTSEL= 1 -> T3)
     
-    OC4R  =  (OC_DUTY_MAX + OC_DUTY_MIN)/2; 		// Inicializar pulso con duracion intermedia (0.0065ms)) (duty cycle para el primer pulso PWM)
+    OC4R  =  0; 		// Inicializar pulso con duracion intermedia (0.0065ms)) (duty cycle para el primer pulso PWM)
     OC4RS = OC4R;               // inicializar registro secundario (duty cycle para el siguiente pulso PWM)
     
     OC4CONbits.OCM=0b110;       // habilitar OC4 en modo PWM sin prot
@@ -153,7 +153,7 @@ void visualizar_Duty(){
             break;
         case VERDUTYOC: //Caso: ruedas
             conversion_4dig(&Ventana_LCD[filaruedas][posdutyl],OC1RS); // Guardar valor de OC1RS en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filaruedas][posdutyr],OC2RS); // Guardar valor de OC2RS en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaruedas][posdutyr],OC3RS); // Guardar valor de OC3RS en Ventana_LCD para su visualizacion en la pantalla
             break;
         case VERDUTYALL: //Caso: duty[0-4]
             conversion_4dig(&Ventana_LCD[filaduty01][posdutyl],duty[DUTY0]);  // Guardar valor de duty0 en Ventana_LCD para su visualizacion en la pantalla
@@ -219,123 +219,147 @@ void inic_calib(){
 void posicion_segura(){
     if (duty[DUTY0] != duty_seguro[DUTY0]) {
         objetivopwm[DUTY0] = duty_seguro[DUTY0];
+        Nop();
+        Nop();
         reached--;
     }
     if (duty[DUTY1] != duty_seguro[DUTY1]) {
         objetivopwm[DUTY1] = duty_seguro[DUTY1];
+        Nop();
+        Nop();
         reached--;
     }
     if (duty[DUTY2] != duty_seguro[DUTY2]) {
         objetivopwm[DUTY2] = duty_seguro[DUTY2];
+        Nop();
+        Nop();
         reached--;
     }
     if (duty[DUTY3] != duty_seguro[DUTY3]) {
         objetivopwm[DUTY3] = duty_seguro[DUTY3];
+        Nop();
+        Nop();
         reached--;
     }
     if (duty[DUTY4] != duty_seguro[DUTY4]) {
         objetivopwm[DUTY4] = duty_seguro[DUTY4];
+        Nop();
+        Nop();
         reached--;
     }
     flag_posicion_segura = 0;
     if (reached != 5) restart_Timer4_movservos(); 
 }
 
-
-
-void dibujar_estrella(){
-    static int linea = LAPIZ;
-    static int index = 0;
+void rutina_perro () {
+    Nop();
+    Nop();
+    static unsigned int estado_rutina_perro=SIT;
+    static unsigned int shakes=0;
+    switch (estado_rutina_perro){
+        case SIT:
+            if (duty[DUTY0] != 951){
+                objetivopwm[DUTY0]=951;
+                reached--;
+            }
+            if (duty[DUTY1] != 1312){
+                objetivopwm[DUTY1]=1312;
+                reached--;
+            }
+            if (duty[DUTY2] != 1192){
+                objetivopwm[DUTY2]=1192;
+                reached--;
+            }
+            if (duty[DUTY3] != 1096){
+                objetivopwm[DUTY3]=1096;
+                reached--;
+            }
+            if (duty[DUTY4] != 1307){
+                objetivopwm[DUTY4]=1307;
+                reached--;
+            }
+            
+            if (reached != 5) restart_Timer4_movservos();
+            
+            estado_rutina_perro=PLAS;
+            break;
+        case PLAS:
+            if (duty[DUTY1] != 522){
+                objetivopwm[DUTY1]=522;
+                reached--;
+            }
+            if (duty[DUTY2] != 672){
+                objetivopwm[DUTY2]=672;
+                reached--;
+            }
+            if (duty[DUTY3] != 866){
+                objetivopwm[DUTY3]=866;
+                reached--;
+            }
+            
+            if (reached != 5) restart_Timer4_movservos();
+            
+            estado_rutina_perro=SHAKEIT_L;
+            break;
+        case SHAKEIT_L:
+            LATBbits.LATB8=1;
+            LATBbits.LATB9=1;
+        
+            OC1RS = PR2 * VEL_ALTA;
+            OC2RS = 0;
+            
+            if (duty[DUTY0] != 1051){
+                objetivopwm[DUTY0]=1051;
+                reached--;
+            }
+            if (duty[DUTY1] != 1307){
+                objetivopwm[DUTY1]=1307;
+                reached--;
+            }
+            if (duty[DUTY2] != 1307){
+                objetivopwm[DUTY2]=1307;
+                reached--;
+            }
+            if (duty[DUTY3] != 756){
+                objetivopwm[DUTY3]=756;
+                reached--;
+            }
+            if (duty[DUTY4] != 600){
+                objetivopwm[DUTY4]=600;
+                reached--;
+            }
+            if (reached != 5) restart_Timer4_movservos();
+            if (shakes==5){
+                estado_rutina_perro=ENDRUTINA;
+                shakes=0;
+            }else {
+                estado_rutina_perro=SHAKEIT_R;
+                shakes++;
+            }
+            break;
+        case SHAKEIT_R:
+            LATBbits.LATB8=1;
+            LATBbits.LATB9=1;
+        
+            OC1RS = 0;
+            OC2RS = PR2 * VEL_ALTA;
+            if (duty[DUTY0] != 851){
+                objetivopwm[DUTY0]=851;
+                reached--;
+            }
+            if (reached != 5) restart_Timer4_movservos();
+            estado_rutina_perro=SHAKEIT_L;
+            break;
+        default:
+            flag_posicion_segura=1;
+            flag_rutina_perro=0;
+            estado_rutina_perro=SIT;
+            LATBbits.LATB8=0;
+            LATBbits.LATB9=0;
+        
+            OC1RS = 0;
+            OC2RS = 0;
+            break;
+    }
     
-    static int pos_star0[5] = {396, 411, 376, 426, 381};
-    static int pos_star1[5] = {712, 842, 767, 772, 847};
-    static int pos_star2[5] = {572, 732, 657, 652, 742};
-
-    switch(linea)
-    {
-        case LAPIZ:
-            if (duty[DUTY3] != 811) {
-                objetivopwm[DUTY3] = 811;
-                reached--;
-            }
-            if (duty[DUTY4] != 1302) {
-                objetivopwm[DUTY4] = 1302;
-                reached--;
-            }
-            if (reached != 5) restart_Timer4_movservos();
-            linea = STAR;
-        break;
-
-        case STAR:
-            if (duty[DUTY0] != pos_star0[index]) {
-                objetivopwm[DUTY0] = pos_star0[index];
-                reached--;
-            }
-            if (duty[DUTY1] != pos_star1[index]) {
-                objetivopwm[DUTY1] = pos_star1[index];
-                reached--;
-            }
-            if (duty[DUTY2] != pos_star2[index]) {
-                objetivopwm[DUTY2] = pos_star2[index];
-                reached--;
-            }
-            if (reached != 5) restart_Timer4_movservos();
-            index ++;
-
-            if(index == 5){
-                linea = LAPIZ;
-                flag_estrella = 0;
-                flag_posicion_segura = 1;
-            }
-        break;
-
-        default:
-            //Inalcanzable
-        break;
-    }
-}
-
-
-
-void dibujar_casa(){
-    /*
-    static int linea = LAPIZ;
-    static int index = 0;
-    static int pos_casa0[8] = {POS_CASA0_0, POS_CASA1_0, POS_CASA2_0, POS_CASA3_0, POS_CASA4_0, POS_CASA5_0, POS_CASA6_0, POS_CASA7_0};
-    static int pos_casa1[8] = {POS_CASA0_1, POS_CASA1_1, POS_CASA2_1, POS_CASA3_1, POS_CASA4_1, POS_CASA5_1, POS_CASA6_1, POS_CASA7_1};
-    static int pos_casa2[8] = {POS_CASA0_2, POS_CASA1_2, POS_CASA2_2, POS_CASA3_2, POS_CASA4_2, POS_CASA5_2, POS_CASA6_2, POS_CASA7_2};
-    static int pos_casa3[8] = {POS_CASA0_3, POS_CASA1_3, POS_CASA2_3, POS_CASA3_3, POS_CASA4_3, POS_CASA5_3, POS_CASA6_3, POS_CASA7_3};
-
-    switch(linea)
-    {
-        case LAPIZ:
-            objetivopwm[DUTY4] = POS_LAPIZ_4;
-            reached--;
-            linea = CASA1;
-            restart_Timer4_movservos(); 
-        break;
-
-        case CASA:
-            objetivopwm[DUTY0] = pos_casa0[index];
-            objetivopwm[DUTY1] = pos_casa1[index];
-            objetivopwm[DUTY2] = pos_casa2[index];
-            objetivopwm[DUTY3] = pos_casa3[index];
-            reached -=4;
-            index ++;
-            restart_Timer4_movservos(); 
-
-            if(index == 8){
-                linea = LAPIZ;
-                flag_casa = 0;
-                flag_posicion_segura = 1;
-            }
-        break;
-
-        default:
-            //Inalcanzable
-        break;
-    }
-
-    flag_allreached = 0;
-    */
 }

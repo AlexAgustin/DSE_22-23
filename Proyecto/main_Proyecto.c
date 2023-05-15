@@ -80,15 +80,13 @@ int main()
     
     inic_Timer5_LCD(); // Inicializar el temporizador T5 //Siempre refresco ditribuido
     
-    while(PORTDbits.RD6);
+    while(PORTDbits.RD14);
     
     inic_calib();
     inic_Timer4_movservos(); //Inicializar Timer del movimiento
     visualizar_Duty();
     inic_PWM(); // Inicializar las variables requeridas para la gestion de PWM
     inic_Timer8_PWM();  //Inicializar el temporizador T8
-    
-    
 
     while(PORTDbits.RD13) visualizar_Duty(); //Esperar a que se pulse S4 (RD13)
 
@@ -123,17 +121,14 @@ int main()
             gestion_dis(dirI2C);  //Gestionar la medicion de la distancia
         if (flag_posicion_segura)
             posicion_segura(); //Llevar el brazo a una posicion segura
-        if (flag_estrella && reached == 5)
-            dibujar_estrella(); //dibujar una estrella
-        if (flag_casa && reached == 5)
-            dibujar_casa(); //dibujar una casa
+        if (flag_rutina_perro && reached == 5){rutina_perro(); }//dibujar una estrella
         if (flag_exit){
             break;
         }
 
         while(IFS3bits.T9IF == 0) cont ++;
         stop_timer9_CPU();
-        //gestion_cont (cont);
+        gestion_cont (cont);
     }
     
 	return (0);

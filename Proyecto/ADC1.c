@@ -119,28 +119,45 @@ void tratar_valorADC1 ()
     Y_media = Y_media / INDIV_MUESTRAS;
     Z_media = Z_media / INDIV_MUESTRAS;
     
-    if(Y_media>525 && Y_media<535){
-        LATBbits.LATB8=0;
-        LATBbits.LATB9=0;
-    }else{
-        LATBbits.LATB8=1;
-        LATBbits.LATB9=1;
-        if(Y_media > 800){
-            OC2RS = VEL_ALTA;
-            OC4RS = VEL_ALTA;
-        } 
-        else if(Y_media > 600){
-            OC2RS = VEL_BAJA;
-            OC4RS = VEL_BAJA;
-        } 
-        else if(Y_media < 400 && Y_media > 200){
-            OC1RS = VEL_BAJA;
-            OC3RS = VEL_BAJA;
-        } 
-        else if(Y_media <= 200){
-            OC1RS = VEL_ALTA;
-            OC3RS = VEL_ALTA;
-        } 
+    if (!flag_rutina_perro){
+        if(Y_media>=400 && Y_media<=600){
+            LATBbits.LATB8=0;
+            LATBbits.LATB9=0;
+
+            OC1RS = 0;
+            OC2RS = 0;
+            OC3RS = 0;
+            OC4RS = 0;
+            flag_Duty_LCD=VERDUTYOC;
+        }else{
+            LATBbits.LATB8=1;
+            LATBbits.LATB9=1;
+            if(Y_media > 800){ //A's para delante //B's para atras
+                OC1RS = 0;
+                OC2RS = 0;
+                OC3RS = PR2 * VEL_ALTA;
+                OC4RS = PR2 * VEL_ALTA;
+            } 
+            else if(Y_media > 600){
+                OC1RS = 0;
+                OC2RS = 0;
+                OC3RS = PR2 * VEL_BAJA;
+                OC4RS = PR2 * VEL_BAJA;
+            } 
+            else if(Y_media < 400 && Y_media > 200){
+                OC1RS = PR2 * VEL_BAJA;
+                OC2RS = PR2 * VEL_BAJA;
+                OC3RS = 0;
+                OC4RS = 0;
+            } 
+            else if(Y_media <= 200){
+                OC1RS = PR2 * VEL_ALTA;
+                OC2RS = PR2 * VEL_ALTA;
+                OC3RS = 0;
+                OC4RS = 0;
+            }
+        flag_Duty_LCD=VERDUTYOC;
+        }
     }
 
     if(!flag_DUTY){ //Si flag_DUTY==0 se obtiene duty0 duty2 y duty4  a partir de la potencia
