@@ -1,12 +1,16 @@
-/* Funciones para trabajar con el modulo UART2_RS232.h
+/* Funciones y variables a exportar a otros 
+modulos para trabajar con el modulo UART2
 ================================================
 
 Autores: Alex y Amanda
-Fecha: Febrero 2023
+Fecha: mayo 2023
 */
 
-// funciones que se utilizan desde otros modulos
-void inic_UART2 ();
+// FUNCION
+//=========================================================
+void inic_UART2 (); // funcion que se utiliza desde otros modulos
 
-//variables que se usan en otros ficheros
-extern unsigned int flag_exit;
+// VARIABLE 
+//=========================================================
+extern unsigned int flag_exit; // variable que se usa en otros ficheros
+

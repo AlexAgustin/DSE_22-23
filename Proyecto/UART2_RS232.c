@@ -3,7 +3,7 @@
  * Contiene las funciones de inicializacion y rutinas de atencion
  * a las interrupciones del emisor y receptor del modulo UART2.
 Autores: Alex y Amanda
-Fecha: Marzo 2023
+Fecha: mayo 2023
 */
 
 #include "p24HJ256GP610A.h"
@@ -19,23 +19,25 @@ Fecha: Marzo 2023
 
 unsigned int flag_exit = 0;
 
+
+// Funcion que inicializa el modulo UART2
 void inic_UART2 ()
 {
-     // Velocidad de transmision
-     // Hay que hacer solo una de las dos asignaciones siguientes
+    // Velocidad de transmision
+    // Hay que hacer solo una de las dos asignaciones siguientes
 	U2BRG = BAUD_RATEREG_2_BRGH1;  // Utilizamos el BRGH para velocidades altas
 	//U2BRG = BAUD_RATEREG_2_BRGH0;
 
-     // U2MODE: habilitar el modulo (UARTEN), 8 bits, no paridad,
-     // 1 bit de stop (STSEL), BRGH ...
+    // U2MODE: habilitar el modulo (UARTEN), 8 bits, no paridad,
+    // 1 bit de stop (STSEL), BRGH ...
 	U2MODE = 0; //Deshabilitado
 	U2MODEbits.BRGH=1; //Uso de velocidades altas
 
-     // U2STA: modo de interrupcion en el envio (UTXISEL), habilitacion del
-     // envio (UTXEN), modo de interrupcion en la recepcion (URXISEL)
+    // U2STA: modo de interrupcion en el envio (UTXISEL), habilitacion del
+    // envio (UTXEN), modo de interrupcion en la recepcion (URXISEL)
 	U2STA = 0; //Deshabilitado
 
-     // inicializacion de los bits IE e IF relacionados (IP si se quiere modificar)
+    // inicializacion de los bits IE e IF relacionados (IP si se quiere modificar)
 	IFS1bits.U2RXIF=0; // puesta a 0 del flag IF del receptor
     IFS1bits.U2TXIF=0; // puesta a 0 del flag IF del emisor
 	IEC1bits.U2RXIE=1; // habilitacion de las interrupciones del receptor
@@ -57,6 +59,8 @@ void inic_UART2 ()
 	Delay_us(T_1BIT_US); 	// Esperar tiempo de 1 bit 
 }
 
+// Rutina de atencion a la interrupcion del receptor del modulo UART2
+// Segun el caracter recibido, lleva a cabo las acciones pertinentes
 void _ISR_NO_PSV _U2RXInterrupt()
 {
     static int duty_cur = DUTY0;
@@ -68,138 +72,149 @@ void _ISR_NO_PSV _U2RXInterrupt()
 
     switch (caracter){ // switch de comprobacion del caracter recibido
         case 'p':
-        case 'P': //si es P o p, se para el temporizador
+        case 'P': //si es P o p, se para el cronometro
             T7CONbits.TON = 0;
             break;
         case 'c':
-        case 'C': //si es C o c, se pone en marcha el temporizador
+        case 'C': //si es C o c, se pone en marcha el cronometro
             T7CONbits.TON = 1;
             break;
         case 'i':
-        case 'I': // si es I o i, se inicializa el temporizador a 0
-            inicializar_crono = 1; //Poner el flag a uno para no alargar la rutina de atencion
+        case 'I': // si es I o i, se inicializa el cronometro a 0
+            inicializar_crono = 1; //Poner el flag para inicializar el cronometro a uno para no alargar la rutina de atencion
             break;
         case 'x':
-        case 'X': // si es x o X, se alterna la gestion de las señales PWM entre UART y señales analogicas
-            flag_DUTY = !flag_DUTY; // cambiar la gestion de duty[0-4] de modo que se obtenga a partir de la potencia (0) o se modifique por UART (1)
+        case 'X': // si es x o X, se alterna la gestion de las senhales PWM entre UART y las entradas analogicas
+            flag_DUTY = !flag_DUTY; // Conmutar el flag que determina el modelo de getion de las senhales PWM entre UART (1) y entradas analogicas (0)
             break;
         case 'e':
         case 'E': //si es e o E, se pone a 1 el flag que hara que el robot dibuje una estrella
-            flag_estrella = 1;
+            flag_estrella = 1; // Puesta a 1 del flag que indica que se ha de dibujar una estrella
             break;
         case 'h':
         case 'H': //si es h o H, se pone a 1 el flag que hara que el robot dibuje una casa
-            flag_casa = 1;
+            flag_casa = 1; //Puesta a 1 del flag que indica que se ha de dibujar una casa
             break;
         case 'f':
-        case 'F': //si es f o F, NOSECOMOPONERESTO
-            if(duty_cur==DUTY0 && !ismin) { //si se estaba calibrando el valor maximo del duty0
-                duty_max[duty_cur] = duty[duty_cur]; // asignar el valor actual de duty0 como su valor maximo
-                ismin=1; // pasar a calibrar el minimo del mismo duty
-            }
-            else if(duty_cur==DUTY0 && ismin) { //si se estaba calibrando el valor minimo del duty0
-                duty_min[duty_cur] = duty[duty_cur]; // asignar el valor actual de duty0 como su valor minimo
-                ismin=0; // pasar a calibrar el maximo...
-                duty_cur = DUTY1; // ... de duty1
-            }
-            else if(duty_cur==DUTY1 && !ismin) { //si se estaba calibrando el valor maximo del duty1
-                duty_max[duty_cur] = duty[duty_cur]; // asignar el valor actual de duty1 como su valor maximo
-                ismin=1; // pasar a calibrar el minimo del mismo duty
-            }
-            else if(duty_cur==DUTY1 && ismin) { //si se estaba calibrando el valor minimo del duty1
-                duty_min[duty_cur] = duty[duty_cur]; // asignar el valor actual de duty1 como su valor minimo
-                ismin=0; // pasar a calibrar el maximo...
-                duty_cur = DUTY2; // ... de duty2
-            }
-            else if(duty_cur==DUTY2 && !ismin) { //si se estaba calibrando el valor maximo del duty2
-                duty_max[duty_cur] = duty[duty_cur]; // asignar el valor actual de duty2 como su valor maximo
-                ismin=1; // pasar a calibrar el minimo del mismo duty
-            }
-            else if(duty_cur==DUTY2 && ismin) { //si se estaba calibrando el valor minimo del duty2
-                duty_min[duty_cur] = duty[duty_cur]; // asignar el valor actual de duty2 como su valor minimo
-                ismin=0; // pasar a calibrar el maximo...
-                duty_cur = DUTY3; // ... de duty3
-            }
-            else if(duty_cur==DUTY3 && !ismin) { //si se estaba calibrando el valor maximo del duty3
-                duty_max[duty_cur] = duty[duty_cur]; // asignar el valor actual de duty3 como su valor maximo
-                ismin=1; // pasar a calibrar el minimo del mismo duty
-            }
-            else if(duty_cur==DUTY3 && ismin) { //si se estaba calibrando el valor minimo del duty3
-                duty_min[duty_cur] = duty[duty_cur]; // asignar el valor actual de duty3 como su valor minimo
-                ismin=0; // pasar a calibrar el maximo...
-                duty_cur = DUTY4;  // ... de duty4
-            }else if(duty_cur==DUTY4 && !ismin) { //si se estaba calibrando el valor maximo del duty4
-                duty_max[duty_cur] = duty[duty_cur]; // asignar el valor actual de duty4 como su valor maximo
-                ismin=1; // pasar a calibrar el minimo del mismo duty
-            }
-            else if(duty_cur==DUTY4 && ismin) { //si se estaba calibrando el valor minimo del duty4
-                duty_min[duty_cur] = duty[duty_cur]; // asignar el valor actual de duty4 como su valor minimo
-                ismin=0;
-                duty_cur = ENDCALIB; //terminar la calibracion
-            }
-            else flag_calib = 0;
-            break;
-        case 'r': //si es r, se mueve el servo incrementando el valor de duty[DUTY0] (+5) si se respetan los limites (<= duty_max[]) y si flag_DUTY == 1 (se gestiona duty[DUTY0] por UART)
-            if(!flag_busy && flag_DUTY && duty[DUTY0]+5<=duty_max[DUTY0]) { // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona duty[DUTY0] por UART)
-               duty[DUTY0]+=5; //Incrementar el valor de duty[DUTY0]: +5
-               flag_Duty_LCD = VERDUTY0; // Poner a 1 el flag para guardar el nuevo valor de duty[DUTY0] en Ventana_LCD para su visualizacion en la pantalla
+        case 'F': //si es f o F, se fija el valor siendo calibrado actualmente y se pasa a gestionar el siguiente
+            if(flag_calib) // Si se esta gestionando el calibrado...
+            {
+                if(!ismin) { //si se estaba calibrando el valor maximo 
+                    duty_max[duty_cur] = duty[duty_cur]; // asignar el valor actual del duty correspondiente como el valor maximo
+                    ismin=1; // pasar a calibrar el minimo del mismo duty
+                }
+                else if(duty_cur==DUTY0 && ismin) { //si se estaba calibrando el valor minimo del duty0
+                    duty_min[duty_cur] = duty[duty_cur]; // asignar el valor actual de duty0 como su valor minimo
+                    ismin=0; // pasar a calibrar el maximo...
+                    duty_cur = DUTY1; // ... de duty1
+                }
+                else if(duty_cur==DUTY1 && ismin) { //si se estaba calibrando el valor minimo del duty1
+                    duty_min[duty_cur] = duty[duty_cur]; // asignar el valor actual de duty1 como su valor minimo
+                    ismin=0; // pasar a calibrar el maximo...
+                    duty_cur = DUTY2; // ... de duty2
+                }
+                else if(duty_cur==DUTY2 && ismin) { //si se estaba calibrando el valor minimo del duty2
+                    duty_min[duty_cur] = duty[duty_cur]; // asignar el valor actual de duty2 como su valor minimo
+                    ismin=0; // pasar a calibrar el maximo...
+                    duty_cur = DUTY3; // ... de duty3
+                }
+                else if(duty_cur==DUTY3 && ismin) { //si se estaba calibrando el valor minimo del duty3
+                    duty_min[duty_cur] = duty[duty_cur]; // asignar el valor actual de duty3 como su valor minimo
+                    ismin=0; // pasar a calibrar el maximo...
+                    duty_cur = DUTY4;  // ... de duty4
+                }
+                else if(duty_cur==DUTY4 && ismin) { //si se estaba calibrando el valor minimo del duty4
+                    duty_min[duty_cur] = duty[duty_cur]; // asignar el valor actual de duty4 como su valor minimo
+                    ismin=0;
+                    duty_cur = ENDCALIB; //terminar la calibracion
+                }
+                else flag_calib = 0; //Fin de la gestion del calibrado
             }
             break;
-        case 'l': //si es l, se mueve el servo incrementando el valor de duty[DUTY1] (+5) si se respetan los limites (<= duty_max[]) y si flag_DUTY == 1 (se gestiona duty[DUTY1] por UART)
-            if(!flag_busy && duty[DUTY1]+5<=duty_max[DUTY1] && dis_media>=CHOQUE) { // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona duty[DUTY1] por UART)
-               duty[DUTY1]+=5; //Incrementar el valor de duty[DUTY1]: +5
-                flag_Duty_LCD = VERDUTY1; // Poner a 2 el flag para guardar el nuevo valor de duty[DUTY1] en Ventana_LCD para su visualizacion en la pantalla
+            
+
+        case 'r': 
+            // si es r, se mueve el servo incrementando el valor de duty0 (+5) si al moverlo se seguirian respetando los limites (<= duty_max[DUTY0]), 
+            // si flag_DUTY == 1 (se gestiona duty0 por UART) y 
+            // si el servo no esta en movimiento actualmente (!flag_busy)
+            if(!flag_busy && flag_DUTY && duty[DUTY0]+5<=duty_max[DUTY0]) { // Realizar comprobaciones
+                duty[DUTY0]+=5; //Incrementar el valor de duty[DUTY0]: +5
+                flag_Duty_LCD = VERDUTY0; // Poner a VERDUTY0 el flag para guardar el nuevo valor de duty0 en Ventana_LCD para su visualizacion en la pantalla
             }
             break;
-        case 'w': //si es w, se mueve el servo incrementando el valor de duty[DUTY2] (+5) si se respetan los limites (<= duty_max[]) y si flag_DUTY == 1 (se gestiona duty[DUTY2] por UART)
-            if(!flag_busy && flag_DUTY && duty[DUTY2]+5<=duty_max[DUTY2] && dis_media>=CHOQUE) { // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona duty[DUTY2] por UART)
-               duty[DUTY2]+=5; //Incrementar el valor de duty[DUTY2]: +5
-               flag_Duty_LCD = VERDUTY2; // Poner a 1 el flag para guardar el nuevo valor de duty[DUTY2] en Ventana_LCD para su visualizacion en la pantalla
+
+
+        case 'l': 
+            // si es l, se mueve el servo incrementando el valor de duty1 (+5) si al moverlo se seguirian respetando los limites (<= duty_max[DUTY1]), 
+            // si no hay riesgo de choque (dis_media>=CHOQUE) y 
+            // si el servo no esta en movimiento actualmente (!flag_busy)
+            if(!flag_busy && duty[DUTY1]+5<=duty_max[DUTY1] && dis_media>=CHOQUE) { // Realizar comprobaciones
+                duty[DUTY1]+=5; //Incrementar el valor de duty1: +5
+                flag_Duty_LCD = VERDUTY1; // Poner a VERDUTY1 el flag para guardar el nuevo valor de duty1 en Ventana_LCD para su visualizacion en la pantalla
             }
             break;
-        case 'a': //si es a, se mueve el servo incrementando el valor de duty[DUTY3] (+5) si se respetan los limites (<= duty_max[]) y si flag_DUTY == 1 (se gestiona duty[DUTY3] por UART)
-            if(!flag_busy && duty[DUTY3]+5<=duty_max[DUTY3] && dis_media>=CHOQUE) { // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona duty[DUTY3] por UART)
-               duty[DUTY3]+=5; //Incrementar el valor de duty[DUTY3]: +5
-               flag_Duty_LCD = VERDUTY3; // Poner a 1 el flag para guardar el nuevo valor de duty[DUTY3] en Ventana_LCD para su visualizacion en la pantalla
+
+        case 'w': 
+            // si es w, se mueve el servo incrementando el valor de duty2 (+5) si al moverlo se seguirian respetando los limites (<= duty_max[DUTY2]) 
+            // si flag_DUTY == 1 (se gestiona duty2 por UART), 
+            // si no hay riesgo de choque (dis_media>=CHOQUE) y 
+            // si el servo no esta en movimiento actualmente (!flag_busy)
+            if(!flag_busy && flag_DUTY && duty[DUTY2]+5<=duty_max[DUTY2] && dis_media>=CHOQUE) { // Realizar comprobaciones
+                duty[DUTY2]+=5; //Incrementar el valor de duty2: +5
+                flag_Duty_LCD = VERDUTY2; // Poner a VERDUTY2 el flag para guardar el nuevo valor de duty2 en Ventana_LCD para su visualizacion en la pantalla
             }
             break;
-        case 's': //si es s, se mueve el servo incrementando el valor de duty[DUTY4] (+5) si se respetan los limites (<= duty_max[]) y si flag_DUTY == 1 (se gestiona duty[DUTY4] por UART)
-            if(!flag_busy && flag_DUTY && duty[DUTY4]+5<=duty_max[DUTY4]) { // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona duty[DUTY4] por UART)
-               duty[DUTY4]+=5; //Incrementar el valor de duty[DUTY4]: +5
-               flag_Duty_LCD = VERDUTY4; // Poner a 1 el flag para guardar el nuevo valor de duty[DUTY4] en Ventana_LCD para su visualizacion en la pantalla
+        // si es a, se mueve el servo incrementando el valor de duty[DUTY3] (+5) si al moverlo se seguirian respetando los limites (<= duty_max[DUTY3]) 
+        // si flag_DUTY == 1 (se gestiona duty[DUTY3] por UART), 
+        // si no hay riesgo de choque (dis_media>=CHOQUE) y 
+        // si el servo no esta en movimiento actualmente (!flag_busy)
+        case 'a': 
+            if(!flag_busy && duty[DUTY3]+5<=duty_max[DUTY3] && dis_media>=CHOQUE) { // Realizar comprobaciones
+                duty[DUTY3]+=5; //Incrementar el valor de duty3: +5
+                flag_Duty_LCD = VERDUTY3; // Poner a VERDUTY3 el flag para guardar el nuevo valor de duty3 en Ventana_LCD para su visualizacion en la pantalla
+            }
+            break;
+        // si es s, se mueve el servo incrementando el valor de duty[DUTY4] (+5) si al moverlo se seguirian respetando los limites (<= duty_max[DUTY4]) 
+        // si flag_DUTY == 1 (se gestiona duty[DUTY4] por UART) y 
+        // si el servo no esta en movimiento actualmente (!flag_busy)
+        case 's': 
+            if(!flag_busy && flag_DUTY && duty[DUTY4]+5<=duty_max[DUTY4]) { // Realizar comprobaciones
+                duty[DUTY4]+=5; //Incrementar el valor de duty4: +5
+                flag_Duty_LCD = VERDUTY4; // Poner a VERDUTY4 el flag para guardar el nuevo valor de duty4 en Ventana_LCD para su visualizacion en la pantalla
             }
             break;
         case 'm': //si es m, se incrementa el valor de duty que se este calibrando
-            if(flag_calib) {// && duty[duty_cur]+5 <= DEF_DUTY_MAX // antes de actualizar el valor maximo de duty, se comprueba si al cambiarlo se seguiria dentro de los limites
-               duty[duty_cur]+=5; //Incrementar el valor de duty_max[]: +5
-               flag_Duty_LCD = VERDUTYMAX; // Poner a 8 el flag para guardar el nuevo valor de duty_max[] en Ventana_LCD para su su visualizacion en la pantalla
+            if(flag_calib && duty[duty_cur]+5 <= DEF_DUTY_MAX) {//antes de actualizar el valor maximo de duty, se comprueba si al cambiarlo se seguiria dentro de los limites
+               duty[duty_cur]+=5; //Incrementar el valor del duty que se esta calibrando actualmente (duty_cur): +5
+               flag_Duty_LCD = VERDUTYMAX; // Poner a VERDUTYMAX el flag para guardar el nuevo valor de calibrado maximo actual en Ventana_LCD para su su visualizacion en la pantalla
             }
             break;
-        case 'R': //si es R, se mueve el servo decrementando el valor de duty[DUTY0] (-5) si se respetan los limites (>= duty_min[]) y si flag_DUTY == 1 (se gestiona duty[DUTY0] por UART)
+        //si es R, se mueve el servo decrementando el valor de duty[DUTY0] (-5) si al moverlo se seguirian respetando los limites (>= duty_min[]) y si flag_DUTY == 1 (se gestiona duty[DUTY0] por UART)
+        case 'R': 
             if(!flag_busy && flag_DUTY && duty[DUTY0]-5>=duty_min[DUTY0]) { // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona duty[DUTY0] por UART)
                 duty[DUTY0]-=5; // Decrementar el valor de duty[DUTY0]: -5
                 flag_Duty_LCD = VERDUTY0; // Poner a 1 el flag para guardar el nuevo valor de duty[DUTY0] en Ventana_LCD para su su visualizacion en la pantalla
             }
             break;
-        case 'L':  //si es L, se mueve el servo decrementando el valor de duty[DUTY1] (-5) si se respetan los limites (>= duty_min[]) y si flag_DUTY == 1 (se gestiona duty[DUTY1] por UART)
+        case 'L':  //si es L, se mueve el servo decrementando el valor de duty[DUTY1] (-5) si al moverlo se seguirian respetando los limites (>= duty_min[]) y si flag_DUTY == 1 (se gestiona duty[DUTY1] por UART)
             if(!flag_busy && duty[DUTY1]-5>=duty_min[DUTY1] && dis_media>=CHOQUE) { // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona duty[DUTY1] por UART)
                 duty[DUTY1]-=5; // Decrementar el valor de duty[DUTY1]: -5
                 flag_Duty_LCD = VERDUTY1; // Poner a 2 el flag para guardar el nuevo valor de duty[DUTY1] en Ventana_LCD para su su visualizacion en la pantalla
             }
             break;
-        case 'W': //si es W, se mueve el servo decrementando el valor de duty[DUTY2] (-5) si se respetan los limites (>= duty_min[]) y si flag_DUTY == 1 (se gestiona duty[DUTY2] por UART)
+        case 'W': //si es W, se mueve el servo decrementando el valor de duty[DUTY2] (-5) si al moverlo se seguirian respetando los limites (>= duty_min[]) y si flag_DUTY == 1 (se gestiona duty[DUTY2] por UART)
             if(!flag_busy && flag_DUTY && duty[DUTY2]-5>=duty_min[DUTY2] && dis_media>=CHOQUE) { // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona duty[DUTY2] por UART)
                 duty[DUTY2]-=5; // Decrementar el valor de duty[DUTY2]: -5
                 flag_Duty_LCD = VERDUTY2; // Poner a 3 el flag para guardar el nuevo valor de duty[DUTY2] en Ventana_LCD para su su visualizacion en la pantalla
             }
             break;
-        case 'A': //si es A, se mueve el servo decrementando el valor de duty[DUTY3] (-5) si se respetan los limites (>= duty_min[]) y si flag_DUTY == 1 (se gestiona duty[DUTY3] por UART)
+        case 'A': //si es A, se mueve el servo decrementando el valor de duty[DUTY3] (-5) si al moverlo se seguirian respetando los limites (>= duty_min[]) y si flag_DUTY == 1 (se gestiona duty[DUTY3] por UART)
             if(!flag_busy && duty[DUTY3]-5>=duty_min[DUTY3] && dis_media>=CHOQUE) { // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona duty[DUTY3] por UART)
                 duty[DUTY3]-=5; // Decrementar el valor de duty[DUTY3]: -5
                 flag_Duty_LCD = VERDUTY3; // Poner a 4 el flag para guardar el nuevo valor de duty[DUTY3] en Ventana_LCD para su su visualizacion en la pantalla
             }
             break;
-        case 'S': //si es S, se mueve el servo decrementando el valor de duty[DUTY4] (-5) si se respetan los limites (>= duty_min[]) y si flag_DUTY == 1 (se gestiona duty[DUTY4] por UART)
+        case 'S': //si es S, se mueve el servo decrementando el valor de duty[DUTY4] (-5) si al moverlo se seguirian respetando los limites (>= duty_min[]) y si flag_DUTY == 1 (se gestiona duty[DUTY4] por UART)
             if(!flag_busy && flag_DUTY && duty[DUTY4]-5>=duty_min[DUTY4]) { // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites y si flag_DUTY == 1 (se gestiona duty[DUTY4] por UART)
                 duty[DUTY4]-=5; // Decrementar el valor de duty[DUTY4]: -5
                 flag_Duty_LCD = VERDUTY4; // Poner a 5 el flag para guardar el nuevo valor de duty[DUTY4] en Ventana_LCD para su su visualizacion en la pantalla
@@ -212,7 +227,7 @@ void _ISR_NO_PSV _U2RXInterrupt()
             }
             break;
         case '>': //si es >, se hace scroll hacia abajo de la informacion a mostrar en la LCD
-            if(fila1<NFILAS-2) 
+            if(fila1<NFILAS-2) // Si no se estan mostrando en la LCD las dos ultimas lineas...
                 {
                     // scroll hacia abajo de la informacion a mostrar en la LCD
                     fila1++; //Actualizar primera fila a mostrar (+1)
@@ -220,7 +235,7 @@ void _ISR_NO_PSV _U2RXInterrupt()
                 }
             break;
         case '<': //si es <, se hace scroll hacia arriba de la informacion a mostrar en la LCD
-            if(fila1>2)
+            if(fila1>2) // Si no se estan mostrando en la LCD las dos primeras lineas...
                 {
                     //scroll hacia arriba de la informacion a mostrar en la LCD
                     fila1--; //Actualizar primera fila a mostrar (-1)
@@ -229,40 +244,43 @@ void _ISR_NO_PSV _U2RXInterrupt()
             break;
         case 'q': 
         case 'Q': // si es q o Q, se pone a 1 el flag que hara que el programa finalice
-            flag_exit=1;
+            flag_exit=1; // Puesta a 1 del flag que hace que el programa finalice
             break;
         default:
             break;
     }
     
-    Ventana_LCD[filacrono][poscarac] = caracter; // anadir en la ultima posicion de ventana el carater recibido para obtener feedback
+    Ventana_LCD[filacrono][poscarac] = caracter; // anhadir en la ultima posicion de la linea del cronometro en Ventana_LCD el carater recibido para obtener feedback
     IFS1bits.U2RXIF=0; // Volver a poner el flag de interrupcion a 0
 }
 
+// Rutina de atencion a la interrupcion del emisor del modulo UART2
+// Envia los datos pertinentes a partir de un automata
 void _ISR_NO_PSV _U2TXInterrupt()
 {
     static unsigned int estado_UART = UART_HOME;
     static int caracter = 0;
     static int fila = 0;
-    switch (estado_UART){ // switch que funciona como automata del emisor de UART
+    // switch que funciona como automata del emisor de UART
+    switch (estado_UART){ //Segun el estado...
         case UART_HOME: //Posicionamiento al principio de la pantalla
             U2TXREG = home[caracter]; //se envia el comando para ello en tres partes
-            caracter++;
-            if (caracter==3){
-                caracter = 0; //Si es la ultima iteracion, se pone a cero
-                estado_UART = UART_DATA; // Cambio de estado, suguiente: envio de datos de la primera linea
+            caracter++; // Se incrementa el indice
+            if (caracter==3){ //Si es la ultima operacion...
+                caracter = 0; //Se pone el indice a cero
+                estado_UART = UART_DATA; // Cambio de estado, siguiente: envio de los datos de las linea
             }
             break;
-        case UART_DATA: // Envio de los datos de la linea
+        case UART_DATA: // Envio de los datos de las lineas
             U2TXREG = Ventana_LCD[fila][caracter]; //se envia un caracter
             caracter++; // se incrementa la posicion
             
-            if (caracter == NCOLUMNAS) {
-                caracter=0; //Si es la ultima iteracion, se vuelve a la posicion 0
+            if (caracter == NCOLUMNAS) { // Si se han enviado todos los datos de la linea...
+                caracter=0; //Se vuelve a la posicion 0
                 fila++; //Salto a la siguiente linea a mostrar
-                if (fila==NFILAS) {
+                if (fila==NFILAS) { //Si se han enviado todas las lineas...
                     estado_UART = UART_HOME; // volvemos al principio
-                    fila=0;
+                    fila = 0; // Se vuelve a la linea 0
                 }
             }
             break;

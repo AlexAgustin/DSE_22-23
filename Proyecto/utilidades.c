@@ -1,7 +1,7 @@
 /* 
 Contiene dos funciones auxiliares:
- * conversion_tiempo: para la conversion del tiempo (digito -> caracteres).
- * conversion_4dig: para la conversion de un valor de 4 digitos (digito -> caracteres).
+-  conversion_2dig: para la conversion de un valor de 2 digitos (digito -> caracteres).
+-  conversion_4dig: para la conversion de un valor de 4 digitos (digito -> caracteres).
 
 Autores: Alex Agustin y Amanda Sin
 Fecha: Marzo 2023
@@ -9,14 +9,13 @@ Fecha: Marzo 2023
 
 #include "p24HJ256GP610A.h"
 
+unsigned char tabla_carac[16]="0123456789"; // Tabla de caracteres
+
 // Funcion para obtener los caracteres de un valor de dos digitos (<100)
 // Parametros:
 // val, valor numerico del que se quieren obtener los caracteres ASCII
 // dir, direccion a partir de la cual queremos que la funcion devuelva los codigos ASCII
 // En dir estara el caracter de mas peso y en dir+1 el de menos peso
-
-
-unsigned char tabla_carac[16]="0123456789";
 void conversion_2dig (unsigned char * dir, unsigned int val)
 {
     unsigned char dig;
@@ -33,7 +32,7 @@ void conversion_2dig (unsigned char * dir, unsigned int val)
     }
 }
 	
-// Funcion para obtener los caracteres de un valor de cuatro digitos (<9999)
+// Funcion para obtener los caracteres de un valor de cuatro digitos (<10000)
 // Parametros:
 // val, valor numerico del que se quieren obtener los caracteres ASCII
 // dir, direccion a partir de la cual queremos que la funcion devuelva los codigos ASCII
