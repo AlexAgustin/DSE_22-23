@@ -348,6 +348,8 @@ void _ISR_NO_PSV _T4Interrupt(){
     else if ((duty[DUTY0] - 5) > objetivopwm[DUTY0]) duty[DUTY0] -= 5;
     else if(duty[DUTY0] != objetivopwm[DUTY0]) {
         duty[DUTY0] = objetivopwm[DUTY0];
+        Nop();
+        Nop();
         reached++;
     }
     
@@ -357,6 +359,8 @@ void _ISR_NO_PSV _T4Interrupt(){
         else if ((duty[DUTY1] - 5) > objetivopwm[DUTY1]) duty[DUTY1] -= 5;
         else if(duty[DUTY1] != objetivopwm[DUTY1]) {
             duty[DUTY1] = objetivopwm[DUTY1];
+            Nop();
+            Nop();
             reached++;
         }
     }
@@ -367,6 +371,8 @@ void _ISR_NO_PSV _T4Interrupt(){
         else if ((duty[DUTY2] - 5) > objetivopwm[DUTY2]) duty[DUTY2] -= 5;
         else if(duty[DUTY2] != objetivopwm[DUTY2]) {
             duty[DUTY2] = objetivopwm[DUTY2]; 
+            Nop();
+            Nop();
             reached++;
         }
     }
@@ -377,6 +383,8 @@ void _ISR_NO_PSV _T4Interrupt(){
         else if ((duty[DUTY3] - 5) > objetivopwm[DUTY3]) duty[DUTY3] -= 5;
         else if(duty[DUTY3] != objetivopwm[DUTY3]) {
             duty[DUTY3] = objetivopwm[DUTY3];
+            Nop();
+            Nop();
             reached++;
         } 
     }
@@ -386,40 +394,30 @@ void _ISR_NO_PSV _T4Interrupt(){
     else if ((duty[DUTY4] - 5) > objetivopwm[DUTY4]) duty[DUTY4] -= 5;
     else if(duty[DUTY4] != objetivopwm[DUTY4]) {
         duty[DUTY4] = objetivopwm[DUTY4]; 
+        Nop();
+        Nop();
         reached++;
     }
 
     if (reached == 5){
-<<<<<<< HEAD
-        reached=0;
-        flag_All_Reached=1;
-=======
->>>>>>> e78a2f2458bf936e2584fcecf1aad20ca3158adb
+        
+        //reached=0;
+        
         T4CONbits.TON = 0;	// apagar el timer
         flag_exit = 0;
     }
     if(flag_inic_pwm) flag_inic_pwm=0;
-<<<<<<< HEAD
-    flag_Duty_LCD= VERDUTYALL;
+    
+    if (flag_calib) flag_Duty_LCD=VERCALIB;
+    else flag_Duty_LCD= VERDUTYALL;
     IFS1bits.T4IF = 0;      // Puesta a 0 del flag IF del temporizador 4
 }
 
-=======
-    flag_Duty_LCD = VERDUTYALL;
-    IFS1bits.T4IF = 0;      // Puesta a 0 del flag IF del temporizador 4
-}
-
-
->>>>>>> e78a2f2458bf936e2584fcecf1aad20ca3158adb
 void restart_Timer4_movservos(){
     TMR4 = 0; // Inicializar el registro de cuenta
     T4CONbits.TON = 1;	// encender el timer T4
 }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> e78a2f2458bf936e2584fcecf1aad20ca3158adb
 void inic_Timer8_PWM(){
     //Inicializar modulo T8
     TMR8 = 0; // Inicializar el registro de cuenta
@@ -442,11 +440,9 @@ void inic_Timer8_PWM(){
 }
 
 void _ISR_NO_PSV _T8Interrupt(){
-<<<<<<< HEAD
+    
     static int sum = 0;
-=======
-    static int sum=0; 
->>>>>>> e78a2f2458bf936e2584fcecf1aad20ca3158adb
+    
     switch (estado_PWM){
         case PWM0_ACTIVE: //Activar PWM (0)
             LATDbits.LATD8 = 1; // Puesta a 1 (RE10)

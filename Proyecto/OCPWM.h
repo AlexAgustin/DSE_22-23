@@ -16,6 +16,7 @@ extern unsigned int flag_inic_pwm;
 extern unsigned int duty[5];
 extern unsigned int duty_min[5];
 extern unsigned int duty_max[5];
+extern unsigned int duty_seguro[5];
 extern unsigned int objetivopwm[7];
 
 // FUNCIONES

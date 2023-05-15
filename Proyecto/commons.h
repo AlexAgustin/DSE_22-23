@@ -41,7 +41,7 @@
 
 // definiciones: filas y posiciones de valores recogidos
 //========================================================= 
-#define NFILAS 22
+#define NFILAS 23
 #define NCOLUMNAS 18
 
 //Filas
@@ -56,12 +56,12 @@
 #define filaduty4 13 // fila duty4
 #define filaruedas 14 // fila ruedas
 #define filacpu 15 //fila CPU
-#define filacalibs0 16 //fila min duty
-#define filacalibs1 17 //fila min duty
-#define filacalibs2 18 //fila min duty
-#define filacalibs3 19 //fila min duty
-#define filacalibs4 20 //fila min duty
-#define filadis 21 //fila distancia
+#define filacalibs0 17 //fila min duty
+#define filacalibs1 18 //fila min duty
+#define filacalibs2 19 //fila min duty
+#define filacalibs3 20 //fila min duty
+#define filacalibs4 21 //fila min duty
+#define filadis 22 //fila distancia
 
 //Posiciones
 #define poscarac 15 // caracter presionado
@@ -135,7 +135,7 @@
 #define SECURE_DUTY_1    1292 //Duty0 en una posicion segura
 #define SECURE_DUTY_2    1292 //Duty0 en una posicion segura
 #define SECURE_DUTY_3    466 //Duty0 en una posicion segura
-#define SECURE_DUTY_4    302 //Duty0 en una posicion segura
+#define SECURE_DUTY_4    312 //Duty0 en una posicion segura
 #define VEL_ALTA    0462 // Velocidad alta
 #define VEL_BAJA    0462 // Velocidad baja
 #define DEF_DUTY_MIN (PR20ms/20) * MINPWM	// valor minimo y maximo por defecto de duty. Se calculan 
@@ -156,7 +156,6 @@
 #define DUTY4 4
 #define DUTYOC1 5
 #define DUTYOC2 6
-#define ENDCALIB 7
 
 // Definiciones relacionadas con el bus I2C
 //==========================================

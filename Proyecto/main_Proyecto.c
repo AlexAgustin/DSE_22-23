@@ -64,6 +64,7 @@ int main()
     U2TXREG = 0;  // Asignacion de un primer caracter para que UART2 TX empiece a interrumpir
     
     InitI2C_1();    //Inicializar el modulo I2C
+    inic_Timer6_dis();  // Inicializar el temporizador T6 
     
     if (detectar_direccion (&dirI2C)) { //Detectar la nueva direccion del sensor
         //Comportamiento inesperado
@@ -79,38 +80,53 @@ int main()
     
     inic_Timer5_LCD(); // Inicializar el temporizador T5 //Siempre refresco ditribuido
     
-    inic_calib();
+    while(PORTDbits.RD6);
     
+    inic_calib();
+    inic_Timer4_movservos(); //Inicializar Timer del movimiento
+    visualizar_Duty();
+    inic_PWM(); // Inicializar las variables requeridas para la gestion de PWM
+    inic_Timer8_PWM();  //Inicializar el temporizador T8
+    
+    
+
     while(PORTDbits.RD13) visualizar_Duty(); //Esperar a que se pulse S4 (RD13)
-    flag_calib = 0; //Deshabilitar opcion de calibrado
+    Nop();
+    Nop();    flag_calib = 0; //Deshabilitar opcion de calibrado
+    
     inic_CN();      // Inicializar modulo CN
     actualizar_Ventana_LCD(); //Actualizar la variable Ventana_LCD
-
+Nop();
+    Nop();
+    
     inic_crono();   // Inicializar cronometro
     inic_Timer7_crono();  // Inicializar el temporizador T7
 
-    
+ Nop();
+    Nop();
+       
     
     inic_OC1(); //Inicializar el modulo OC1
     inic_OC2(); //Inicializar el modulo OC1
     inic_OC3();
     inic_OC4();
     inic_Timer2_OCx();  //Inicializar el temporizador T2
-
-    inic_Timer8_PWM();  //Inicializar el temporizador T8
-    inic_Timer4_movservos(); //Inicializar Timer del movimiento
-    inic_PWM(); // Inicializar las variables requeridas para la gestion de PWM
     
-    inic_Timer6_dis();  // Inicializar el temporizador T6 
+Nop();
+    Nop();
+    
 
     inic_ADC1();    //Inicializar el modulo ADC1
     inic_Timer3_ADC(); // Inicializar el temporizador T3
     reinic_Timer9_CPU();
     
+    Nop();
+    Nop();
     while(1) { // bucle infinito
         cont = 0;
-        restart_Timer9_CPU();
-
+        restart_timer9_CPU();
+        Nop();
+        Nop();
         cronometro(); // ejecucion del cronometro
         if (flag_ADC)   //Una vez se han recogido todas las muestras necesarias
             tratar_valorADC1(); // Calcular la media de las muestras tomadas y visualizar la informacion pertinente
@@ -128,9 +144,9 @@ int main()
             break;
         }
 
-        while(IFS3bits.T9IF = 0) cont ++;
+        while(IFS3bits.T9IF == 0) cont ++;
         stop_timer9_CPU();
-        gestion_cont (cont);
+        //gestion_cont (cont);
     }
     
 	return (0);

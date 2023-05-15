@@ -38,6 +38,7 @@ unsigned int duty[5];
 unsigned int objetivopwm[7];
 unsigned int duty_min[5];
 unsigned int duty_max[5];
+unsigned int duty_seguro[5]={SECURE_DUTY_0,SECURE_DUTY_1,SECURE_DUTY_2,SECURE_DUTY_3,SECURE_DUTY_4};
 
 void mover_servo(unsigned int num_duty, unsigned int objetivo);
 void posicion_segura();
@@ -127,6 +128,12 @@ void visualizar_Duty(){
             conversion_4dig(&Ventana_LCD[filacalibs4][poscalibmax], duty_max[DUTY4]); // Guardar valor del duty minimo en Ventana_LCD para su visualizacion en la pantalla
             break;
         case VERCALIB:
+            conversion_4dig(&Ventana_LCD[filaduty01][posdutyl],duty[DUTY0]);  // Guardar valor de duty0 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaduty01][posdutyr],duty[DUTY1]); // Guardar valor de duty1 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaduty23][posdutyl],duty[DUTY2]); // Guardar valor de duty2 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaduty23][posdutyr],duty[DUTY3]); // Guardar valor de duty3 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaduty4][posdutyl],duty[DUTY4]); // Guardar valor de duty4 en Ventana_LCD para su visualizacion en la pantalla
+            
             conversion_4dig(&Ventana_LCD[filacalibs0][poscalibmin], duty_min[DUTY0]); // Guardar valor del duty minimo en Ventana_LCD para su visualizacion en la pantalla
             conversion_4dig(&Ventana_LCD[filacalibs1][poscalibmin], duty_min[DUTY1]); // Guardar valor del duty minimo en Ventana_LCD para su visualizacion en la pantalla
             conversion_4dig(&Ventana_LCD[filacalibs2][poscalibmin], duty_min[DUTY2]); // Guardar valor del duty minimo en Ventana_LCD para su visualizacion en la pantalla
@@ -171,6 +178,7 @@ void inic_PWM(){
     //int duracion_intermedia = (DEF_DUTY_MAX + DEF_DUTY_MIN) / 2;
     estado_PWM = PWM0_ACTIVE; //Definir estado inicial
     
+    duty[DUTY0]=(DEF_DUTY_MAX + DEF_DUTY_MIN) / 2;
     duty[DUTY1]=duty_max[DUTY1];
     duty[DUTY2]=duty_max[DUTY2];
     
@@ -186,6 +194,8 @@ void inic_PWM(){
 
 void inic_calib(){
     //Inicializar duty minimo: valor por defecto
+    Nop();
+    Nop();
     duty_min[DUTY0] = DEF_DUTY_MIN;
     duty_min[DUTY1] = DEF_DUTY_MIN;
     duty_min[DUTY2] = DEF_DUTY_MIN;
@@ -204,47 +214,62 @@ void inic_calib(){
 
 
 void posicion_segura(){
-    objetivopwm[DUTY0] = SECURE_DUTY_0;
-    objetivopwm[DUTY1] = SECURE_DUTY_1;
-    objetivopwm[DUTY2] = SECURE_DUTY_2;
-    objetivopwm[DUTY3] = SECURE_DUTY_3;
-    objetivopwm[DUTY4] = SECURE_DUTY_4;
-    reached =0;
+    Nop();
+    Nop();
+    if (duty[DUTY0] != duty_seguro[DUTY0]) {
+        objetivopwm[DUTY0] = duty_seguro[DUTY0];
+        reached--;
+    }
+    if (duty[DUTY1] != duty_seguro[DUTY1]) {
+        objetivopwm[DUTY1] = duty_seguro[DUTY1];
+        reached--;
+    }
+    if (duty[DUTY2] != duty_seguro[DUTY2]) {
+        objetivopwm[DUTY2] = duty_seguro[DUTY2];
+        reached--;
+    }
+    if (duty[DUTY3] != duty_seguro[DUTY3]) {
+        objetivopwm[DUTY3] = duty_seguro[DUTY3];
+        reached--;
+    }
+    if (duty[DUTY4] != duty_seguro[DUTY4]) {
+        objetivopwm[DUTY4] = duty_seguro[DUTY4];
+        reached--;
+    }
     flag_posicion_segura = 0;
-    restart_Timer4_movservos(); 
+    if (reached != 5) restart_Timer4_movservos(); 
 }
 
 
 
 void dibujar_estrella(){
-    /*
     static int linea = LAPIZ;
     static int index = 0;
-    static int pos_star0[8] = {POS_STAR0_0, POS_STAR1_0, POS_STAR2_0, POS_STAR3_0, POS_STAR4_0};
-    static int pos_star1[8] = {POS_STAR0_1, POS_STAR1_1, POS_STAR2_1, POS_STAR3_1, POS_STAR4_1};
-    static int pos_star2[8] = {POS_STAR0_2, POS_STAR1_2, POS_STAR2_2, POS_STAR3_2, POS_STAR4_2};
-    static int pos_star3[8] = {POS_STAR0_3, POS_STAR1_3, POS_STAR2_3, POS_STAR3_3, POS_STAR4_3};
+    
+    static int pos_star0[5] = {396, 411, 376, 426, 381};
+    static int pos_star1[5] = {712, 842, 767, 772, 847};
+    static int pos_star2[5] = {572, 732, 657, 652, 742};
 
 
     switch(linea)
     {
         case LAPIZ:
-            objetivopwm[DUTY4] = POS_LAPIZ_4;
-            reached--;
-            linea = STAR1;
+            objetivopwm[DUTY4] = 811;
+            objetivopwm[DUTY4] = 1302;
+            reached-=2;
+            linea = STAR;
         break;
 
         case STAR:
             objetivopwm[DUTY0] = pos_star0[index];
             objetivopwm[DUTY1] = pos_star1[index];
             objetivopwm[DUTY2] = pos_star2[index];
-            objetivopwm[DUTY3] = pos_star3[index];
-            reached -=4;
+            reached -=3;
             index ++;
 
             if(index == 5){
                 linea = LAPIZ;
-                flag_star = 0;
+                flag_estrella = 0;
                 flag_posicion_segura = 1;
             }
         break;
@@ -253,7 +278,6 @@ void dibujar_estrella(){
             //Inalcanzable
         break;
     }
-    */
 }
 
 

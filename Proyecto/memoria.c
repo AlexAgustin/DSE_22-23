@@ -9,6 +9,7 @@ Fecha: Marzo 2023
 #include "p24HJ256GP610A.h"
 #include "LCD.h"
 #include "commons.h"
+#include "utilidades.h"
 
 unsigned char Ventana_LCD[NFILAS][NCOLUMNAS] = {
     {"- DSE 2022-23 --""\x0D\x0A"},
@@ -36,17 +37,17 @@ unsigned char Ventana_LCD[NFILAS][NCOLUMNAS] = {
     {"Distancia:  ----""\x0D\x0A"}
 };
 
-void actualizar_Ventana_LCD (unsigned char * dir)
+void actualizar_Ventana_LCD ()//unsigned char * dir
 {
   fila1 = 2; // se muestra la tercera entrada de Ventana_LCD en la linea superior de la pantalla LCD
   fila2 = 3; // se muestra la caurta entrada de Ventana_LCD en la linea inferior de la pantalla LCD
-  *dir="--En curso... --""\x0D\x0A"; // se muestra en la pantalla del PC que ya puede manejarse el brazo
+  //*dir="--En curso... --""\x0D\x0A"; // se muestra en la pantalla del PC que ya puede manejarse el brazo
 }
 
 void gestion_cont(unsigned long cont)
 {
-  static unsigned long contmin = ULLONG_MAX;
-  static unsigned long contmax = ULLONG_MIN;
+  static unsigned long contmin = 999999999; //
+  static unsigned long contmax = 0;
 
   // TODO: Calcular porcentaje sobre 100, need el otro datito
 

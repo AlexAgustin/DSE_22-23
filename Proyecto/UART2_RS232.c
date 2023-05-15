@@ -66,7 +66,9 @@ void _ISR_NO_PSV _U2RXInterrupt()
     static int duty_cur = DUTY0;
     static unsigned int flag_busy = 0;
     char caracter = U2RXREG;
-    unsigned int ismin=0;
+    static unsigned int ismin=0;
+    Nop();
+    Nop();
     if(reached != 5) flag_busy = 1; 
     else  flag_busy = 0;
 
@@ -99,36 +101,48 @@ void _ISR_NO_PSV _U2RXInterrupt()
         case 'F': //si es f o F, se fija el valor siendo calibrado actualmente y se pasa a gestionar el siguiente
             if(flag_calib) // Si se esta gestionando el calibrado...
             {
-                if(!ismin) { //si se estaba calibrando el valor maximo 
+                
+                if(!ismin) { //si se estaba calibrando el valor maximo
                     duty_max[duty_cur] = duty[duty_cur]; // asignar el valor actual del duty correspondiente como el valor maximo
-                    ismin=1; // pasar a calibrar el minimo del mismo duty
-                }
-                else if(duty_cur==DUTY0 && ismin) { //si se estaba calibrando el valor minimo del duty0
+                    if (duty[duty_cur]!=duty_seguro[duty_cur]){
+                        objetivopwm[duty_cur]=duty_seguro[duty_cur];
+                        Nop();
+                        Nop();
+                        reached--;
+                        restart_Timer4_movservos();
+                    }
+                }else{
                     duty_min[duty_cur] = duty[duty_cur]; // asignar el valor actual de duty0 como su valor minimo
-                    ismin=0; // pasar a calibrar el maximo...
-                    duty_cur = DUTY1; // ... de duty1
+                    if (duty[duty_cur]!=duty_seguro[duty_cur]){
+                        objetivopwm[duty_cur]=duty_seguro[duty_cur];
+                        Nop();
+                        Nop();
+                        reached--;
+                        restart_Timer4_movservos();
+                    }
+                    switch (duty_cur){
+                        case DUTY0:
+                            duty_cur = DUTY1; // pasar a calibrar DUTY1
+                            break;
+                        case DUTY1:
+                            duty_cur = DUTY2; // pasar a calibrar DUTY2
+                            break;
+                        case DUTY2:
+                            duty_cur = DUTY3; // pasar a calibrar DUTY3
+                            break;
+                        case DUTY3:
+                            duty_cur = DUTY4; // pasar a calibrar DUTY4
+                            break;
+                        case DUTY4:
+                            flag_calib = 0; //Fin de la gestion del calibrado
+                            break;
+                        default:
+                            break;
+                    }
                 }
-                else if(duty_cur==DUTY1 && ismin) { //si se estaba calibrando el valor minimo del duty1
-                    duty_min[duty_cur] = duty[duty_cur]; // asignar el valor actual de duty1 como su valor minimo
-                    ismin=0; // pasar a calibrar el maximo...
-                    duty_cur = DUTY2; // ... de duty2
-                }
-                else if(duty_cur==DUTY2 && ismin) { //si se estaba calibrando el valor minimo del duty2
-                    duty_min[duty_cur] = duty[duty_cur]; // asignar el valor actual de duty2 como su valor minimo
-                    ismin=0; // pasar a calibrar el maximo...
-                    duty_cur = DUTY3; // ... de duty3
-                }
-                else if(duty_cur==DUTY3 && ismin) { //si se estaba calibrando el valor minimo del duty3
-                    duty_min[duty_cur] = duty[duty_cur]; // asignar el valor actual de duty3 como su valor minimo
-                    ismin=0; // pasar a calibrar el maximo...
-                    duty_cur = DUTY4;  // ... de duty4
-                }
-                else if(duty_cur==DUTY4 && ismin) { //si se estaba calibrando el valor minimo del duty4
-                    duty_min[duty_cur] = duty[duty_cur]; // asignar el valor actual de duty4 como su valor minimo
-                    ismin=0;
-                    duty_cur = ENDCALIB; //terminar la calibracion
-                }
-                else flag_calib = 0; //Fin de la gestion del calibrado
+                
+                ismin=!ismin;
+                
             }
             break;
             
@@ -137,6 +151,8 @@ void _ISR_NO_PSV _U2RXInterrupt()
             // si es r, se mueve el servo incrementando el valor de duty0 (+5) si al moverlo se seguirian respetando los limites (<= duty_max[DUTY0]), 
             // si flag_DUTY == 1 (se gestiona duty0 por UART) y 
             // si el servo no esta en movimiento actualmente (!flag_busy)
+            Nop();
+            Nop();
             if(!flag_busy && flag_DUTY && duty[DUTY0]+5<=duty_max[DUTY0]) { // Realizar comprobaciones
                 duty[DUTY0]+=5; //Incrementar el valor de duty[DUTY0]: +5
                 flag_Duty_LCD = VERDUTY0; // Poner a VERDUTY0 el flag para guardar el nuevo valor de duty0 en Ventana_LCD para su visualizacion en la pantalla
@@ -183,10 +199,10 @@ void _ISR_NO_PSV _U2RXInterrupt()
                 flag_Duty_LCD = VERDUTY4; // Poner a VERDUTY4 el flag para guardar el nuevo valor de duty4 en Ventana_LCD para su visualizacion en la pantalla
             }
             break;
-        case 'm': //si es m, se incrementa el valor de duty que se este calibrando
-            if(flag_calib && duty[duty_cur]+5 <= DEF_DUTY_MAX) {//antes de actualizar el valor maximo de duty, se comprueba si al cambiarlo se seguiria dentro de los limites
-               duty[duty_cur]+=5; //Incrementar el valor del duty que se esta calibrando actualmente (duty_cur): +5
-               flag_Duty_LCD = VERDUTYMAX; // Poner a VERDUTYMAX el flag para guardar el nuevo valor de calibrado maximo actual en Ventana_LCD para su su visualizacion en la pantalla
+        case 'M': //si es m, se incrementa el valor de duty que se este calibrando
+            if(flag_calib && duty[duty_cur]+5 <= duty_max[duty_cur] && (!ismin || (ismin && duty[duty_cur]+5<=duty_seguro[duty_cur]))) {//antes de actualizar el valor maximo de duty, se comprueba si al cambiarlo se seguiria dentro de los limites
+                duty[duty_cur]+=5; //Incrementar el valor del duty que se esta calibrando actualmente (duty_cur): +5
+                flag_Duty_LCD = VERCALIB; // Poner a VERDUTYMAX el flag para guardar el nuevo valor de calibrado maximo actual en Ventana_LCD para su su visualizacion en la pantalla
             }
             break;
         //si es R, se mueve el servo decrementando el valor de duty[DUTY0] (-5) si al moverlo se seguirian respetando los limites (>= duty_min[]) y si flag_DUTY == 1 (se gestiona duty[DUTY0] por UART)
@@ -220,10 +236,10 @@ void _ISR_NO_PSV _U2RXInterrupt()
                 flag_Duty_LCD = VERDUTY4; // Poner a 5 el flag para guardar el nuevo valor de duty[DUTY4] en Ventana_LCD para su su visualizacion en la pantalla
             }
             break;
-        case 'M': //si es M, se decrementa el valor de duty que se este calibrando
-            if(flag_calib) {//&& duty_max[duty_cur]-5>=duty_min[duty_cur] // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites
+        case 'm': //si es M, se decrementa el valor de duty que se este calibrando
+            if(flag_calib && duty[duty_cur]-5>=duty_min[duty_cur] && (ismin || (!ismin && duty[duty_cur]-5>=duty_seguro[duty_cur]))) { // antes de mover el servo, se comprueba si al moverlo se seguiria dentro de los limites
                 duty[duty_cur]-=5; // Decrementar el valor de duty_max[]: -5
-                flag_Duty_LCD = VERDUTYMAX; // Poner a 8 el flag para guardar el nuevo valor de duty_max[] en Ventana_LCD para su su visualizacion en la pantalla
+                flag_Duty_LCD = VERCALIB; // Poner a 8 el flag para guardar el nuevo valor de duty_max[] en Ventana_LCD para su su visualizacion en la pantalla
             }
             break;
         case '>': //si es >, se hace scroll hacia abajo de la informacion a mostrar en la LCD
