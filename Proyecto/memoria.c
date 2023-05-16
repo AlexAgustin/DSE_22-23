@@ -29,7 +29,7 @@ unsigned char Ventana_LCD[NFILAS][NCOLUMNAS] = {
     {"S3:---- S4:---- ""\x0D\x0A"},
     {"S5:----         ""\x0D\x0A"},
     {"VA:---- VD:---- ""\x0D\x0A"},
-    {"CPU M:--- Un: --""\x0D\x0A"}, 
+    {"CPU c:---  M:---""\x0D\x0A"}, 
     {"   = Calib =    ""\x0D\x0A"},
     {"S1 M:---- m:----""\x0D\x0A"},
     {"S2 M:---- m:----""\x0D\x0A"},
