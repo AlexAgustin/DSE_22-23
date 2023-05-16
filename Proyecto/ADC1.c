@@ -166,8 +166,7 @@ void tratar_valorADC1 ()
     }
 
     
-    if(!flag_DUTY && !flag_rutina_perro){ //Si flag_DUTY==0 y no se esta realizando la rutina canina, se obtienen duty0 duty2 y duty4  a partir de entradas analogicas
-        
+    if(reached==5 && !flag_DUTY && !flag_rutina_perro){ //Si flag_DUTY==0 y los servos no estan en movimiento, se obtienen duty0 duty2 y duty4  a partir de entradas analogicas
         objetivopwm[DUTY0] =  (Poten_media/1023) * (duty_max[DUTY0] - duty_min[DUTY0]) + duty_min[DUTY0]; // Obtener duty0 a partir de la potencia
         if(duty[DUTY0] != objetivopwm[DUTY0]) reached--; // De ser necesario, actualizar la cantidad de servos en su posicion objetivo
         objetivopwm[DUTY2] = (X_media/999) * (duty_max[DUTY2] - duty_min[DUTY2]) + duty_min[DUTY2]; // Obtener duty2 a partir de la coordenada X

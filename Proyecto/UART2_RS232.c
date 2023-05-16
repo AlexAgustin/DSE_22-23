@@ -95,7 +95,6 @@ void _ISR_NO_PSV _U2RXInterrupt()
         case 'F': //si es f o F, se fija el valor que esta siendo calibrado actualmente y se pasa a gestionar el siguiente
             if(flag_calib) // Si se esta gestionando el calibrado...
             {
-                
                 if(!ismin) { //si se estaba calibrando el valor maximo de cualquier duty
                     duty_max[duty_cur] = duty[duty_cur]; // asignar el valor actual del duty correspondiente como el valor maximo
                     if (duty[duty_cur]!=duty_seguro[duty_cur]){ //Si el servo no esta en una posicion segura...
@@ -103,7 +102,7 @@ void _ISR_NO_PSV _U2RXInterrupt()
                         reached--; //Actualizar cantidad de servos que no se encuentran en su posicion objetivo
                         restart_Timer4_movservos(); // Encender timer para la gestion del movimiento de los servos
                     }
-                    if(reached ==5) flag_Duty_LCD = VERDUTYMIN;
+                    if(reached ==5) flag_Duty_LCD = VERCALIB;
                 }else{
                     duty_min[duty_cur] = duty[duty_cur]; // asignar el valor actual del duty siendo gestionado como el minimo
                     if (duty[duty_cur]!=duty_seguro[duty_cur]){ //Si el servo no esta en una posicion segura...
@@ -132,7 +131,7 @@ void _ISR_NO_PSV _U2RXInterrupt()
                             break; //Inalcanzable
                     }
 
-                    if(reached ==5) flag_Duty_LCD = VERDUTYMAX;
+                    if(reached ==5) flag_Duty_LCD = VERCALIB;
                 }
                 
                 ismin=!ismin; // Conmutar ismin: minimo (1) <=> maximo (0)
@@ -142,10 +141,12 @@ void _ISR_NO_PSV _U2RXInterrupt()
 
         case 'R': 
             // si es R, se mueve el servo S1 incrementando el valor de duty0 (+5) si al moverlo se seguirian respetando los limites (<= duty_max[DUTY0]), 
+            // si no se esta calibrando
             // si flag_DUTY == 1 (se gestiona duty0 por UART) y 
             // si el servo no esta en movimiento actualmente (!flag_busy) ni se esta realizando la rutina canina
-            if(!flag_rutina_perro && !flag_busy && flag_DUTY && duty[DUTY0]+5<=duty_max[DUTY0]) { // Realizar comprobaciones
+            if(!flag_calib && !flag_rutina_perro && !flag_busy && flag_DUTY && duty[DUTY0]+5<=duty_max[DUTY0]) { // Realizar comprobaciones
                 duty[DUTY0]+=5; //Incrementar el valor de duty[DUTY0]: +5
+                objetivopwm[DUTY0]= duty[DUTY0];
                 flag_Duty_LCD = VERDUTY0; // Poner a VERDUTY0 el flag para guardar el nuevo valor de duty0 en Ventana_LCD para su visualizacion en la pantalla
             }
             break;
@@ -153,41 +154,49 @@ void _ISR_NO_PSV _U2RXInterrupt()
 
         case 'L': 
             // si es L, se mueve el servo incrementando el valor de duty1 (+5) si al moverlo se seguirian respetando los limites (<= duty_max[DUTY1]), 
+            // si no se esta calibrando
             // si no hay riesgo de choque (dis_media>=CHOQUE) y 
             // si el servo no esta en movimiento actualmente (!flag_busy) ni se esta realizando la rutina canina
-            if(!flag_rutina_perro && !flag_busy && duty[DUTY1]+5<=duty_max[DUTY1] && dis_media>=CHOQUE) { // Realizar comprobaciones
+            if(!flag_calib && !flag_rutina_perro && !flag_busy && duty[DUTY1]+5<=duty_max[DUTY1] && dis_media>=CHOQUE) { // Realizar comprobaciones
                 duty[DUTY1]+=5; //Incrementar el valor de duty1: +5
+                objetivopwm[DUTY1]= duty[DUTY1];
                 flag_Duty_LCD = VERDUTY1; // Poner a VERDUTY1 el flag para guardar el nuevo valor de duty1 en Ventana_LCD para su visualizacion en la pantalla
             }
             break;
 
         case 'W': 
             // si es W, se mueve el servo incrementando el valor de duty2 (+5) si al moverlo se seguirian respetando los limites (<= duty_max[DUTY2]) 
+            // si no se esta calibrando
             // si flag_DUTY == 1 (se gestiona duty2 por UART), 
             // si no hay riesgo de choque (dis_media>=CHOQUE) y 
             // si el servo no esta en movimiento actualmente (!flag_busy) ni se esta realizando la rutina canina
-            if(!flag_rutina_perro && !flag_busy && flag_DUTY && duty[DUTY2]+5<=duty_max[DUTY2] && dis_media>=CHOQUE) { // Realizar comprobaciones
+            if(!flag_calib && !flag_rutina_perro && !flag_busy && flag_DUTY && duty[DUTY2]+5<=duty_max[DUTY2] && dis_media>=CHOQUE) { // Realizar comprobaciones
                 duty[DUTY2]+=5; //Incrementar el valor de duty2: +5
+                objetivopwm[DUTY2]= duty[DUTY2];
                 flag_Duty_LCD = VERDUTY2; // Poner a VERDUTY2 el flag para guardar el nuevo valor de duty2 en Ventana_LCD para su visualizacion en la pantalla
             }
             break;
 
         case 'A': 
             // si es A, se mueve el servo incrementando el valor de duty[DUTY3] (+5) si al moverlo se seguirian respetando los limites (<= duty_max[DUTY3]) 
+            // si no se esta calibrando
             // si no hay riesgo de choque (dis_media>=CHOQUE) y 
             // si el servo no esta en movimiento actualmente (!flag_busy) ni se esta realizando la rutina canina
-            if(!flag_rutina_perro && !flag_busy && duty[DUTY3]+5<=duty_max[DUTY3] && dis_media>=CHOQUE) { // Realizar comprobaciones
+            if(!flag_calib && !flag_rutina_perro && !flag_busy && duty[DUTY3]+5<=duty_max[DUTY3] && dis_media>=CHOQUE) { // Realizar comprobaciones
                 duty[DUTY3]+=5; //Incrementar el valor de duty3: +5
+                objetivopwm[DUTY3]= duty[DUTY3];
                 flag_Duty_LCD = VERDUTY3; // Poner a VERDUTY3 el flag para guardar el nuevo valor de duty3 en Ventana_LCD para su visualizacion en la pantalla
             }
             break;
 
         case 'S': 
             // si es S, se mueve el servo incrementando el valor de duty[DUTY4] (+5) si al moverlo se seguirian respetando los limites (<= duty_max[DUTY4]) 
+            // si no se esta calibrando
             // si flag_DUTY == 1 (se gestiona duty[DUTY4] por UART) y 
             // si el servo no esta en movimiento actualmente (!flag_busy) ni se esta realizando la rutina canina
-            if(!flag_rutina_perro && !flag_busy && flag_DUTY && duty[DUTY4]+5<=duty_max[DUTY4]) { // Realizar comprobaciones
+            if(!flag_calib && !flag_rutina_perro && !flag_busy && flag_DUTY && duty[DUTY4]+5<=duty_max[DUTY4]) { // Realizar comprobaciones
                 duty[DUTY4]+=5; //Incrementar el valor de duty4: +5
+                objetivopwm[DUTY4]= duty[DUTY4];
                 flag_Duty_LCD = VERDUTY4; // Poner a VERDUTY4 el flag para guardar el nuevo valor de duty4 en Ventana_LCD para su visualizacion en la pantalla
             }
             break;
@@ -204,52 +213,62 @@ void _ISR_NO_PSV _U2RXInterrupt()
         
         case 'r': 
             //si es r, se mueve el servo decrementando el valor de duty[DUTY0] (-5) 
+            // si no se esta calibrando
             // si al moverlo se seguirian respetando los limites (>= duty_min) 
             // si flag_DUTY == 1 (se gestiona duty0 por UART) y 
             // si el servo no esta en movimiento actualmente (!flag_busy) ni se esta realizando la rutina canina
-            if(!flag_rutina_perro && !flag_busy && flag_DUTY && duty[DUTY0]-5>=duty_min[DUTY0]) { // realizar comprobaciones
+            if(!flag_calib && !flag_rutina_perro && !flag_busy && flag_DUTY && duty[DUTY0]-5>=duty_min[DUTY0]) { // realizar comprobaciones
                 duty[DUTY0]-=5; // Decrementar el valor de duty0: -5
+                objetivopwm[DUTY0]= duty[DUTY0];
                 flag_Duty_LCD = VERDUTY0; // Poner a VERDUTY0 el flag para guardar el nuevo valor de duty0 en Ventana_LCD para su su visualizacion en la pantalla
             }
             break;
         case 'l':  
             //si es l, se mueve el servo decrementando el valor de duty[DUTY1] (-5) 
+            // si no se esta calibrando
             // si no hay riesgo de choque (dis_media>=CHOQUE
             // si al moverlo se seguirian respetando los limites (>= duty_min) y
             // si el servo no esta en movimiento actualmente (!flag_busy) ni se esta realizando la rutina canina
-            if(!flag_rutina_perro && !flag_busy && duty[DUTY1]-5>=duty_min[DUTY1] && dis_media>=CHOQUE) { // realizar comprobaciones
+            if(!flag_calib && !flag_rutina_perro && !flag_busy && duty[DUTY1]-5>=duty_min[DUTY1] && dis_media>=CHOQUE) { // realizar comprobaciones
                 duty[DUTY1]-=5; // Decrementar el valor de duty1: -5
+                objetivopwm[DUTY1]= duty[DUTY1];
                 flag_Duty_LCD = VERDUTY1; // Poner a 2 el flag para guardar el nuevo valor de duty[DUTY1] en Ventana_LCD para su su visualizacion en la pantalla
             }
             break;
         case 'w': 
             //si es w, se mueve el servo decrementando el valor de duty[DUTY2] (-5) 
            // si no hay riesgo de choque (dis_media>=CHOQUE
+            // si no se esta calibrando
             // si al moverlo se seguirian respetando los limites (>= duty_min) 
             // si flag_DUTY == 1 (se gestiona duty2 por UART) y
             // si el servo no esta en movimiento actualmente (!flag_busy) ni se esta realizando la rutina canina
-            if(!flag_rutina_perro && !flag_busy && flag_DUTY && duty[DUTY2]-5>=duty_min[DUTY2] && dis_media>=CHOQUE) {  // realizar comprobaciones
+            if(!flag_calib && !flag_rutina_perro && !flag_busy && flag_DUTY && duty[DUTY2]-5>=duty_min[DUTY2] && dis_media>=CHOQUE) {  // realizar comprobaciones
                 duty[DUTY2]-=5; // Decrementar el valor de duty[DUTY2]: -5
+                objetivopwm[DUTY2]= duty[DUTY2];
                 flag_Duty_LCD = VERDUTY2; // Poner a 3 el flag para guardar el nuevo valor de duty[DUTY2] en Ventana_LCD para su su visualizacion en la pantalla
             }
             break;
         case 'a': 
             //si es a, se mueve el servo decrementando el valor de duty[DUTY3] (-5) 
+            // si no se esta calibrando
             // si no hay riesgo de choque (dis_media>=CHOQUE
             // si al moverlo se seguirian respetando los limites (>= duty_min) y
             // si el servo no esta en movimiento actualmente (!flag_busy) ni se esta realizando la rutina canina
-            if(!flag_rutina_perro && !flag_busy && duty[DUTY3]-5>=duty_min[DUTY3] && dis_media>=CHOQUE) {  // realizar comprobaciones
+            if(!flag_calib && !flag_rutina_perro && !flag_busy && duty[DUTY3]-5>=duty_min[DUTY3] && dis_media>=CHOQUE) {  // realizar comprobaciones
                 duty[DUTY3]-=5; // Decrementar el valor de duty[DUTY3]: -5
+                objetivopwm[DUTY3]= duty[DUTY3];
                 flag_Duty_LCD = VERDUTY3; // Poner a 4 el flag para guardar el nuevo valor de duty[DUTY3] en Ventana_LCD para su su visualizacion en la pantalla
             }
             break;
         case 's': 
             //si es S, se mueve el servo decrementando el valor de duty[DUTY4] (-5) 
+            // si no se esta calibrando
             // si al moverlo se seguirian respetando los limites (>= duty_min) 
             // si flag_DUTY == 1 (se gestiona duty4 por UART) y
             // si el servo no esta en movimiento actualmente (!flag_busy) ni se esta realizando la rutina canina
-            if(!flag_rutina_perro && !flag_busy && flag_DUTY && duty[DUTY4]-5>=duty_min[DUTY4]) {  // realizar comprobaciones
+            if(!flag_calib && !flag_rutina_perro && !flag_busy && flag_DUTY && duty[DUTY4]-5>=duty_min[DUTY4]) {  // realizar comprobaciones
                 duty[DUTY4]-=5; // Decrementar el valor de duty[DUTY4]: -5
+                objetivopwm[DUTY4]= duty[DUTY4];
                 flag_Duty_LCD = VERDUTY4; // Poner a 5 el flag para guardar el nuevo valor de duty[DUTY4] en Ventana_LCD para su su visualizacion en la pantalla
             }
             break;

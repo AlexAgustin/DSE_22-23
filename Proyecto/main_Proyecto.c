@@ -5,7 +5,7 @@ Una vez pulsado, entra en la fase de calibrado donde se pueden ajustar los valor
 queda a la espera de que se pulse S4 para inicializar el cronometro (encuesta de S4).
 Una vez pulsado, se inicializa el cronometro y se muestra tanto por pantalla como en los leds el 
 tiempo transcurrido (led D3 -> ms, led D5 -> seg, led D9 -> min). 
-Para visualizar mas informacion se habra de hacer scroll hacia abajo (S4) y hacia arriba (S5).
+Para visualizar mas informacion se habra de hacer scroll hacia abajo (S5) y hacia arriba (S4).
 Se mostrara la media de las 8 muestras tomadas de 5 entradas analogicas: potenciometro, temperatura, coordenadas X, Y e Z. 
 Se detecta la direccion del sensor conectado y se modifica su valor mediante la constante newdirsI2C (commons.h).
 Ademas, se mostrara la distacia recogida por el sensor. 
@@ -14,8 +14,8 @@ pueden visualizarse.
 
 A partir de este punto se permite la interrupcion de los pulsadores S3, S4, S5 y S6:
 * pulsador S3 -> parar/reanudar cronometro
-* pulsador S4 -> scroll hacia abajo
-* pulsador S5 -> scroll hacia arriba
+* pulsador S4 -> scroll hacia arriba
+* pulsador S5 -> scroll hacia abajo
 * pulsador S6 -> inicializar cronometro (puesta a 0)
 
 Ademas, visualizamos en el ordenador (a traves del emisor de UART2) la informacion que mandamos a la LCD.
@@ -118,7 +118,7 @@ int main()
     inic_PWM(); // Inicializar las variables requeridas para la gestion de PWM
     inic_Timer8_PWM();  //Inicializar el temporizador T8
 
-    while(PORTDbits.RD13) visualizar_Duty(); //Esperar a que se pulse S4 (RD13) mientras se visualizan los cambios de la calibracion
+    while(PORTDbits.RD13) if (flag_Duty_LCD) visualizar_Duty(); //Esperar a que se pulse S4 (RD13) mientras se visualizan los cambios de la calibracion
 
     flag_calib = 0; //Deshabilitar opcion de calibrado
     
@@ -150,7 +150,7 @@ int main()
             visualizar_Duty(); // se guarda el valor de duty0 en Ventana_LCD para su visualizacion en la pantalla
         if (flag_dis) //Si se puede leer la medicion de la distancia...
             gestion_dis(dirI2C);  //Gestionar la medicion de la distancia
-        if (flag_posicion_segura) posicion_segura(); //Llevar el brazo a una posicion segura si el flag flag_posicion_segura esta activado 
+        if (flag_DUTY && flag_posicion_segura) posicion_segura(); //Llevar el brazo a una posicion segura si el flag flag_posicion_segura esta activado y el control de los servos no se esta realizando mediante senhales analogicas 
         if (flag_rutina_perro && reached == 5) //Si el flag esta activado y los servos estan en su posicion objetivo...
             rutina_perro(); // El brazo realiza una rutina canina 
         if (flag_exit){ //Termina el programa

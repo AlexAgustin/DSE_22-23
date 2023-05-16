@@ -52,8 +52,8 @@
 #define pos4dig 12      // cifras 4 digitos
 #define posdutyl 3      // duty a la izquierda
 #define posdutyr 11     // duty a la derecha
-#define poscpucur 7     // CPU: cont minimo
-#define poscpumax 14    // CPU: cont maximo
+#define poscpucur 6     // CPU: cont minimo
+#define poscpumax 13    // CPU: cont maximo
 #define poscalibmax 5   // duty maximo
 #define poscalibmin 12  // duty minimo
 
@@ -70,8 +70,6 @@
 #define VERDUTY2 3
 #define VERDUTY3 4
 #define VERDUTY4 5
-#define VERDUTYMIN 6
-#define VERDUTYMAX 7
 #define VERSOLOCALIB 8
 #define VERCALIB 9
 #define VERDUTYOC 10
