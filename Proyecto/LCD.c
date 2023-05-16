@@ -2,6 +2,7 @@
 Funciones para utilizar LCD :
 -	Inicializacion
 -	Enviar un comando
+-	Enviar un dato
 
 Autores: Alex y Amanda
 Fecha: Febrero 2023
@@ -26,6 +27,22 @@ void lcd_cmd (char cmd)        // subroutine for lcd commands
   Nop();Nop();Nop();Nop();Nop();Nop();Nop();Nop();Nop();Nop(); //aseguramos el tiempo para que los datos esten estables
   
   E = 0;		// desactivar E
+  RW = 1;		// desactivar escritura
+}
+
+//Subrutina para enviar un dato
+void lcd_data (char data)      // subroutine for lcd data
+{
+  RW = 0;       	// RW=0, para escribir
+  RS = 1;            	// RS=1, se va a escribir un caracter
+  DATA &= 0xFF00;    	// pines RD0-RD7 (dato que se envia): poner a 0
+  DATA |= data;      	// copiar a esos pines el parametro data
+  E = 1;             	// E=1. Debe permanecer activado al menos 230 ns.
+
+  Nop();Nop();Nop();Nop();Nop();Nop();Nop();Nop();Nop();Nop(); //aseguramos el tiempo para que los datos esten estables
+  
+  E = 0;             	// desactivar E
+  RS = 0;            	// desactivar RS
   RW = 1;		// desactivar escritura
 }
 

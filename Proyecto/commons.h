@@ -31,14 +31,6 @@
 #define  DATAPORT  PORTE
 #define  TRISDATA  TRISE          // I/O setup for data Port
 
-// definiciones posiciones cronometro
-//=========================================================
-#define posds 13 //decimas de segundo
-#define poscs 14 //centesimas de segundo
-#define posseg 10 //segundo
-#define posmin 7 //minuto
-
-
 // definiciones: filas y posiciones de valores recogidos
 //========================================================= 
 #define NFILAS 23
@@ -63,7 +55,7 @@
 #define filacalibs4 21 //fila min duty
 #define filadis 22 //fila distancia
 
-//Posiciones
+//Posiciones generales
 #define poscarac 15 // caracter presionado
 #define pos4dig 12 // cifras 4 digitos
 #define posdutyl 3 // duty a la izquierda
@@ -72,6 +64,12 @@
 #define poscpumax 14 // CPU: cont maximo
 #define poscalibmax 5
 #define poscalibmin 12
+
+// definiciones posiciones cronometro
+#define posds 13 //decimas de segundo
+#define poscs 14 //centesimas de segundo
+#define posseg 10 //segundo
+#define posmin 7 //minuto
  
 // definiciones: filas y posiciones de valores recogidos
 //========================================================= 
@@ -82,10 +80,11 @@
 #define VERDUTY4 5
 #define VERDUTYMIN 6
 #define VERDUTYMAX 7
-#define VERCALIB 8
-#define VERDUTYOC 9
-#define VERDUTYALL 10
-#define VERDUTYADC 11
+#define VERSOLOCALIB 8
+#define VERCALIB 9
+#define VERDUTYOC 10
+#define VERDUTYALL 11
+#define VERDUTYADC 12
 
 
 // Definiciones ligadas a la velocidad de transmision de UART2
@@ -125,7 +124,6 @@
 
 // Definiciones relacionadas con los servos y PWM
 //========================================================= 
-// Caso: servos del brazo
 #define PR20ms  12500 	// Periodo adecuado para conseguir 20 ms
                         // teniendo en cuenta un prescaler de 1:64.
                         // Fosc= 80 MHz Fcy = 40 MHz Tcy= 25 ns
@@ -141,26 +139,19 @@
 #define DEF_DUTY_MIN (PR20ms/20) * MINPWM	// valor minimo y maximo por defecto de duty. Se calculan 
 #define DEF_DUTY_MAX (PR20ms/20) * MAXPWM	// mediante los "define" PR20ms, MINPWM y MAXPWM
 
-// Caso: ruedas
-#define PR100us  4000 	// Periodo adecuado para conseguir 0,1 ms (100us)
-                        // teniendo en cuenta un prescaler de 1:1.
-                        // Fosc= 80 MHz Fcy = 40 MHz Tcy= 25 ns
-
 // Posiciones de duty en el array
 #define DUTY0 0
 #define DUTY1 1
 #define DUTY2 2
 #define DUTY3 3
 #define DUTY4 4
-#define DUTYOC1 5
-#define DUTYOC2 6
 
 // Definiciones relacionadas con el bus I2C
 //==========================================
 #define newdirsI2C 0xFE //Direccion a asignar al sensor
 #define REG_COM 0 //Registro de comandos
 #define REG_DATA 2 //Registro de datos
-#define CHOQUE 5 
+#define CHOQUE 5  // distancia de riesgo de choque
 
 
 

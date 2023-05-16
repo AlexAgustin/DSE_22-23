@@ -44,16 +44,18 @@ Fecha: Marzo 2023
 #define OC4_ACTIVE 3
 #define OC_RESTO 4
 
-void cronometro();
-
-
 //Variables globales
+//===================
 int inicializar_crono = 0;
 unsigned int mili,deci,seg,min;
 unsigned int reached=5;
 
 
-// inicializacion del timer 9
+//Funciones
+//===========
+void cronometro();
+
+// inicializacion del timer T9 para que lleve a cabo esperas dado un determinado numero de ciclos
 void inic_Timer9_delay(unsigned long ciclos){
     TMR9 = 0 ; 	// Inicializar el registro de cuenta
     if (ciclos < 65535) { //65535 es el maximo numero de ciclos que entra en un tamanho de 2^16 (tamanho de PR) 
@@ -92,31 +94,28 @@ void reinic_Timer9_CPU(){
 		// Fcy = 40 MHz (cada instruccion dos ciclos de reloj)
 		// Por tanto, Tcy= 25 ns para ejecutar una instruccion
         // Para contar 20 ms se necesitan 800.000 ciclos.
-		// Posteriormente, el valor de PR8 ira cambiando.
     
     T9CONbits.TCKPS = 2;	// escala del prescaler 1:64
     
     IEC3bits.T9IE = 0;      // deshabilitar la interrupcion general de T9
     IFS3bits.T9IF = 0;      // Puesta a 0 del flag IF del temporizador 9
     
-    T9CONbits.TON = 1;	// encender el timer
+    T9CONbits.TON = 0;	// dejar apagado el timer
 }
 
-// Pone en marcha el temporizador T9
+// Puesta en marcha del temporizador T9
 void restart_Timer9_CPU()
 {
     TMR9 = 0; // Inicializar el registro de cuenta
-    T9CONbits.TON = 1;	// encender el timer
+    T9CONbits.TON = 1;	// encender el temporizador
 }
 
-// Detiene el temporizador T9
+// Detiene el temporizador T9, poniendo ademas a 0 su flag IF
 void stop_Timer9_CPU()
 {
-    IFS3bits.T9IF = 0;      // Puesta a 0 del flag IF del temporizador 9
-    T9CONbits.TON = 0;	// encender el timer
+    IFS3bits.T9IF = 0;  // Puesta a 0 del flag IF del temporizador 9 (se marca la interrupcion como atendida)
+    T9CONbits.TON = 0;	// apagar el temporizador
 }
-
-
 
 //Espera un determinado numero de milisegundos
 void Delay_ms(unsigned int ms){
@@ -126,8 +125,7 @@ void Delay_ms(unsigned int ms){
         inic_Timer9_delay(ciclos);// inicializa el T9
         
         while(!IFS3bits.T9IF); // espera a que el temporizador indique que ha finalizado
-        IFS3bits.T9IF = 0; // se marca la interrupcion como atendida
-        T9CONbits.TON = 0; // apagar el temporizador
+        stop_Timer9_CPU(); // Detener el temporizador
     }else{ // Valor de tiempo de espera superior a lo contemplado
         LATAbits.LATA4=!LATAbits.LATA4; // Se conmuta el LED D7 (RA4)
         while(1); //espera infinita para advertir del error
@@ -142,14 +140,14 @@ void Delay_us(unsigned int us){
         inic_Timer9_delay(ciclos);// inicializa el T9
         
         while(!IFS3bits.T9IF); // espera a que el temporizador indique que ha finalizado
-        IFS3bits.T9IF = 0; // se marca la interrupcion como atendida
-        T9CONbits.TON = 0; // apagar el temporizador
+        stop_Timer9_CPU(); // Detener el temporizador
     }else{ // Valor de tiempo de espera superior a lo contemplado
         LATAbits.LATA5=!LATAbits.LATA5; // Se conmuta el LED D8 (RA5)
         while(1); //espera infinita para advertir del error
     }
 }
 
+//Inicializacion del modulo T7 para que gestione el paso del tiempo mediante el cronometro
 void inic_Timer7_crono ()
 {
     //Inicializar modulo T7
@@ -170,6 +168,7 @@ void inic_Timer7_crono ()
     T7CONbits.TON = 1;	// encender el timer
 }	
 
+// Interrupcion del modulo T7
 void _ISR_NO_PSV _T7Interrupt()
 {
     //Han pasado 10 milesimas de segundo
@@ -177,9 +176,9 @@ void _ISR_NO_PSV _T7Interrupt()
     IFS3bits.T7IF = 0;      // Puesta a 0 del flag IF del temporizador 7
 }
 
-void inic_crono()	
 // Inicializacion de las variables del cronometro: 
 // milesimas de segundo (mili), decimas de segundo (deci), segundos (seg) y minutos (min)
+void inic_crono()	
 {
 	mili=0;
     deci=0;
@@ -188,9 +187,9 @@ void inic_crono()
 }
 
 
-void cronometro()	
 // control del tiempo (se actualiza cada 10 ms)
 // inicializar cronometro: si el flag inicializar_crono esta activado, inicializa el cronometro
+void cronometro()	
 {
     if(inicializar_crono)
     {
@@ -237,6 +236,7 @@ void cronometro()
     }
 }
 
+// Inicializacion del modulo T5 para que gestione el refresco distribuido
 void inic_Timer5_LCD ()
 {
     //Inicializar modulo T5
@@ -257,11 +257,12 @@ void inic_Timer5_LCD ()
     T5CONbits.TON = 1;	// encender el timer
 }	
 
+// Rutina de atencion a la interrupcion del modulo T5: se encarga de refrescar la informacion en la pantalla
 void _ISR_NO_PSV _T5Interrupt()
 {
     static unsigned int estado_LCD = LCD_LINE1;
     static int i = 0;
-    switch (estado_LCD){
+    switch (estado_LCD){ //Segun el estado se llevan a cabo las acciones correspondientes
         case LCD_LINE1: //Posicionamiento en la primera linea
             lcd_cmd(0x80);  	// Set DDRAM address (@0)
             estado_LCD = LCD_DATA1; // Cambio de estado, suguiente: envio de datos de la primera linea
@@ -293,6 +294,8 @@ void _ISR_NO_PSV _T5Interrupt()
     IFS1bits.T5IF = 0;      // Puesta a 0 del flag IF del temporizador 5
 }
 
+
+// Inicializacion del temporizador T3 para la gestion del modulo ADC1
 void inic_Timer3_ADC()
 {
     //Inicializar modulo T3
@@ -313,7 +316,7 @@ void inic_Timer3_ADC()
     T3CONbits.TON = 1;	// encender el timer
 }
 
-
+// inicializacion del modulo T2 para la gestion de los modulos OC1, OC2, OC3 y OC4
 void inic_Timer2_OCx(){
     //Inicializar modulo T2
     TMR2 = 0; // Inicializar el registro de cuenta
@@ -334,6 +337,7 @@ void inic_Timer2_OCx(){
     T2CONbits.TON = 1;	// encender el timer
 }
 
+// Inicializacion del modulo T4 para la gestion del movimiento de los servos
 void inic_Timer4_movservos ()
 {
     //Inicializar modulo T4
@@ -356,7 +360,8 @@ void inic_Timer4_movservos ()
 
 
 /**
- * Mueve el servo correspondiente al duty num_duty a la posicion objetivo
+ * Rutina de atencion del modulo T4
+ * Mueve el servo correspondiente a la posicion objetivo
  */
 void _ISR_NO_PSV _T4Interrupt(){
     
@@ -417,8 +422,6 @@ void _ISR_NO_PSV _T4Interrupt(){
     }
 
     if (reached == 5){
-        
-        //reached=0;
         
         T4CONbits.TON = 0;	// apagar el timer
     }

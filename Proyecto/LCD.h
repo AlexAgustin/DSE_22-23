@@ -1,10 +1,12 @@
-//Exporta la funcion y las variables relacionadas con LCD usadas en otros modulos
+//Exporta las funciones y las variables relacionadas con LCD usadas en otros modulos
 
-// FUNCION
-// declaracion de la funcion relacionada con LCD
-// que se usa en otros modulos
+// FUNCIONES
+// declaracion de las funciones relacionadas con LCD
+// que se usan en otros modulos
 //=========================================================
 void Init_LCD();
+void lcd_data (char data);
+void lcd_cmd (char cmd);
 
 // VARIABLES
 // variables que se usan en otros ficheros
