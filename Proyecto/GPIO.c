@@ -1,14 +1,16 @@
 /*
-Funciones de inicializacion y tratamiento de leds y pulsadores
+Contiene las funciones de inicializacion y tratamiento de leds y pulsadores.
 
 Autores: Alex y Amanda
-Fecha: Febrero 2023
+Fecha: mayo 2023
 */
 
 
 #include "p24HJ256GP610A.h"
 #include "commons.h"
 
+// Funcion para inicializar los pulsadores
+//==================
 void inic_pulsadores ()
 {
 	// Definir pines AN16 - AN31 como pines digitales para evitar problemas
@@ -19,17 +21,21 @@ void inic_pulsadores ()
 	el pulsador S5 esta siempre pulsado aunque no sea asi
 	*/
    	
-	// Definir los pines de los pulsadores S3, S4, S5, S6 y el gatillo del Joystick como entrada
-	// S6(RD7),  S4(RD13), S3 (RD6), S5 (RA7), gatillo del Joystick (RD14)
+	// Definir los pines de los pulsadores S3, S4, S5, S6 y el boton central del Joystick como entrada
+	// S6(RD7),  S4(RD13), S3 (RD6), S5 (RA7), boton central del Joystick (RD14)
     TRISDbits.TRISD6 = 1;   // S3
     TRISDbits.TRISD13 = 1;  // S4
     TRISDbits.TRISD7 = 1;   // S6
     TRISAbits.TRISA7 = 1;   // S5
-    TRISDbits.TRISD14 = 1;  // Gatillo del Joystick
+    TRISDbits.TRISD14 = 1;  // boton central del Joystick
 }
 
+// Funcion para inicializar los leds
+//==================
 void inic_leds()
 {
   TRISA = 0xff00; // Definir como salidas los 8 pines conectados a leds: RA7-RA0		  // El resto como entradas: 1 = In; 0 = Out
+  Nop(); 
+  Nop();
   LATA=LATA & 0xff00; 	// Apagar los leds	
 }

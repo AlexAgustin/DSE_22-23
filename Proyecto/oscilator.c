@@ -1,5 +1,5 @@
 /*
-Contiene las funciones asociadas al modulo oscilator (inicializacion).
+Contiene la funcion asociada a la inicializacion del modulo oscilator.
 
 Autores: Alex Agustin y Amanda Sin
 Fecha: Febrero 2023
@@ -19,7 +19,8 @@ Fecha: Febrero 2023
 # pragma config POSCMD=XT      //XT oscillator
 # pragma config FWDTEN=OFF     //Watchdog Timer: Disabled
 
-
+// Funcion para inicializar el modulo oscilator
+//==================
 void inic_oscilator ()
 {
 

@@ -1,9 +1,13 @@
 /*
 Funciones para utilizar el sensor de distancia.
+================================================
 
-Contiene las funciones para gestionar la medicion de la distancia, 
-iniciar la medicion, leer la medicion, 
-cambiar la direccion del sensor y detectar la direccion del sensor.
+Contiene las funciones para 
+- gestionar la medicion de la distancia (lectura + inic)
+- iniciar la medicion
+- leer la medicion
+- cambiar la direccion del sensor 
+- detectar la direccion del sensor
 
 Autoras/es: Alex y Amanda
 
@@ -21,10 +25,11 @@ Fecha: Marzo 2023
 unsigned int flag_dis = 0;
 unsigned int dis_media = 11;
 
-//Gestionar la medicion de la distancia
+
 void gestion_dis(unsigned char dirI2C)
+ // Funcion para gestionar la medicion de la distancia:
+ // lectura de la distancia media e inicializacion de una nueva medicion  
 {
-    
     unsigned char dis[2];
 
     if (leer_medicion(dirI2C,dis)) { // Lectura de la distancia media
@@ -48,8 +53,9 @@ void gestion_dis(unsigned char dirI2C)
 unsigned int inic_medicion_dis (unsigned char dirI2C)
  // Puesta en marcha de una medicion
  // Parametro dirI2C corresponde a la direccion I2C del sensor
-{ //Mandar al registro 0 (comandos) del esclavo (dirI2C)
-    return (LDByteWriteI2C_1(dirI2C,REG_COM,0x51)); //el comando para que de los resultados en cm (0x51).
+ // Mandar al registro 0 (comandos) del esclavo (dirI2C)
+{
+    return (LDByteWriteI2C_1(dirI2C,REG_COM,0x51)); //Escribir el comando para que de los resultados en cm (0x51).
 }
 
 unsigned int leer_medicion (unsigned char dirI2C, unsigned char *dis) 
@@ -98,7 +104,7 @@ unsigned int detectar_direccion (unsigned char *dirI2C)
             return (0);
         }
     }
-    //Comportamiento inesperado
+    // No ha respondido ningun sensor
     return(1);
 }
 

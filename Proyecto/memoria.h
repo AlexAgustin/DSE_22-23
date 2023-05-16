@@ -1,6 +1,9 @@
-//Exporta variables y funciones utilizadas externamente
-// variables
+//La variable y la funcion a exportar a otros modulos.
 
+// VARIABLE
+//=========================================================
 extern unsigned char Ventana_LCD[NFILAS][NCOLUMNAS];
-void actualizar_Ventana_LCD(); //unsigned char * dir
-void gestion_cont(unsigned long cont);
+
+// FUNCION
+//=========================================================
+void actualizar_Ventana_LCD();

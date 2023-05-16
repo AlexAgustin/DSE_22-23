@@ -1,6 +1,6 @@
 /*
-Funciones relacionadas con el modulo CN: inicializacion del modulo
-y rutina de atencion.
+Contiene las funciones relacionadas con el modulo CN: 
+inicializacion del modulo y rutina de atencion.
 
 Autores: Alex y Amanda
 Fecha: Marzo 2023
@@ -13,6 +13,7 @@ Fecha: Marzo 2023
 #include "LCD.h"
 
 int cont3=0, cont4=0, cont5=0, cont6=0;
+
 // Funcion para inicializar el modulo CN
 //==================
 void inic_CN()
@@ -28,10 +29,6 @@ void inic_CN()
 
     CNEN2bits.CN16IE = 1;	// habilitacion de la interrupcion del pin CN16
                             // que es al que esta conectado el pulsador S6
-    
-    //CNEN2bits.CN20IE = 1;   // habilitacion de la interrupcion del pin CN20
-                            // que es al que esta conectado el pulsador del joystick
-    
     
 	IEC1bits.CNIE = 1;      // habilitacion de la interrupcion general de CN
 	IFS1bits.CNIF = 0;      // Puesta a 0 del flag IF del modulo
@@ -64,17 +61,11 @@ void _ISR_NO_PSV _CNInterrupt()
     }
     if(!PORTDbits.RD7)     //pulsador S6
 	{
-        // se ha pulsado S6
-		//reset del crono
+        // se ha pulsado S6: reset del crono
         inicializar_crono = 1; // Poner a 1 el flag para inicializar el cronometro
         cont6 ++; //se suma uno al contador de interrupciones recibidas (S6)
 	}
-    /*if(!PORTDbits.RD14)     //pulsador joystick
-	{
-        // se ha pulsado el gatillo del joystick
-        flag_posicion_segura=1; //se pone a uno el flag que hara que el brazo robotico se mueva a una posicion segura
-        cont6 ++; //se suma uno al contador de interrupciones recibidas (S6)
-	}*/
+
 	IFS1bits.CNIF = 0;	//se marca que la interrupcion ha sido atendida	
 }
 
