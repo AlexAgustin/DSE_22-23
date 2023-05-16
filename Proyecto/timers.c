@@ -364,79 +364,75 @@ void inic_Timer4_movservos ()
  * Mueve el servo correspondiente a la posicion objetivo
  */
 void _ISR_NO_PSV _T4Interrupt(){
-    
+    // Se incrementa / decrementa el valor del servo en funcion de la diferencia respectoa a la posicion objetivo
+    // Si la diferencia es mayor que 5, se incrementa / decrementa en 5 unidades
+    // Sino, se asigna el valor de manera directa.
+
     //Caso: duty 0
-    if((duty[DUTY0] + 5) < objetivopwm[DUTY0]) duty[DUTY0] += 5;
-    else if ((duty[DUTY0] - 5) > objetivopwm[DUTY0]) duty[DUTY0] -= 5;
+    if((duty[DUTY0] + 5) < objetivopwm[DUTY0]) duty[DUTY0] += 5; // Caso: incrementar 5 a duty0
+    else if ((duty[DUTY0] - 5) > objetivopwm[DUTY0]) duty[DUTY0] -= 5; // Caso: decrementar 5 a duty0
     else if(duty[DUTY0] != objetivopwm[DUTY0]) {
         duty[DUTY0] = objetivopwm[DUTY0];
-        Nop();
-        Nop();
         reached++;
     }
     
     //Caso: duty 1
     if (dis_media>=CHOQUE && !flag_inic_pwm){
-        if((duty[DUTY1] + 5) < objetivopwm[DUTY1]) duty[DUTY1] += 5;
-        else if ((duty[DUTY1] - 5) > objetivopwm[DUTY1]) duty[DUTY1] -= 5;
-        else if(duty[DUTY1] != objetivopwm[DUTY1]) {
-            duty[DUTY1] = objetivopwm[DUTY1];
-            Nop();
-            Nop();
-            reached++;
+        if((duty[DUTY1] + 5) < objetivopwm[DUTY1]) duty[DUTY1] += 5; // Caso: incrementar 5 a duty1
+        else if ((duty[DUTY1] - 5) > objetivopwm[DUTY1]) duty[DUTY1] -= 5;// Caso: decrementar 5 a duty1
+        else if(duty[DUTY1] != objetivopwm[DUTY1]) { // Si el servo no esta en la posicion objetivo (diferencia <= 5)...
+            duty[DUTY1] = objetivopwm[DUTY1]; //Guardar valor de manera directa
+            reached++; //Actualizar cantidad de servos en su posicion objetivo
         }
     }
     
     //Caso: duty 2
     if (dis_media>=CHOQUE && !flag_inic_pwm){
-        if((duty[DUTY2] + 5) < objetivopwm[DUTY2]) duty[DUTY2] += 5;
-        else if ((duty[DUTY2] - 5) > objetivopwm[DUTY2]) duty[DUTY2] -= 5;
-        else if(duty[DUTY2] != objetivopwm[DUTY2]) {
-            duty[DUTY2] = objetivopwm[DUTY2];
-            Nop();
-            Nop();
-            reached++;
+        if((duty[DUTY2] + 5) < objetivopwm[DUTY2]) duty[DUTY2] += 5;// Caso: incrementar 5 a duty2
+        else if ((duty[DUTY2] - 5) > objetivopwm[DUTY2]) duty[DUTY2] -= 5; // Caso: decrementar 5 a duty2
+        else if(duty[DUTY2] != objetivopwm[DUTY2]) { // Si el servo no esta en la posicion objetivo (diferencia <= 5)...
+            duty[DUTY2] = objetivopwm[DUTY2]; //Guardar valor de manera directa
+            reached++; //Actualizar cantidad de servos en su posicion objetivo
         }
     }
 
     //Caso: duty 3
     if (dis_media>=CHOQUE && !flag_inic_pwm){
-        if((duty[DUTY3] + 5) < objetivopwm[DUTY3]) duty[DUTY3] += 5;
-        else if ((duty[DUTY3] - 5) > objetivopwm[DUTY3]) duty[DUTY3] -= 5;
-        else if(duty[DUTY3] != objetivopwm[DUTY3]) {
-            duty[DUTY3] = objetivopwm[DUTY3];
-            Nop();
-            Nop();
-            reached++;
+        if((duty[DUTY3] + 5) < objetivopwm[DUTY3]) duty[DUTY3] += 5; // Caso: incrementar 5 a duty3
+        else if ((duty[DUTY3] - 5) > objetivopwm[DUTY3]) duty[DUTY3] -= 5; // Caso: decrementar 5 a duty3
+        else if(duty[DUTY3] != objetivopwm[DUTY3]) { // Si el servo no esta en la posicion objetivo (diferencia <= 5)...
+            duty[DUTY3] = objetivopwm[DUTY3]; //Guardar valor de manera directa
+            reached++; //Actualizar cantidad de servos en su posicion objetivo
         } 
     }
 
     //Caso: duty 4
-    if((duty[DUTY4] + 5) < objetivopwm[DUTY4]) duty[DUTY4] += 5;
-    else if ((duty[DUTY4] - 5) > objetivopwm[DUTY4]) duty[DUTY4] -= 5;
-    else if(duty[DUTY4] != objetivopwm[DUTY4]) {
-        duty[DUTY4] = objetivopwm[DUTY4];
-        Nop();
-        Nop();
-        reached++;
+    if((duty[DUTY4] + 5) < objetivopwm[DUTY4]) duty[DUTY4] += 5; // Caso: incrementar 5 a duty4
+    else if ((duty[DUTY4] - 5) > objetivopwm[DUTY4]) duty[DUTY4] -= 5; // Caso: decrementar 5 a duty4
+    else if(duty[DUTY4] != objetivopwm[DUTY4]) { // Si el servo no esta en la posicion objetivo (diferencia <= 5)...
+        duty[DUTY4] = objetivopwm[DUTY4]; //Guardar valor de manera directa
+        reached++; //Actualizar cantidad de servos en su posicion objetivo
     }
 
-    if (reached == 5){
+    if (reached == 5){ // Si todos los servos han alcanzado su posicion objetivo...
         
         T4CONbits.TON = 0;	// apagar el timer
     }
+
     if(flag_inic_pwm) flag_inic_pwm=0;
     
     if (flag_calib) flag_Duty_LCD=VERCALIB;
-    else flag_Duty_LCD= VERDUTYALL;
+    else flag_Duty_LCD = VERDUTYALL;
     IFS1bits.T4IF = 0;      // Puesta a 0 del flag IF del temporizador 4
 }
 
+//Poner en marcha modulo T4
 void restart_Timer4_movservos(){
     TMR4 = 0; // Inicializar el registro de cuenta
     T4CONbits.TON = 1;	// encender el timer T4
 }
 
+//Inicializacion del modulo T8 (gestion senhales PWM)
 void inic_Timer8_PWM(){
     //Inicializar modulo T8
     TMR8 = 0; // Inicializar el registro de cuenta
@@ -458,47 +454,48 @@ void inic_Timer8_PWM(){
     T8CONbits.TON = 1;	// encender el timer
 }
 
+//Rutina de atencion  la interrupcion del modulo T8
 void _ISR_NO_PSV _T8Interrupt(){
     
     static int sum = 0;
     
     switch (estado_PWM){
         case PWM0_ACTIVE: //Activar PWM (0)
-            LATDbits.LATD8 = 1; // Puesta a 1 (RE10)
+            LATDbits.LATD8 = 1; // Puesta a 1 (RD8)
             PR8 = duty[DUTY0]; //Determinar periodo del temporizador 8 a partir de duty0
             sum=duty[DUTY0]; // Guardar ciclos transcurridos
             estado_PWM = PWM1_ACTIVE; // Estado siguiente: activar PWM (1)
             break;
         case PWM1_ACTIVE: //Activar PWM (1)
-            LATDbits.LATD8 = 0; // Puesta a 0 (RE10)
-            LATDbits.LATD9 = 1; // Puesta a 1 (RE11)
+            LATDbits.LATD8 = 0; // Puesta a 0 (RD8)
+            LATDbits.LATD9 = 1; // Puesta a 1 (RD9)
             PR8 = duty[DUTY1]; //Determinar periodo del temporizador 8 a partir de duty1
             sum+=duty[DUTY1]; // Acumular ciclos transcurridos
             estado_PWM = PWM2_ACTIVE; // Estado siguiente: senhales desactivadas
             break;
         case PWM2_ACTIVE: //Activar PWM (2)
-            LATDbits.LATD9 = 0; // Puesta a 0 (RE11)
-            LATDbits.LATD10 = 1; // Puesta a 1 (RE12)
+            LATDbits.LATD9 = 0; // Puesta a 0 (RD9)
+            LATDbits.LATD10 = 1; // Puesta a 1 (RD10)
             PR8 = duty[DUTY2]; //Determinar periodo del temporizador 8 a partir de duty2
             sum+=duty[DUTY2]; // Acumular ciclos transcurridos
             estado_PWM = PWM3_ACTIVE; // Estado siguiente: senhales desactivadas
             break;
         case PWM3_ACTIVE: //Activar PWM (3)
-            LATDbits.LATD10 = 0; // Puesta a 0 (RE12)
-            LATDbits.LATD11 = 1; // Puesta a 1 (RE13)
+            LATDbits.LATD10 = 0; // Puesta a 0 (RD10)
+            LATDbits.LATD11 = 1; // Puesta a 1 (RD11)
             PR8 = duty[DUTY3]; //Determinar periodo del temporizador 8 a partir de duty3
             sum+=duty[DUTY3]; // Acumular ciclos transcurridos
             estado_PWM = PWM4_ACTIVE; // Estado siguiente: senhales desactivadas
             break;
         case PWM4_ACTIVE: //Activar PWM (4)
-            LATDbits.LATD11 = 0; // Puesta a 0 (RE13)
-            LATDbits.LATD12 = 1; // Puesta a 1 (RE14)
+            LATDbits.LATD11 = 0; // Puesta a 0 (RD11)
+            LATDbits.LATD12 = 1; // Puesta a 1 (RD12)
             PR8 = duty[DUTY4]; //Determinar periodo del temporizador 8 a partir de duty4
             sum+=duty[DUTY4]; // Acumular ciclos transcurridos
             estado_PWM = PWM_RESTO; // Estado siguiente: senhales desactivadas
             break;
         case PWM_RESTO: // Senhales desactivadas
-            LATDbits.LATD12 = 0; // Puesta a 0 (RE14)
+            LATDbits.LATD12 = 0; // Puesta a 0 (RD12)
             PR8 = (PR20ms-sum); // Determinar periodo del temporizador 8 a partir de los ciclos restantes
             estado_PWM = PWM0_ACTIVE; // Estado siguiente: activar PWM (0)
             break;
@@ -508,6 +505,7 @@ void _ISR_NO_PSV _T8Interrupt(){
     IFS3bits.T8IF = 0;      // Puesta a 0 del flag IF del temporizador 8
 }
 
+//Inicializacion del modulo T6 (gestion distancia)
 void inic_Timer6_dis(){
     //Inicializar modulo T6
     TMR6 = 0; // Inicializar el registro de cuenta
@@ -528,13 +526,14 @@ void inic_Timer6_dis(){
     T6CONbits.TON = 1;	// encender el timer T6
 }
 
+// Rutina de atencion a la interrupcion de T6
 void _ISR_NO_PSV _T6Interrupt(){
     flag_dis = 1; //Poner a 1 el flag para realizar la medicion de la distancia
     T6CONbits.TON = 0;	// apagar el timer T6
     IFS2bits.T6IF = 0;      // Puesta a 0 del flag IF del temporizador 6
 }
 
-
+// Poner en marcha T6
 void restart_Timer6_dis(){
     TMR6 = 0; // Inicializar el registro de cuenta
     T6CONbits.TON = 1;	// encender el timer T6
