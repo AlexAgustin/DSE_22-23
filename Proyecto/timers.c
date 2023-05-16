@@ -1,4 +1,7 @@
 /* 
+Funciones relacionadas con los temporizadores
+=================================================
+
 Por un lado, contiene las funciones asociadas al modulo T9 (inicializacion y reinicializacion), 
 a las esperas de un determinado numero de milisegundos y microsegundos y a la puesta en marcha / detencion del modulo T9.
 
@@ -7,7 +10,7 @@ y a su correspondiente cronometro (inicializacion y gestion del paso del tiempo)
 
 Por otro lado, contiene la funcion para inicializar el modulo T5 y su correspondiente rutina de atencion.
 
-Ademas, contiene las funciones para inicializar los modulo T2 y T3.
+Ademas, contiene las funciones para inicializar los modulos T2 y T3.
 
 Por otro lado, contiene las funciones asociadas al modulo T4 (inicializacion, rutina de atencion y puesta en marcha).
  
@@ -46,9 +49,9 @@ Fecha: Mayo 2023
 
 //Variables globales
 //===================
-int inicializar_crono = 0;
-unsigned int mili,deci,seg,min;
-unsigned int reached=5;
+int inicializar_crono = 0; //Flag para inicializar el cronometro
+unsigned int mili,deci,seg,min; //Variables del cronometro
+unsigned int reached=5; //Cantidad de servos que han alcanzado su posicion debida
 
 
 //Funciones
@@ -532,7 +535,7 @@ void inic_Timer6_dis(){
 
 // Rutina de atencion a la interrupcion de T6
 void _ISR_NO_PSV _T6Interrupt(){
-    flag_dis = 1;       //Poner a 1 el flag para realizar la medicion de la distancia
+    flag_dis = 1;       //Poner a 1 el flag para realizar la gestion de la distancia (lectura + inic)
     T6CONbits.TON = 0;	// apagar el timer T6
     IFS2bits.T6IF = 0;  // Puesta a 0 del flag IF del temporizador 6
 }

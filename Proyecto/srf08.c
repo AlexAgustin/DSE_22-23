@@ -9,7 +9,7 @@ Contiene las funciones para
 - detectar la direccion del sensor
 
 Autores: Alex y Amanda
-Fecha: Marzo 2023
+Fecha: Mayo 2023
 */
 
 #include "p24HJ256GP610A.h"
@@ -20,8 +20,8 @@ Fecha: Marzo 2023
 #include "utilidades.h"
 #include "srf08.h"
 
-unsigned int flag_dis = 0;
-unsigned int dis_media = 11;
+unsigned int flag_dis = 0; //Indica que ha finalizado una medicion de la distancia
+unsigned int dis_media = 11; //Distancia media
 
  /*Funcion para gestionar la medicion de la distancia:
  * lectura de la distancia media e inicializacion de una nueva medicion */

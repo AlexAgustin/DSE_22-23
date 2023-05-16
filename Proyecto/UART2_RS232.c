@@ -17,7 +17,7 @@ Fecha: Mayo 2023
 #define UART_HOME 0
 #define UART_DATA 1
 
-unsigned int flag_exit = 0;
+unsigned int flag_exit = 0; //Flag para finalizar el programa (1)
 
 
 // Funcion que inicializa el modulo UART2
@@ -226,7 +226,7 @@ void _ISR_NO_PSV _U2RXInterrupt()
         case 'l':  
             //si es l, se mueve el servo decrementando el valor de duty[DUTY1] (-5) 
             // si no se esta calibrando
-            // si no hay riesgo de choque (dis_media>=CHOQUE
+            // si no hay riesgo de choque (dis_media>=CHOQUE)
             // si al moverlo se seguirian respetando los limites (>= duty_min) y
             // si el servo no esta en movimiento actualmente (!flag_busy) ni se esta realizando la rutina canina
             if(!flag_calib && !flag_rutina_perro && !flag_busy && duty[DUTY1]-5>=duty_min[DUTY1] && dis_media>=CHOQUE) { // realizar comprobaciones
@@ -237,7 +237,7 @@ void _ISR_NO_PSV _U2RXInterrupt()
             break;
         case 'w': 
             //si es w, se mueve el servo decrementando el valor de duty[DUTY2] (-5) 
-           // si no hay riesgo de choque (dis_media>=CHOQUE
+           // si no hay riesgo de choque (dis_media>=CHOQUE)
             // si no se esta calibrando
             // si al moverlo se seguirian respetando los limites (>= duty_min) 
             // si flag_DUTY == 1 (se gestiona duty2 por UART) y
@@ -251,7 +251,7 @@ void _ISR_NO_PSV _U2RXInterrupt()
         case 'a': 
             //si es a, se mueve el servo decrementando el valor de duty[DUTY3] (-5) 
             // si no se esta calibrando
-            // si no hay riesgo de choque (dis_media>=CHOQUE
+            // si no hay riesgo de choque (dis_media>=CHOQUE)
             // si al moverlo se seguirian respetando los limites (>= duty_min) y
             // si el servo no esta en movimiento actualmente (!flag_busy) ni se esta realizando la rutina canina
             if(!flag_calib && !flag_rutina_perro && !flag_busy && duty[DUTY3]-5>=duty_min[DUTY3] && dis_media>=CHOQUE) {  // realizar comprobaciones
@@ -261,7 +261,7 @@ void _ISR_NO_PSV _U2RXInterrupt()
             }
             break;
         case 's': 
-            //si es S, se mueve el servo decrementando el valor de duty[DUTY4] (-5) 
+            //si es s, se mueve el servo decrementando el valor de duty[DUTY4] (-5) 
             // si no se esta calibrando
             // si al moverlo se seguirian respetando los limites (>= duty_min) 
             // si flag_DUTY == 1 (se gestiona duty4 por UART) y

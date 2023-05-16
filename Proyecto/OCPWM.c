@@ -1,4 +1,4 @@
-/* Funciones para la gestion de las senhales PWM
+/* Funciones para la gestion de las senhales PWM (incluye modulos OC)
 ================================================
 Contiene las siguientes funciones:
  * -Inizalizacion de los modulos OC (1, 2, 3 y 4)
@@ -27,21 +27,21 @@ Fecha: Mayo 2023
 #define SHAKEIT_R 4
 #define ENDRUTINA 5
 
-unsigned int estado_PWM;
+unsigned int estado_PWM; //Estado del automata que gestiona las senhales PWM
 
 unsigned int flag_DUTY = 1;     // duty se gestionara por defecto a traves de UART
 unsigned int flag_Duty_LCD;     // cuando duty cambia, se hace la conversion para visualizarlo en la pantalla 
 unsigned int flag_calib = 1;    //permite realizar el calibrado
 unsigned int flag_posicion_segura=0;    //se lleva el brazo a una posicion segura para apagar si el flag esta a 1 (desde el programa principal)
 unsigned int flag_rutina_perro = 0;     // el brazo realiza una rutina de entrenamiento canino
-unsigned int flag_inic_pwm=0;
+unsigned int flag_inic_pwm=0; //Se pone a 1 en la inicializacion de las variables asociadas a las senhales PWM
 
 
-unsigned int duty[5];
-unsigned int objetivopwm[7];
-unsigned int duty_min[5];
-unsigned int duty_max[5];
-unsigned int duty_seguro[5]={SECURE_DUTY_0,SECURE_DUTY_1,SECURE_DUTY_2,SECURE_DUTY_3,SECURE_DUTY_4};
+unsigned int duty[5]; //Valores de los duty's asociados a las senhales PWM
+unsigned int objetivopwm[7]; //Valores "objetivo" de los duty's asociados a las senhales PWM
+unsigned int duty_min[5]; //Valores minimos de los duty's
+unsigned int duty_max[5]; //Valores maximos de los duty's
+unsigned int duty_seguro[5]={SECURE_DUTY_0,SECURE_DUTY_1,SECURE_DUTY_2,SECURE_DUTY_3,SECURE_DUTY_4}; //Valores de los duty's asociados a una posicion segura
 
 void mover_servo(unsigned int num_duty, unsigned int objetivo);
 void posicion_segura();
@@ -277,7 +277,7 @@ void posicion_segura(){
     if (reached != 5) restart_Timer4_movservos();  // Si la cantidad de servos que se encuentran en su posicion segura no es 5 => gestionar movimiento seguro de servos
 }
 
-// Funion que da lugar a la realizacion de una rutina canina
+// Funion que da lugar a la realizacion de una rutina canina de entrenamiento
 void rutina_perro () {
     static unsigned int estado_rutina_perro=SIT;
     static unsigned int shakes=0;

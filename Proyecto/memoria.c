@@ -13,6 +13,7 @@ Fecha: Mayo 2023
 #include "commons.h"
 #include "utilidades.h"
 
+//Variable que contiene toda la informacion de control a visualizar en pantalla (LCD/UART)
 unsigned char Ventana_LCD[NFILAS][NCOLUMNAS] = {
     {"- DSE 2022-23 --""\x0D\x0A"},
     {"Joy calib/S4 com""\x0D\x0A"},

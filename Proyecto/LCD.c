@@ -12,6 +12,7 @@ Fecha: Mayo 2023
 #include "commons.h"
 #include "timers.h"
 
+//filas de Ventana_LCD a mostrar en la LCD
 unsigned int fila1, fila2;
 
 /*****	LCD SUBROUTINES  *****/ 

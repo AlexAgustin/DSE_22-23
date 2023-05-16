@@ -1,8 +1,8 @@
 /* Funciones para el modulo ADC1
 ================================================
- * Contiene las funciones de inicializacion del modulo ADC, comienzo del muestreo, 
+ * Contiene las funciones de inicializacion del modulo ADC1, comienzo del muestreo, 
  * tratamiento de valores (obtener medias y guardarlas en las posiciones debidas de Ventana_LCD 
- * + gestion de servos) y la rutina de atencion.
+ * + gestion de servos y ruedas) y la rutina de atencion.
 Autores: Alex y Amanda
 Fecha: Mayo 2023
 */
@@ -14,13 +14,13 @@ Fecha: Mayo 2023
 #include "OCPWM.h"
 #include "timers.h"
 
-unsigned int Poten_value[8];
-unsigned int Temp_value[8];
-unsigned int X_value[8];
-unsigned int Y_value[8];
-unsigned int Z_value[8];
-unsigned int flag_ADC =0;
-unsigned long num_conversiones=0;
+unsigned int Poten_value[8]; //Muestras del potenciometro
+unsigned int Temp_value[8]; //muestras de temperatura
+unsigned int X_value[8]; //muestras de coord X
+unsigned int Y_value[8]; //muestras de coord Y
+unsigned int Z_value[8]; // Muestras de coord Z
+unsigned int flag_ADC =0; // Indica si se han tomado todas las muestras (1)
+unsigned long num_conversiones=0; //Cantidad de conversiones realizadas
 
 
 /*Inicializacion del modulo ADC1 para la recogida de 5 entradas analogicas

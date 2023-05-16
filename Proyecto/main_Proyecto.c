@@ -19,7 +19,7 @@ A partir de este punto se permite la interrupcion de los pulsadores S3, S4, S5 y
 * pulsador S6 -> inicializar cronometro (puesta a 0)
 
 Ademas, visualizamos en el ordenador (a traves del emisor de UART2) la informacion que mandamos a la LCD.
-10 teclas presionadas en el PC tienen efecto sobre el programa gracias al receptor del modulo UART2: 
+30 teclas presionadas en el PC tienen efecto sobre el programa gracias al receptor del modulo UART2: 
  * I e i, inicializar el crono.
  * P y p, parar el crono.
  * C y c, poner en marcha el crono. 

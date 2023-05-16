@@ -1,3 +1,11 @@
+/* Definiciones generales a exportar a otros modulos
+================================================
+
+Autores: Alex y Amanda
+Fecha: Mayo 2023
+*/
+
+
 // definiciones generales 
 //=========================================================
 #define Nop()   __builtin_nop()
@@ -138,7 +146,7 @@
 #define DUTY3 3
 #define DUTY4 4
 
-// Definiciones relacionadas con el bus I2C
+// Definiciones relacionadas con el bus I2C y la distancia
 //==========================================
 #define newdirsI2C 0xFC //Direccion a asignar al sensor
 #define REG_COM 0 //Registro de comandos

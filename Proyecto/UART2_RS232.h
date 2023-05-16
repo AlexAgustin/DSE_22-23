@@ -8,9 +8,9 @@ Fecha: Mayo 2023
 
 // FUNCION
 //=========================================================
-void inic_UART2 (); // funcion que se utiliza desde otros modulos
+void inic_UART2 (); // funcion que se utiliza desde otros modulos (inicializacion)
 
 // VARIABLE 
 //=========================================================
-extern unsigned int flag_exit; // variable que se usa en otros ficheros
+extern unsigned int flag_exit; // variable que se usa en otros ficheros (finalizar el programa)
 

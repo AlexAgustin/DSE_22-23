@@ -1,5 +1,5 @@
 /* Funciones y variables a exportar a otros 
-modulos para trabajar con las señales PWM (incluye modulos OC)
+modulos para trabajar con las senhales PWM (incluye modulos OC)
 ================================================
 
 Autores: Alex y Amanda

@@ -17,5 +17,5 @@ void lcd_cmd (char cmd);    //Funcion para mandar un comando
 // VARIABLES
 // variables que se usan en otros ficheros
 //=========================================================
-extern unsigned int fila1, fila2;
+extern unsigned int fila1, fila2; //filas de Ventana_LCD a mostrar en la LCD
 
