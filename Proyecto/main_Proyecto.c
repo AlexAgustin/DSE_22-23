@@ -23,7 +23,7 @@ Ademas, visualizamos en el ordenador (a traves del emisor de UART2) la informaci
  * I e i, inicializar el crono.
  * P y p, parar el crono.
  * C y c, poner en marcha el crono. 
- * X y x, cambiar modo de gestion de los servos S1, S3, S5. Flag=0, gestion por entradas analogicas; flag=1, gestion por UART
+ * X y x, cambiar modo de gestion de los servos S1 (duty0), S3 (duty2), S5 (duty4). Flag=0, gestion por entradas analogicas; flag=1, gestion por UART
  * M, para incrementar el duty del servo que se este calibrando.
  * m, para decrementar el duty del servo que se este calibrando.
  * F y f, para fijar el valor del duty que se este calibrando.
@@ -39,13 +39,21 @@ Ademas, visualizamos en el ordenador (a traves del emisor de UART2) la informaci
  * s, mover el servo S5 decrementando duty4 (-5) si se respetan los limites (>= DUTY_MIN).
  * >, para hacer scroll hacia abajo en la pantalla LCD.
  * <, para hacer scroll hacia arriba en la pantalla LCD.
- * D y d, pera realizar la rutina canina.
+ * D y d, pera realizar la rutina canina de entrenamiento.
  * Z y z, para llevar el brazo a una posicion segura.
  * Q y q, para terminar el programa.
  * El resto de caracteres no afectaran al programa.
+
 Se mostrara la tecla presionada en la ultima posicion de la linea correspondinte al cronometro tanto en el modulo LCD como
 en la pantalla del PC.
 La velocidad de las ruedas depende de la media de la coordenada Y.
+
+Servos:
+S1 (duty0): puede gestionarse por potenciometro o UART. 
+S2 (duty1): puede gestionarse por UART. 
+S3 (duty2): puede gestionarse por coordenada X o UART. 
+S4 (duty3): puede gestionarse por UART. 
+S5 (duty4): puede gestionarse por coordenada Z o UART. 
 
 Autores: Alex Agustin y Amanda Sin
 Fecha: Mayo 2023
