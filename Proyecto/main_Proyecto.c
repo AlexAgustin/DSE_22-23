@@ -1,6 +1,6 @@
 /*
 Proyecta texto en la pantalla y queda a la espera de que se pulse el boton central del joystick (encuesta).
-Para actualizar la informacion en la pantalla LCD se da refresco distribuido.
+Mencionar que para actualizar la informacion en la pantalla LCD se da refresco distribuido.
 Una vez pulsado, entra en la fase de calibrado donde se pueden ajustar los valores maximo y minimo de cada servo y 
 queda a la espera de que se pulse S4 para inicializar el cronometro (encuesta de S4).
 Una vez pulsado, se inicializa el cronometro y se muestra tanto por pantalla como en los leds el 
@@ -8,7 +8,7 @@ tiempo transcurrido (led D3 -> ms, led D5 -> seg, led D9 -> min).
 Para visualizar mas informacion se habra de hacer scroll hacia abajo (S5) y hacia arriba (S4).
 Se mostrara la media de las 8 muestras tomadas de 5 entradas analogicas: potenciometro, temperatura, coordenadas X, Y e Z. 
 Se detecta la direccion del sensor conectado y se modifica su valor mediante la constante newdirsI2C (commons.h).
-Ademas, se mostrara la distacia recogida por el sensor. 
+Ademas, se mostrara la distacia recogida por el sensor, la cual condiciona el movimiento de algunos servos. 
 Mencionar que en esta version se gestionan 5 servomotores con un unico temporizador (T8), cuyos valores actuales, maximos y minimos
 pueden visualizarse.
 
@@ -45,6 +45,7 @@ Ademas, visualizamos en el ordenador (a traves del emisor de UART2) la informaci
  * El resto de caracteres no afectaran al programa.
 Se mostrara la tecla presionada en la ultima posicion de la linea correspondinte al cronometro tanto en el modulo LCD como
 en la pantalla del PC.
+La velocidad de las ruedas depende de la media de la coordenada Y.
 
 Autores: Alex Agustin y Amanda Sin
 Fecha: Mayo 2023
