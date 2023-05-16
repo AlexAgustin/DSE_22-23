@@ -1,10 +1,7 @@
 /**********************************************************************
 Funciones para utilizar LCD :
-	Inicializacion
-	Enviar un comando
-	Visualizar un dato
-	Visualizar un texto
-	Funciones especiales: posicionarse en linea 1 // posicionarse en linea 2
+-	Inicializacion
+-	Enviar un comando
 
 Autores: Alex y Amanda
 Fecha: Febrero 2023
@@ -17,6 +14,7 @@ Fecha: Febrero 2023
 unsigned int fila1, fila2;
 
 /*****	LCD SUBROUTINES  *****/ 
+//Subrutina para enviar un comando
 void lcd_cmd (char cmd)        // subroutine for lcd commands
 {
   RW = 0;             // RW=0, para escribir
@@ -31,23 +29,7 @@ void lcd_cmd (char cmd)        // subroutine for lcd commands
   RW = 1;		// desactivar escritura
 }
 
-
-void lcd_data (char data)      // subroutine for lcd data
-{
-  RW = 0;       	// RW=0, para escribir
-  RS = 1;            	// RS=1, se va a escribir un caracter
-  DATA &= 0xFF00;    	// pines RD0-RD7 (dato que se envia): poner a 0
-  DATA |= data;      	// copiar a esos pines el parametro data
-  E = 1;             	// E=1. Debe permanecer activado al menos 230 ns.
-
-  Nop();Nop();Nop();Nop();Nop();Nop();Nop();Nop();Nop();Nop(); //aseguramos el tiempo para que los datos esten estables
-  
-  E = 0;             	// desactivar E
-  RS = 0;            	// desactivar RS
-  RW = 1;		// desactivar escritura
-}
-
-
+//Inicializacion del modulo LCD
 void Init_LCD ()             // initialize LCD display
 {
   // 15mS delay after Vdd reaches nnVdc before proceeding 
@@ -84,27 +66,4 @@ void Init_LCD ()             // initialize LCD display
   //Inicializar las filas a mostrar en la LCD
   fila1=0;
   fila2=1;
-}
-
-
-void puts_lcd (unsigned char *data, unsigned char count) 
-{
-    while (count)
-    {
-        lcd_data(*data++); //se accede a data y se le suma 1 al puntero (se incrementa la direcion a la que se accede)
-        Delay_us (40);	// 40 us delay
-        count--;
-	}	
-}
-
-void line_1()
-{
-    lcd_cmd(0x80);  	// Set DDRAM address (@0)
-    Delay_us (40); 	// 40 us delay
-}
-
-void line_2()
-{
-    lcd_cmd(0xC0);  	// Set DDRAM address (@40)
-    Delay_us (40); 	// 40 us delay
 }

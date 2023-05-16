@@ -1,17 +1,19 @@
 /* 
-Por un lado, contiene las funciones asociadas al modulo T9 (inicializacion) y 
-a las esperas de un determinado numero de milisegundos y microsegundos.
+Por un lado, contiene las funciones asociadas al modulo T9 (inicializacion y reinicializacion), 
+a las esperas de un determinado numero de milisegundos y microsegundos y a la puesta en marcha / detencion del modulo T9.
 
 Ademas, contiene las funciones asociadas al modulo T7 (inicializacion y rutina de atencion) 
 y a su correspondiente cronometro (inicializacion y gestion del paso del tiempo).
 
 Por otro lado, contiene la funcion para inicializar el modulo T5 y su correspondiente rutina de atencion.
 
-Ademas, contiene la funcion para inicializar el modulo T3.
+Ademas, contiene las funciones para inicializar los modulo T2 y T3.
 
-Por otro lado, contiene las funciones asociadas al modulo T2 (inicializacion y rutina de atencion).
+Por otro lado, contiene las funciones asociadas al modulo T4 (inicializacion, rutina de atencion y puesta en marcha).
  
 Ademas, contiene las funciones asociadas al modulo T6 (inicializacion, rutina de atencion y puesta en marcha) 
+
+Por otro lado, contiene la funcion para inicializar el modulo T8 y su correspondiente rutina de atencion.
 
 Autores: Alex Agustin y Amanda Sin
 Fecha: Marzo 2023
@@ -29,6 +31,13 @@ Fecha: Marzo 2023
 #include "i2c_funciones.h"
 #include "UART2_RS232.h"
 
+// CONSTANTES
+//=========================================================
+#define LCD_LINE1 0
+#define LCD_DATA1 1
+#define LCD_LINE2 2
+#define LCD_DATA2 3
+
 #define OC1_ACTIVE 0
 #define OC2_ACTIVE 1
 #define OC3_ACTIVE 2
@@ -41,9 +50,7 @@ void cronometro();
 //Variables globales
 int inicializar_crono = 0;
 unsigned int mili,deci,seg,min;
-
 unsigned int reached=5;
-
 
 
 // inicializacion del timer 9
@@ -76,6 +83,7 @@ void inic_Timer9_delay(unsigned long ciclos){
 }
 
 
+//Reinicializa el temporizador T9 para para medir el porcentaje de uso de la CPU
 void reinic_Timer9_CPU(){
     TMR9 = 0; // Inicializar el registro de cuenta
     PR9 =  12500-1 ;	// Periodo del timer
@@ -94,13 +102,15 @@ void reinic_Timer9_CPU(){
     T9CONbits.TON = 1;	// encender el timer
 }
 
-void restart_timer9_CPU()
+// Pone en marcha el temporizador T9
+void restart_Timer9_CPU()
 {
     TMR9 = 0; // Inicializar el registro de cuenta
     T9CONbits.TON = 1;	// encender el timer
 }
 
-void stop_timer9_CPU()
+// Detiene el temporizador T9
+void stop_Timer9_CPU()
 {
     IFS3bits.T9IF = 0;      // Puesta a 0 del flag IF del temporizador 9
     T9CONbits.TON = 0;	// encender el timer

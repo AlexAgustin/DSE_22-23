@@ -111,7 +111,7 @@ int main()
     
     while(1) { // bucle infinito
         cont = 0;
-        restart_timer9_CPU();
+        restart_Timer9_CPU();
         cronometro(); // ejecucion del cronometro
         if (flag_ADC)   //Una vez se han recogido todas las muestras necesarias
             tratar_valorADC1(); // Calcular la media de las muestras tomadas y visualizar la informacion pertinente
@@ -127,7 +127,7 @@ int main()
         }
 
         while(IFS3bits.T9IF == 0) cont ++;
-        stop_timer9_CPU();
+        stop_Timer9_CPU();
         gestion_cont (cont);
     }
     
