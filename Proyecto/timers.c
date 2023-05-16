@@ -16,7 +16,7 @@ Ademas, contiene las funciones asociadas al modulo T6 (inicializacion, rutina de
 Por otro lado, contiene la funcion para inicializar el modulo T8 y su correspondiente rutina de atencion.
 
 Autores: Alex Agustin y Amanda Sin
-Fecha: Marzo 2023
+Fecha: Mayo 2023
 */
 
 #include "p24HJ256GP610A.h"
@@ -60,7 +60,7 @@ void inic_Timer9_delay(unsigned long ciclos){
     TMR9 = 0 ; 	// Inicializar el registro de cuenta
     if (ciclos < 65535) { //65535 es el maximo numero de ciclos que entra en un tamanho de 2^16 (tamanho de PR) 
          T9CONbits.TCKPS = 0;	// escala del prescaler 00
-         PR9 =  ciclos-1 ;	// Periodo del timer con prescaler 00
+         PR9 =  ciclos-1 ;      // Periodo del timer con prescaler 00
     }else{
         if ((ciclos/8) < 65535){
             T9CONbits.TCKPS = 1;	// escala del prescaler 01
@@ -77,11 +77,11 @@ void inic_Timer9_delay(unsigned long ciclos){
             }
         }
     }
-    T9CONbits.TCS = 0;	// reloj interno
+    T9CONbits.TCS = 0;      // Reloj interno
     T9CONbits.TGATE = 0;	// Deshabilitar el modo Gate    
-    IEC3bits.T9IE = 0;      // deshabilitar la interrupcion general de T9
+    IEC3bits.T9IE = 0;      // Deshabilitar la interrupcion general de T9
     IFS3bits.T9IF = 0;      // Puesta a 0 del flag IF del temporizador 9
-    T9CONbits.TON = 1;	// puesta en marcha del timer
+    T9CONbits.TON = 1;      // Puesta en marcha del timer
 }
 
 
@@ -125,7 +125,8 @@ void Delay_ms(unsigned int ms){
         inic_Timer9_delay(ciclos);// inicializa el T9
         
         while(!IFS3bits.T9IF); // espera a que el temporizador indique que ha finalizado
-        stop_Timer9_CPU(); // Detener el temporizador
+        IFS3bits.T9IF = 0;  // Puesta a 0 del flag IF del temporizador 9 (se marca la interrupcion como atendida)
+        T9CONbits.TON = 0;	// apagar el temporizador
     }else{ // Valor de tiempo de espera superior a lo contemplado
         LATAbits.LATA4=!LATAbits.LATA4; // Se conmuta el LED D7 (RA4)
         while(1); //espera infinita para advertir del error
@@ -140,7 +141,8 @@ void Delay_us(unsigned int us){
         inic_Timer9_delay(ciclos);// inicializa el T9
         
         while(!IFS3bits.T9IF); // espera a que el temporizador indique que ha finalizado
-        stop_Timer9_CPU(); // Detener el temporizador
+        IFS3bits.T9IF = 0;  // Puesta a 0 del flag IF del temporizador 9 (se marca la interrupcion como atendida)
+        T9CONbits.TON = 0;	// apagar el temporizador
     }else{ // Valor de tiempo de espera superior a lo contemplado
         LATAbits.LATA5=!LATAbits.LATA5; // Se conmuta el LED D8 (RA5)
         while(1); //espera infinita para advertir del error
@@ -159,13 +161,13 @@ void inic_Timer7_crono ()
 		// Por tanto, Tcy= 25 ns para ejecutar una instruccion
 		// Para contar 10 ms se necesitan 400.000 ciclos.
     T7CONbits.TCKPS = 1;	// escala del prescaler 01
-    T7CONbits.TCS = 0;	// reloj interno
+    T7CONbits.TCS = 0;      // reloj interno
     T7CONbits.TGATE = 0;	// Deshabilitar el modo Gate
     
     IEC3bits.T7IE = 1;      // habilitacion de la interrupcion general de T7
     IFS3bits.T7IF = 0;      // Puesta a 0 del flag IF del temporizador 7
     
-    T7CONbits.TON = 1;	// encender el timer
+    T7CONbits.TON = 1;      // encender el timer
 }	
 
 // Interrupcion del modulo T7
@@ -187,7 +189,7 @@ void inic_crono()
 }
 
 
-// control del tiempo (se actualiza cada 10 ms)
+// Control del tiempo (se actualiza cada 10 ms)
 // inicializar cronometro: si el flag inicializar_crono esta activado, inicializa el cronometro
 void cronometro()	
 {
@@ -215,8 +217,10 @@ void cronometro()
         LATAbits.LATA0=!LATAbits.LATA0; //conmutar LED D3
 
         if (deci>=10){ //cada 10 decimas de segundo
+            /*---------------------------------------------------------------*/
             Nop();//Comprobacion de cuantas conversiones del ADC se han hecho
             Nop();
+            /*---------------------------------------------------------------*/
             num_conversiones=0; // resetear numero de conversiones
             seg+=1; //se suma 1 segundo
             deci-=10; //reset decimas
@@ -248,13 +252,13 @@ void inic_Timer5_LCD ()
 		// Por tanto, Tcy= 25 ns para ejecutar una instruccion
 		// Para contar 2.5 ms se necesitan 100.000 ciclos.
     T5CONbits.TCKPS = 1;	// escala del prescaler 01
-    T5CONbits.TCS = 0;	// reloj interno
+    T5CONbits.TCS = 0;      // reloj interno
     T5CONbits.TGATE = 0;	// Deshabilitar el modo Gate
     
     IEC1bits.T5IE = 1;      // habilitacion de la interrupcion general de T5
     IFS1bits.T5IF = 0;      // Puesta a 0 del flag IF del temporizador 5
     
-    T5CONbits.TON = 1;	// encender el timer
+    T5CONbits.TON = 1;      // encender el timer
 }	
 
 // Rutina de atencion a la interrupcion del modulo T5: se encarga de refrescar la informacion en la pantalla
@@ -265,7 +269,7 @@ void _ISR_NO_PSV _T5Interrupt()
     switch (estado_LCD){ //Segun el estado se llevan a cabo las acciones correspondientes
         case LCD_LINE1: //Posicionamiento en la primera linea
             lcd_cmd(0x80);  	// Set DDRAM address (@0)
-            estado_LCD = LCD_DATA1; // Cambio de estado, suguiente: envio de datos de la primera linea
+            estado_LCD = LCD_DATA1; // Cambio de estado, siguiente: envio de datos de la primera linea
             break;
         case LCD_DATA1: // Envio de los datos de la primera linea
             lcd_data(Ventana_LCD[fila1][i]); //Primero se manda uno de los datos de ventana
@@ -277,7 +281,7 @@ void _ISR_NO_PSV _T5Interrupt()
             break;
         case LCD_LINE2: //Posicionamiento en la segunda linea
             lcd_cmd(0xC0);  	// Set DDRAM address (@40)
-            estado_LCD = LCD_DATA2; // Cambio de estado, suguiente: envio de datos de la segunda linea
+            estado_LCD = LCD_DATA2; // Cambio de estado, siguiente: envio de datos de la segunda linea
             break;
         case LCD_DATA2: // Envio de los datos de la segunda linea
             lcd_data(Ventana_LCD[fila2][i]); //Primero se manda uno de los datos de ventana
@@ -307,13 +311,13 @@ void inic_Timer3_ADC()
 		// Por tanto, Tcy= 25 ns para ejecutar una instruccion
 		// Para contar 1 ms se necesitan 40.000 ciclos.
     T3CONbits.TCKPS = 0;	// escala del prescaler 00
-    T3CONbits.TCS = 0;	// reloj interno
+    T3CONbits.TCS = 0;      // reloj interno
     T3CONbits.TGATE = 0;	// Deshabilitar el modo Gate
     
     IEC0bits.T3IE = 0;      // deshabilitar la interrupcion general de T3
     IFS0bits.T3IF = 0;      // Puesta a 0 del flag IF del temporizador 3
     
-    T3CONbits.TON = 1;	// encender el timer
+    T3CONbits.TON = 1;      // encender el timer
 }
 
 // inicializacion del modulo T2 para la gestion de los modulos OC1, OC2, OC3 y OC4
@@ -328,13 +332,13 @@ void inic_Timer2_OCx(){
 		// Para contar 0,1 ms se necesitan 4.000 ciclos.
     
     T2CONbits.TCKPS = 0;	// escala del prescaler 1:1
-    T2CONbits.TCS = 0;	// reloj interno
+    T2CONbits.TCS = 0;      // reloj interno
     T2CONbits.TGATE = 0;	// Deshabilitar el modo Gate
     
     IEC0bits.T2IE = 0;      // deshabilitar la interrupcion general de T2
     IFS0bits.T2IF = 0;      // Puesta a 0 del flag IF del temporizador 2
     
-    T2CONbits.TON = 1;	// encender el timer
+    T2CONbits.TON = 1;      // encender el timer
 }
 
 // Inicializacion del modulo T4 para la gestion del movimiento de los servos
@@ -349,13 +353,13 @@ void inic_Timer4_movservos ()
 		// Por tanto, Tcy= 25 ns para ejecutar una instruccion
 		// Para contar 10 ms se necesitan 400.000 ciclos.
     T4CONbits.TCKPS = 1;	// escala del prescaler 01
-    T4CONbits.TCS = 0;	// reloj interno
+    T4CONbits.TCS = 0;      // reloj interno
     T4CONbits.TGATE = 0;	// Deshabilitar el modo Gate
     
     IEC1bits.T4IE = 1;      // habilitacion de la interrupcion general de T4
     IFS1bits.T4IF = 0;      // Puesta a 0 del flag IF del temporizador 4
     
-    T4CONbits.TON = 0;	// apagar el timer
+    T4CONbits.TON = 0;      // apagar el timer
 }	
 
 
@@ -364,20 +368,20 @@ void inic_Timer4_movservos ()
  * Mueve el servo correspondiente a la posicion objetivo
  */
 void _ISR_NO_PSV _T4Interrupt(){
-    // Se incrementa / decrementa el valor del servo en funcion de la diferencia respectoa a la posicion objetivo
+    // Se incrementa / decrementa el valor del servo en funcion de la diferencia respecto a la posicion objetivo
     // Si la diferencia es mayor que 5, se incrementa / decrementa en 5 unidades
     // Sino, se asigna el valor de manera directa.
 
     //Caso: duty 0
     if((duty[DUTY0] + 5) < objetivopwm[DUTY0]) duty[DUTY0] += 5; // Caso: incrementar 5 a duty0
     else if ((duty[DUTY0] - 5) > objetivopwm[DUTY0]) duty[DUTY0] -= 5; // Caso: decrementar 5 a duty0
-    else if(duty[DUTY0] != objetivopwm[DUTY0]) {
-        duty[DUTY0] = objetivopwm[DUTY0];
-        reached++;
+    else if(duty[DUTY0] != objetivopwm[DUTY0]) { // Si el servo no esta en la posicion objetivo (diferencia <= 5)...
+        duty[DUTY0] = objetivopwm[DUTY0]; //Guardar valor de manera directa
+        reached++; //Actualizar cantidad de servos en su posicion objetivo
     }
     
     //Caso: duty 1
-    if (dis_media>=CHOQUE && !flag_inic_pwm){
+    if (dis_media>=CHOQUE || flag_inic_pwm){  // si no hay nada a una distacia peligrosa o es la inicializacion (no se tiene en cuenta la distancia)
         if((duty[DUTY1] + 5) < objetivopwm[DUTY1]) duty[DUTY1] += 5; // Caso: incrementar 5 a duty1
         else if ((duty[DUTY1] - 5) > objetivopwm[DUTY1]) duty[DUTY1] -= 5;// Caso: decrementar 5 a duty1
         else if(duty[DUTY1] != objetivopwm[DUTY1]) { // Si el servo no esta en la posicion objetivo (diferencia <= 5)...
@@ -387,7 +391,7 @@ void _ISR_NO_PSV _T4Interrupt(){
     }
     
     //Caso: duty 2
-    if (dis_media>=CHOQUE && !flag_inic_pwm){
+    if (dis_media>=CHOQUE || flag_inic_pwm){  // si no hay nada a una distacia peligrosa o es la inicializacion (no se tiene en cuenta la distancia)
         if((duty[DUTY2] + 5) < objetivopwm[DUTY2]) duty[DUTY2] += 5;// Caso: incrementar 5 a duty2
         else if ((duty[DUTY2] - 5) > objetivopwm[DUTY2]) duty[DUTY2] -= 5; // Caso: decrementar 5 a duty2
         else if(duty[DUTY2] != objetivopwm[DUTY2]) { // Si el servo no esta en la posicion objetivo (diferencia <= 5)...
@@ -397,7 +401,7 @@ void _ISR_NO_PSV _T4Interrupt(){
     }
 
     //Caso: duty 3
-    if (dis_media>=CHOQUE && !flag_inic_pwm){
+    if (dis_media>=CHOQUE || flag_inic_pwm){ // si no hay nada a una distacia peligrosa o es la inicializacion (no se tiene en cuenta la distancia)
         if((duty[DUTY3] + 5) < objetivopwm[DUTY3]) duty[DUTY3] += 5; // Caso: incrementar 5 a duty3
         else if ((duty[DUTY3] - 5) > objetivopwm[DUTY3]) duty[DUTY3] -= 5; // Caso: decrementar 5 a duty3
         else if(duty[DUTY3] != objetivopwm[DUTY3]) { // Si el servo no esta en la posicion objetivo (diferencia <= 5)...
@@ -417,11 +421,11 @@ void _ISR_NO_PSV _T4Interrupt(){
     if (reached == 5){ // Si todos los servos han alcanzado su posicion objetivo...
         
         T4CONbits.TON = 0;	// apagar el timer
+        if(flag_inic_pwm) flag_inic_pwm=0; //se ha terminado la incializacion
     }
-
-    if(flag_inic_pwm) flag_inic_pwm=0;
     
-    if (flag_calib) flag_Duty_LCD=VERCALIB;
+    if (flag_calib) flag_Duty_LCD=VERCALIB; //dependiendo de que moviemiento se haya hecho se visualizan los datos correspondientes
+    else if (flag_rutina_perro) flag_Duty_LCD=VERPERRO;
     else flag_Duty_LCD = VERDUTYALL;
     IFS1bits.T4IF = 0;      // Puesta a 0 del flag IF del temporizador 4
 }
@@ -445,16 +449,16 @@ void inic_Timer8_PWM(){
 		// Posteriormente, el valor de PR8 ira cambiando.
     
     T8CONbits.TCKPS = 2;	// escala del prescaler 1:64
-    T8CONbits.TCS = 0;	// reloj interno
+    T8CONbits.TCS = 0;      // reloj interno
     T8CONbits.TGATE = 0;	// Deshabilitar el modo Gate
     
     IEC3bits.T8IE = 1;      // habilitar la interrupcion general de T8
     IFS3bits.T8IF = 0;      // Puesta a 0 del flag IF del temporizador 8
     
-    T8CONbits.TON = 1;	// encender el timer
+    T8CONbits.TON = 1;      // encender el timer
 }
 
-//Rutina de atencion  la interrupcion del modulo T8
+//Rutina de atencion  la interrupcion del modulo T8: control de senhales PWM
 void _ISR_NO_PSV _T8Interrupt(){
     
     static int sum = 0;
@@ -471,21 +475,21 @@ void _ISR_NO_PSV _T8Interrupt(){
             LATDbits.LATD9 = 1; // Puesta a 1 (RD9)
             PR8 = duty[DUTY1]; //Determinar periodo del temporizador 8 a partir de duty1
             sum+=duty[DUTY1]; // Acumular ciclos transcurridos
-            estado_PWM = PWM2_ACTIVE; // Estado siguiente: senhales desactivadas
+            estado_PWM = PWM2_ACTIVE; // Estado siguiente: activar PWM (2)
             break;
         case PWM2_ACTIVE: //Activar PWM (2)
             LATDbits.LATD9 = 0; // Puesta a 0 (RD9)
             LATDbits.LATD10 = 1; // Puesta a 1 (RD10)
             PR8 = duty[DUTY2]; //Determinar periodo del temporizador 8 a partir de duty2
             sum+=duty[DUTY2]; // Acumular ciclos transcurridos
-            estado_PWM = PWM3_ACTIVE; // Estado siguiente: senhales desactivadas
+            estado_PWM = PWM3_ACTIVE; // Estado siguiente: activar PWM (3)
             break;
         case PWM3_ACTIVE: //Activar PWM (3)
             LATDbits.LATD10 = 0; // Puesta a 0 (RD10)
             LATDbits.LATD11 = 1; // Puesta a 1 (RD11)
             PR8 = duty[DUTY3]; //Determinar periodo del temporizador 8 a partir de duty3
             sum+=duty[DUTY3]; // Acumular ciclos transcurridos
-            estado_PWM = PWM4_ACTIVE; // Estado siguiente: senhales desactivadas
+            estado_PWM = PWM4_ACTIVE; // Estado siguiente: activar PWM (4)
             break;
         case PWM4_ACTIVE: //Activar PWM (4)
             LATDbits.LATD11 = 0; // Puesta a 0 (RD11)
@@ -517,20 +521,20 @@ void inic_Timer6_dis(){
         // Para contar 70 ms se necesitan 2.800.000 ciclos.
     
     T6CONbits.TCKPS = 2;	// escala del prescaler 1:64
-    T6CONbits.TCS = 0;	// reloj interno
+    T6CONbits.TCS = 0;      // reloj interno
     T6CONbits.TGATE = 0;	// Deshabilitar el modo Gate
     
     IEC2bits.T6IE = 1;      // habilitar la interrupcion general de T6
     IFS2bits.T6IF = 0;      // Puesta a 0 del flag IF del temporizador 6
     
-    T6CONbits.TON = 1;	// encender el timer T6
+    T6CONbits.TON = 1;      // encender el timer T6
 }
 
 // Rutina de atencion a la interrupcion de T6
 void _ISR_NO_PSV _T6Interrupt(){
-    flag_dis = 1; //Poner a 1 el flag para realizar la medicion de la distancia
+    flag_dis = 1;       //Poner a 1 el flag para realizar la medicion de la distancia
     T6CONbits.TON = 0;	// apagar el timer T6
-    IFS2bits.T6IF = 0;      // Puesta a 0 del flag IF del temporizador 6
+    IFS2bits.T6IF = 0;  // Puesta a 0 del flag IF del temporizador 6
 }
 
 // Poner en marcha T6
@@ -538,5 +542,3 @@ void restart_Timer6_dis(){
     TMR6 = 0; // Inicializar el registro de cuenta
     T6CONbits.TON = 1;	// encender el timer T6
 }
-
-

@@ -5,7 +5,7 @@ Una vez pulsado, entra en la fase de calibrado donde se pueden ajustar los valor
 queda a la espera de que se pulse S4 para inicializar el cronometro (encuesta de S4).
 Una vez pulsado, se inicializa el cronometro y se muestra tanto por pantalla como en los leds el 
 tiempo transcurrido (led D3 -> ms, led D5 -> seg, led D9 -> min). 
-Para visualizar mas informacion se habra de hacer scroll hacia abajo (S5) y hacia arriba (S4).
+Para visualizar mas informacion se habra de hacer scroll hacia abajo (S4) y hacia arriba (S5).
 Se mostrara la media de las 8 muestras tomadas de 5 entradas analogicas: potenciometro, temperatura, coordenadas X, Y e Z. 
 Se detecta la direccion del sensor conectado y se modifica su valor mediante la constante newdirsI2C (commons.h).
 Ademas, se mostrara la distacia recogida por el sensor. 
@@ -23,17 +23,31 @@ Ademas, visualizamos en el ordenador (a traves del emisor de UART2) la informaci
  * I e i, inicializar el crono.
  * P y p, parar el crono.
  * C y c, poner en marcha el crono. 
- * 
- * R, mover el servo incrementando duty1 (+10) si se respetan los limites (<= DUTY_MAX).
- * L, mover el servo decrementando duty1 (-10) si se respetan los limites (>= DUTY_MIN).
- * r, mover el servo incrementando duty0 (+10) si se respetan los limites (<= DUTY_MAX) y se gestiona duty0 por UART (flag_DUTY == 1).
- * l, mover el servo decrementando duty0 (-10) si se respetan los limites (>= DUTY_MIN) y se gestiona duty0 por UART (flag_DUTY == 1).
+ * X y x, cambiar modo de gestion de los servos S1, S3, S5. Flag=0, gestion por entradas analogicas; flag=1, gestion por UART
+ * M, para incrementar el duty del servo que se este calibrando.
+ * m, para decrementar el duty del servo que se este calibrando.
+ * F y f, para fijar el valor del duty que se este calibrando.
+ * R, mover el servo S1 incrementando duty0 (+5) si se respetan los limites (<= DUTY_MAX).
+ * L, mover el servo S2 incrementando duty1 (+5) si se respetan los limites (<= DUTY_MAX).
+ * W, mover el servo S3 incrementando duty2 (+5) si se respetan los limites (<= DUTY_MAX).
+ * A, mover el servo S4 incrementando duty3 (+5) si se respetan los limites (<= DUTY_MAX).
+ * S, mover el servo S5 incrementando duty4 (+5) si se respetan los limites (<= DUTY_MAX).
+ * r, mover el servo S1 decrementando duty0 (-5) si se respetan los limites (>= DUTY_MIN).
+ * l, mover el servo S2 decrementando duty1 (-5) si se respetan los limites (>= DUTY_MIN).
+ * w, mover el servo S3 decrementando duty2 (-5) si se respetan los limites (>= DUTY_MIN).
+ * a, mover el servo S4 decrementando duty3 (-5) si se respetan los limites (>= DUTY_MIN).
+ * s, mover el servo S5 decrementando duty4 (-5) si se respetan los limites (>= DUTY_MIN).
+ * >, para hacer scroll hacia abajo en la pantalla LCD.
+ * <, para hacer scroll hacia arriba en la pantalla LCD.
+ * D y d, pera realizar la rutina canina.
+ * Z y z, para llevar el brazo a una posicion segura.
+ * Q y q, para terminar el programa.
  * El resto de caracteres no afectaran al programa.
 Se mostrara la tecla presionada en la ultima posicion de la linea correspondinte al cronometro tanto en el modulo LCD como
 en la pantalla del PC.
 
 Autores: Alex Agustin y Amanda Sin
-Fecha: mayo 2023
+Fecha: Mayo 2023
 */
 
 #include "p24HJ256GP610A.h"
@@ -98,18 +112,18 @@ int main()
     
     while(PORTDbits.RD14); //Esperar a que se pulse el boton central del joystick
     
-    inic_calib();
-    inic_Timer4_movservos(); //Inicializar Timer del movimiento
+    inic_calib(); //Inicializar las varibles necesarias para la calibracion
+    inic_Timer4_movservos(); //Inicializar Timer del movimiento de los servos
     visualizar_Duty(); //Visualizar valores por defecto de calibracion
     inic_PWM(); // Inicializar las variables requeridas para la gestion de PWM
     inic_Timer8_PWM();  //Inicializar el temporizador T8
 
-    while(PORTDbits.RD13) visualizar_Duty(); //Esperar a que se pulse S4 (RD13)
+    while(PORTDbits.RD13) visualizar_Duty(); //Esperar a que se pulse S4 (RD13) mientras se visualizan los cambios de la calibracion
 
     flag_calib = 0; //Deshabilitar opcion de calibrado
     
     inic_CN();      // Inicializar modulo CN
-    actualizar_Ventana_LCD(); //Actualizar la variable Ventana_LCD
+    actualizar_Ventana_LCD(); //Actualizar la informacion que muestra la pantalla LCD
     
     inic_crono();   // Inicializar cronometro
     inic_Timer7_crono();  // Inicializar el temporizador T7
@@ -145,7 +159,7 @@ int main()
 
         while(IFS3bits.T9IF == 0) cont ++; // Obtener conts restantes (20 ms) => medicion del uso de la CPU
         stop_Timer9_CPU();//Parar timer T9
-        gestion_cont (cont); // Gestion del valor de cont (uso de CPU)
+        gestion_cont (cont); // Gestion del valor de cont (calculo del porcentaje de uso de CPU)
     }
     
 	return (0);

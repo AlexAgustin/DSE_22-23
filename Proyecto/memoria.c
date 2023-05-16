@@ -1,10 +1,11 @@
-/*
+/* Funciones para la gestion de memoria
+================================================
 Contiene la variable que contendra el texto a mostrar en la pantalla
 y la funcion para actualizar la informacion a mostrar en la
 LCD una vez comienza el programa.
 
 Autores: Alex Agustin y Amanda Sin
-Fecha: mayo 2023
+Fecha: Mayo 2023
 */
 
 #include "p24HJ256GP610A.h"
@@ -43,6 +44,6 @@ void actualizar_Ventana_LCD ()
 // Actualiza la informacion a mostrar en la LCD: titulo y crono
 {
   fila1 = 2; // se muestra la tercera entrada de Ventana_LCD en la linea superior de la pantalla LCD (titulo)
-  fila2 = 3; // se muestra la caurta entrada de Ventana_LCD en la linea inferior de la pantalla LCD (crono)
+  fila2 = 3; // se muestra la cuarta entrada de Ventana_LCD en la linea inferior de la pantalla LCD (crono)
 }
 

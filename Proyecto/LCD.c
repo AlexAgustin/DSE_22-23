@@ -1,11 +1,11 @@
-/**********************************************************************
-Funciones para utilizar LCD :
--	Inicializacion
--	Enviar un comando
--	Enviar un dato
+/* Funciones para el modulo LCD
+================================================
+    -	Inicializacion
+    -	Enviar un comando
+    -	Enviar un dato
 
 Autores: Alex y Amanda
-Fecha: Febrero 2023
+Fecha: Mayo 2023
 **********************************************************************/
 
 #include "p24HJ256GP610A.h"

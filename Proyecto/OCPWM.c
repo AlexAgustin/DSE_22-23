@@ -1,10 +1,16 @@
-/*
-Funciones relacionadas con la gestion de la senhal PWM
-
-Contiene la funcion de inicializacion de las variables para la gestion de PWM y la funcion para visualizar duty en la pantalla.
+/* Funciones para la gestion de las senhales PWM
+================================================
+Contiene las siguientes funciones:
+ * -Inizalizacion de los modulos OC (1, 2, 3 y 4)
+ * -Inicializacion de los pines enable de las ruedas
+ * -Funcion de actualizacion de la informacion de control a visualizar relativa a duty's
+ * -Inicializacion de las variables relacionadas con PWM
+ * -Inicializacion de las variables necesarias para la calibracion
+ * -Funcion que prepara los valores de la posicion segura
+ * -Funcion que realiza una serie de movimientos programados sobre el robot
 
 Autores: Alex y Amanda
-Fecha: Marzo 2023
+Fecha: Mayo 2023
 */
 
 #include "p24HJ256GP610A.h"
@@ -23,12 +29,11 @@ Fecha: Marzo 2023
 
 unsigned int estado_PWM;
 
-unsigned int flag_DUTY = 1;  // duty se gestionara por defecto a traves de UART
-unsigned int flag_Duty_LCD; // cuando duty cambia, se hace la conversion para visualizarlo en la pantalla 
-unsigned int flag_calib = 1; //permite realizar el calibrado
-unsigned int flag_posicion_segura=0; //se lleva el brazo a una posicion segura para apagar si el flag esta a 1 (desde el programa principal)
-unsigned int flag_num_duty = 0;
-unsigned int flag_rutina_perro = 0; // el brazo realiza una rutina de entrenamiento canino
+unsigned int flag_DUTY = 1;     // duty se gestionara por defecto a traves de UART
+unsigned int flag_Duty_LCD;     // cuando duty cambia, se hace la conversion para visualizarlo en la pantalla 
+unsigned int flag_calib = 1;    //permite realizar el calibrado
+unsigned int flag_posicion_segura=0;    //se lleva el brazo a una posicion segura para apagar si el flag esta a 1 (desde el programa principal)
+unsigned int flag_rutina_perro = 0;     // el brazo realiza una rutina de entrenamiento canino
 unsigned int flag_inic_pwm=0;
 
 
@@ -124,75 +129,81 @@ void visualizar_Duty(){
             conversion_4dig(&Ventana_LCD[filaduty4][posdutyl],duty[DUTY4]); // Guardar valor de duty4 en Ventana_LCD para su visualizacion en la pantalla
             break;
         case VERDUTYMIN: //Caso: min duty
-            conversion_4dig(&Ventana_LCD[filacalibs0][poscalibmin], duty_min[DUTY0]); // Guardar valor del duty0 minimo en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filacalibs1][poscalibmin], duty_min[DUTY1]); // Guardar valor del duty1 minimo en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filacalibs2][poscalibmin], duty_min[DUTY2]); // Guardar valor del duty2 minimo en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filacalibs3][poscalibmin], duty_min[DUTY3]); // Guardar valor del duty3 minimo en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filacalibs4][poscalibmin], duty_min[DUTY4]); // Guardar valor del duty4 minimo en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs0][poscalibmin], duty_min[DUTY0]); // Guardar valor minimo del duty0 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs1][poscalibmin], duty_min[DUTY1]); // Guardar valor minimo del duty1 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs2][poscalibmin], duty_min[DUTY2]); // Guardar valor minimo del duty2 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs3][poscalibmin], duty_min[DUTY3]); // Guardar valor minimo del duty3 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs4][poscalibmin], duty_min[DUTY4]); // Guardar valor minimo del duty4 en Ventana_LCD para su visualizacion en la pantalla
             break;
         case VERDUTYMAX: //Caso: max duty
-            conversion_4dig(&Ventana_LCD[filacalibs0][poscalibmax], duty_max[DUTY0]); // Guardar valor del duty0 maximo en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filacalibs1][poscalibmax], duty_max[DUTY1]); // Guardar valor del duty1 maximo en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filacalibs2][poscalibmax], duty_max[DUTY2]); // Guardar valor del duty2 maximo en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filacalibs3][poscalibmax], duty_max[DUTY3]); // Guardar valor del duty3 maximo en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filacalibs4][poscalibmax], duty_max[DUTY4]); // Guardar valor del duty4 maximo en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs0][poscalibmax], duty_max[DUTY0]); // Guardar valor maximo del duty0 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs1][poscalibmax], duty_max[DUTY1]); // Guardar valor maximo del duty1 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs2][poscalibmax], duty_max[DUTY2]); // Guardar valor maximo del duty2 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs3][poscalibmax], duty_max[DUTY3]); // Guardar valor maximo del duty3 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs4][poscalibmax], duty_max[DUTY4]); // Guardar valor maximo del duty4 en Ventana_LCD para su visualizacion en la pantalla
             break;
         case VERSOLOCALIB: //Caso max y min duty
-            conversion_4dig(&Ventana_LCD[filacalibs0][poscalibmin], duty_min[DUTY0]); // Guardar valor del duty0 minimo en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filacalibs1][poscalibmin], duty_min[DUTY1]); // Guardar valor del duty1 minimo en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filacalibs2][poscalibmin], duty_min[DUTY2]); // Guardar valor del duty2 minimo en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filacalibs3][poscalibmin], duty_min[DUTY3]); // Guardar valor del duty3 minimo en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filacalibs4][poscalibmin], duty_min[DUTY4]); // Guardar valor del duty4 minimo en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs0][poscalibmin], duty_min[DUTY0]); // Guardar valor minimo del duty0 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs1][poscalibmin], duty_min[DUTY1]); // Guardar valor minimo del duty1 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs2][poscalibmin], duty_min[DUTY2]); // Guardar valor minimo del duty2 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs3][poscalibmin], duty_min[DUTY3]); // Guardar valor minimo del duty3 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs4][poscalibmin], duty_min[DUTY4]); // Guardar valor minimo del duty4 en Ventana_LCD para su visualizacion en la pantalla
             
-            conversion_4dig(&Ventana_LCD[filacalibs0][poscalibmax], duty_max[DUTY0]); // Guardar valor del duty0 maximo en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filacalibs1][poscalibmax], duty_max[DUTY1]); // Guardar valor del duty1 maximo en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filacalibs2][poscalibmax], duty_max[DUTY2]); // Guardar valor del duty2 maximo en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filacalibs3][poscalibmax], duty_max[DUTY3]); // Guardar valor del duty3 maximo en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filacalibs4][poscalibmax], duty_max[DUTY4]); // Guardar valor del duty4 maximo en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs0][poscalibmax], duty_max[DUTY0]); // Guardar valor maximo del duty0 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs1][poscalibmax], duty_max[DUTY1]); // Guardar valor maximo del duty1 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs2][poscalibmax], duty_max[DUTY2]); // Guardar valor maximo del duty2 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs3][poscalibmax], duty_max[DUTY3]); // Guardar valor maximo del duty3 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs4][poscalibmax], duty_max[DUTY4]); // Guardar valor maximo del duty4 en Ventana_LCD para su visualizacion en la pantalla
             break;
         case VERCALIB: //Caso calibracion: max / min / current duty
-            conversion_4dig(&Ventana_LCD[filaduty01][posdutyl],duty[DUTY0]);  // Guardar valor de duty0 en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filaduty01][posdutyr],duty[DUTY1]); // Guardar valor de duty1 en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filaduty23][posdutyl],duty[DUTY2]); // Guardar valor de duty2 en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filaduty23][posdutyr],duty[DUTY3]); // Guardar valor de duty3 en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filaduty4][posdutyl],duty[DUTY4]); // Guardar valor de duty4 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaduty01][posdutyl],duty[DUTY0]);    // Guardar valor de duty0 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaduty01][posdutyr],duty[DUTY1]);    // Guardar valor de duty1 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaduty23][posdutyl],duty[DUTY2]);    // Guardar valor de duty2 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaduty23][posdutyr],duty[DUTY3]);    // Guardar valor de duty3 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaduty4][posdutyl],duty[DUTY4]);     // Guardar valor de duty4 en Ventana_LCD para su visualizacion en la pantalla
             
-            conversion_4dig(&Ventana_LCD[filacalibs0][poscalibmin], duty_min[DUTY0]); // Guardar valor del duty0 minimo en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filacalibs1][poscalibmin], duty_min[DUTY1]); // Guardar valor del duty1 minimo en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filacalibs2][poscalibmin], duty_min[DUTY2]); // Guardar valor del duty2 minimo en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filacalibs3][poscalibmin], duty_min[DUTY3]); // Guardar valor del duty3 minimo en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filacalibs4][poscalibmin], duty_min[DUTY4]); // Guardar valor del duty4 minimo en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs0][poscalibmin], duty_min[DUTY0]); // Guardar valor minimo del duty0 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs1][poscalibmin], duty_min[DUTY1]); // Guardar valor minimo del duty1 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs2][poscalibmin], duty_min[DUTY2]); // Guardar valor minimo del duty2 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs3][poscalibmin], duty_min[DUTY3]); // Guardar valor minimo del duty3 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs4][poscalibmin], duty_min[DUTY4]); // Guardar valor minimo del duty4 en Ventana_LCD para su visualizacion en la pantalla
             
-            conversion_4dig(&Ventana_LCD[filacalibs0][poscalibmax], duty_max[DUTY0]); // Guardar valor del duty0 maximo en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filacalibs1][poscalibmax], duty_max[DUTY1]); // Guardar valor del duty1 maximo en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filacalibs2][poscalibmax], duty_max[DUTY2]); // Guardar valor del duty2 maximo en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filacalibs3][poscalibmax], duty_max[DUTY3]); // Guardar valor del duty3 maximo en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filacalibs4][poscalibmax], duty_max[DUTY4]); // Guardar valor del duty4 maximo en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs0][poscalibmax], duty_max[DUTY0]); // Guardar valor maximo del duty0 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs1][poscalibmax], duty_max[DUTY1]); // Guardar valor maximo del duty1 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs2][poscalibmax], duty_max[DUTY2]); // Guardar valor maximo del duty2 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs3][poscalibmax], duty_max[DUTY3]); // Guardar valor maximo del duty3 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filacalibs4][poscalibmax], duty_max[DUTY4]); // Guardar valor maximo del duty4 en Ventana_LCD para su visualizacion en la pantalla
             break;
         case VERDUTYOC: //Caso: ruedas
             conversion_4dig(&Ventana_LCD[filaruedas][posdutyl],OC1RS); // Guardar valor de OC1RS en Ventana_LCD para su visualizacion en la pantalla
             conversion_4dig(&Ventana_LCD[filaruedas][posdutyr],OC3RS); // Guardar valor de OC3RS en Ventana_LCD para su visualizacion en la pantalla
             break;
         case VERDUTYALL: //Caso: duty[0-4]
-            conversion_4dig(&Ventana_LCD[filaduty01][posdutyl],duty[DUTY0]);  // Guardar valor de duty0 en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filaduty01][posdutyr],duty[DUTY1]); // Guardar valor de duty1 en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filaduty23][posdutyl],duty[DUTY2]); // Guardar valor de duty2 en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filaduty23][posdutyr],duty[DUTY3]); // Guardar valor de duty3 en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filaduty4][posdutyl],duty[DUTY4]); // Guardar valor de duty4 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaduty01][posdutyl],duty[DUTY0]);    // Guardar valor de duty0 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaduty01][posdutyr],duty[DUTY1]);    // Guardar valor de duty1 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaduty23][posdutyl],duty[DUTY2]);    // Guardar valor de duty2 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaduty23][posdutyr],duty[DUTY3]);    // Guardar valor de duty3 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaduty4][posdutyl],duty[DUTY4]);     // Guardar valor de duty4 en Ventana_LCD para su visualizacion en la pantalla
             break;
         case VERDUTYADC: //Caso: duty0 duty2 duty4
-            conversion_4dig(&Ventana_LCD[filaduty01][posdutyl],duty[DUTY0]);  // Guardar valor de duty0 en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filaduty23][posdutyl],duty[DUTY2]); // Guardar valor de duty2 en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filaduty4][posdutyl],duty[DUTY4]); // Guardar valor de duty4 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaduty01][posdutyl],duty[DUTY0]);    // Guardar valor de duty0 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaduty23][posdutyl],duty[DUTY2]);    // Guardar valor de duty2 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaduty4][posdutyl],duty[DUTY4]);     // Guardar valor de duty4 en Ventana_LCD para su visualizacion en la pantalla
             break;
-        case VERDUTYOCADC: //Caso: duty0 duty2 duty4
-            conversion_4dig(&Ventana_LCD[filaduty01][posdutyl],duty[DUTY0]);  // Guardar valor de duty0 en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filaduty23][posdutyl],duty[DUTY2]); // Guardar valor de duty2 en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filaduty4][posdutyl],duty[DUTY4]); // Guardar valor de duty4 en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filaruedas][posdutyl],OC1RS); // Guardar valor de OC1RS en Ventana_LCD para su visualizacion en la pantalla
-            conversion_4dig(&Ventana_LCD[filaruedas][posdutyr],OC3RS); // Guardar valor de OC3RS en Ventana_LCD para su visualizacion en la pantalla
+        case VERDUTYOCADC: //Caso: duty0 duty2 duty4 y los OCRS 1 y 3
+            conversion_4dig(&Ventana_LCD[filaduty01][posdutyl],duty[DUTY0]);    // Guardar valor de duty0 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaduty23][posdutyl],duty[DUTY2]);    // Guardar valor de duty2 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaduty4][posdutyl],duty[DUTY4]);     // Guardar valor de duty4 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaruedas][posdutyl],OC1RS);          // Guardar valor de OC1RS en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaruedas][posdutyr],OC3RS);          // Guardar valor de OC3RS en Ventana_LCD para su visualizacion en la pantalla
             break;
-        case VERPERRO:
+        case VERPERRO: //Caso: duty[0-4] y ruedas
+            conversion_4dig(&Ventana_LCD[filaduty01][posdutyl],duty[DUTY0]);    // Guardar valor de duty0 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaduty01][posdutyr],duty[DUTY1]);    // Guardar valor de duty1 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaduty23][posdutyl],duty[DUTY2]);    // Guardar valor de duty2 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaduty23][posdutyr],duty[DUTY3]);    // Guardar valor de duty3 en Ventana_LCD para su visualizacion en la pantalla
+            conversion_4dig(&Ventana_LCD[filaduty4][posdutyl],duty[DUTY4]);     // Guardar valor de duty4 en Ventana_LCD para su visualizacion en la pantalla
+            
             if(OC1RS==0)conversion_4dig(&Ventana_LCD[filaruedas][posdutyl],OC2RS); // Guardar valor de OC2RS en Ventana_LCD para su visualizacion en la pantalla
             else conversion_4dig(&Ventana_LCD[filaruedas][posdutyl],OC1RS); // Guardar valor de OC1RS en Ventana_LCD para su visualizacion en la pantalla
             break;
@@ -205,25 +216,27 @@ void visualizar_Duty(){
 
 // Inicializacion de las variables relacionadas con las senhales PWM
 void inic_PWM(){
+    
     flag_inic_pwm=1;
     
     estado_PWM = PWM0_ACTIVE; //Definir estado inicial
     
     // Inicializacion a partir de valores determinados para evitar movimientos bruscos iniciales
-    duty[DUTY0]=(duty_max[DUTY0] + duty_min[DUTY0]) / 2; //Asignar valor intermedio a duty0
-    duty[DUTY1]=duty_max[DUTY1]; //Asignar duty1 maximo a duty1
-    duty[DUTY2]=duty_max[DUTY2]; //Asignar duty2 maximo a duty2
+    duty[DUTY0]=(duty_max[DUTY0] + duty_min[DUTY0]) / 2;    //Asignar valor intermedio a duty0
+    duty[DUTY1]=duty_max[DUTY1];                            //Asignar duty1 maximo a duty1
+    duty[DUTY2]=duty_max[DUTY2];                            //Asignar duty2 maximo a duty2
     
     posicion_segura(); // Llevar el brazo a una posicion segura
 
-    TRISDbits.TRISD8 = 0; //Definir como salida el pin que se usara para la senhal PWM (0)
-    TRISDbits.TRISD9 = 0; //Definir como salida el pin que se usara para la senhal PWM (1)
-    TRISDbits.TRISD10 = 0; //Definir como salida el pin que se usara para la senhal PWM (2)
-    TRISDbits.TRISD11 = 0; //Definir como salida el pin que se usara para la senhal PWM (3)
-    TRISDbits.TRISD12 = 0; //Definir como salida el pin que se usara para la senhal PWM (4)
+    TRISDbits.TRISD8 = 0;   //Definir como salida el pin que se usara para la senhal PWM (0)
+    TRISDbits.TRISD9 = 0;   //Definir como salida el pin que se usara para la senhal PWM (1)
+    TRISDbits.TRISD10 = 0;  //Definir como salida el pin que se usara para la senhal PWM (2)
+    TRISDbits.TRISD11 = 0;  //Definir como salida el pin que se usara para la senhal PWM (3)
+    TRISDbits.TRISD12 = 0;  //Definir como salida el pin que se usara para la senhal PWM (4)
     flag_Duty_LCD = VERDUTYALL; // Visualizar todos los dutys
 }
 
+//Inicializa los valores necesarios para la calibracion
 void inic_calib(){
     //Inicializar duty minimo: valor por defecto
     duty_min[DUTY0] = DEF_DUTY_MIN; //duty0
@@ -245,32 +258,37 @@ void inic_calib(){
 //Llevar el brazo a una posicion segura
 void posicion_segura(){
     //Caso duty0
-    if (duty[DUTY0] != duty_seguro[DUTY0]) {  //si no se encuentra en una posicion segura...
+    if (duty[DUTY0] != duty_seguro[DUTY0]) {  //si no se encuentra en la posicion segura...
         objetivopwm[DUTY0] = duty_seguro[DUTY0]; //actualizar posicion objetivo
         reached--; // actualizar cantidad de servos en su posicion objetivo
     }
+    
     //caso duty1
-    if (duty[DUTY1] != duty_seguro[DUTY1]) { //si no se encuentra en una posicion segura...
+    if (duty[DUTY1] != duty_seguro[DUTY1]) { //si no se encuentra en la posicion segura...
         objetivopwm[DUTY1] = duty_seguro[DUTY1];//actualizar posicion objetivo
         reached--;// actualizar cantidad de servos en su posicion objetivo
     }
+    
     //caso duty2
-    if (duty[DUTY2] != duty_seguro[DUTY2]) { //si no se encuentra en una posicion segura...
+    if (duty[DUTY2] != duty_seguro[DUTY2]) { //si no se encuentra en la posicion segura...
         objetivopwm[DUTY2] = duty_seguro[DUTY2];//actualizar posicion objetivo
         reached--;// actualizar cantidad de servos en su posicion objetivo
     }
+    
     //caso duty3
-    if (duty[DUTY3] != duty_seguro[DUTY3]) { //si no se encuentra en una posicion segura...
+    if (duty[DUTY3] != duty_seguro[DUTY3]) { //si no se encuentra en la posicion segura...
         objetivopwm[DUTY3] = duty_seguro[DUTY3];//actualizar posicion objetivo
         reached--;// actualizar cantidad de servos en su posicion objetivo
     }
+    
     //caso duty4
-    if (duty[DUTY4] != duty_seguro[DUTY4]) {//si no se encuentra en una posicion segura...
+    if (duty[DUTY4] != duty_seguro[DUTY4]) {//si no se encuentra en la posicion segura...
         objetivopwm[DUTY4] = duty_seguro[DUTY4];//actualizar posicion objetivo
         reached--;// actualizar cantidad de servos en su posicion objetivo
     }
-    flag_posicion_segura = 0; //Actualiar flag que da lugar a llevar el brazo a una posicion segura
-    if (reached != 5) restart_Timer4_movservos();  // Si la cantidad de servos en su posicion objetivo no es 5 => gestionar movimiento de servos
+    
+    flag_posicion_segura = 0; //Actualiar flag que da lugar a llevar el brazo a la posicion segura
+    if (reached != 5) restart_Timer4_movservos();  // Si la cantidad de servos que se encuentran en su posicion segura no es 5 => gestionar movimiento seguro de servos
 }
 
 // Funion que da lugar a la realizacion de una rutina canina
@@ -301,7 +319,7 @@ void rutina_perro () {
                 reached--; // actualizar cantidad de servos en su posicion objetivo
             }
             
-            if (reached != 5) restart_Timer4_movservos(); // Si la cantidad de servos en su posicion objetivo no es 5 => gestionar movimiento de servos
+            if (reached != 5) restart_Timer4_movservos(); // Si la cantidad de servos que se encuentran en su posicion objetivo no es 5 => gestionar movimiento seguro de servos
             
             estado_rutina_perro=PLAS; //Estado siguiente: tumbado (PLAS)
             break;
@@ -319,7 +337,7 @@ void rutina_perro () {
                 reached--; // actualizar cantidad de servos en su posicion objetivo
             }
             
-            if (reached != 5) restart_Timer4_movservos(); // Si la cantidad de servos en su posicion objetivo no es 5 => gestionar movimiento de servos
+            if (reached != 5) restart_Timer4_movservos();// Si la cantidad de servos que se encuentran en su posicion objetivo no es 5 => gestionar movimiento seguro de servos
             
             estado_rutina_perro=SHAKEIT_L; // Estado siguiente: mover colita a la izda (SHAKEIT_L)
             break;
@@ -328,7 +346,7 @@ void rutina_perro () {
             LATBbits.LATB8=1; //Enable = 1 (encender motor de rueda)
             LATBbits.LATB9=0; //Enable = 0 (apagar motor de rueda)
         
-            OC1RS = PR2 * VEL_ALTA; // Velocida alta en la rueda
+            OC1RS = PR2 * VEL_ALTA; // Velocida alta en la rueda izquierda
             OC2RS = 0; // No movimiento
             OC3RS = 0; // No movimiento
             OC4RS = 0; // No movimiento
@@ -353,7 +371,7 @@ void rutina_perro () {
                 objetivopwm[DUTY4]=600; //actualizar posicion objetivo
                 reached--; // actualizar cantidad de servos en su posicion objetivo
             }
-            if (reached != 5) restart_Timer4_movservos(); // Si la cantidad de servos en su posicion objetivo no es 5 => gestionar movimiento de servos
+            if (reached != 5) restart_Timer4_movservos(); // Si la cantidad de servos que se encuentran en su posicion objetivo no es 5 => gestionar movimiento seguro de servos
             if (shakes==5){ // Si se han dado 5 movimientos de colita... 
                 estado_rutina_perro=ENDRUTINA; // Termina la rutina canina 
                 shakes=0; // reseteamos movimientos de colita
@@ -367,7 +385,7 @@ void rutina_perro () {
             LATBbits.LATB9=1; //Enable = 1 (encender motor de rueda)
         
             OC1RS = 0; // No movimiento
-            OC2RS = PR2 * VEL_ALTA; //Velocidad alta en la rueda
+            OC2RS = PR2 * VEL_ALTA; //Velocidad alta en la rueda derecha
             OC3RS = 0; // No movimiento
             OC4RS = 0; // No movimiento
 
@@ -375,7 +393,7 @@ void rutina_perro () {
                 objetivopwm[DUTY0]=851; //actualizar posicion objetivo
                 reached--; // actualizar cantidad de servos en su posicion objetivo
             }
-            if (reached != 5) restart_Timer4_movservos(); // Si la cantidad de servos en su posicion objetivo no es 5 => gestionar movimiento de servos
+            if (reached != 5) restart_Timer4_movservos(); // Si la cantidad de servos que se encuentran en su posicion objetivo no es 5 => gestionar movimiento seguro de servos
             estado_rutina_perro=SHAKEIT_L; //Estado siguiente: mover colita a la izda (SHAKEIT_L)
             break;
 
@@ -389,8 +407,10 @@ void rutina_perro () {
             LATBbits.LATB9=0;
         
             // Velocidad: 0
-            OC1RS = 0;
-            OC2RS = 0;
+            OC1RS = 0; // No movimiento
+            OC2RS = 0; // No movimiento
+            OC3RS = 0; // No movimiento
+            OC4RS = 0; // No movimiento
             break;
     }
     

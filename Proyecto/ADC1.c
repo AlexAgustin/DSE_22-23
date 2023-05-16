@@ -1,8 +1,8 @@
 /* Funciones para el modulo ADC1
 ================================================
  * Contiene las funciones de inicializacion del modulo ADC, comienzo del muestreo, 
- * tratamiento de valores (obtener medias y guardarlas en las posiciones debidas de Ventana_LCD + gestion de servos) 
- * y la rutina de atencion.
+ * tratamiento de valores (obtener medias y guardarlas en las posiciones debidas de Ventana_LCD 
+ * + gestion de servos) y la rutina de atencion.
 Autores: Alex y Amanda
 Fecha: Mayo 2023
 */
@@ -22,7 +22,11 @@ unsigned int Z_value[8];
 unsigned int flag_ADC =0;
 unsigned long num_conversiones=0;
 
-void inic_ADC1 (void) // inicializacion del modulo ADC1
+
+/*Inicializacion del modulo ADC1 para la recogida de 5 entradas analogicas
+ * (potenciometro, temperatura, X, Y y Z). Se gestiona con el temporizador T3
+ * y esta en modo automatico. */
+void inic_ADC1 (void) // 
 {
 // Inicializacion registro control AD1CON1
 AD1CON1 = 0;       // todos los campos a 0
@@ -43,12 +47,12 @@ AD1CON1bits.ASAM = 1;
 // Inicializacion registro control AD1CON2
 AD1CON2= 0 ;  // todos los campos a 0
 
-// Inicializacion registro control AD1CON3
-AD1CON3=0;    // todos los campos a 0
+// Inicializacion registro control AD1CON3 a 0
+AD1CON3=0;
 // Reloj con el que funciona el ADC:  0= reloj CPU; 1= RC erlojua 
-//AD1CON3bits.ADRC = 0;  // 
+//AD1CON3bits.ADRC = 0; 
 AD1CON3bits.SAMC=31;   // Tiempo muestreo = numero de Tad 
-AD1CON3bits.ADCS=3;   // Relacion entre TAD y Tcy TAD = Tcy(ADCS+1)
+AD1CON3bits.ADCS=3;    // Relacion entre TAD y Tcy TAD = Tcy(ADCS+1)
 
 // Inicializacion registro control AD1CON4
 AD1CON4=0; //relacionado con DMA, no lo usaremos
@@ -58,19 +62,19 @@ AD1CHS123=0;	//seleccion del canal 1,2 y 3
 
 // Inicializacion registro AD1CHS0
 AD1CHS0=0; 
-AD1CHS0bits.CH0SA=5; // elige la entrada analogica conectada
+AD1CHS0bits.CH0SA=5; // Seleccion de la entrada analogica que gestionara primero
 
 //AD1CHS0bits.CH0SB = 0;
 
 // Inicializacion registros AD1CSS 
 // Si escaneo secuencial 1, si no 0
-
 AD1CSSH = 0;   // 16-31 
 AD1CSSL = 0;   // 0-15 
 
 // Inicializacion registros AD1PCFG. Inicialmente todas AN como digitales
 AD1PCFGH = 0xFFFF;      // 1= digital / 0= Analog
 AD1PCFGL = 0xFFFF;      // Puerto B, todos digitales
+
 // Inicializar como analogicas solo las que vayamos a usar
 AD1PCFGLbits.PCFG5=0;   // potenciometro
 AD1PCFGLbits.PCFG4=0;   // sensor temperatura
@@ -90,7 +94,9 @@ AD1CON1bits.ADON=1;  // Habilitar el modulo ADC
 
 
 
-// Funcion que calcula la media de las muestras tomadas y prepara los datos para ser visualizados
+/*Funcion que calcula la media de las muestras tomadas y prepara los datos para ser 
+ * visualizados. Ademas, se gestiona el movimiento de las ruedas dependiendo del rango en el 
+ * que se encuentre Y_media. Por ultimo, se gestionan los duty's 0, 2 y 4 cuando corresponda.*/
 void tratar_valorADC1 () 
 {   
     float Poten_media = 0, Temp_media=0, X_media=0, Y_media=0, Z_media=0;
@@ -105,7 +111,6 @@ void tratar_valorADC1 ()
         Y_media += Y_value[i]; //coordenada y
         Z_media += Z_value[i]; //coordenada z
     }
-    
     //Dividir la suma realizada por el numero de muestras tomadas
     Poten_media = Poten_media / INDIV_MUESTRAS; 
     Temp_media = Temp_media / INDIV_MUESTRAS;
@@ -113,9 +118,10 @@ void tratar_valorADC1 ()
     Y_media = Y_media / INDIV_MUESTRAS;
     Z_media = Z_media / INDIV_MUESTRAS;
     
+    // Gestion del movimiento de las ruedas dependiendo del valor de Y_media
     if (!flag_rutina_perro) { //Si el brazo no esta realizando la rutina canina...
         if(Y_media>=400 && Y_media<=600){ // Rango 400 <= Y_media <= 600
-            // Enable = 0 (motores de las ruedas apagados)
+            // Enable = 0 (motores de las ruedas apagados, las ruedas no se mueven)
             LATBbits.LATB8=0;
             LATBbits.LATB9=0;
 
@@ -159,19 +165,20 @@ void tratar_valorADC1 ()
         }
     }
 
-    if(!flag_DUTY && !flag_rutina_perro){ //Si flag_DUTY==0 se obtienen duty0 duty2 y duty4  a partir de entradas analogicas
+    
+    if(!flag_DUTY && !flag_rutina_perro){ //Si flag_DUTY==0 y no se esta realizando la rutina canina, se obtienen duty0 duty2 y duty4  a partir de entradas analogicas
         
-        objetivopwm[DUTY0] =  (Poten_media/1023) * (duty_max[DUTY0] - duty_min[DUTY0]) + duty_min[DUTY0]; // Obtener duty0  a partir de la potencia
-        if(duty[DUTY0] != objetivopwm[DUTY0]) reached--; // Actualizar de ser necesario la cantidad de servos en su posicion objetivo
+        objetivopwm[DUTY0] =  (Poten_media/1023) * (duty_max[DUTY0] - duty_min[DUTY0]) + duty_min[DUTY0]; // Obtener duty0 a partir de la potencia
+        if(duty[DUTY0] != objetivopwm[DUTY0]) reached--; // De ser necesario, actualizar la cantidad de servos en su posicion objetivo
         objetivopwm[DUTY2] = (X_media/999) * (duty_max[DUTY2] - duty_min[DUTY2]) + duty_min[DUTY2]; // Obtener duty2 a partir de la coordenada X
-        if(duty[DUTY2] != objetivopwm[DUTY2]) reached--; // Actualizar de ser necesario la cantidad de servos en su posicion objetivo
+        if(duty[DUTY2] != objetivopwm[DUTY2]) reached--; // De ser necesario, actualizar la cantidad de servos en su posicion objetivo
         objetivopwm[DUTY4] = (Z_media/999) * (duty_max[DUTY4] - duty_min[DUTY4]) + duty_min[DUTY4]; // Obtener duty4 a partir de la coordenada Z
-        if(duty[DUTY4] != objetivopwm[DUTY4]) reached--; // Actualizar de ser necesario la cantidad de servos en su posicion objetivo
+        if(duty[DUTY4] != objetivopwm[DUTY4]) reached--; // De ser necesario, actualizar la cantidad de servos en su posicion objetivo
         
-        if (reached!=5) restart_Timer4_movservos(); // Hay servos que no estan en su posicion objetivo => gestionar su movimiento
+        if (reached!=5) restart_Timer4_movservos(); // Hay servos que no estan en su posicion objetivo => gestionar su movimiento lento/seguro
         
-        if (flag_Duty_LCD == VERDUTYOC) flag_Duty_LCD = VERDUTYOCADC; // Visualizar dutys getionados por adc + OCs
-        else flag_Duty_LCD = VERDUTYADC; //Visualizar dutys gestionados por ADC y OCs
+        if (flag_Duty_LCD == VERDUTYOC) flag_Duty_LCD = VERDUTYOCADC; // Visualizar dutys getionados por ADC1 + OCs
+        else flag_Duty_LCD = VERDUTYADC; //Visualizar dutys gestionados por ADC1
     }
 
     //Escribir el valor de cada dato a visualizar en la posicion correspondiente de Ventana_LCD
@@ -184,11 +191,14 @@ void tratar_valorADC1 ()
     flag_ADC=0; //Puesta a 0 del flag 
 }
 
-//Rutina de atencion a la interrupcion del modulo ADC1
+/* Rutina de atencion a la interrupcion del modulo ADC1.
+ * Toma 8 muestras de cada senhal analogica contemplada.*/
 void _ISR_NO_PSV _ADC1Interrupt(){
     static int num_muestras=0;
     static int i = 0;
+    
     num_conversiones++;
+    
     if (!flag_ADC){ //Comprobacion de que el programa principal ha terminado con las muestras anteriores
         switch(AD1CHS0bits.CH0SA){ //Switch de las diferentes entradas analogicas
             case potenciometro: //Entrada del potenciometro
@@ -196,31 +206,32 @@ void _ISR_NO_PSV _ADC1Interrupt(){
                 AD1CHS0bits.CH0SA = termometro; //Se define la siguiente senhal a muestrear
                 num_muestras++; //Incrementar el numero de muestras tomadas
                 break;
-            case termometro: //entrada del termometro
+            case termometro: //Entrada del termometro
                 Temp_value[i] = ADC1BUF0; //Se guarde el valor recogido en la posicion de la tabla de muestras que le corresponde
                 AD1CHS0bits.CH0SA = coordx; //Se define la siguiente senhal a muestrear
                 num_muestras++; //Incrementar el numero de muestras tomadas
                 break;
-            case coordx: //entrada de la coordenada X del joystick
+            case coordx: //Entrada de la coordenada X del joystick
                 X_value[i] = ADC1BUF0; //Se guarde el valor recogido en la posicion de la tabla de muestras que le corresponde
                 AD1CHS0bits.CH0SA = coordy; //Se define la siguiente senhal a muestrear
                 num_muestras ++; //Incrementar el numero de muestras tomadas
                 break;
-            case coordy: //entrada de la coordenada Y del joystick
+            case coordy: //Entrada de la coordenada Y del joystick
                 Y_value[i] = ADC1BUF0; //Se guarde el valor recogido en la posicion de la tabla de muestras que le corresponde
                 AD1CHS0bits.CH0SA = coordz; //Se define la siguiente senhal a muestrear
                 num_muestras ++; //Incrementar el numero de muestras tomadas
                 break;
-            case coordz: //entrada de la coordenada Z del joystick
+            case coordz: //Entrada de la coordenada Z del joystick
                 Z_value[i] = ADC1BUF0; //Se guarde el valor recogido en la posicion de la tabla de muestras que le corresponde
                 AD1CHS0bits.CH0SA = potenciometro; //Se define la siguiente senhal a muestrear
                 num_muestras ++; //Incrementar el numero de muestras tomadas
+                
                 i++; //incrementar la posicion de la tabla de muestras (indice de escritura)
                 break;
             default:
                 break;
         }
-        if(num_muestras==TOTAL_MUESTRAS){ // se han tomado todas las muestras requeridas
+        if(num_muestras==TOTAL_MUESTRAS){ // si se han tomado todas las muestras requeridas
             flag_ADC=1; //Puesta a 1 del flag
             num_muestras=0; //Resetear num_muestras
             i=0; //Resetear indice de escritura

@@ -1,6 +1,9 @@
-/* 
-Funciones y variables relacionadas con el sensor de distancia
-a exportar a otros ficheros.
+/* Funciones y variables a exportar a otros 
+modulos relacionadas con el sensor de distancia
+================================================
+
+Autores: Alex y Amanda
+Fecha: Mayo 2023
 */
 
 // FUNCIONES A EXPORTAR 

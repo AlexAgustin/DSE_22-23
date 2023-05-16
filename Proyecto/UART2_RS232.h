@@ -1,9 +1,9 @@
-/* Funciones y variables a exportar a otros 
+/* Funcion y variable a exportar a otros 
 modulos para trabajar con el modulo UART2
 ================================================
 
 Autores: Alex y Amanda
-Fecha: mayo 2023
+Fecha: Mayo 2023
 */
 
 // FUNCION

@@ -8,14 +8,6 @@
 // definiciones para la pantalla LCD
 //=========================================================
 
-/* 
-   For Explorer 16 board, here are the data and control signal definitions
-   RS -> RB15
-   E  -> RD4
-   RW -> RD5
-   DATA -> RE0 - RE7   
-*/
-
 // Control signal data pins 
 #define  RW  LATDbits.LATD5       // LCD R/W signal
 #define  RS  LATBbits.LATB15      // LCD RS signal
@@ -33,43 +25,43 @@
 
 // definiciones: filas y posiciones de valores recogidos
 //========================================================= 
-#define NFILAS 23
-#define NCOLUMNAS 18
+#define NFILAS 23       //Numero de filas a mostrar
+#define NCOLUMNAS 18    //Numero de columnas a mostrar por cada fila
 
 //Filas
-#define filacrono 3 // fila cronometro
-#define filapoten 5 // fila potencia
-#define filatemp 6 // fila temperatura
-#define filax 7 // fila coordenada X
-#define filay 8 // fila coordenada Y
-#define filaz 9 // fila coordenada Z
-#define filaduty01 11 // fila duty0 y duty1
-#define filaduty23 12 // fila duty2 y duty3
-#define filaduty4 13 // fila duty4
-#define filaruedas 14 // fila ruedas
-#define filacpu 15 //fila CPU
-#define filacalibs0 17 //fila min duty
-#define filacalibs1 18 //fila min duty
-#define filacalibs2 19 //fila min duty
-#define filacalibs3 20 //fila min duty
-#define filacalibs4 21 //fila min duty
-#define filadis 22 //fila distancia
+#define filacrono 3     // fila cronometro
+#define filapoten 5     // fila potenciometro
+#define filatemp 6      // fila temperatura
+#define filax 7         // fila coordenada X
+#define filay 8         // fila coordenada Y
+#define filaz 9         // fila coordenada Z
+#define filaduty01 11   // fila duty0 y duty1
+#define filaduty23 12   // fila duty2 y duty3
+#define filaduty4 13    // fila duty4
+#define filaruedas 14   // fila ruedas
+#define filacpu 15      // fila CPU
+#define filacalibs0 17  // fila valores maximos y minimos de duty0
+#define filacalibs1 18  // fila valores maximos y minimos de duty1
+#define filacalibs2 19  // fila valores maximos y minimos de duty2
+#define filacalibs3 20  // fila valores maximos y minimos de duty3
+#define filacalibs4 21  // fila valores maximos y minimos de duty4
+#define filadis 22      // fila distancia
 
 //Posiciones generales
-#define poscarac 15 // caracter presionado
-#define pos4dig 12 // cifras 4 digitos
-#define posdutyl 3 // duty a la izquierda
-#define posdutyr 11 // duty a la derecha
-#define poscpucur 7 // CPU: cont minimo
-#define poscpumax 14 // CPU: cont maximo
-#define poscalibmax 5
-#define poscalibmin 12
+#define poscarac 15     // caracter presionado
+#define pos4dig 12      // cifras 4 digitos
+#define posdutyl 3      // duty a la izquierda
+#define posdutyr 11     // duty a la derecha
+#define poscpucur 7     // CPU: cont minimo
+#define poscpumax 14    // CPU: cont maximo
+#define poscalibmax 5   // duty maximo
+#define poscalibmin 12  // duty minimo
 
 // definiciones posiciones cronometro
-#define posds 13 //decimas de segundo
-#define poscs 14 //centesimas de segundo
-#define posseg 10 //segundo
-#define posmin 7 //minuto
+#define posds 13    //decimas de segundo
+#define poscs 14    //centesimas de segundo
+#define posseg 10   //segundo
+#define posmin 7    //minuto
  
 // definiciones: filas y posiciones de valores recogidos
 //========================================================= 
@@ -85,6 +77,8 @@
 #define VERDUTYOC 10
 #define VERDUTYALL 11
 #define VERDUTYADC 12
+#define VERDUTYOCADC 13
+#define VERPERRO 14
 
 
 // Definiciones ligadas a la velocidad de transmision de UART2
@@ -129,13 +123,13 @@
                         // Fosc= 80 MHz Fcy = 40 MHz Tcy= 25 ns
 #define MINPWM 0.5      // Duracion minima pulso PWM (en milisegundos)
 #define MAXPWM 2.1      // Duracion maxima pulso PWM (en milisegundos)
-#define SECURE_DUTY_0    951 //Duty0 en una posicion segura
-#define SECURE_DUTY_1    1292 //Duty0 en una posicion segura
-#define SECURE_DUTY_2    1292 //Duty0 en una posicion segura
-#define SECURE_DUTY_3    466 //Duty0 en una posicion segura
-#define SECURE_DUTY_4    312 //Duty0 en una posicion segura
+#define SECURE_DUTY_0    951    //Duty0 en una posicion segura
+#define SECURE_DUTY_1    1292   //Duty1 en una posicion segura
+#define SECURE_DUTY_2    1292   //Duty2 en una posicion segura
+#define SECURE_DUTY_3    466    //Duty3 en una posicion segura
+#define SECURE_DUTY_4    312    //Duty4 en una posicion segura
 #define VEL_ALTA    0.8  // Velocidad alta
-#define VEL_BAJA    0.6 // Velocidad baja
+#define VEL_BAJA    0.6  // Velocidad baja
 #define DEF_DUTY_MIN (PR20ms/20) * MINPWM	// valor minimo y maximo por defecto de duty. Se calculan 
 #define DEF_DUTY_MAX (PR20ms/20) * MAXPWM	// mediante los "define" PR20ms, MINPWM y MAXPWM
 
@@ -148,7 +142,7 @@
 
 // Definiciones relacionadas con el bus I2C
 //==========================================
-#define newdirsI2C 0xFE //Direccion a asignar al sensor
+#define newdirsI2C 0xFC //Direccion a asignar al sensor
 #define REG_COM 0 //Registro de comandos
 #define REG_DATA 2 //Registro de datos
 #define CHOQUE 5  // distancia de riesgo de choque

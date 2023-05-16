@@ -5,11 +5,13 @@ Contiene cuatro funciones auxiliares:
 -  conversion_4dig: para la conversion de un valor de 4 digitos (digito -> caracteres).
 -  gestion_cont: obtener y visualizar el porcentaje de uso de CPU actual y el maximo registrado.
 
-Autores: Alex Agustin y Amanda Sin
-Fecha: mayo 2023
+Autores: Alex y Amanda
+Fecha: Mayo 2023
 */
 
 #include "p24HJ256GP610A.h"
+#include "commons.h"
+#include "memoria.h"
 
 unsigned char tabla_carac[16]="0123456789"; // Tabla de caracteres
 
@@ -50,7 +52,6 @@ void conversion_3dig (unsigned char * dir, unsigned int val)
         dig=val;
         for(i=0; i<2; i++){
             dig=dig/divisor;
-            
             dig=tabla_carac[dig];
             *dir=dig;
             dir++;
@@ -97,7 +98,7 @@ void gestion_cont(unsigned long cont)
 {
     static unsigned long contmax = 0;
     unsigned int cont_aux=0;
-    cont_aux = 100-((float)cont / (float)80001) * 100; // Obtener porcentaje de uso de CPU
+    cont_aux = 100-((float)cont / (float)80001) * 100; // Obtener porcentaje de uso de CPU //80001 es el valor establecido como maximo (extaido del programa auxiliar))
     conversion_3dig(&Ventana_LCD[filacpu][poscpucur], cont_aux); //Guardar dicho porcentaje en VentanaLCD
 
     //Actualizar valor maximo de uso de CPU registrado si procede

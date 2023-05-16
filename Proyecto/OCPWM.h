@@ -1,5 +1,10 @@
+/* Funciones y variables a exportar a otros 
+modulos para trabajar con las señales PWM (incluye modulos OC)
+================================================
 
-// Variables y funciones exportadas para utilizarlas desde otros modulos
+Autores: Alex y Amanda
+Fecha: Mayo 2023
+*/
 
 // VARIABLES
 //=========================================================

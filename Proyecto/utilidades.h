@@ -1,7 +1,12 @@
+/* Funciones auxiliares a exportar a otros modulos
+================================================
 
-// declaracion de las funciones auxiliares
-// que se usan en otros modulos
+Autores: Alex y Amanda
+Fecha: Mayo 2023
+*/
 
+// FUNCIONES
+//=========================================================
 void conversion_2dig (unsigned char * dir, unsigned int val);
 void conversion_3dig (unsigned char * dir, unsigned int val);
 void conversion_4dig (unsigned char * dir, unsigned int val);
